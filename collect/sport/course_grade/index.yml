@@ -1,0 +1,471 @@
+service:
+  - key: analyst_list_import
+    module: empty
+    http: true
+    excel_config: "./analyst_list2excel.json"
+    params:
+      course_id:
+        check:
+          template: "{{must .course_id}}"
+          err_msg: "课程ID不能为空"
+      dashboard_type:
+        check:
+          template: "{{must .dashboard_type}}"
+          err_msg: "大屏类型不能为空"
+    handler_params:
+      - key: excel2data
+        save_field: remote_grade_list
+      - key: service2field
+        service:
+          service: sport.course_grade_query
+        append_param: true
+        save_field: local_grade_list
+      - key: update_array_from_array
+        name: "根据username 更新操作，有修改，没有就新增"
+        foreach: "[remote_grade_list]"
+        item: item
+        field: "[username]"
+        right: "[local_grade_list]"
+        right_field: "[username]"
+        fields:
+          - field: course_grade_id
+            template: "[right.course_grade_id]"
+      - key: filter_arr
+        name: 过滤修改列表
+        foreach: "[remote_grade_list]"
+        item: item
+        if_template: "{{must .item.course_grade_id}}"
+        save_field: update_list
+      - key: service2field
+        name: 保存修改列表
+        enable: "{{must .update_list}}"
+        service:
+          service: sport.course_grade_bulk_update
+          grade_list: "[update_list]"
+      - key: filter_arr
+        name: 过滤新增
+        foreach: "[remote_grade_list]"
+        item: item
+        if_template: "{{is_empty .item.course_grade_id}}"
+        save_field: add_list
+
+      - key: update_array
+        name: 生成uuid
+        enable: "{{must .add_list}}"
+        foreach: "[add_list]"
+        item: item
+        fields:
+          - field: course_grade_id
+            template: "{{ uuid }}"
+          - field: course_id
+            template: "[course_id]"
+          - field: create_time
+            template: "{{current_date_time}}"
+          - field: dashboard_type
+            template: "[dashboard_type]"
+      - key: service2field
+        enable: "{{must .add_list}}"
+        service:
+          service: sport.course_grade_bulk_create
+          grade_list: "[add_list]"
+      - key: prop_arr
+        foreach: "[remote_grade_list]"
+        value: "[username]"
+        save_field: username_list
+      - key: service2field
+        service:
+          service: hrm.user_list
+          username_list: "[username_list]"
+          pagination: false
+        save_field: user_list
+      - key: update_array_from_array
+        name: "根据username 更新操作，有修改，没有就新增"
+        enable: "{{must .user_list}}"
+        foreach: "[user_list]"
+        item: item
+        field: "[username]"
+        right: "[remote_grade_list]"
+        right_field: "[username]"
+        fields:
+          - field: sport_level
+            template: "[right.sport_level]"
+      - key: service2field
+        enable: "{{must .user_list}}"
+        service:
+          service: hrm.bulk_update_user
+          user_list: "[user_list]"
+          fields: ["sport_level","user_id"]
+      - key: params2result
+        fields:
+          - from: "[remote_grade_list]"
+            to: remote_grade_list
+          - from: "[update_list]"
+            to: update_list
+          - from: "[add_list]"
+            to: add_list
+          - from: "[user_list]"
+            to: user_list
+
+  - key: upload_course_grade
+    module: empty
+    http: true
+    excel_config: "./grade_list2excel.json"
+    params:
+      course_id:
+        check:
+          template: "{{must .course_id}}"
+          err_msg: "课程ID不能为空"
+      dashboard_type:
+        check:
+          template: "{{must .dashboard_type}}"
+          err_msg: "大屏类型不能为空"
+    handler_params:
+      - key: excel2data
+        save_field: remote_grade_list
+      - key: service2field
+        service:
+          service: sport.course_grade_query
+        append_param: true
+        save_field: local_grade_list
+      - key: update_array_from_array
+        name: "根据username 更新操作，有修改，没有就新增"
+        foreach: "[remote_grade_list]"
+        item: item
+        field: "[username&training_project_code]"
+        right: "[local_grade_list]"
+        right_field: "[username&training_project_code]"
+        fields:
+          - field: course_grade_id
+            template: "[right.course_grade_id]"
+      - key: filter_arr
+        name: 过滤修改列表
+        foreach: "[remote_grade_list]"
+        item: item
+        if_template: "{{must .item.course_grade_id}}"
+        save_field: update_list
+      - key: service2field
+        name: 保存修改列表
+        enable: "{{must .update_list}}"
+        service:
+          service: sport.course_grade_bulk_update
+          grade_list: "[update_list]"
+      - key: filter_arr
+        name: 过滤新增
+        foreach: "[remote_grade_list]"
+        item: item
+        if_template: "{{is_empty .item.course_grade_id}}"
+        save_field: add_list
+
+      - key: update_array
+        name: 生成uuid
+        enable: "{{must .add_list}}"
+        foreach: "[add_list]"
+        item: item
+        fields:
+          - field: course_grade_id
+            template: "{{ uuid }}"
+          - field: course_id
+            template: "[course_id]"
+          - field: create_time
+            template: "{{current_date_time}}"
+          - field: dashboard_type
+            template: "[dashboard_type]"
+      - key: service2field
+        enable: "{{must .add_list}}"
+        service:
+          service: sport.course_grade_bulk_create
+          grade_list: "[add_list]"
+      - key: prop_arr
+        foreach: "[remote_grade_list]"
+        value: "[username]"
+        save_field: username_list
+      - key: service2field
+        service:
+          service: hrm.user_list
+          username_list: "[username_list]"
+          pagination: false
+        save_field: user_list
+      - key: update_array_from_array
+        name: "根据username 更新操作，有修改，没有就新增"
+        enable: "{{must .user_list}}"
+        foreach: "[user_list]"
+        item: item
+        field: "[username]"
+        right: "[remote_grade_list]"
+        right_field: "[username]"
+        fields:
+          - field: sport_level
+            template: "[right.sport_level]"
+      - key: service2field
+        enable: "{{must .user_list}}"
+        service:
+          service: hrm.bulk_update_user
+          user_list: "[user_list]"
+          fields: ["sport_level","user_id"]
+      - key: params2result
+        fields:
+          - from: "[remote_grade_list]"
+            to: remote_grade_list
+          - from: "[update_list]"
+            to: update_list
+          - from: "[add_list]"
+            to: add_list
+          - from: "[user_list]"
+            to: user_list
+
+
+  - key: grade_list_download
+    module: empty
+    http: true
+    excel_config: "./grade_list2excel.json"
+    params:
+      excel_path:
+        template: './template/{{current_date_format "20220202"}}/user_{{  replace (sub_str current_date_time -8 0) ":" ""}}_{{sub_str uuid -8 0}}.xlsx'
+      response_name:
+        default: "training_score.xlsx"
+    handler_params:
+      - key: service2field
+        service:
+          service: sport.course_grade_query
+          with_all: true
+          with_training_project: true
+        append_param: true
+        save_field: user_list
+      - key: data2excel
+        path: "[excel_path]"
+      - key: file2result
+        path: "[excel_path]"
+        result_name: "[response_name]"
+  - key: analyst_list_download
+    module: empty
+    http: true
+    excel_config: "./analyst_list2excel.json"
+    params:
+      excel_path:
+        template: './template/{{current_date_format "20220202"}}/user_{{  replace (sub_str current_date_time -8 0) ":" ""}}_{{sub_str uuid -8 0}}.xlsx'
+      response_name:
+        default: "analyst_score.xlsx"
+    handler_params:
+      - key: service2field
+        service:
+          service: sport.course_grade_query
+          with_all: true
+        append_param: true
+        save_field: user_list
+      - key: data2excel
+        path: "[excel_path]"
+      - key: file2result
+        path: "[excel_path]"
+        result_name: "[response_name]"
+  - key: course_grade_bulk_create
+
+    http: true
+    table: course_grade
+    module: bulk_create
+    params:
+      grade_list:
+        check:
+          template: "{{must .grade_list}}"
+          err_msg: 成绩列表不能为空
+    model_field: grade_list
+  - key: course_grade_bulk_update
+    http: true
+    table: course_grade
+    module: bulk_upsert
+    params:
+      grade_list:
+        check:
+          template: "{{must .grade_list}}"
+          err_msg: 成绩列表不能为空
+    model_field: grade_list
+  - key: course_grade_save
+    http: true
+    table: course_grade
+    module: model_save
+
+
+
+    handler_params:
+      - key: service2field
+        service:
+          service: sport.course_grade_query
+          course_id: "[course_id]"
+          username: "[username]"
+          dashboard_type: "[dashboard_type]"
+        save_field: current_score
+        template: "{{is_empty .current_score}}"
+        err_msg: "学生【{{.username}}】已经存在。请在列表选择用户，进行编辑数据"
+    params:
+      course_grade_id:
+        template: "{{uuid}}"
+      dashboard_type:
+        check:
+          template: "{{must .dashboard_type}}"
+          err_msg: 大屏类型不能为空
+      username:
+        check:
+          template: "{{must .username}}"
+          err_msg: 用户名不能为空
+
+  - key: course_grade_update
+    http: true
+    module: model_update
+    table: course_grade
+    params:
+      course_grade_id:
+        check:
+          template: "{{must .course_grade_id}}"
+          err_msg: 成绩不能为空
+    filter:
+      course_grade_id: "[course_grade_id]"
+  - key: course_grade_delete_by_course_id
+    module: model_delete
+    table: course_grade
+    params:
+      course_id:
+        check:
+          template: "{{must .course_id}}"
+          err_msg: 课程不能为空
+      dashboard_type:
+        check:
+          template: "{{must .dashboard_type}}"
+          err_msg: 大屏类型不能为空
+    filter:
+      course_id: "[course_id]"
+      dashboard_type: "[dashboard_type]"
+
+  - key: course_grade_delete
+    http: true
+    module: model_delete
+    table: course_grade
+    params:
+      course_grade_id_list:
+        check:
+          template: "{{must .course_grade_id_list}}"
+          err_msg: 成绩不能为空
+    filter:
+      course_grade_id__in: "[course_grade_id_list]"
+  - key: gen_course_grade
+    http: true
+    module: empty
+    params:
+      target_course_id:
+        check:
+          template: "{{must .target_course_id}}"
+          err_msg: 课程不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: sport.course_grade_query
+          course_id: _new_course
+        append_param: true
+        save_field: course_grade_list
+      - key: update_array
+        foreach: "[course_grade_list]"
+        item: item
+        fields:
+          - field: course_grade_id
+            template: "{{uuid}}"
+          - field: course_id
+            template: "[target_course_id]"
+          - field: dashboard_type
+            template: "[dashboard_type]"
+          - field: before_score
+            template: "{{ if eq .item.sport_level `not_passed`}}{{random_int 40 59}} {{ else if eq .item.sport_level `passed` }}{{random_int 60 79}} {{ else if eq .item.sport_level `good` }}{{random_int 80 89}} {{ else if eq .item.sport_level `excellent` }}{{random_int 90 100}} {{ else }}60{{ end }}"
+          - field: in_score
+            template: "{{ if eq .item.sport_level `not_passed`}}{{random_int 40 59}} {{ else if eq .item.sport_level `passed` }}{{random_int 60 79}} {{ else if eq .item.sport_level `good` }}{{random_int 80 89}} {{ else if eq .item.sport_level `excellent` }}{{random_int 90 100}} {{ else }}60{{ end }}"
+          - field: after_score
+            template: "{{random_int 90 100}}"
+          - field: before_calories
+            template: "{{random_int 130 180}}"
+          - field: in_calories
+            template: "{{random_int 130 180}}"
+          - field: after_calories
+            template: "{{random_int 130 180}}"
+          - field: before_training_times
+            template: "{{random_int 20 30}}"
+          - field: in_training_times
+            template: "{{random_int 20 30}}"
+          - field: after_training_times
+            template: "{{random_int 20 30}}"
+      - key: service2field
+        name: 删除之前课程数据
+        service:
+          service: sport.course_grade_delete_by_course_id
+          course_id: "[target_course_id]"
+          dashboard_type: "[dashboard_type]"
+      - key: service2field
+        service:
+          service: sport.course_grade_bulk_create
+          grade_list: "[course_grade_list]"
+      - key: param2result
+        field: "[course_grade_list]"
+
+  - key: course_grade_query
+    http: true
+    module: sql
+
+    params:
+      search:
+        template: "{{ if .search }}%{{.search}}%{{ end }}"
+      course_id:
+        check:
+          template: "{{or (must .course_id) .showLastCourse}}"
+          err_msg: 课程不能为空
+      group_prefix:
+        default: "%_group"
+      with_training_project:
+        default: false
+      training_type:
+        default: ""
+      body_part:
+        default: ""
+    data_file: course_grade_query.sql
+    handler_params:
+      - key: service2field
+        enable: "{{ must .with_training_project}}"
+        service:
+          service: sport.course_query
+          course_id: "[course_id]"
+          to_obj: true
+        save_field: course
+      - key: update_field
+        name: 更新字段
+        enable: "{{ne .course_id `_new_course`}}"
+        fields:
+          - field: training_type
+            template: "[course.training_type]"
+          - field: body_part
+            template: "[course.body_part]"
+    result_handler:
+      - key: result2params
+        fields:
+          - to: "[result_list]"
+      - key: gen_sport_level
+        foreach: "[result_list]"
+        fields:
+          - field: "[total_score]"
+            to: "sport_level"
+          - field: "[before_score]"
+            to: "before_sport_level"
+          - field: "[in_score]"
+            to: "in_sport_level"
+          - field: "[after_score]"
+            to: "after_sport_level"
+        save_field: result_list
+      - key: param2result
+        field: "[result_list]"
+
+  - key: grade_total
+    http: true
+    module: sql
+    data_file: grade_total.sql
+  - key: grade_history
+    http: true
+    module: sql
+    params:
+      teacher_id:
+        default: ""
+      student_id:
+        default: ""
+    data_file: grade_history.sql

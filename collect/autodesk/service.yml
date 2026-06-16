@@ -1,0 +1,49 @@
+# 项目点路由
+service:
+  - name: "价格目录树"
+    path: "price-doc-tree/index.yml"
+
+  - name: "价格"
+    path: "price_doc/index.yml"
+
+  - name: "投标"
+    path: "tender/index.yml"
+  - name: "项目"
+    path: "price-doc-project/index.yml"
+  - name: "文档"
+    path: "technical_doc/index.yml"
+
+  - name: "大模型"
+    path: "model/index.yml"
+
+  - name: "项目"
+    path: "price-doc-qing-project/index.yml"
+  - name: "清单价格库"
+    path: "price-doc-qing/index.yml"
+
+  - name: "清单"
+    path: "price-doc-qing-tree/index.yml"
+
+  - name: "投标配置"
+    path: "tb-config/index.yml"
+
+  - name: "投标项目"
+    path: "tb-project/index.yml"
+
+  - name: "文档"
+    path: "doc-project/index.yml"
+
+  - name: "文档"
+    path: "doc-project-detail/index.yml"
+
+  - name: "文档"
+    path: "doc-project-content/index.yml"
+
+
+  - name: "文档"
+    path: "doc-project-task/index.yml"
+
+
+  - name: "文档"
+    path: "tb_project_manager_config/index.yml"
+

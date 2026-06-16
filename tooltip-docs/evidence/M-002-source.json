@@ -1,0 +1,17 @@
+{
+  "task_id": "M-002",
+  "source_group": "模块处理",
+  "source_doc_text": "2.bulk_service\n批量服务",
+  "read_at": "2026-05-07T08:06:02.205Z",
+  "title": "bulk_service(批量服务)",
+  "textarea_count": 6,
+  "textarea_values": [
+    "    module: bulk_service\n    params:\n      collect_doc_id:\n        check:\n          template: \"{{must .collect_doc_id}}\"\n          err_msg: 文档不能为空\n    data_file: service_transfer.json\n    handler_params:\n      - key: service2field\n        service:\n          service: config.get_detail_service\n          collect_doc_id: \"[collect_doc_id]\"\n        save_field: service_list\n    batch:\n      foreach: \"[service_list]\"\n      service:\n        service: \"[service]\"\n      append_item_param: true\n      save_field: 'result'",
+    "    批量运行服务，多线程运行服务。\n    我之前写一个发布计划接口，一个查询然后编辑的接口，结合所有表一起查询与保存。保存还好，毕竟修改数据花个3-5秒还能接受。但是一进来查询得花个3-5秒查询，基本受不了。每个模块都是查询一次，但是是顺序进行的。一个模块花0.2秒，但是架不住模块多啊，乘以20，加上模块自身需要点时间，所以时间越来越大，3-5秒很正常。\n   可以利用此服务批量进行查询。将服务一次性查询出来\n   比如批量去发http请求\n",
+    "{\n  \"config.doc_query\": \"config.doc_query\",\n  \"config.import_list_query\": \"config.import_list_query\",\n  \"config.params_query\": \"config.params_query\",\n  \"config.demo_query\": \"config.demo_query\"\n}",
+    "  - key: get_detail_service\n    module: empty\n    params:\n      collect_doc_id:\n        check:\n          template: \"{{must .collect_doc_id}}\"\n          err_msg: 文档不能为空\n    data_file: doc_detail.json\n    handler_params:\n      - key: file2datajson\n        save_field: service_list\n      - key: param2result\n        field: service_list",
+    "[\n  {\n    \"service\": \"config.doc_query\",\n    \"collect_doc_id\": \"{{.collect_doc_id}}\",\n    \"target_field\": \"doc\",\n    \"to_obj\":true\n  },\n  {\n    \"service\": \"config.import_list_query\",\n    \"collect_doc_id\": \"{{.collect_doc_id}}\",\n    \"target_field\": \"important_list\"\n  },\n  {\n    \"service\": \"config.params_query\",\n    \"collect_doc_id\": \"{{.collect_doc_id}}\",\n    \"target_field\": \"params\"\n  },\n  {\n    \"service\": \"config.demo_query\",\n    \"collect_doc_id\": \"{{.collect_doc_id}}\",\n    \"target_field\": \"demo\"\n  }\n]\n",
+    "      - key: service2field\n        service:\n          service: gateway.nginx_config_info_bulk\n          file_path: \"[main_file.path]\"\n          name: \"[main_file.main_upstream_name]\"\n          server_list: \"[slb_list]\"\n        save_field: result_list\n      - key: prop_arr\n        name: 过滤结果集合\n        foreach: \"[result_list]\"\n        value: \"[result.data]\"\n        save_field: result_list\n      - key: filter_arr\n        name: 过滤掉数据为空请求\n        enable: \"{{must .result_list}}\"\n        foreach: \"[result_list]\"\n        item: item\n        if_template: \"{{not (is_empty .item.data)}}\"\n        save_field: result_list\n      - key: params2result\n        fields:\n          - from: \"[result_list]\"\n            to: result_list"
+  ],
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/M-002-source.png"
+}

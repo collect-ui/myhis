@@ -1,0 +1,7 @@
+{
+  "pass": false,
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "targetFile": "/data/project/moongod-backend/backend/config/service_imp/request_handlers/handlers/render_doc_tpl.py",
+  "startedAt": "2026-05-06T12:34:00.060Z",
+  "error": "page.goto: net::ERR_EMPTY_RESPONSE at http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool\nCall log:\n\u001b[2m  - navigating to \"http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool\", waiting until \"domcontentloaded\"\u001b[22m\n\n    at /data/project/sport/.tmp-render-doc-tpl-format-check.cjs:132:16"
+}

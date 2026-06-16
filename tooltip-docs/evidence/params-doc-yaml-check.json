@@ -1,0 +1,36 @@
+{
+  "generated_at": "2026-05-07 17:19:10 +0800",
+  "docs": [
+    {
+      "file": "/data/project/sport/tooltip-docs/key/params.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/template.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/check.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/default.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/type.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    }
+  ],
+  "all_pass": true
+}

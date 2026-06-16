@@ -1,0 +1,143 @@
+{
+  "apiUrl": "http://192.168.232.130:8015/template_data/data",
+  "projectCode": "backend",
+  "groupTitle": "test2",
+  "loginTitle": "登录",
+  "userTitle": "获取用户信息",
+  "docs": {
+    "groupId": "22d4a5db-aa91-4a9b-a49b-053649358969",
+    "loginDocId": "61ccc2a5-df6f-41b2-ac55-b42e3ea23eb6",
+    "userDocId": "00411a41-a299-4b9c-967f-4d1f266c127f"
+  },
+  "requests": {
+    "login": {
+      "request_method": "post",
+      "request_url": "http://172.26.0.13:8088/backend/template_data/data",
+      "request_header": {
+        "content-type": "application/json"
+      },
+      "request_data": {
+        "service": "system.login",
+        "remember": true,
+        "login_model": "inner",
+        "username": "zhangzhi",
+        "tenant_id": "wego",
+        "password": "zhangzhi@888"
+      }
+    },
+    "userInfo": {
+      "request_method": "post",
+      "request_url": "http://172.26.0.13:8088/backend/template_data/data",
+      "request_header": {},
+      "request_data": {
+        "service": "hrm.currentUser",
+        "tenant_id": "wego"
+      }
+    }
+  },
+  "checks": {
+    "loginResponseIsObject": true,
+    "userResponseIsObject": true,
+    "loginSetCookie": true,
+    "userSentCookie": true,
+    "userHasIdentityFields": true
+  },
+  "pass": true,
+  "error": "",
+  "loginResult": {
+    "status_code": 200,
+    "status_text": "200 OK",
+    "cookie": {
+      "domain_prefix": "172.26.0.13",
+      "host": "172.26.0.13",
+      "project_code": "backend",
+      "scope": "backend::172.26.0.13",
+      "sent_cookie_header": "",
+      "sent_cookies": [],
+      "sent_count": 0,
+      "set_cookie_count": 1,
+      "set_cookies": [
+        {
+          "domain": "",
+          "expires": "2026-06-04T09:14:11Z",
+          "expires_unix": "1780564451",
+          "httpOnly": true,
+          "max_age": 2592000,
+          "name": "'devops_session_id_product'",
+          "path": "/",
+          "same_site": "Default",
+          "secure": false,
+          "value": "3ixutnw876ji6l5kcivdi0mykdriefbj"
+        }
+      ],
+      "stored_cookies": [
+        {
+          "domain": "",
+          "httpOnly": false,
+          "name": "'devops_session_id_product'",
+          "path": "",
+          "same_site": "Default",
+          "secure": false,
+          "value": "3ixutnw876ji6l5kcivdi0mykdriefbj"
+        }
+      ],
+      "stored_count": 1
+    },
+    "response_json": {
+      "code": "0",
+      "count": 0,
+      "data": "zhangzhi",
+      "msg": "登录成功！",
+      "success": true
+    }
+  },
+  "userResult": {
+    "status_code": 200,
+    "status_text": "200 OK",
+    "cookie": {
+      "domain_prefix": "172.26.0.13",
+      "host": "172.26.0.13",
+      "project_code": "backend",
+      "scope": "backend::172.26.0.13",
+      "sent_cookie_header": "'devops_session_id_product'=3ixutnw876ji6l5kcivdi0mykdriefbj",
+      "sent_cookies": [
+        {
+          "domain": "",
+          "httpOnly": false,
+          "name": "'devops_session_id_product'",
+          "path": "",
+          "same_site": "Default",
+          "secure": false,
+          "value": "3ixutnw876ji6l5kcivdi0mykdriefbj"
+        }
+      ],
+      "sent_count": 1,
+      "set_cookie_count": 0,
+      "set_cookies": [],
+      "stored_cookies": [
+        {
+          "domain": "",
+          "httpOnly": false,
+          "name": "'devops_session_id_product'",
+          "path": "",
+          "same_site": "Default",
+          "secure": false,
+          "value": "3ixutnw876ji6l5kcivdi0mykdriefbj"
+        }
+      ],
+      "stored_count": 1
+    },
+    "response_json": {
+      "code": "0",
+      "count": 0,
+      "data": {
+        "login_model": "inner",
+        "nick": "张治",
+        "userid": "5b858f98-7c20-416c-9da8-bcf1e26653a9",
+        "username": "zhangzhi"
+      },
+      "msg": null,
+      "success": true
+    }
+  }
+}

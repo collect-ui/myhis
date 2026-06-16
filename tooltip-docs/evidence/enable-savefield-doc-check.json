@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-05-07 17:14:58 +0800",
+  "files": [
+    {
+      "file": "/data/project/sport/tooltip-docs/key/enable.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/save_field.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/handler_params.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/result_handler.md",
+      "yaml_blocks": 1,
+      "yaml_ok": true,
+      "errors": []
+    }
+  ],
+  "all_pass": true
+}

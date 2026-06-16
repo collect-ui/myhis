@@ -1,0 +1,11 @@
+{
+  "poolUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "webshellUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell",
+  "checks": {},
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshots": {},
+  "pass": false,
+  "error": "page.waitForFunction: Timeout 15000ms exceeded.\n    at visibleHistoryButton ([stdin]:19:225)\n    at async [stdin]:22:330"
+}

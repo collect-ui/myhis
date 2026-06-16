@@ -1,0 +1,34 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "paths": {
+    "rootPath": "/data/project/test/test",
+    "level1Path": "/data/project/test/test/dlg_lvl1_1778418738199",
+    "level1RenamedPath": "/data/project/test/test/dlg_lvl1_1778418738199_renamed",
+    "level2Path": "/data/project/test/test/dlg_lvl1_1778418738199/dlg_lvl2_1778418738199",
+    "nestedFilePath": "/data/project/test/test/dlg_lvl1_1778418738199/dlg_lvl2_1778418738199/dlg_case_1778418738199.txt",
+    "opsFilePath": "/data/project/test/test/dlg_ops_1778418738199.txt",
+    "opsFileRenamedPath": "/data/project/test/test/dlg_ops_1778418738199_renamed.txt",
+    "rightAddPath": "/data/project/test/test/dlg_add_1778418738199"
+  },
+  "checks": {
+    "setupByApi": true,
+    "rightAddDir": true,
+    "rightAddDirServerOk": true,
+    "rightAddDirKeepsRootExpanded": true,
+    "multiLevelVisible": true,
+    "rightEditPrefill": true,
+    "rightEditParentShown": true,
+    "rightEditParentSelectable": true,
+    "rightEditRenameServerOk": true,
+    "rightDeleteFile": true,
+    "rightDeleteFileServerOk": true,
+    "rightDeleteDirKeepsRootExpanded": true,
+    "rightDeleteDirServerOk": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-workspace-file-rightclick-dialog-check.png",
+  "pass": true
+}

@@ -1,0 +1,33 @@
+{
+  "pageUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "checks": {
+    "expandedAfterSet": true,
+    "expandedAfterReload": true,
+    "ratioMoved": true,
+    "ratioRestoredAfterReload": true,
+    "uiStateWritten": true,
+    "panelLayoutKeyWritten": true
+  },
+  "before": {
+    "collapseText": "展开",
+    "handleX": 1539,
+    "localUiState": "",
+    "panelKeys": [
+      "react-resizable-panels:workspace-http-detail-body-layout-backend",
+      "react-resizable-panels:workspace-http-workbench-layout-backend"
+    ]
+  },
+  "afterSet": {
+    "collapseText": "收起",
+    "handleX": 1500,
+    "localUiState": "{\"detail_headers_collapsed\":false,\"console_headers_collapsed\":true}"
+  },
+  "afterReload": {
+    "collapseText": "收起",
+    "handleX": 1500,
+    "localUiState": "{\"detail_headers_collapsed\":false,\"console_headers_collapsed\":true}"
+  },
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-http-layout-persist-check.png"
+}

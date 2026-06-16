@@ -1,0 +1,491 @@
+{
+  "tag": "panel",
+  "id": "${'workspace-editor-panel-'+project_code}",
+  "order": 2,
+  "defaultSize": 78,
+  "minSize": 30,
+  "children": [
+    {
+      "tag": "layout-fit",
+      "style": {
+        "height": "100%"
+      },
+      "children": [
+        {
+          "tag": "panel-group",
+          "direction": "horizontal",
+          "children": [
+            {
+              "tag": "panel",
+              "defaultSize": 70,
+              "minSize": 34,
+              "children": [
+                {
+                  "tag": "layout-fit",
+                  "style": {
+                    "height": "100%"
+                  },
+                  "children": [
+        {
+          "tag": "panel-group",
+          "visible": "${workspacePanelList.length>0}",
+          "direction": "horizontal",
+          "children": [
+            {
+              "tag": "listview",
+              "itemData": "${[...workspacePanelList]}",
+              "keyField": "id",
+              "rowClickAction": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "workspaceLastGroupId": "${row.id}"
+                  }
+                }
+              ],
+              "itemAttr": {
+                "tag": "panel",
+                "id": "${row.id}",
+                "defaultSize": "${workspacePanelList.length>0?Math.floor(100/workspacePanelList.length):100}",
+                "minSize": 10,
+                "order": "${row.order}",
+                "className": "border-right",
+                "children": [
+                  {
+                    "tag": "panel-group",
+                    "direction": "vertical",
+                    "children": [
+                      {
+                        "tag": "listview",
+                        "itemData": "${[...row.children]}",
+                        "keyField": "id",
+                        "rowClickAction": [
+                          {
+                            "tag": "update-store",
+                            "value": {
+                              "workspaceLastShellId": "${row.id}"
+                            }
+                          }
+                        ],
+                        "itemAttr": {
+                          "tag": "panel",
+                          "id": "${row.id}",
+                          "defaultSize": "${row.parent?.children?.length>0?Math.floor(100/row.parent.children.length):100}",
+                          "minSize": 10,
+                          "order": "${row.order}",
+                          "className": "${row.id==workspaceLastShellId?'shell-group-active':''}",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "height": "100%",
+                                "display": "flex",
+                                "flexDirection": "column",
+                                "minHeight": 0,
+                                "background": "#ffffff"
+                              },
+                              "children": [
+                                {
+                                  "tag": "tabs",
+                                  "size": "small",
+                                  "withHistory": true,
+                                  "type": "editable-card",
+                                  "hideAdd": true,
+                                  "headerOnly": true,
+                                  "keyField": "token",
+                                  "activeKey": "${row.activeKey}",
+                                  "itemData": "${(row.content||[]).filter(item=>['http','console','console-result'].indexOf(String(item.type||'file'))<0)}",
+                                  "style": {
+                                    "flex": "0 0 auto"
+                                  },
+                                  "itemAttr": {
+                                    "label": "${row.title}",
+                                    "children": [
+                                      {
+                                        "tag": "div",
+                                        "style": {
+                                          "height": "0px",
+                                          "overflow": "hidden"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "removeAction": [
+                                    {
+                                      "tag": "method",
+                                      "enable": "${row.activeKey==key && (row.content||[]).filter(item=>['http','console','console-result'].indexOf(String(item.type||'file'))<0 && item.token!==key).length>0}",
+                                      "method": "${(()=>{const next=(row.content||[]).filter(item=>['http','console','console-result'].indexOf(String(item.type||'file'))<0 && item.token!==key);if(next.length>0){row.setActiveKey(next[next.length-1].token);}})()}"
+                                    },
+                                    {
+                                      "tag": "localstore",
+                                      "method": "write",
+                                      "key": "${'workspace-open-files-'+(project_code||workspaceCurrent||'')}",
+                                      "value": "${(()=>{const files=(row.content||[]).filter(i=>i.token!==key&&(i.type||'file')==='file').map(i=>({path:i.path,title:i.title}));return {files};})()}"
+                                    },
+                                    {
+                                      "tag": "method",
+                                      "method": "${row.removeByKey(key)}"
+                                    },
+                                    {
+                                      "tag": "update-store",
+                                      "value": {
+                                        "workspacePanelList": "${workspacePanelList.map(item=>Object.assign({}, item, { children: (item.children||[]).filter(c=>(c.content||[]).length>0) })).filter(item=>(item.children||[]).length>0)}"
+                                      }
+                                    },
+                                    {
+                                      "tag": "method",
+                                      "method": "${workspacePanelList.forEach(item=>item.initialize())}"
+                                    }
+                                  ],
+                                  "rightMenu": [
+                                    {
+                                      "type": "item",
+                                      "icon": "TbLayoutRows",
+                                      "code": "horizontal",
+                                      "label": "水平分割"
+                                    },
+                                    {
+                                      "type": "item",
+                                      "icon": "TbLayoutColumns",
+                                      "code": "vertical",
+                                      "label": "垂直分割"
+                                    }
+                                  ],
+                                  "rightMenuAction": [
+                                    {
+                                      "tag": "update-store",
+                                      "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                      "value": {
+                                        "workspaceToken": "${uuid()}"
+                                      }
+                                    },
+                                    {
+                                      "tag": "arr-push",
+                                      "enable": "${item && item.code && item.code==='horizontal'}",
+                                      "from": "workspacePanelList",
+                                      "value": {
+                                        "id": "${uuid()}",
+                                        "order": "${workspacePanelList.length+1}",
+                                        "description": "横向分组",
+                                        "children": [
+                                          {
+                                            "id": "${uuid()}",
+                                            "order": 1,
+                                            "description": "纵向分组",
+                                            "activeKey": "${workspaceToken}",
+                                            "content": [
+                                              {
+                                                "token": "${workspaceToken}",
+                                                "title": "${row.title}",
+                                                "path": "${row.path}",
+                                                "project_code": "${row.project_code||workspaceCurrent}",
+                                                "type": "${row.type||'file'}",
+                                                "id": "${row.id||''}",
+                                                "http_method": "${row.http_method||'post'}",
+                                                "http_url": "${row.http_url||'/template_data/data'}",
+                                                "http_request_text": "${row.http_request_text||'{}'}",
+                                                "http_response_text": "${row.http_response_text||''}"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "tag": "arr-push",
+                                      "enable": "${item && item.code && item.code==='vertical'}",
+                                      "method": "${row.parent.parent.addChildren(value)}",
+                                      "value": {
+                                        "id": "${uuid()}",
+                                        "order": 1,
+                                        "description": "纵向分组",
+                                        "activeKey": "${workspaceToken}",
+                                        "content": [
+                                          {
+                                            "token": "${workspaceToken}",
+                                            "title": "${row.title}",
+                                            "path": "${row.path}",
+                                            "project_code": "${row.project_code||workspaceCurrent}",
+                                            "type": "${row.type||'file'}",
+                                            "id": "${row.id||''}",
+                                            "http_method": "${row.http_method||'post'}",
+                                            "http_url": "${row.http_url||'/template_data/data'}",
+                                            "http_request_text": "${row.http_request_text||'{}'}",
+                                            "http_response_text": "${row.http_response_text||''}"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "tag": "method",
+                                      "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                      "method": "${workspacePanelList.forEach(item=>item.initialize())}"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "tag": "workspace-editor-pool",
+                                  "style": {
+                                    "flex": 1,
+                                    "minHeight": 0
+                                  },
+                                  "subgroupRow": "${row}",
+                                  "subgroupId": "${row.id}",
+                                  "content": "${row.content}",
+                                  "contentVersion": "${(row.content||[]).map(item=>item.token).join('|')+'::'+(row.activeKey||'')}",
+                                  "activeKey": "${row.activeKey}",
+                                  "httpDocRefreshVersion": "${workspaceHttpDocRefreshVersion||''}",
+                                  "poolSize": 4,
+                                  "emptyText": "请选择左侧文件"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "joinAttr": {
+                          "tag": "panel-resize"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "joinAttr": {
+                "tag": "panel-resize"
+              }
+            }
+          ]
+        },
+                    {
+                      "tag": "div",
+                      "visible": "${workspacePanelList.length<=0}",
+                      "style": {
+                        "height": "100%",
+                        "display": "flex",
+                        "alignItems": "center",
+                        "justifyContent": "center",
+                        "color": "#999",
+                        "fontSize": "14px"
+                      },
+                      "children": "从左侧目录树选择一个文件，打开工作空间 Demo。"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "panel-resize"
+            },
+            {
+              "tag": "panel",
+              "defaultSize": 30,
+              "minSize": 16,
+              "children": [
+                {
+                  "tag": "layout-fit",
+                  "style": {
+                    "height": "100%",
+                    "padding": "8px",
+                    "background": "#f8fafc",
+                    "overflow": "hidden",
+                    "borderTop": "1px solid #e5e7eb"
+                  },
+                  "children": [
+                    {
+                      "tag": "form",
+                      "name": "workspace-http-console-form",
+                      "layout": "inline",
+                      "initialValues": "${workspaceHttpConsoleForm}",
+                      "style": {
+                        "height": "100%",
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "minHeight": 0,
+                        "width": "100%"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "style": {
+                            "display": "grid",
+                            "gridTemplateColumns": "120px minmax(0,1fr) auto",
+                            "gap": "8px",
+                            "width": "100%",
+                            "alignItems": "center",
+                            "marginBottom": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "form-item",
+                              "name": "request_method",
+                              "style": {
+                                "marginBottom": 0
+                              },
+                              "children": [
+                                {
+                                  "tag": "select",
+                                  "allowClear": false,
+                                  "options": [
+                                    {
+                                      "label": "POST",
+                                      "value": "post"
+                                    },
+                                    {
+                                      "label": "GET",
+                                      "value": "get"
+                                    },
+                                    {
+                                      "label": "PUT",
+                                      "value": "put"
+                                    },
+                                    {
+                                      "label": "DELETE",
+                                      "value": "delete"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "form-item",
+                              "name": "request_url",
+                              "style": {
+                                "marginBottom": 0,
+                                "width": "100%"
+                              },
+                              "children": [
+                                {
+                                  "tag": "input",
+                                  "allowClear": true,
+                                  "placeholder": "输入请求URL，例如 /template_data/data"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "style": {
+                                "height": "32px"
+                              },
+                              "children": "发送",
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "showResultMsg": true,
+                                  "api": "post:/template_data/data?service=webshell.http_proxy_request",
+                                  "data": {
+                                    "request_method": "${String(getFormValue('workspace-http-console-form','request_method')||'post').toLowerCase()}",
+                                    "request_url": "${String(getFormValue('workspace-http-console-form','request_url')||'/template_data/data')}",
+                                    "request_header": "${(()=>{try{const raw=String(getFormValue('workspace-http-console-form','request_headers')||'{}').trim();const obj=raw?JSON.parse(raw):{};return obj&&typeof obj==='object'&&!Array.isArray(obj)?obj:{};}catch(err){return {};}})()}",
+                                    "request_data": "${(()=>{try{const raw=String(getFormValue('workspace-http-console-form','request_body')||'{}').trim();const obj=raw?JSON.parse(raw):{};return obj&&typeof obj==='object'&&!Array.isArray(obj)?obj:{};}catch(err){return {};}})()}"
+                                  },
+                                  "adapt": {
+                                    "workspaceHttpConsoleResponse": "${String((data&&data.response_text)||'')}",
+                                    "workspaceHttpConsoleStatus": "${'状态 '+String((data&&data.status_code)||'N/A')+' '+String((data&&data.status_text)||'')}",
+                                    "workspaceHttpConsoleUpdatedAt": "${new Date().toISOString()}",
+                                    "workspaceHttpConsoleForm": "${Object.assign({}, workspaceHttpConsoleForm||{}, { request_method: String(getFormValue('workspace-http-console-form','request_method')||'post').toLowerCase(), request_url: String(getFormValue('workspace-http-console-form','request_url')||'/template_data/data'), request_headers: String(getFormValue('workspace-http-console-form','request_headers')||'{}'), request_body: String(getFormValue('workspace-http-console-form','request_body')||'{}') })}"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "fontSize": "12px",
+                            "color": "#475569",
+                            "marginBottom": "6px"
+                          },
+                          "children": "${workspaceHttpConsoleStatus ? (workspaceHttpConsoleStatus+' · '+workspaceHttpConsoleUpdatedAt) : 'HTTP 控制台（独立底部区）'}"
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "request_headers",
+                          "style": {
+                            "width": "100%",
+                            "marginBottom": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "editor",
+                              "language": "json",
+                              "theme": "vs-dark",
+                              "height": "120px",
+                              "value": "${getFormValue('workspace-http-console-form','request_headers')||workspaceHttpConsoleForm.request_headers||'{}'}",
+                              "path": "workspace-http-console-headers.json",
+                              "options": {
+                                "readOnly": false,
+                                "minimap": {
+                                  "enabled": false
+                                },
+                                "fontSize": 12,
+                                "wordWrap": "on"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "request_body",
+                          "style": {
+                            "width": "100%",
+                            "marginBottom": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "editor",
+                              "language": "json",
+                              "theme": "vs-dark",
+                              "height": "180px",
+                              "value": "${getFormValue('workspace-http-console-form','request_body')||workspaceHttpConsoleForm.request_body||'{}'}",
+                              "path": "workspace-http-console-body.json",
+                              "options": {
+                                "readOnly": false,
+                                "minimap": {
+                                  "enabled": false
+                                },
+                                "fontSize": 12,
+                                "wordWrap": "on"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "fontSize": "12px",
+                            "fontWeight": 600,
+                            "color": "#0f172a",
+                            "marginBottom": "4px"
+                          },
+                          "children": "响应结果"
+                        },
+                        {
+                          "tag": "editor",
+                          "language": "json",
+                          "theme": "vs-dark",
+                          "height": "200px",
+                          "value": "${workspaceHttpConsoleResponse||''}",
+                          "path": "workspace-http-console-response.json",
+                          "options": {
+                            "readOnly": true,
+                            "minimap": {
+                              "enabled": false
+                            },
+                            "fontSize": 12,
+                            "wordWrap": "on"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

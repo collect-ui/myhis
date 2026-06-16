@@ -1,0 +1,36 @@
+{
+  "success": true,
+  "agentBaseURL": "http://192.168.232.130:8015",
+  "questionBaseURL": "http://192.168.232.130:8026",
+  "questionURL": "http://192.168.232.130:8026/collect-ui/#/collect-ui/framework/question-bank",
+  "agentURL": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/agent_regression",
+  "sessionKey": "agent-markdown-image-1779594943502",
+  "login": {
+    "attempted": true,
+    "filledUser": true,
+    "filledPassword": true,
+    "clicked": true,
+    "finalURL": "http://192.168.232.130:8026/collect-ui/#/collect-ui/framework/question-bank"
+  },
+  "markdownImage": "![question-bank](/template_data/agent/artifact?path=%2Fdata%2Fproject%2Fsport%2Ftest%2Flowcode-page%2Fresults%2Flatest%2Fagent-markdown-image%2Fquestion-bank.png)",
+  "artifactURL": "/template_data/agent/artifact?path=%2Fdata%2Fproject%2Fsport%2Ftest%2Flowcode-page%2Fresults%2Flatest%2Fagent-markdown-image%2Fquestion-bank.png",
+  "imageInfo": {
+    "src": "/template_data/agent/artifact?path=%2Fdata%2Fproject%2Fsport%2Ftest%2Flowcode-page%2Fresults%2Flatest%2Fagent-markdown-image%2Fquestion-bank.png",
+    "currentSrc": "http://192.168.232.130:8015/template_data/agent/artifact?path=%2Fdata%2Fproject%2Fsport%2Ftest%2Flowcode-page%2Fresults%2Flatest%2Fagent-markdown-image%2Fquestion-bank.png",
+    "complete": true,
+    "naturalWidth": 1440,
+    "naturalHeight": 980,
+    "rect": {
+      "width": 822,
+      "height": 559,
+      "top": 160,
+      "left": 372
+    }
+  },
+  "questionScreenshot": "/data/project/sport/test/lowcode-page/results/latest/agent-markdown-image/question-bank.png",
+  "agentScreenshot": "/data/project/sport/test/lowcode-page/results/latest/agent-markdown-image/agent-markdown-rendered.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "badResponses": []
+}

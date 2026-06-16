@@ -1,0 +1,71 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "rounds": [
+    {
+      "round": 1,
+      "handleBefore": 1414.8125,
+      "handleAfterDrag": 1335.59375,
+      "dragMoved": true,
+      "handleAfterReload": 1335.59375,
+      "dragPersisted": true,
+      "titleAfterCollapse": "展开HTTP面板",
+      "collapsedNow": true,
+      "titleAfterRefresh": "展开HTTP面板",
+      "collapsedPersisted": true,
+      "localStorageKeys": [
+        "workspace-http-panel-visible-backend",
+        "react-resizable-panels:workspace-root-layout-backend"
+      ],
+      "localStorageValues": {
+        "workspace-http-panel-visible-backend": "{\"visible\":false}",
+        "react-resizable-panels:workspace-root-layout-backend": "{\"workspace-editor-panel-backend,workspace-http-workbench-panel-backend,workspace-tree-panel-backend\":{\"expandToSizes\":{},\"layout\":[11.6666666667,65,23.3333333333]},\"workspace-editor-panel-backend,workspace-tree-panel-backend\":{\"expandToSizes\":{},\"layout\":[15.2173913043,84.7826086957]}}"
+      },
+      "pass": true
+    },
+    {
+      "round": 2,
+      "handleBefore": 1335.59375,
+      "handleAfterDrag": 1455.609375,
+      "dragMoved": true,
+      "handleAfterReload": 1455.609375,
+      "dragPersisted": true,
+      "titleAfterCollapse": "展开HTTP面板",
+      "collapsedNow": true,
+      "titleAfterRefresh": "展开HTTP面板",
+      "collapsedPersisted": true,
+      "localStorageKeys": [
+        "workspace-http-panel-visible-backend",
+        "react-resizable-panels:workspace-root-layout-backend"
+      ],
+      "localStorageValues": {
+        "workspace-http-panel-visible-backend": "{\"visible\":false}",
+        "react-resizable-panels:workspace-root-layout-backend": "{\"workspace-editor-panel-backend,workspace-http-workbench-panel-backend,workspace-tree-panel-backend\":{\"expandToSizes\":{},\"layout\":[11.6666666667,65,23.3333333333]},\"workspace-editor-panel-backend,workspace-tree-panel-backend\":{\"expandToSizes\":{},\"layout\":[15.2173913043,84.7826086957]}}"
+      },
+      "pass": true
+    },
+    {
+      "round": 3,
+      "handleBefore": 1455.609375,
+      "handleAfterDrag": 1365.703125,
+      "dragMoved": true,
+      "handleAfterReload": 1365.703125,
+      "dragPersisted": true,
+      "titleAfterCollapse": "展开HTTP面板",
+      "collapsedNow": true,
+      "titleAfterRefresh": "展开HTTP面板",
+      "collapsedPersisted": true,
+      "localStorageKeys": [
+        "workspace-http-panel-visible-backend",
+        "react-resizable-panels:workspace-root-layout-backend"
+      ],
+      "localStorageValues": {
+        "workspace-http-panel-visible-backend": "{\"visible\":false}",
+        "react-resizable-panels:workspace-root-layout-backend": "{\"workspace-editor-panel-backend,workspace-http-workbench-panel-backend,workspace-tree-panel-backend\":{\"expandToSizes\":{},\"layout\":[11.6666666667,65,23.3333333333]},\"workspace-editor-panel-backend,workspace-tree-panel-backend\":{\"expandToSizes\":{},\"layout\":[15.2173913043,84.7826086957]}}"
+      },
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "pass": true,
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-http-layout-persist-loop-check.png"
+}

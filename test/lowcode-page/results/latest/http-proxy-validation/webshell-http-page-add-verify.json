@@ -1,0 +1,82 @@
+{
+  "caseName": "ui_add_1777944944350",
+  "pass": true,
+  "saveRequest": {
+    "service": "config.doc_save",
+    "demo": [],
+    "doc": {
+      "title": "ui_add_1777944944350",
+      "sub_title": "ui-add-sub",
+      "type": "2",
+      "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+      "order_index": 1,
+      "request_mode": "backend",
+      "request_method": "put",
+      "request_url": "/template_data/data?from=ui_add_page",
+      "request_headers": "{\n  \"X-FROM\": \"ui-add\"\n}",
+      "code": "{\n  \"hello\": \"world\",\n  \"count\": 1\n}",
+      "code_desc": "",
+      "code_result": ""
+    },
+    "important_list": [],
+    "params": [],
+    "result": []
+  },
+  "createdId": "28373ad1-a569-4797-b594-cfbcf84f1e86",
+  "db": {
+    "collect_doc_id": "28373ad1-a569-4797-b594-cfbcf84f1e86",
+    "title": "ui_add_1777944944350",
+    "sub_title": "ui-add-sub",
+    "request_mode": "backend",
+    "request_method": "put",
+    "request_url": "/template_data/data?from=ui_add_page",
+    "request_headers": "{\n  \"X-FROM\": \"ui-add\"\n}",
+    "code": "{\n  \"hello\": \"world\",\n  \"count\": 1\n}",
+    "is_delete": "0"
+  },
+  "detail": {
+    "count": 0,
+    "success": true,
+    "code": "0",
+    "msg": "成功",
+    "data": {
+      "demo": [],
+      "doc": {
+        "code": "{\n  \"hello\": \"world\",\n  \"count\": 1\n}",
+        "code_desc": "",
+        "code_result": "",
+        "collect_doc_id": "28373ad1-a569-4797-b594-cfbcf84f1e86",
+        "create_time": "2026-05-05 09:35:52",
+        "create_user": "",
+        "is_delete": "0",
+        "order_index": "1",
+        "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+        "request_headers": "{\n  \"X-FROM\": \"ui-add\"\n}",
+        "request_method": "put",
+        "request_mode": "backend",
+        "request_url": "/template_data/data?from=ui_add_page",
+        "sub_title": "ui-add-sub",
+        "title": "ui_add_1777944944350",
+        "type": "2"
+      },
+      "important_list": [],
+      "params": [],
+      "result": []
+    }
+  },
+  "uiReadback": {
+    "request_url": "/template_data/data?from=ui_add_page",
+    "title": "ui_add_1777944944350",
+    "sub_title": "ui-add-sub",
+    "selects": [
+      "接口",
+      "后端代发",
+      "PUT",
+      "test2"
+    ],
+    "request_editor": "{\n  \"hello\": \"world\",\n  \"count\": 1\n}",
+    "headers_editor": "{\n  \"X-FROM\": \"ui-add\"\n}"
+  },
+  "deleteOk": true,
+  "errors": []
+}

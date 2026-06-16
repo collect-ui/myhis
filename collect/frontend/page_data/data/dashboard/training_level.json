@@ -1,0 +1,432 @@
+{
+  "tag": "layout-fit",
+  "className": "overflow-auto",
+  "storeName": "dashboard",
+  "initStoreType": {
+    "grade_list": "GradeList"
+  },
+  "initStore": {
+    "not_passed_list": [],
+    "passed_list": [],
+    "good_list": [],
+    "excellent_list": []
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "get-data-list",
+      "api": "post:/template_data/data?service=hrm.user_list_group",
+      "adapt": {
+        "not_passed_list": "${data.not_passed_list}",
+        "passed_list": "${data.passed_list}",
+        "good_list": "${data.good_list}",
+        "excellent_list": "${data.excellent_list}"
+      }
+    }
+  ],
+  "style": {
+    "background": "#051c45",
+    "color": "#fff",
+    "fontFamily": "'Microsoft YaHei' !important",
+    "margin": "0px 0px",
+    "padding": "0px 0px",
+    "overflowX": "hidden",
+    "backgroundRepeat": "no-repeat",
+    "backgroundSize": "100% 100%",
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "children": [
+    {
+      "tag": "div",
+      "style": {
+        "width": "100%",
+        "lineHeight": "80px",
+        "background": "url(/data/img/top-title.png) center/100% 100% no-repeat",
+        "fontSize": "36px",
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "transform": "translateY(-12px)"
+          },
+          "children": "学生训练等级管理"
+        }
+      ]
+    },
+    {
+      "tag": "div",
+      "style": {
+        "flex": 1,
+        "display": "flex",
+        "overflow": "hidden"
+      },
+      "children": [
+        {
+          "tag": "drag-container",
+          "style": {
+            "display": "flex"
+          },
+          "action": [
+            {
+              "tag": "ajax",
+              "api": "post:/template_data/data?service=hrm.update_user_by_username",
+              "data": {
+                "username": "${draggableId}",
+                "sport_level": "${destination.droppableId}"
+              }
+
+            },
+            {
+              "tag": "reload-init-action",
+              "group": "get-data-list"
+            }
+
+          ],
+          "children": [
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "padding": "10px",
+                "height": "100%"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "flex-direction": "column"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "children": "不合格",
+                      "style": {
+                        "fontSize": 22,
+                        "fontWeight": "bold"
+                      }
+                    },
+                    {
+                      "tag": "drop",
+                      "droppableId": "not_passed",
+                      "style": {
+                        "flex": 1,
+                        "overflow": "auto",
+                        "border": "1px dashed gray",
+                        "padding": "10px"
+
+                      },
+                      "children": [
+                        {
+                          "tag": "listview",
+                          "keyField": "index",
+                          "itemData": "${not_passed_list}",
+                          "itemAttr": {
+                            "tag": "drag",
+                            "index": "${row.index}",
+                            "draggableId": "${row.username}",
+                            "style": {
+
+                              "width": 160,
+                              "height": 80,
+                              "margin": 6,
+                              "padding": 10
+                            },
+                            "className": "not-passed",
+                            "children": [
+                              {
+                                "tag": "div",
+                                "children": [
+                                  {
+                                    "tag": "image",
+                                    "preview": false,
+                                    "src": "/data/img/avatar.svg"
+                                  },
+                                  {
+                                    "tag": "div",
+                                    "style": {
+                                      "fontSize": "16px",
+                                      "marginBottom": "8px",
+                                      "display": "inline-block",
+                                      "marginLeft": "10px",
+                                      "fontWeight": 600
+                                    },
+                                    "children": "${row.username+' '+row.nick}"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "div",
+                                "children": "${row.role_names.split(',').length>1?row.role_names.split(',')[1]:''}"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "padding": "10px",
+                "height": "100%"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "flex-direction": "column"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "children": "合格",
+                      "style": {
+                        "fontSize": 22,
+                        "fontWeight": "bold"
+                      }
+                    },
+                    {
+                      "tag": "drop",
+                      "droppableId": "passed",
+                      "style": {
+                        "flex": 1,
+                        "overflow": "auto",
+                        "border": "1px dashed gray",
+                        "padding": "10px"
+                      },
+                      "children": [
+                        {
+                          "tag": "listview",
+                          "keyField": "index",
+                          "itemData": "${passed_list}",
+                          "itemAttr": {
+                            "tag": "drag",
+                            "index": "${row.index}",
+                            "draggableId": "${row.username}",
+                            "style": {
+
+                              "width": 160,
+                              "height": 80,
+                              "margin": 6,
+                              "padding": 10
+                            },
+                            "className": "passed",
+                            "children": [
+                              {
+                                "tag": "div",
+                                "children": [
+                                  {
+                                    "tag": "image",
+                                    "preview": false,
+                                    "src": "/data/img/avatar.svg"
+                                  },
+                                  {
+                                    "tag": "div",
+                                    "style": {
+                                      "fontSize": "16px",
+                                      "marginBottom": "8px",
+                                      "display": "inline-block",
+                                      "marginLeft": "10px",
+                                      "fontWeight": 600
+                                    },
+                                    "children": "${row.username+' '+row.nick}"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "div",
+                                "children": "${row.role_names.split(',').length>1?row.role_names.split(',')[1]:''}"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "padding": "10px",
+                "height": "100%"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "flex-direction": "column"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "children": "良好",
+                      "style": {
+                        "fontSize": 22,
+                        "fontWeight": "bold"
+                      }
+                    },
+                    {
+                      "tag": "drop",
+                      "droppableId": "good",
+                      "style": {
+                        "flex": 1,
+                        "overflow": "auto",
+                        "border": "1px dashed gray",
+                        "padding": "10px"
+
+                      },
+                      "children": [
+                        {
+                          "tag": "listview",
+                          "keyField": "index",
+                          "itemData": "${good_list}",
+                          "itemAttr": {
+                            "tag": "drag",
+                            "index": "${row.index}",
+                            "draggableId": "${row.username}",
+                            "style": {
+
+                              "width": 160,
+                              "height": 80,
+                              "margin": 6,
+                              "padding": 10
+                            },
+                            "className": "good",
+                            "children": [
+                              {
+                                "tag": "div",
+                                "children": [
+                                  {
+                                    "tag": "image",
+                                    "preview": false,
+                                    "src": "/data/img/avatar.svg"
+                                  },
+                                  {
+                                    "tag": "div",
+                                    "style": {
+                                      "fontSize": "16px",
+                                      "marginBottom": "8px",
+                                      "display": "inline-block",
+                                      "marginLeft": "10px",
+                                      "fontWeight": 600
+                                    },
+                                    "children": "${row.username+' '+row.nick}"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "div",
+                                "children": "${row.role_names.split(',').length>1?row.role_names.split(',')[1]:''}"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "padding": "10px",
+                "height": "100%"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "flex-direction": "column"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": 22,
+                        "fontWeight": "bold"
+                      },
+                      "children": "优秀"
+                    },
+                    {
+                      "tag": "drop",
+                      "droppableId": "excellent",
+                      "style": {
+                        "flex": 1,
+                        "overflow": "auto",
+                        "border": "1px dashed gray",
+                        "padding": "10px"
+                      },
+                      "children": [
+                        {
+                          "tag": "listview",
+                          "keyField": "index",
+                          "itemData": "${excellent_list}",
+                          "itemAttr": {
+                            "tag": "drag",
+                            "index": "${row.index}",
+                            "draggableId": "${row.username}",
+                            "style": {
+
+                              "width": 160,
+                              "height": 80,
+                              "margin": 6,
+                              "padding": 10
+                            },
+                            "className": "excellent",
+                            "children": [
+                              {
+                                "tag": "div",
+                                "children": [
+                                  {
+                                    "tag": "image",
+                                    "preview": false,
+                                    "src": "/data/img/avatar.svg"
+                                  },
+                                  {
+                                    "tag": "div",
+                                    "style": {
+                                      "fontSize": "16px",
+                                      "marginBottom": "8px",
+                                      "display": "inline-block",
+                                      "marginLeft": "10px",
+                                      "fontWeight": 600
+                                    },
+                                    "children": "${row.username+' '+row.nick}"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "div",
+                                "children": "${row.role_names.split(',').length>1?row.role_names.split(',')[1]:''}"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

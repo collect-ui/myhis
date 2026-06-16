@@ -1,0 +1,165 @@
+service:
+  - key: feedback_update
+    http: true
+    module: model_update
+    params:
+      feedback_id:
+        check:
+          template: "{{must .feedback_id}}"
+          err_msg: 反馈不能为空
+    table: feedback
+    filter:
+      feedback_id: "[feedback_id]"
+  - key: feedback_submit
+    http: true
+    module: model_save
+    must_login: false
+    table: feedback
+    params:
+      status:
+        default: "start"
+      feedback_id:
+        template: "{{uuid}}"
+      contact:
+        check:
+          template: "{{must .contact}}"
+          err_msg: "联系方式不能为空"
+      type:
+        check:
+          template: "{{must .type}}"
+          err_msg: "反馈类型不能为空"
+      title:
+        check:
+          template: "{{must .title}}"
+          err_msg: "标题不能为空"
+      content:
+        check:
+          template: "{{must .content}}"
+          err_msg: "内容不能为空"
+      service:
+        default: "system.feedback_submit"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+    handler_params:
+      - key: service2field
+        enable: "{{gt (len .attachment) 0}}"
+        service:
+          service: system.feedback_attachment_save
+          feedback_id: "[feedback_id]"
+          attachment: "[attachment]"
+
+
+  - key: feedback_attachment_query
+    http: true
+    module: sql
+
+    data_file: feedback_attachment_query.sql
+  - key: feedback_attachment_save
+    http: false
+    module: bulk_create
+    table: feedback_attachment
+    params:
+      attachment:
+        check:
+          template: "{{must .attachment}}"
+          err_msg: 附件不能为空
+      feedback_id:
+        check:
+          template: "{{must .feedback_id}}"
+          err_msg: 反馈不能为空
+    handler_params:
+      - key: update_array
+        enable: "{{must .attachment}}"
+        foreach: attachment
+        item: item
+        fields:
+          - field: feedback_id
+            template: "[feedback_id]"
+          - field: attachment_id
+            template: "{{uuid}}"
+    model_field: attachment
+  - key: feedback_detail
+    http: true
+    module: empty
+    params:
+      feedback_id:
+        check:
+          template: "{{must .feedback_id}}"
+          err_msg: 反馈不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.feedback_query
+          feedback_id: "[feedback_id]"
+        save_field: data_list
+      - key: service2field
+        service:
+          service: system.feedback_attachment_query
+          feedback_id: "[feedback_id]"
+        save_field: attachment
+      - key: combine_array
+        enable: "{{gt (len .attachment) 0}}"
+        foreach: "[data_list]"
+        field: "[feedback_id]"
+        right: "[attachment]"
+        right_field: "[feedback_id]"
+        children: "attachment"
+      - key: param2result
+        field: data_list
+      - key: arr2obj
+  - key: feedback_query
+    http: true
+    module: sql
+    table: feedback
+    params:
+      search:
+        template: "{{ if .search }}%{{.search}}%{{ end }}"
+      page:
+        type: int
+        default: 1
+      size:
+        default: 20
+        type: int
+      start:
+        template: " ({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+      to_obj:
+        default: false
+    data_file: query.sql
+    count_file: count.sql
+    pagination: pagination
+    result_handler:
+      - key: arr2obj
+        enable: "[to_obj]"
+  - key: feedback_attachment_delete
+    http: true
+    module: model_delete
+    table: feedback_attachment
+    params:
+      feedback_id_list:
+        check:
+          template: "{{must .feedback_id_list}}"
+          err_msg: "请选择要删除的反馈记录"
+    filter:
+      feedback_id__in: "[feedback_id_list]"
+  - key: feedback_delete
+    http: true
+    module: model_delete
+    table: feedback
+    params:
+      feedback_id_list:
+        check:
+          template: "{{must .feedback_id_list}}"
+          err_msg: "请选择要删除的反馈记录"
+    filter:
+      feedback_id__in: "[feedback_id_list]"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.feedback_attachment_delete
+          feedback_id_list: "[feedback_id_list]"

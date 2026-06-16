@@ -1,0 +1,2 @@
+unset https_proxy http_proxy HTTPS_PROXY HTTP_PROXY ALL_PROXY all_proxy
+opencode

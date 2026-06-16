@@ -1,0 +1,1713 @@
+{
+  "tag": "layout-fit",
+  "storeName": "pixOutpRegMaster",
+  "initStore": {
+    "searchForm": {
+      "area_code": "",
+      "doctor_code": "",
+      "is_enable": "",
+      "master_status": "",
+      "page": 1,
+      "size": 20
+    },
+    "dataList": [],
+    "count": 0,
+    "selection": [],
+    "dialogVisible": false,
+    "op": "add",
+    "opForm": {},
+    "opFormChangedFields": [],
+    "opFormAreaCode": "",
+    "opFormAreaName": "",
+    "opFormDeptCode": "",
+    "opFormSpecialClinicCode": "",
+    "opFormRegFeeId": "",
+    "opFormDoctorCode": "",
+    "opFormOutpDate": "",
+    "opFormWeekText": "",
+             "regFeeSelected": [],
+             "specialClinicSelected": [],
+             "doctorSelected": [],
+             "durationCodes": "",
+    "areaOptions": [],
+    "regFeeOptions": [],
+    "deptOptions": [],
+    "specialClinicOptions": [],
+    "doctorOptions": [],
+    "outpTypeOptions": [],
+    "durationCodes": "",
+    "durationOptions": [
+      {
+        "label": "上午",
+        "value": "1"
+      },
+      {
+        "label": "中午",
+        "value": "2"
+      },
+      {
+        "label": "下午",
+        "value": "3"
+      },
+      {
+        "label": "晚上",
+        "value": "4"
+      },
+      {
+        "label": "凌晨",
+        "value": "5"
+      },
+      {
+        "label": "全天",
+        "value": "6"
+      }
+    ]
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "loadDataList",
+      "api": "post:/template_data/data?service=him.pix_outp_reg_master_query",
+      "appendFields": "${searchForm}",
+      "adapt": {
+        "dataList": "${data}",
+        "count": "${count}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "loadFormOptions",
+      "api": "post:/template_data/data?service=him.pix_outp_reg_master_area_options",
+      "adapt": {
+        "areaOptions": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "loadFormOptions",
+      "api": "post:/template_data/data?service=him.pix_outp_reg_master_reg_fee_options",
+      "adapt": {
+        "regFeeOptions": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "loadFormOptions",
+      "api": "post:/template_data/data?service=him.pix_outp_reg_master_dept_options",
+      "adapt": {
+        "deptOptions": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "loadFormOptions",
+      "api": "post:/template_data/data?service=him.pix_outp_reg_master_special_clinic_options",
+      "adapt": {
+        "specialClinicOptions": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "loadFormOptions",
+      "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+      "adapt": {
+        "doctorOptions": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "loadFormOptions",
+      "api": "post:/template_data/data?service=him.pix_outp_reg_master_outp_type_options",
+      "adapt": {
+        "outpTypeOptions": "${data}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "table",
+      "selection": "${selection}",
+      "rowSelection": "multiple",
+      "keyField": "master_id",
+      "defaultColDef": {
+        "resizable": true
+      },
+      "columnDefs": [
+        {
+          "headerName": "#",
+          "width": 60,
+          "valueGetter": "node.rowIndex + 1",
+          "sortable": false,
+          "pinned": "left"
+        },
+        {
+          "checkboxSelection": true,
+          "headerCheckboxSelection": true,
+          "headerName": "号源ID",
+          "width": 100,
+          "suppressSizeToFit": true,
+          "field": "master_id"
+        },
+        {
+          "headerName": "门诊日期",
+          "width": 120,
+          "field": "outp_date",
+          "valueFormatter": "${String(value||'').slice(0,10)}"
+        },
+        {
+          "headerName": "院区",
+          "width": 100,
+          "field": "area_code"
+        },
+        {
+          "headerName": "科室编码",
+          "width": 120,
+          "field": "reside_dept_code"
+        },
+        {
+          "headerName": "医生编码",
+          "width": 120,
+          "field": "doctor_code"
+        },
+        {
+          "headerName": "挂号类别",
+          "width": 100,
+          "field": "outp_type_code"
+        },
+        {
+          "headerName": "限号数",
+          "width": 80,
+          "field": "registration_limits"
+        },
+        {
+          "headerName": "预约限号",
+          "width": 80,
+          "field": "appointment_limits"
+        },
+        {
+          "headerName": "当前可用",
+          "width": 80,
+          "field": "current_limits"
+        },
+        {
+          "headerName": "别名",
+          "width": 120,
+          "field": "alias_name",
+          "tooltipField": "alias_name"
+        },
+        {
+          "headerName": "号源状态",
+          "width": 100,
+          "field": "master_status"
+        },
+        {
+          "headerName": "启用",
+          "width": 70,
+          "field": "is_enable"
+        },
+        {
+          "headerName": "排序号",
+          "width": 70,
+          "field": "sort_no"
+        },
+        {
+          "headerName": "备注",
+          "width": 160,
+          "field": "descn",
+          "tooltipField": "descn"
+        },
+        {
+          "headerName": "操作",
+          "field": "op",
+          "width": 170,
+          "pinned": "right",
+          "sortable": false,
+          "cellRender": [
+            {
+              "tag": "button",
+              "type": "primary",
+              "size": "small",
+              "children": "编辑",
+              "action": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "dialogVisible": true,
+                    "op": "edit",
+                    "opFormAreaCode": "${row.area_code||''}",
+                    "opFormAreaName": "${(areaOptions.find(item=>item.value===row.area_code)||{}).area_name||row.area_code||''}",
+                    "opFormDeptCode": "${row.reside_dept_code||''}",
+                    "opFormSpecialClinicCode": "${row.special_clinic_code||''}",
+                    "opFormRegFeeId": "${row.reg_fee_id||''}",
+                    "opFormDoctorCode": "${row.doctor_code||''}",
+                    "opFormOutpDate": "${row.outp_date||''}",
+                    "opFormWeekText": "${(()=>{const v=row.outp_date;if(!v)return '';const p=String(v).split('-').map(Number);const d=p.length===3?new Date(p[0],p[1]-1,p[2]):new Date(v);return Number.isNaN(d.getTime())?'':['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][d.getDay()]})()}",
+                    "opFormChangedFields": []
+                  }
+                },
+                {
+                  "tag": "reset-form",
+                  "formName": "opForm"
+                },
+                {
+                  "tag": "update-form",
+                  "formName": "opForm",
+                  "value": "${row}"
+                }
+              ]
+            },
+            {
+              "tag": "button",
+              "danger": true,
+              "size": "small",
+              "children": "删除",
+              "confirm": {
+                "title": "确认删除",
+                "description": "${'确认删除号源【'+row.master_id+'】吗？'}"
+              },
+              "action": [
+                {
+                  "tag": "ajax",
+                  "api": "post:/template_data/data?service=him.pix_outp_reg_master_delete",
+                  "data": {
+                    "master_id_list": "${[row.master_id]}"
+                  },
+                  "showResultMsg": true
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "loadDataList"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rowData": "${dataList}"
+    },
+    {
+      "tag": "dialog",
+      "title": "${op==='add'?'新增临时排班':'编辑号源'}",
+      "open": "${dialogVisible}",
+      "width": 1360,
+      "action": [
+        {
+          "tag": "submit-form",
+          "description": "提交表单",
+          "formName": "opForm",
+          "saveField": "opForm"
+        },
+        {
+          "tag": "check",
+          "enable": "${op==='add'}",
+          "check": "${opForm.outp_duration_code && Number(opForm.registration_limits)>0}",
+          "title": "请选择班次并填写大于0的限号数"
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op==='add'}",
+          "description": "新增",
+          "api": "post:/template_data/data?service=him.pix_outp_reg_master_save",
+          "appendFormFields": "opForm",
+          "data": {
+            "outp_duration_code": "${opForm.outp_duration_code||''}",
+            "registration_limits": "${Number(opForm.registration_limits||0)}",
+            "appointment_limits": "${Number(opForm.appointment_limits||0)}",
+            "transfer_no": "${Number(opForm.transfer_no||0)}",
+            "internet_limits": "${String(opForm.internet_limits||0)}",
+            "atime_flag": "${String(opForm.atime_flag||'0')}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op==='edit'}",
+          "description": "修改",
+          "api": "post:/template_data/data?service=him.pix_outp_reg_master_update",
+          "appendFormFields": "opForm"
+        },
+        {
+          "tag": "update-store",
+          "description": "关闭对话框",
+          "value": {
+            "dialogVisible": false
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "loadDataList",
+          "description": "刷新列表"
+        }
+      ],
+      "children": [
+        {
+          "tag": "form",
+          "name": "opForm",
+          "initialValues": "${opForm}",
+          "labelCol": {
+            "span": 6
+          },
+          "wrapperCol": {
+            "span": 18
+          },
+          "changeFields": "${opFormChangedFields}",
+          "changeAction": [
+            {
+              "tag": "update-form",
+              "enable": true,
+              "formName": "opForm",
+              "value": {
+                "appointment_limits": "${(()=>{const reg=Number(registration_limits||0);const app=Number(appointment_limits||0);const touched=Array.isArray(opFormChangedFields)&&opFormChangedFields.some(f=>f&&f.field==='appointment_limits');return (!touched&&reg>0)?reg:app;})()}",
+                "atime_rows": "${(()=>{const flag=String(atime_flag||'0');const duration=String(outp_duration_code||'');if(flag!=='1'||!duration)return [];const atimeTouched=Array.isArray(opFormChangedFields)&&opFormChangedFields.some(f=>f&&f.field==='atime_rows');if(atimeTouched&&Array.isArray(atime_rows)&&atime_rows.length)return atime_rows;const configs=['2-9','10-12','13-19','20-33','34-1','34-33'];const point=configs[Number(duration)-1]||'';const parts=point.split('-').map(v=>Number(v));if(parts.length<2||!parts[0]||!parts[1])return [];const codes=[];const add=(a,b)=>{for(let i=a;i<=b;i+=1)codes.push(i);};if(parts[0]<=parts[1]){add(parts[0],parts[1]);}else{add(parts[0],48);add(1,parts[1]);}const pad=n=>String(n).padStart(2,'0');const fmt=m=>pad(Math.floor((m/60)%24))+':'+pad(m%60);const time=q=>{const start=q<=33?450+(q-1)*30:(q-34)*30;return [fmt(start),fmt(start+30)];};const dist=(total,len,idx)=>{const n=Math.max(0,Number(total||0));return len?Math.floor(n/len)+(idx<n%len?1:0):0;};const touched=Array.isArray(opFormChangedFields)&&opFormChangedFields.some(f=>f&&f.field==='appointment_limits');const reg=Number(registration_limits||0);const app=(!touched&&reg>0&&!Number(appointment_limits||0))?reg:Number(appointment_limits||0);const reserve=Number(transfer_no||0);const internet=Number(internet_limits||0);return codes.map((q,idx)=>{const t=time(q);const timeLimits=dist(reg,codes.length,idx);const appointmentLimits=dist(app,codes.length,idx);const reserveLimits=dist(reserve,codes.length,idx);const internetLimits=dist(internet,codes.length,idx);return {__rowId:'atime_'+duration+'_'+q,time_quantum:String(q),sort_no:idx+1,item_name:t[0]+'-'+t[1],stage_begin_time:t[0],stage_end_time:t[1],time_limits:timeLimits,appointment_limits:appointmentLimits,reserve_limits:reserveLimits,internet_limits:internetLimits,current_time_limits:timeLimits,current_appointment_limits:appointmentLimits,current_reserve_limits:reserveLimits,current_internet_limits:internetLimits,time_status:'0'};});})()}"
+              }
+            }
+          ],
+          "children": [
+            {
+              "tag": "form-item",
+              "name": "master_id",
+              "hidden": true,
+              "children": [
+                {
+                  "tag": "input"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "outp_type_code",
+              "hidden": true,
+              "children": [
+                {
+                  "tag": "input"
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "gutter": 12,
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "area_code",
+                      "label": "院区",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择院区"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "select",
+                          "showSearch": true,
+                          "allowClear": false,
+                          "disabled": "${op==='add' && areaOptions.length===1}",
+                          "optionFilterProp": "label",
+                          "placeholder": "请选择院区",
+                          "options": "${areaOptions}",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "opFormAreaCode": "${value||''}",
+                                "opFormAreaName": "${value ? ((areaOptions.find(item=>item.value===value)||{}).area_name||value) : ''}",
+                                "opFormRegFeeId": "",
+                                "opFormDeptCode": "",
+                                "opFormSpecialClinicCode": "",
+                                "opFormDoctorCode": "",
+                                "regFeeSelected": [],
+                                "specialClinicSelected": [],
+                                "doctorSelected": []
+                              }
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "opForm",
+                              "value": {
+                                "reg_fee_id": "",
+                                "outp_type_code": "",
+                                "outp_type_code_str": "",
+                                "reside_dept_code": "",
+                                "special_clinic_code": "",
+                                "doctor_code": "",
+                                "average_time": ""
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_reg_fee_options",
+                              "data": {
+                                "area_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "regFeeOptions": "${data}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_dept_options",
+                              "data": {
+                                "area_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "deptOptions": "${data}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_special_clinic_options",
+                              "data": {
+                                "area_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "specialClinicOptions": "${data}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+                              "data": {
+                                "area_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "doctorOptions": "${data}"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "reg_fee_id",
+                      "label": "挂号费别",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择挂号费别"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "select",
+                          "showSearch": true,
+                          "allowClear": true,
+                          "optionFilterProp": "label",
+                          "placeholder": "请选择挂号费别",
+                          "options": "${regFeeOptions}",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "opFormRegFeeId": "${value||''}"
+                              }
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "opForm",
+                              "value": {
+                                "outp_type_code": "",
+                                "outp_type_code_str": "",
+                                "average_time": ""
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_reg_fee_options",
+                              "data": {
+                                "area_code": "${opFormAreaCode||''}",
+                                "reg_fee_id": "${value||''}"
+                              },
+                              "adapt": {
+                                "regFeeSelected": "${data}"
+                              },
+                              "onSuccess": [
+                                {
+                                  "tag": "update-form",
+                                  "formName": "opForm",
+                                  "value": {
+                                    "outp_type_code": "${value ? (regFeeSelected && regFeeSelected[0] ? regFeeSelected[0].outp_type_code||'' : '') : ''}",
+                                    "outp_type_code_str": "${value ? (regFeeSelected && regFeeSelected[0] ? regFeeSelected[0].outp_type_code_str||regFeeSelected[0].outp_type_code||'' : '') : ''}"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "outp_type_code_str",
+                      "label": "号别",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "disabled": true,
+                          "placeholder": "选择费别后带出"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "reside_dept_code",
+                      "label": "门诊科室",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择门诊科室"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "select",
+                          "showSearch": true,
+                          "allowClear": true,
+                          "optionFilterProp": "label",
+                          "placeholder": "请选择门诊科室",
+                          "options": "${deptOptions}",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "opFormDeptCode": "${value||''}",
+                                "opFormSpecialClinicCode": "",
+                                "opFormDoctorCode": "",
+                                "specialClinicSelected": [],
+                                "doctorSelected": []
+                              }
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "opForm",
+                              "value": {
+                                "special_clinic_code": "",
+                                "doctor_code": "",
+                                "average_time": ""
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_special_clinic_options",
+                              "data": {
+                                "area_code": "${opFormAreaCode||''}",
+                                "reside_dept_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "specialClinicOptions": "${data}"
+                              },
+                              "onSuccess": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "opFormSpecialClinicCode": "${specialClinicOptions && specialClinicOptions.length === 1 ? specialClinicOptions[0].value : ''}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "opForm",
+                                  "value": {
+                                    "special_clinic_code": "${specialClinicOptions && specialClinicOptions.length === 1 ? specialClinicOptions[0].value||'' : ''}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+                              "data": {
+                                "area_code": "${opFormAreaCode||''}",
+                                "reside_dept_code": "${value||''}",
+                                "special_clinic_code": "${opFormSpecialClinicCode||''}"
+                              },
+                              "adapt": {
+                                "doctorOptions": "${data}"
+                              },
+                              "onSuccess": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "opFormDoctorCode": "${doctorOptions && doctorOptions.length === 1 ? doctorOptions[0].value : ''}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "opForm",
+                                  "value": {
+                                    "doctor_code": "${doctorOptions && doctorOptions.length === 1 ? doctorOptions[0].value||'' : ''}"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "enable": "${doctorOptions && doctorOptions.length === 1}",
+                                  "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+                                  "data": {
+                                    "area_code": "${opFormAreaCode||''}",
+                                    "reside_dept_code": "${value||''}",
+                                    "special_clinic_code": "${opFormSpecialClinicCode||''}",
+                                    "doctor_code": "${doctorOptions[0].value||''}"
+                                  },
+                                  "adapt": {
+                                    "doctorSelected": "${data}"
+                                  },
+                                  "onSuccess": [
+                                    {
+                                      "tag": "update-form",
+                                      "formName": "opForm",
+                                      "value": {
+                                        "average_time": "${doctorSelected && doctorSelected[0] ? doctorSelected[0].average_time||'' : ''}"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "special_clinic_code",
+                      "label": "门诊专科",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择门诊专科"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "select",
+                          "showSearch": true,
+                          "allowClear": true,
+                          "optionFilterProp": "label",
+                          "placeholder": "请选择门诊专科",
+                          "options": "${[...specialClinicOptions]}",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "opFormSpecialClinicCode": "${value||''}",
+                                "opFormDoctorCode": "",
+                                "specialClinicSelected": [],
+                                "doctorSelected": []
+                              }
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "opForm",
+                              "value": {
+                                "doctor_code": "",
+                                "average_time": ""
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_special_clinic_options",
+                              "data": {
+                                "area_code": "${opFormAreaCode||''}",
+                                "special_clinic_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "specialClinicSelected": "${data}"
+                              },
+                              "onSuccess": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "durationCodes": "${specialClinicSelected && specialClinicSelected[0] ? specialClinicSelected[0].outp_duration_codes||'' : ''}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "opFormDeptCode": "${value && specialClinicSelected && specialClinicSelected[0] && Array.isArray(deptOptions) && deptOptions.some(d => d.value === specialClinicSelected[0].reside_dept_code) ? specialClinicSelected[0].reside_dept_code : opFormDeptCode||''}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "opForm",
+                                  "value": {
+                                    "reside_dept_code": "${value && specialClinicSelected && specialClinicSelected[0] && Array.isArray(deptOptions) && deptOptions.some(d => d.value === specialClinicSelected[0].reside_dept_code) ? specialClinicSelected[0].reside_dept_code : opFormDeptCode||''}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+                              "data": {
+                                "area_code": "${opFormAreaCode||''}",
+                                "reside_dept_code": "${opFormDeptCode||''}",
+                                "special_clinic_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "doctorOptions": "${data}"
+                              },
+                              "onSuccess": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "opFormDoctorCode": "${doctorOptions && doctorOptions.length === 1 ? doctorOptions[0].value : ''}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "opForm",
+                                  "value": {
+                                    "doctor_code": "${doctorOptions && doctorOptions.length === 1 ? doctorOptions[0].value||'' : ''}"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "enable": "${doctorOptions && doctorOptions.length === 1}",
+                                  "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+                                  "data": {
+                                    "area_code": "${opFormAreaCode||''}",
+                                    "reside_dept_code": "${opFormDeptCode||''}",
+                                    "special_clinic_code": "${value||''}",
+                                    "doctor_code": "${doctorOptions[0].value||''}"
+                                  },
+                                  "adapt": {
+                                    "doctorSelected": "${data}"
+                                  },
+                                  "onSuccess": [
+                                    {
+                                      "tag": "update-form",
+                                      "formName": "opForm",
+                                      "value": {
+                                        "average_time": "${doctorSelected && doctorSelected[0] ? doctorSelected[0].average_time||'' : ''}"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "doctor_code",
+                      "label": "医生姓名",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "showSearch": true,
+                          "allowClear": true,
+                          "optionFilterProp": "label",
+                          "placeholder": "请输入搜索",
+                          "options": "${[...doctorOptions]}",
+                          "searchAction": [
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+                              "data": {
+                                "area_code": "${opFormAreaCode||''}",
+                                "reside_dept_code": "${opFormDeptCode||''}",
+                                "special_clinic_code": "${opFormSpecialClinicCode||''}",
+                                "keyword": "${value ? '%'+value+'%' : ''}"
+                              },
+                              "adapt": {
+                                "doctorOptions": "${data}"
+                              }
+                            }
+                          ],
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "opFormDoctorCode": "${value||''}",
+                                "doctorSelected": []
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+                              "data": {
+                                "area_code": "${opFormAreaCode||''}",
+                                "reside_dept_code": "${opFormDeptCode||''}",
+                                "special_clinic_code": "${opFormSpecialClinicCode||''}",
+                                "doctor_code": "${value||''}"
+                              },
+                              "adapt": {
+                                "doctorSelected": "${data}"
+                              },
+                              "onSuccess": [
+                                {
+                                  "tag": "update-form",
+                                  "formName": "opForm",
+                                  "value": {
+                                    "average_time": "${value ? (doctorSelected && doctorSelected[0] ? doctorSelected[0].average_time||'' : '') : ''}"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "registration_type",
+                      "label": "限号设置",
+                      "children": [
+                        {
+                          "tag": "radio",
+                          "group": true,
+                          "options": [
+                            {
+                              "label": "按时段号源生成",
+                              "value": "0"
+                            },
+                            {
+                              "label": "按平均看诊时间生成",
+                              "value": "1"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "outp_date",
+                      "label": "排班日期",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择排班日期"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "date",
+                          "picker": "date",
+                          "valueFormat": "YYYY-MM-DD",
+                          "placeholder": "请选择年月日",
+                          "style": {
+                            "width": "100%"
+                          },
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "opFormOutpDate": "${value||''}",
+                                "opFormWeekText": "${(()=>{if(!value)return '';const p=String(value).split('-').map(Number);const d=p.length===3?new Date(p[0],p[1]-1,p[2]):new Date(value);return Number.isNaN(d.getTime())?'':['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][d.getDay()]})()}"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "label": "星期选择",
+                      "children": [
+                        {
+                          "tag": "div",
+                          "style": {
+                            "minHeight": "32px",
+                            "lineHeight": "30px",
+                            "padding": "0 11px",
+                            "border": "1px solid #d9d9d9",
+                            "borderRadius": "6px",
+                            "background": "#f5f5f5",
+                            "color": "rgba(0,0,0,0.88)"
+                          },
+                          "children": "${opFormWeekText}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "average_time",
+                      "label": "平均时长",
+                      "itemVisible": "${registration_type === '1'}",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "min": 0,
+                          "addonAfter": "分钟",
+                          "placeholder": "请输入"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 24,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "margin": "8px 0 12px",
+                        "padding": "8px 12px",
+                        "borderLeft": "4px solid #1677ff",
+                        "background": "#f5f7fb",
+                        "fontWeight": 600
+                      },
+                      "children": "时段号源（注意全天时段和其他时段是否有冲突）"
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "outp_duration_code",
+      "label": "时段",
+                          "itemVisible": "${op === 'add' || op === 'edit'}",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择时段"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "select",
+                              "showSearch": true,
+                              "allowClear": true,
+                              "optionFilterProp": "label",
+                              "placeholder": "请选择时段",
+                              "options": "${(()=>{const codes=durationCodes;if(!codes||codes==='')return durationOptions;const arr=String(codes).split(',');return durationOptions.filter(d=>arr.includes(String(d.value)));})()}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "registration_limits",
+                      "label": "限号数",
+                      "itemVisible": "${op === 'add' || op === 'edit'}",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入限号数"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "min": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "appointment_limits",
+                      "label": "预约数",
+                      "itemVisible": "${op === 'add' || op === 'edit'}",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "min": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "transfer_no",
+                      "label": "预留数",
+                      "itemVisible": "${op === 'add' || op === 'edit'}",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "min": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "internet_limits",
+                      "label": "互联网",
+                      "itemVisible": "${op === 'add' || op === 'edit'}",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "min": 0
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 24,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "margin": "8px 0 12px",
+                        "padding": "8px 12px",
+                        "borderLeft": "4px solid #52c41a",
+                        "background": "#f6ffed",
+                        "fontWeight": 600
+                      },
+                      "children": "分时号源"
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "current_limits",
+                      "label": "当前可用",
+                      "itemVisible": false,
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "min": 0,
+                          "placeholder": "默认同限号数"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "appointment_current_limits",
+                      "label": "预约可用",
+                      "itemVisible": false,
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "min": 0,
+                          "placeholder": "默认同预约数"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "atime_flag",
+                      "label": "分时标志",
+                      "itemVisible": "${op === 'add' || op === 'edit'}",
+                      "itemDisabled": "${!outp_duration_code}",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "options": [
+                            {
+                              "label": "启用",
+                              "value": "1"
+                            },
+                            {
+                              "label": "未启用",
+                              "value": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 24,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "atime_rows",
+                      "label": "分时详情",
+                      "labelCol": {
+                        "span": 2
+                      },
+                      "wrapperCol": {
+                        "span": 22
+                      },
+                      "itemVisible": "${atime_flag === '1'}",
+                      "children": [
+                        {
+                          "tag": "input-table",
+                          "keyField": "__rowId",
+                          "rowSelection": "multiple",
+                          "rowDragManaged": true,
+                          "style": {
+                            "height": "220px",
+                            "width": "100%"
+                          },
+                          "defaultColDef": {
+                            "resizable": true
+                          },
+                          "columnDefs": [
+                            {
+                              "headerName": "分时时段",
+                              "field": "item_name",
+                              "width": 160,
+                              "cellEditor": "agTextCellEditor"
+                            },
+                            {
+                              "headerName": "开始时间",
+                              "field": "stage_begin_time",
+                              "width": 120,
+                              "cellEditor": "agTextCellEditor"
+                            },
+                            {
+                              "headerName": "结束时间",
+                              "field": "stage_end_time",
+                              "width": 120,
+                              "cellEditor": "agTextCellEditor"
+                            },
+                            {
+                              "headerName": "限号数",
+                              "field": "time_limits",
+                              "width": 110,
+                              "cellEditor": "agNumberCellEditor"
+                            },
+                            {
+                              "headerName": "预约数",
+                              "field": "appointment_limits",
+                              "width": 110,
+                              "cellEditor": "agNumberCellEditor"
+                            },
+                            {
+                              "headerName": "预留数",
+                              "field": "reserve_limits",
+                              "width": 110,
+                              "cellEditor": "agNumberCellEditor"
+                            },
+                            {
+                              "headerName": "互联网",
+                              "field": "internet_limits",
+                              "width": 110,
+                              "cellEditor": "agNumberCellEditor"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "is_enable",
+                      "label": "启用标志",
+                      "itemVisible": false,
+                      "children": [
+                        {
+                          "tag": "select",
+                          "options": [
+                            {
+                              "label": "启用",
+                              "value": "1"
+                            },
+                            {
+                              "label": "停用",
+                              "value": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "master_status",
+                      "label": "号源状态",
+                      "itemVisible": false,
+                      "children": [
+                        {
+                          "tag": "select",
+                          "options": [
+                            {
+                              "label": "正常",
+                              "value": "0"
+                            },
+                            {
+                              "label": "暂停",
+                              "value": "1"
+                            },
+                            {
+                              "label": "停诊",
+                              "value": "2"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "sort_no",
+                      "label": "排序号",
+                      "itemVisible": false,
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "alias_name",
+                      "label": "别名",
+                      "itemVisible": false,
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "别名/简称"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 24,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "descn",
+                      "label": "备注",
+                      "itemVisible": false,
+                      "labelCol": {
+                        "span": 2
+                      },
+                      "wrapperCol": {
+                        "span": 22
+                      },
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isTextarea": true,
+                          "rows": 2,
+                          "placeholder": "备注信息"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "门诊号池管理",
+  "topRight": [
+    {
+      "tag": "button",
+      "type": "primary",
+      "children": "新增",
+      "icon": "FaPlus",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dialogVisible": true,
+            "op": "add",
+            "opFormAreaCode": "${areaOptions.length===1 ? areaOptions[0].value : ''}",
+            "opFormAreaName": "${areaOptions.length===1 ? (areaOptions[0].area_name||areaOptions[0].label||areaOptions[0].value) : ''}",
+            "opFormDeptCode": "",
+            "opFormSpecialClinicCode": "",
+            "opFormRegFeeId": "",
+            "opFormDoctorCode": "",
+            "opFormOutpDate": "${(()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);})()}",
+            "opFormWeekText": "${['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][new Date().getDay()]}",
+            "opFormChangedFields": [],
+            "regFeeSelected": [],
+            "specialClinicSelected": [],
+            "doctorSelected": [],
+            "opForm": {
+              "area_code": "${areaOptions.length===1 ? areaOptions[0].value : ''}",
+              "area_name": "${areaOptions.length===1 ? (areaOptions[0].area_name||areaOptions[0].label||areaOptions[0].value) : ''}",
+              "outp_date": "${(()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);})()}",
+              "registration_type": "0",
+              "average_time": "",
+              "outp_type_code": "",
+              "outp_type_code_str": "",
+              "outp_duration_code": "",
+              "registration_limits": 0,
+              "appointment_limits": 0,
+              "atime_flag": "0",
+              "atime_rows": [],
+              "is_enable": "1",
+              "master_status": "0",
+              "transfer_no": 0,
+              "internet_limits": 0,
+              "current_no": 0
+            }
+          }
+        },
+        {
+          "tag": "reset-form",
+          "formName": "opForm"
+        },
+        {
+          "tag": "update-form",
+          "formName": "opForm",
+          "value": "${opForm}"
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "loadFormOptions"
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "disabled": "${selection.length != 1}",
+      "children": "编辑",
+      "icon": "FaPencilAlt",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dialogVisible": true,
+            "op": "edit",
+            "opFormAreaCode": "${selection[0].area_code||''}",
+            "opFormAreaName": "${(areaOptions.find(item=>item.value===selection[0].area_code)||{}).area_name||selection[0].area_code||''}",
+            "opFormDeptCode": "${selection[0].reside_dept_code||''}",
+            "opFormSpecialClinicCode": "${selection[0].special_clinic_code||''}",
+            "opFormRegFeeId": "${selection[0].reg_fee_id||''}",
+            "opFormDoctorCode": "${selection[0].doctor_code||''}",
+            "opFormOutpDate": "${selection[0].outp_date||''}",
+            "opFormWeekText": "${(()=>{const v=selection[0].outp_date;if(!v)return '';const p=String(v).split('-').map(Number);const d=p.length===3?new Date(p[0],p[1]-1,p[2]):new Date(v);return Number.isNaN(d.getTime())?'':['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][d.getDay()]})()}"
+          }
+        },
+        {
+          "tag": "reset-form",
+          "formName": "opForm"
+        },
+        {
+          "tag": "update-form",
+          "formName": "opForm",
+          "value": "${selection[0]}"
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=him.pix_outp_reg_master_reg_fee_options",
+          "data": {
+            "area_code": "${selection[0].area_code||''}"
+          },
+          "adapt": {
+            "regFeeOptions": "${data}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=him.pix_outp_reg_master_dept_options",
+          "data": {
+            "area_code": "${selection[0].area_code||''}"
+          },
+          "adapt": {
+            "deptOptions": "${data}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=him.pix_outp_reg_master_special_clinic_options",
+          "data": {
+            "area_code": "${selection[0].area_code||''}",
+            "reside_dept_code": "${selection[0].reside_dept_code||''}"
+          },
+          "adapt": {
+            "specialClinicOptions": "${data}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=him.pix_outp_reg_master_doctor_options",
+          "data": {
+            "area_code": "${selection[0].area_code||''}",
+            "reside_dept_code": "${selection[0].reside_dept_code||''}",
+            "special_clinic_code": "${selection[0].special_clinic_code||''}"
+          },
+          "adapt": {
+            "doctorOptions": "${data}"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "disabled": "${selection.length <= 0}",
+      "danger": true,
+      "confirm": {
+        "title": "确认删除",
+        "description": "${'确认删除选中的 '+selection.length+' 条记录吗？'}"
+      },
+      "children": "删除",
+      "icon": "FaTrashAlt",
+      "action": [
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=him.pix_outp_reg_master_delete",
+          "data": {
+            "master_id_list": "${selection.map(item=>item.master_id)}"
+          },
+          "showResultMsg": true
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "loadDataList"
+        }
+      ]
+    }
+  ],
+  "searchToolBar": [
+    {
+      "tag": "form",
+      "name": "searchForm",
+      "initialValues": "${searchForm}",
+      "labelCol": {
+        "span": 5
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "action": [
+        {
+          "tag": "reload-init-action",
+          "group": "loadDataList"
+        }
+      ],
+      "submitOnChange": true,
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "area_code",
+                  "label": "院区",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "院区编码",
+                      "allowClear": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "doctor_code",
+                  "label": "医生编码",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "医生编码",
+                      "allowClear": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "is_enable",
+                  "label": "状态",
+                  "children": [
+                    {
+                      "tag": "select",
+                      "allowClear": true,
+                      "options": [
+                        {
+                          "label": "启用",
+                          "value": "1"
+                        },
+                        {
+                          "label": "停用",
+                          "value": "0"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "master_status",
+                  "label": "号源状态",
+                  "children": [
+                    {
+                      "tag": "select",
+                      "allowClear": true,
+                      "options": [
+                        {
+                          "label": "正常",
+                          "value": "0"
+                        },
+                        {
+                          "label": "暂停",
+                          "value": "1"
+                        },
+                        {
+                          "label": "停诊",
+                          "value": "2"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "bottomToolBar": [
+    {
+      "tag": "pagination",
+      "showSizeChanger": true,
+      "pageSize": "${searchForm.size}",
+      "current": "${searchForm.page}",
+      "total": "${count}",
+      "showTotal": true,
+      "action": [
+        {
+          "tag": "reload-init-action",
+          "group": "loadDataList"
+        }
+      ]
+    }
+  ]
+}

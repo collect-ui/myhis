@@ -1,0 +1,791 @@
+{
+  "color": [
+    "#00FF68",
+    "#0001F7",
+    "#00B8FE",
+    "#00FFFF"
+  ],
+  "tooltip": {
+    "show": false,
+    "trigger": "axis"
+  },
+  "grid": {
+    "top": 70,
+    "bottom": 70
+  },
+  "legend": {
+    "data": [
+      "粗品",
+      "成品",
+      "精品"
+    ],
+    "itemGap": 10,
+    "itemWidth": 15,
+    "itemHeight": 12,
+    "orient": "horizontal",
+    "show": true,
+    "right": "8",
+    "top": "20",
+    "icon": "roundRect",
+    "textStyle": {
+      "color": "#FFFFFF"
+    }
+  },
+  "xAxis": [
+    {
+      "name": "任务\\n小组",
+      "type": "category",
+      "axisTick": {
+        "alignWithLabel": true
+      },
+      "axisLabel": {
+        "color": "#FFFFFF",
+        "fontSize": 14,
+        "padding": [
+          30,
+          0,
+          0,
+          0
+        ]
+      },
+      "splitLine": {
+        "show": false
+      },
+      "axisLine": {
+        "show": true,
+        "lineStyle": {
+          "color": "rgba(255,255,255,0.8)"
+        }
+      },
+      "data": [
+        "宣传组",
+        "策划组",
+        "销售组",
+        "市场组"
+      ]
+    }
+  ],
+  "yAxis": {
+    "type": "value",
+    "name": "分",
+    "axisLabel": {
+      "color": "#ffffff"
+    },
+    "max": 60,
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "rgba(255,255,255,0.8)"
+      }
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "rgba(255,255,255,.4)"
+      }
+    }
+  },
+  "series": [
+    {
+      "type": "bar",
+      "stack": "r0",
+      "data": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "label": {
+        "rotate": -45,
+        "show": true,
+        "formatter": "任务1",
+        "fontSize": 10,
+        "color": "#FFFFFF",
+        "offset": [
+          15,
+          5
+        ]
+      },
+      "tooltip": {
+        "show": false
+      }
+    },
+    {
+      "data": [
+        11,
+        10,
+        9,
+        9
+      ],
+      "name": "粗品",
+      "stack": "r0",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#015BD3"
+            },
+            {
+              "offset": 1,
+              "color": "#138DFF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        20,
+        17,
+        17,
+        16
+      ],
+      "name": "成品",
+      "stack": "r0",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#0176D3"
+            },
+            {
+              "offset": 1,
+              "color": "#13B7FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        10,
+        9,
+        10,
+        8
+      ],
+      "name": "精品",
+      "stack": "r0",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#12B3F8"
+            },
+            {
+              "offset": 1,
+              "color": "#7DE8FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar",
+      "stack": "r1",
+      "data": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "label": {
+        "rotate": -45,
+        "show": true,
+        "formatter": "任务2",
+        "fontSize": 10,
+        "color": "#FFFFFF",
+        "offset": [
+          15,
+          5
+        ]
+      },
+      "tooltip": {
+        "show": false
+      }
+    },
+    {
+      "data": [
+        11,
+        9,
+        9,
+        9
+      ],
+      "name": "粗品",
+      "stack": "r1",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#015BD3"
+            },
+            {
+              "offset": 1,
+              "color": "#138DFF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        21,
+        18,
+        18,
+        17
+      ],
+      "name": "成品",
+      "stack": "r1",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#0176D3"
+            },
+            {
+              "offset": 1,
+              "color": "#13B7FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        11,
+        10,
+        11,
+        10
+      ],
+      "name": "精品",
+      "stack": "r1",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#12B3F8"
+            },
+            {
+              "offset": 1,
+              "color": "#7DE8FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar",
+      "stack": "r2",
+      "data": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "label": {
+        "rotate": -45,
+        "show": true,
+        "formatter": "任务3",
+        "fontSize": 10,
+        "color": "#FFFFFF",
+        "offset": [
+          15,
+          5
+        ]
+      },
+      "tooltip": {
+        "show": false
+      }
+    },
+    {
+      "data": [
+        12,
+        9,
+        10,
+        10
+      ],
+      "name": "粗品",
+      "stack": "r2",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#015BD3"
+            },
+            {
+              "offset": 1,
+              "color": "#138DFF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        23,
+        19,
+        21,
+        19
+      ],
+      "name": "成品",
+      "stack": "r2",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#0176D3"
+            },
+            {
+              "offset": 1,
+              "color": "#13B7FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        12,
+        11,
+        11,
+        11
+      ],
+      "name": "精品",
+      "stack": "r2",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#12B3F8"
+            },
+            {
+              "offset": 1,
+              "color": "#7DE8FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar",
+      "stack": "r3",
+      "data": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "label": {
+        "rotate": -45,
+        "show": true,
+        "formatter": "任务4",
+        "fontSize": 10,
+        "color": "#FFFFFF",
+        "offset": [
+          15,
+          5
+        ]
+      },
+      "tooltip": {
+        "show": false
+      }
+    },
+    {
+      "data": [
+        12,
+        10,
+        11,
+        11
+      ],
+      "name": "粗品",
+      "stack": "r3",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#015BD3"
+            },
+            {
+              "offset": 1,
+              "color": "#138DFF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        25,
+        20,
+        22,
+        21
+      ],
+      "name": "成品",
+      "stack": "r3",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#0176D3"
+            },
+            {
+              "offset": 1,
+              "color": "#13B7FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        12,
+        12,
+        12,
+        12
+      ],
+      "name": "精品",
+      "stack": "r3",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#12B3F8"
+            },
+            {
+              "offset": 1,
+              "color": "#7DE8FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar",
+      "stack": "r4",
+      "data": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "label": {
+        "rotate": -45,
+        "show": true,
+        "formatter": "任务5",
+        "fontSize": 10,
+        "color": "#FFFFFF",
+        "offset": [
+          15,
+          5
+        ]
+      },
+      "tooltip": {
+        "show": false
+      }
+    },
+    {
+      "data": [
+        13,
+        11,
+        12,
+        12
+      ],
+      "name": "粗品",
+      "stack": "r4",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#015BD3"
+            },
+            {
+              "offset": 1,
+              "color": "#138DFF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        27,
+        21,
+        22,
+        23
+      ],
+      "name": "成品",
+      "stack": "r4",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#0176D3"
+            },
+            {
+              "offset": 1,
+              "color": "#13B7FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        13,
+        13,
+        13,
+        13
+      ],
+      "name": "精品",
+      "stack": "r4",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#12B3F8"
+            },
+            {
+              "offset": 1,
+              "color": "#7DE8FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "bar",
+      "stack": "r5",
+      "data": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "label": {
+        "rotate": -45,
+        "show": true,
+        "formatter": "任务6",
+        "fontSize": 10,
+        "color": "#FFFFFF",
+        "offset": [
+          15,
+          5
+        ]
+      },
+      "tooltip": {
+        "show": false
+      }
+    },
+    {
+      "data": [
+        14,
+        12,
+        13,
+        13
+      ],
+      "name": "粗品",
+      "stack": "r5",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#015BD3"
+            },
+            {
+              "offset": 1,
+              "color": "#138DFF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        28,
+        22,
+        22,
+        25
+      ],
+      "name": "成品",
+      "stack": "r5",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#0176D3"
+            },
+            {
+              "offset": 1,
+              "color": "#13B7FF"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "data": [
+        13,
+        13,
+        14,
+        14
+      ],
+      "name": "精品",
+      "stack": "r5",
+      "type": "bar",
+      "barWidth": 13,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#12B3F8"
+            },
+            {
+              "offset": 1,
+              "color": "#7DE8FF"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

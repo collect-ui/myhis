@@ -1,0 +1,5 @@
+service:
+  - key: work_task_issue_type_query
+    http: true
+    module: sql
+    data_file: work_task_issue_type_query.sql

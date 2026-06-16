@@ -1,0 +1,117 @@
+{
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "openMetrics": {
+    "label": "open",
+    "drawerRect": {
+      "x": 550.40625,
+      "y": 76,
+      "w": 1169.59375,
+      "h": 866
+    },
+    "closeRect": {
+      "x": 558.40625,
+      "y": 84,
+      "w": 28,
+      "h": 24
+    },
+    "handleRect": {
+      "x": 545.40625,
+      "y": 76,
+      "w": 10,
+      "h": 866
+    },
+    "lineRect": {
+      "x": 549.40625,
+      "y": 76,
+      "w": 2,
+      "h": 866
+    },
+    "handleOpacity": 1,
+    "lineOpacity": 1,
+    "closeLeftGap": 8,
+    "closeTopGap": 8,
+    "oldInlineClosePresent": false
+  },
+  "pmModalVisible": true,
+  "pmMetrics": {
+    "label": "pm",
+    "drawerRect": {
+      "x": 550.40625,
+      "y": 76,
+      "w": 1169.59375,
+      "h": 866
+    },
+    "closeRect": {
+      "x": 558.40625,
+      "y": 84,
+      "w": 28,
+      "h": 24
+    },
+    "handleRect": {
+      "x": 545.40625,
+      "y": 76,
+      "w": 10,
+      "h": 866
+    },
+    "lineRect": {
+      "x": 549.40625,
+      "y": 76,
+      "w": 2,
+      "h": 866
+    },
+    "handleOpacity": 0,
+    "lineOpacity": 1,
+    "closeLeftGap": 8,
+    "closeTopGap": 8,
+    "oldInlineClosePresent": false
+  },
+  "csModalVisible": true,
+  "csMetrics": {
+    "label": "cs",
+    "drawerRect": {
+      "x": 550.40625,
+      "y": 76,
+      "w": 1169.59375,
+      "h": 866
+    },
+    "closeRect": {
+      "x": 558.40625,
+      "y": 84,
+      "w": 28,
+      "h": 24
+    },
+    "handleRect": {
+      "x": 545.40625,
+      "y": 76,
+      "w": 10,
+      "h": 866
+    },
+    "lineRect": {
+      "x": 549.40625,
+      "y": 76,
+      "w": 2,
+      "h": 866
+    },
+    "handleOpacity": 0,
+    "lineOpacity": 1,
+    "closeLeftGap": 8,
+    "closeTopGap": 8,
+    "oldInlineClosePresent": false
+  },
+  "closed": {
+    "drawerVisibleAfterClose": false,
+    "localWorkspaceVisible": "false"
+  },
+  "errors": {
+    "console": [],
+    "page": [],
+    "failed": []
+  },
+  "screenshots": {
+    "open": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-relpos-open-2026-05-05T13-30-20-840Z.png",
+    "pm": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-relpos-pm-2026-05-05T13-30-20-840Z.png",
+    "cs": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-relpos-cs-2026-05-05T13-30-20-840Z.png"
+  },
+  "report": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-relpos-check-2026-05-05T13-30-20-840Z.json",
+  "pass": false
+}

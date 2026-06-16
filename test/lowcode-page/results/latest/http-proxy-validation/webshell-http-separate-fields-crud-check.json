@@ -1,0 +1,185 @@
+{
+  "caseName": "crud_sep_1777944267671",
+  "pass": true,
+  "createdId": "4a5bb2f4-3939-41fa-827c-d2fa2be4af8d",
+  "createDb": {
+    "collect_doc_id": "4a5bb2f4-3939-41fa-827c-d2fa2be4af8d",
+    "title": "crud_sep_1777944267671",
+    "sub_title": "crud-create",
+    "type": "2",
+    "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+    "request_mode": "backend",
+    "request_method": "put",
+    "request_url": "/template_data/data?from=crud_create",
+    "request_headers": "{\"X-CRUD\":\"create\"}",
+    "code": "{\"biz\":\"create\"}",
+    "is_delete": "0"
+  },
+  "updateDb": {
+    "collect_doc_id": "4a5bb2f4-3939-41fa-827c-d2fa2be4af8d",
+    "title": "crud_sep_1777944267671",
+    "sub_title": "crud-update",
+    "type": "2",
+    "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+    "request_mode": "frontend",
+    "request_method": "get",
+    "request_url": "/template_data/data?from=crud_update",
+    "request_headers": "{\"X-CRUD\":\"update\"}",
+    "code": "{\"biz\":\"update\",\"n\":2}",
+    "is_delete": "0"
+  },
+  "createDetail": {
+    "count": 0,
+    "success": true,
+    "code": "0",
+    "msg": "成功",
+    "data": {
+      "demo": [],
+      "doc": {
+        "code": "{\"biz\":\"create\"}",
+        "code_desc": "crud check",
+        "code_result": "{\"ok\":true}",
+        "collect_doc_id": "4a5bb2f4-3939-41fa-827c-d2fa2be4af8d",
+        "create_time": "2026-05-05 09:24:27",
+        "create_user": "",
+        "is_delete": "0",
+        "order_index": "1",
+        "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+        "request_headers": "{\"X-CRUD\":\"create\"}",
+        "request_method": "put",
+        "request_mode": "backend",
+        "request_url": "/template_data/data?from=crud_create",
+        "sub_title": "crud-create",
+        "title": "crud_sep_1777944267671",
+        "type": "2"
+      },
+      "important_list": [],
+      "params": [],
+      "result": []
+    }
+  },
+  "updateDetail": {
+    "count": 0,
+    "success": true,
+    "code": "0",
+    "msg": "成功",
+    "data": {
+      "demo": [],
+      "doc": {
+        "code": "{\"biz\":\"update\",\"n\":2}",
+        "code_desc": "crud check update",
+        "code_result": "{\"ok\":false}",
+        "collect_doc_id": "4a5bb2f4-3939-41fa-827c-d2fa2be4af8d",
+        "create_time": "2026-05-05 09:24:27",
+        "create_user": "",
+        "is_delete": "0",
+        "order_index": "2",
+        "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+        "request_headers": "{\"X-CRUD\":\"update\"}",
+        "request_method": "get",
+        "request_mode": "frontend",
+        "request_url": "/template_data/data?from=crud_update",
+        "sub_title": "crud-update",
+        "title": "crud_sep_1777944267671",
+        "type": "2"
+      },
+      "important_list": [],
+      "params": [],
+      "result": []
+    }
+  },
+  "createUi": {
+    "form": {
+      "request_url": "/template_data/data?from=crud_create",
+      "title": "crud_sep_1777944267671",
+      "subtitle": "crud-create",
+      "selects": [
+        "接口",
+        "后端代发",
+        "PUT",
+        "test2"
+      ],
+      "request_editor": "{\n  \"biz\": \"create\"\n}",
+      "headers_editor": "{\n  \"X-CRUD\": \"create\"\n}",
+      "form_state": null
+    },
+    "detailBody": {
+      "count": 0,
+      "success": true,
+      "code": "0",
+      "msg": "成功",
+      "data": {
+        "demo": [],
+        "doc": {
+          "code": "{\"biz\":\"create\"}",
+          "code_desc": "crud check",
+          "code_result": "{\"ok\":true}",
+          "collect_doc_id": "4a5bb2f4-3939-41fa-827c-d2fa2be4af8d",
+          "create_time": "2026-05-05 09:24:27",
+          "create_user": "",
+          "is_delete": "0",
+          "order_index": "1",
+          "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+          "request_headers": "{\"X-CRUD\":\"create\"}",
+          "request_method": "put",
+          "request_mode": "backend",
+          "request_url": "/template_data/data?from=crud_create",
+          "sub_title": "crud-create",
+          "title": "crud_sep_1777944267671",
+          "type": "2"
+        },
+        "important_list": [],
+        "params": [],
+        "result": []
+      }
+    }
+  },
+  "updateUi": {
+    "form": {
+      "request_url": "/template_data/data?from=crud_update",
+      "title": "crud_sep_1777944267671",
+      "subtitle": "crud-update",
+      "selects": [
+        "接口",
+        "前台直发",
+        "GET",
+        "test2"
+      ],
+      "request_editor": "{\n  \"biz\": \"update\",\n  \"n\": 2\n}",
+      "headers_editor": "{\n  \"X-CRUD\": \"update\"\n}",
+      "form_state": null
+    },
+    "detailBody": {
+      "count": 0,
+      "success": true,
+      "code": "0",
+      "msg": "成功",
+      "data": {
+        "demo": [],
+        "doc": {
+          "code": "{\"biz\":\"update\",\"n\":2}",
+          "code_desc": "crud check update",
+          "code_result": "{\"ok\":false}",
+          "collect_doc_id": "4a5bb2f4-3939-41fa-827c-d2fa2be4af8d",
+          "create_time": "2026-05-05 09:24:27",
+          "create_user": "",
+          "is_delete": "0",
+          "order_index": "2",
+          "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+          "request_headers": "{\"X-CRUD\":\"update\"}",
+          "request_method": "get",
+          "request_mode": "frontend",
+          "request_url": "/template_data/data?from=crud_update",
+          "sub_title": "crud-update",
+          "title": "crud_sep_1777944267671",
+          "type": "2"
+        },
+        "important_list": [],
+        "params": [],
+        "result": []
+      }
+    }
+  },
+  "deleteOk": true,
+  "errors": []
+}

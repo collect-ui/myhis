@@ -1,0 +1,448 @@
+{
+  "tag": "layout-fit",
+  "className": "overflow-auto",
+  "initStore": {
+    "class_grade_data": null,
+    "class_word_analyst": null,
+    "memery_way": null,
+    "cognition_analyst": null,
+    "style_analyst": null,
+    "self_learn": null,
+    "special_analyst": null
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "reload-data",
+      "api": "post:/template_data/data?service=chart.learn_before",
+      "data": {
+
+      },
+      "adapt": {
+        "class_grade_data": "${data.class_grade_data}",
+        "class_word_analyst": "${data.class_word_analyst}",
+        "memery_way": "${data.memery_way}",
+        "cognition_analyst": "${data.cognition_analyst}",
+        "style_analyst": "${data.style_analyst}",
+        "self_learn": "${data.self_learn}",
+        "special_analyst": "${data.special_analyst}"
+      }
+    }
+
+  ],
+  "style": {
+    "backgroundImage": "url(/data/img/page_bg.png)",
+    "fontFamily": "'Microsoft YaHei' !important",
+    "margin": "0px 0px",
+    "padding": "0px, 0px",
+    "color": "#20DFE2",
+    "overflowX": "hidden",
+    "backgroundRepeat": "no-repeat",
+    "backgroundSize": "100% 100%",
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "children": [
+    {
+      "tag": "div",
+      "style": {
+        "backgroundImage": "url(/data/img/top_bg1.png)",
+        "backgroundPosition": "center bottom",
+        "backgroundRepeat": "no-repeat",
+        "backgroundSize": "auto 100%",
+        "height": "60px",
+        "textAlign": "center",
+        "lineHeight": "60px"
+      },
+      "children": [
+        {
+          "tag": "span",
+          "style": {
+            "fontSize": "26px",
+            "letterSpacing": "0.2rem",
+            "fontWeight": "bold",
+            "fontFamily": "Microsoft YaHei",
+            "backgroundImage": "-webkit-gradient(linear, 0 0, 0 bottom, from(rgba(46, 233, 216, 1)), to(rgba(47, 129, 237, 1)))",
+            "WebkitBackgroundClip": "text",
+            "WebkitTextFillColor": "transparent"
+          },
+          "children": [
+            "2024级汽车服务与营销专业比亚迪订单班课前学情分析"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "row",
+      "className": "flex1",
+      "children": [
+        {
+          "tag": "col",
+          "span": 8,
+          "style": {
+            "padding": "10px 20px 10px 10px"
+          },
+          "children": [
+            {
+              "style": {
+                "height": "100%",
+                "backgroundImage": "url(/data/img/1_imgbg4.png)",
+                "backgroundPosition": "center, center",
+                "backgroundRepeat": "no-repeat",
+                "backgroundSize": "100% 100%",
+                "padding": "10px",
+                "boxSizing": "border-box",
+                "display": "flex",
+                "flexDirection": "column"
+              },
+              "tag": "div",
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "width": "100%",
+                    "height": "4vh",
+                    "fontSize": "1.2rem",
+                    "fontWeight": "600",
+                    "overflow": "hidden",
+                    "textAlign": "center",
+                    "lineHeight": "4vh",
+                    "letterSpacing": "0.3rem",
+                    "backgroundImage": "url(/data/img/top_bg.png)",
+                    "backgroundPosition": "center",
+                    "backgroundRepeat": "no-repeat",
+                    "backgroundSize": "100% 100%"
+                  },
+                  "children": "基础知识"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "overflow": "hidden",
+                    "marginTop": "0.5vh",
+                    "marginBottom": "0.5vh"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "backgroundImage": "url(/data/img/title2.png)",
+                        "backgroundPosition": "left",
+                        "backgroundRepeat": "no-repeat",
+                        "backgroundSize": "30%",
+                        "width": "100%",
+                        "height": "4vh",
+                        "lineHeight": "4vh",
+                        "overflow": "hidden",
+                        "fontSize": "1.1rem",
+                        "paddingLeft": "75px",
+                        "letterSpacing": "0.2rem"
+                      },
+                      "children": "班级英语知识水平"
+                    },
+                    {
+                      "tag": "chart",
+                      "visible": "${class_grade_data}",
+                      "option": "${class_grade_data}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "overflow": "hidden"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "backgroundImage": "url(/data/img/title2.png)",
+                        "backgroundPosition": "left",
+                        "backgroundRepeat": "no-repeat",
+                        "backgroundSize": "30%",
+                        "width": "100%",
+                        "height": "4vh",
+                        "lineHeight": "4vh",
+                        "overflow": "hidden",
+                        "fontSize": "1.1rem",
+                        "paddingLeft": "75px",
+                        "letterSpacing": "0.2rem"
+                      },
+                      "children": "班级学生词汇量"
+                    },
+                    {
+                      "tag": "chart",
+                      "visible": "${class_word_analyst}",
+                      "option": "${class_word_analyst}"
+                    }
+                  ]
+                }
+
+              ]
+            }
+
+
+          ]
+        },
+        {
+          "tag": "col",
+          "span": 8,
+          "style": {
+            "padding": "10px 20px 10px 0px"
+          },
+          "children": [
+            {
+              "style": {
+                "height": "100%",
+                "backgroundImage": "url(/data/img/1_imgbg4.png)",
+                "backgroundPosition": "center, center",
+                "backgroundRepeat": "no-repeat",
+                "backgroundSize": "100% 100%",
+                "padding": "10px",
+                "boxSizing": "border-box",
+                "display": "flex",
+                "flexDirection": "column"
+              },
+              "tag": "div",
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "width": "100%",
+                    "height": "4vh",
+                    "fontSize": "1.2rem",
+                    "fontWeight": "600",
+                    "overflow": "hidden",
+                    "textAlign": "center",
+                    "lineHeight": "4vh",
+                    "letterSpacing": "0.3rem",
+                    "backgroundImage": "url(/data/img/top_bg.png)",
+                    "backgroundPosition": "center",
+                    "backgroundRepeat": "no-repeat",
+                    "backgroundSize": "100% 100%"
+                  },
+                  "children": "认知能力"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "overflow": "hidden",
+                    "marginTop": "0.5vh",
+                    "marginBottom": "0.5vh"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "backgroundImage": "url(/data/img/title2.png)",
+                        "backgroundPosition": "left",
+                        "backgroundRepeat": "no-repeat",
+                        "backgroundSize": "30%",
+                        "width": "100%",
+                        "height": "4vh",
+                        "lineHeight": "4vh",
+                        "overflow": "hidden",
+                        "fontSize": "1.1rem",
+                        "paddingLeft": "75px",
+                        "letterSpacing": "0.2rem"
+                      },
+                      "children": "记忆方式的问卷分析"
+                    },
+                    {
+                      "tag": "chart",
+                      "visible": "${memery_way}",
+                      "option": "${memery_way}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "overflow": "hidden"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "backgroundImage": "url(/data/img/title2.png)",
+                        "backgroundPosition": "left",
+                        "backgroundRepeat": "no-repeat",
+                        "backgroundSize": "30%",
+                        "width": "100%",
+                        "height": "4vh",
+                        "lineHeight": "4vh",
+                        "overflow": "hidden",
+                        "fontSize": "1.1rem",
+                        "paddingLeft": "75px",
+                        "letterSpacing": "0.2rem"
+                      },
+                      "children": "认知能力测试分析"
+                    },
+                    {
+                      "tag": "chart",
+                      "visible": "${cognition_analyst}",
+                      "option": "${cognition_analyst}"
+                    }
+                  ]
+                }
+
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "col",
+          "span": 8,
+          "style": {
+            "padding": "10px 20px 10px 0px",
+            "overflow": "hidden"
+          },
+          "children": [
+            {
+              "style": {
+                "height": "100%",
+                "backgroundImage": "url(/data/img/1_imgbg4.png)",
+                "backgroundPosition": "center, center",
+                "backgroundRepeat": "no-repeat",
+                "backgroundSize": "100% 100%",
+                "padding": "10px",
+                "boxSizing": "border-box",
+                "display": "flex",
+                "flexDirection": "column"
+              },
+              "tag": "div",
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "width": "100%",
+                    "height": "4vh",
+                    "fontSize": "1.2rem",
+                    "fontWeight": "600",
+                    "overflow": "hidden",
+                    "textAlign": "center",
+                    "lineHeight": "4vh",
+                    "letterSpacing": "0.3rem",
+                    "backgroundImage": "url(/data/img/top_bg.png)",
+                    "backgroundPosition": "center",
+                    "backgroundRepeat": "no-repeat",
+                    "backgroundSize": "100% 100%"
+                  },
+                  "children": "学习特点"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "overflow": "hidden",
+                    "marginTop": "0.5vh",
+                    "marginBottom": "0.5vh"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "backgroundImage": "url(/data/img/title2.png)",
+                        "backgroundPosition": "left",
+                        "backgroundRepeat": "no-repeat",
+                        "backgroundSize": "30%",
+                        "width": "100%",
+                        "height": "4vh",
+                        "lineHeight": "4vh",
+                        "overflow": "hidden",
+                        "fontSize": "1.1rem",
+                        "paddingLeft": "75px",
+                        "letterSpacing": "0.2rem"
+                      },
+                      "children": "学习风格"
+                    },
+                    {
+                      "tag": "chart",
+                      "style": {
+                        "height":"26vh"
+                      },
+                      "visible": "${style_analyst}",
+                      "option": "${style_analyst}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "backgroundImage": "url(/data/img/title2.png)",
+                        "backgroundPosition": "left",
+                        "backgroundRepeat": "no-repeat",
+                        "backgroundSize": "30%",
+                        "width": "100%",
+                        "height": "4vh",
+                        "lineHeight": "4vh",
+                        "overflow": "hidden",
+                        "fontSize": "1.1rem",
+                        "paddingLeft": "75px",
+                        "letterSpacing": "0.2rem"
+                      },
+                      "children": "自主学习"
+                    },
+                    {
+                      "tag": "chart",
+                      "style": {
+                        "height":"10vh"
+                      },
+                      "visible": "${special_analyst}",
+                      "option": "${self_learn}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "overflow": "hidden",
+                    "display": "flex",
+                    "flexDirection": "column"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "backgroundImage": "url(/data/img/title2.png)",
+                        "backgroundPosition": "left",
+                        "backgroundRepeat": "no-repeat",
+                        "backgroundSize": "30%",
+                        "width": "100%",
+                        "height": "4vh",
+                        "lineHeight": "4vh",
+                        "overflow": "hidden",
+                        "fontSize": "1.1rem",
+                        "paddingLeft": "75px",
+                        "letterSpacing": "0.2rem"
+                      },
+                      "children": "专业特性"
+                    },
+                    {
+                      "tag": "chart",
+                      "style": {
+                        "flex": 1
+
+                      },
+                      "visible": "${special_analyst}",
+                      "option": "${special_analyst}"
+                    }
+
+                  ]
+                }
+
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

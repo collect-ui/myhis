@@ -1,0 +1,18 @@
+# 项目点路由
+service:
+  - name: "验证"
+    path: "token/index.yml"
+  - name: 项目管理
+    path: "workspace_project/index.yml"
+  - name: 目录管理
+    path: "workspace_file/index.yml"
+  - name: 日志
+    path: "webshell_log/index.yml"
+  - name: HTTP代理
+    path: "http_proxy/index.yml"
+  - name: WebSQL
+    path: "websql/index.yml"
+  - name: 快捷引入文本
+    path: "quick_text/index.yml"
+  - name: HTTP控制台测试数据
+    path: "http_console_store/index.yml"

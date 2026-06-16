@@ -1,0 +1,15 @@
+[Unit]
+Description=Wiki Go Application
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/data/wiki/startup.sh
+ExecStop=/data/wiki/shutdown.sh
+Restart=on-failure
+User=root
+Group=root
+WorkingDirectory=/data/wiki
+
+[Install]
+WantedBy=multi-user.target

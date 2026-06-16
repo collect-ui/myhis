@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "active_tab_text": "model_delete",
+  "title": "model_delete(表数据删除)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [],
+  "textarea_count": 3,
+  "textarea_values": [
+    "- key: role_ldap_group_delete\n    module: model_delete\n    params:\n      role_id_list:\n        check:\n          template: \"{{must .role_id_list}}\"\n          err_msg: 角色不能为空\n    table: \"role_ldap_group\"\n    filter:\n      role_id__in: \"[role_id_list]\"",
+    "针对表数据库删除",
+    "- key: collect_doc_demo_remove\n    module: model_delete\n    table: collect_doc_demo\n    params:\n      demo_list:\n        check:\n          template: \"{{must .demo_list}}\"\n          err_msg: 示例代码不能为空\n    handler_params:\n      - key: prop_arr\n        foreach: \"[demo_list]\"\n        value: \"[doc_demo_id]\"\n        save_field: doc_demo_id_list\n    filter:\n      doc_demo_id__in: \"[doc_demo_id_list]\""
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "module",
+          "string",
+          "是",
+          "module: model_delete"
+        ],
+        [
+          "table",
+          "string",
+          "是",
+          "数据库的表名"
+        ],
+        [
+          "filter",
+          "string",
+          "是",
+          "参考model_update 的fitler"
+        ]
+      ]
+    }
+  ],
+  "body_text": "model_delete(表数据删除)  \n示例\n参数\n参数\t类型\t必须\t说明\nmodule\n\t\nstring\n\t\n是\n\t\nmodule: model_delete\n\n\ntable\n\t\nstring\n\t\n是\n\t\n数据库的表名\n\n\nfilter\n\t\nstring\n\t\n是\n\t\n参考model_update 的fitler\n示例\n1. 前台传一个数组对象，过滤生简单数组\n菜单导航\n示例\n参数\n示例\n1.前台传一个数组对象，过滤生简单数组",
+  "task_id": "M-005",
+  "source_group": "模块处理",
+  "source_title": "model_delete",
+  "source_doc_text": "5.model_delete\n表数据删除",
+  "read_at": "2026-05-07T08:19:47.065Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/M-005-source.png"
+}

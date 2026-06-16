@@ -1,0 +1,82 @@
+
+    collect首页大屏管理课程管理招投标运维管理文档系统管理Editor工作台工作空间项目月神后端后端客户端前端代码核心前端低代码项目管理源码目录HTTP目录test2文档管理SSHget_env_detail_service(获取服务)ldaphrm项目运动大屏页面数据任务排版生成codex服务常用HTTP请求get_env_detail_service(获取服务)打开1次get_env_detail_service(获取服务)get_env_detail_service(获取服务) 控制台console://ba278ef9-be4d-4e4d-aa52-61633a8ca073刷新发送请求布局水平分割垂直分割1111
+.workspace-http-doc{height:100%;background:linear-gradient(180deg,#fbfefc 0%,#ffffff 100%);overflow:auto;padding:8px;}
+.workspace-http-hero{border:1px solid rgba(16,24,40,0.08);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:linear-gradient(180deg,rgba(24,226,153,0.08),rgba(24,226,153,0) 56%),#ffffff;box-shadow:0 1px 2px rgba(16,24,40,0.03);}
+.workspace-http-hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:nowrap;}
+.workspace-http-hero-main{min-width:0;flex:1 1 auto;}
+.workspace-http-headline{display:flex;align-items:center;gap:8px;min-width:0;}
+.workspace-http-method{display:inline-flex;align-items:center;justify-content:center;height:20px;padding:0 7px;border-radius:999px;background:#d4fae8;color:#0fa76e;font-size:10px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;flex:0 0 auto;}
+.workspace-http-path{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:11px;line-height:16px;color:#0d0d0d;}
+.workspace-http-title-row{display:flex;align-items:center;gap:6px;min-width:0;margin-top:5px;}
+.workspace-http-title{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:20px;font-weight:600;letter-spacing:-0.2px;color:#0d0d0d;font-family:Inter,'Helvetica Neue',Arial,sans-serif;}
+.workspace-http-subtitle{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;line-height:16px;color:#6b7280;}
+.workspace-http-title-dot{flex:0 0 auto;color:#c7ccd4;font-size:10px;line-height:16px;}
+.workspace-http-meta{display:grid;grid-template-columns:repeat(3,minmax(70px,1fr));gap:6px;flex:0 0 216px;}
+.workspace-http-meta-card{border:1px solid rgba(16,24,40,0.08);border-radius:8px;padding:7px 8px;background:#fff;}
+.workspace-http-meta-label{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:12px;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;}
+.workspace-http-meta-value{margin-top:3px;font-size:13px;line-height:16px;font-weight:600;color:#0d0d0d;}
+.workspace-http-section{margin-top:8px;border:1px solid rgba(16,24,40,0.08);border-radius:10px;background:#ffffff;box-shadow:0 1px 2px rgba(16,24,40,0.02);overflow:hidden;}
+.workspace-http-section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(16,24,40,0.06);background:linear-gradient(180deg,#fcfdfc 0%,#f6faf8 100%);}
+.workspace-http-section-title{font-size:12px;line-height:16px;font-weight:600;color:#0d0d0d;font-family:Inter,'Helvetica Neue',Arial,sans-serif;}
+.workspace-http-section-caption{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:12px;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;}
+.workspace-http-info-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;}
+.workspace-http-callout{padding:10px 12px;font-size:12px;line-height:18px;color:#374151;white-space:pre-wrap;background:linear-gradient(180deg,#ffffff 0%,#fbfcfc 100%);}
+.workspace-http-callout-muted{color:#475467;}
+.workspace-http-note-list{padding:6px 10px 8px 10px;display:block;}
+.workspace-http-note-item{font-size:11px;line-height:16px;color:#1f2937;padding:6px 0 6px 8px;border-bottom:1px dashed rgba(16,24,40,0.1);background:transparent;}
+.workspace-http-note-item:last-child{border-bottom:none;}
+.workspace-http-code-panel{height:260px;padding:0;overflow:hidden;background:#0b1020;}
+.workspace-http-code-shell{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,0.08);background:#11182d;}
+.workspace-http-code-shell-title{font-size:11px;line-height:16px;font-weight:600;color:#f3f4f6;font-family:Inter,'Helvetica Neue',Arial,sans-serif;}
+.workspace-http-code-shell-badge{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:14px;letter-spacing:0.3px;text-transform:uppercase;color:#a7f3d0;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.2);border-radius:999px;padding:0 6px;}
+.workspace-http-code-editor{height:calc(100% - 34px);}
+.workspace-http-table-wrap{padding:6px 8px 8px 8px;background:#ffffff;overflow:auto;}
+.workspace-http-table{width:100%;border-collapse:collapse;font-size:12px;color:#1f2937;}
+.workspace-http-table th{padding:8px;border:1px solid #e4ebe6;background:#f3f7f4;text-align:left;font-weight:600;}
+.workspace-http-table td{padding:8px;border:1px solid #edf2ee;vertical-align:top;line-height:18px;}
+.workspace-http-table tbody tr:nth-child(odd){background:#fbfcfc;}
+.workspace-http-demo-wrap{padding:8px;background:#ffffff;}
+.workspace-http-demo-card{border:1px solid rgba(16,24,40,0.08);border-radius:8px;background:#ffffff;overflow:hidden;margin-bottom:6px;}
+.workspace-http-demo-trigger{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:12px;line-height:16px;font-weight:600;color:#0d0d0d;cursor:pointer;background:linear-gradient(180deg,#fcfdfc 0%,#f7f9f8 100%);}
+.workspace-http-demo-state{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:12px;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;}
+.workspace-http-demo-body{padding:8px 10px;border-top:1px solid rgba(16,24,40,0.06);font-size:12px;line-height:18px;white-space:pre-wrap;color:#374151;background:#ffffff;}
+.workspace-http-empty{padding:12px;color:#98a2b3;font-size:11px;line-height:16px;}
+.workspace-http-console-root{position:absolute;inset:0;minHeight:0;display:flex;flex-direction:column;gap:6px;padding:6px;background:linear-gradient(180deg,#f4f7fb 0%,#edf2f8 100%);}
+.workspace-http-console-card{border:1px solid rgba(15,23,42,0.1);border-radius:10px;background:#ffffff;box-shadow:0 1px 4px rgba(15,23,42,0.05);}
+.workspace-http-console-request-bar{display:grid;grid-template-columns:80px minmax(0,1fr);gap:6px;align-items:center;padding:7px;}
+.workspace-http-console-method{height:32px;border-radius:8px;border:1px solid #dbe2ea;padding:0 8px;font-size:11px;font-weight:700;outline:none;cursor:pointer;font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;}
+.workspace-http-console-method-get{background:#eef9f3;border-color:#8ce0af;color:#0f8f51;}
+.workspace-http-console-method-post{background:#ecf3ff;border-color:#98bbff;color:#1d4ed8;}
+.workspace-http-console-method-put{background:#fff7ed;border-color:#fdba74;color:#c2410c;}
+.workspace-http-console-method-delete{background:#fef2f2;border-color:#fca5a5;color:#b91c1c;}
+.workspace-http-console-url-combo{height:32px;display:grid;grid-template-columns:90px minmax(0,1fr);border:1px solid #dbe2ea;border-radius:8px;overflow:hidden;background:#f8fafc;}
+.workspace-http-console-send{height:100%;border:0;border-radius:0;background:linear-gradient(180deg,#ff9a3d 0%,#f97316 100%);color:#fff;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:0.1px;}
+.workspace-http-console-url{height:100%;border:0;border-radius:0;padding:0 10px;font-size:12px;color:#0f172a;outline:none;background:transparent;}
+.workspace-http-console-meta{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 7px 7px 7px;flex-wrap:wrap;}
+.workspace-http-console-meta-left{display:flex;align-items:center;gap:6px;min-width:0;flex-wrap:wrap;}
+.workspace-http-console-meta-right{display:flex;align-items:center;gap:6px;}
+.workspace-http-console-mode{height:26px;border-radius:8px;border:1px solid #dbe2ea;padding:0 8px;background:#fff;color:#334155;font-size:11px;outline:none;}
+.workspace-http-console-ghost{height:26px;border:1px solid #d8dee6;background:#fff;border-radius:8px;padding:0 8px;color:#475569;font-size:11px;cursor:pointer;}
+.workspace-http-console-layout{display:inline-flex;align-items:center;border:1px solid #d8dee6;border-radius:8px;overflow:hidden;background:#fff;}
+.workspace-http-console-layout button{height:26px;border:0;background:#fff;color:#475569;font-size:11px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;cursor:pointer;}
+.workspace-http-console-layout button+button{border-left:1px solid #d8dee6;}
+.workspace-http-console-layout button.active{background:#0f172a;color:#fff;}
+.workspace-http-console-collapse .ant-collapse-item{border:0 !important;}
+.workspace-http-console-collapse .ant-collapse-header{padding:7px 10px !important;align-items:center !important;}
+.workspace-http-console-collapse .ant-collapse-content-box{padding:0 8px 8px 8px !important;}
+.workspace-http-console-header-title{font-size:11px;line-height:14px;font-weight:700;color:#0f172a;}
+.workspace-http-console-header-tip{font-size:10px;line-height:14px;color:#64748b;}
+.workspace-http-console-panels{flex:1;min-height:0;}
+.workspace-http-console-panel{height:100%;min-height:0;border:1px solid rgba(15,23,42,0.1);border-radius:10px;overflow:hidden;background:#0b1020;box-shadow:0 1px 3px rgba(15,23,42,0.14);}
+.workspace-http-console-panel-head{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.08);background:linear-gradient(180deg,#1b263b 0%,#111827 100%);}
+.workspace-http-console-panel-title{font-size:10px;line-height:14px;font-weight:700;color:#e2e8f0;font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;}
+.workspace-http-console-panel-badge{font-size:9px;line-height:12px;font-weight:600;color:#94a3b8;}
+.workspace-http-console-panel-body{height:calc(100% - 26px);}
+@media (max-width:1200px){.workspace-http-hero-top{flex-wrap:wrap;}.workspace-http-meta{grid-template-columns:repeat(3,minmax(0,1fr));flex-basis:100%;}.workspace-http-info-grid{grid-template-columns:minmax(0,1fr);}}
+@media (max-width:900px){.workspace-http-console-request-bar{grid-template-columns:minmax(0,1fr);}.workspace-http-console-meta{align-items:flex-start;}}
+@media (max-width:768px){.workspace-http-doc{padding:6px;}.workspace-http-hero{padding:8px 10px;}.workspace-http-title-row,.workspace-http-headline{display:block;}.workspace-http-title-dot{display:none;}.workspace-http-title,.workspace-http-subtitle,.workspace-http-path{white-space:normal;overflow:visible;text-overflow:clip;}.workspace-http-meta{grid-template-columns:minmax(0,1fr);}.workspace-http-console-root{padding:6px;gap:6px;}}
+GETPOSTPUTDELETE发送请求前台直发后端代发格式化请求左右上下Headers点击展开REQUEST HEADERSJSON1{BodyPOST123{  "service": "project.get_env_detail_service"}ResponseREAD ONLY12345678910111213141516171819{  "count": 0,  "success": true,  "code": "0",  "msg": "成功",  "data": [    {      "project_code": "my",      "service": "project.env_tree",      "target_field": "env_tree",      "to_tree": false    },    {      "project_code": "my",      "service": "project.server_list",      "target_field": "server_list"    }  ]}
+
+
+  
+

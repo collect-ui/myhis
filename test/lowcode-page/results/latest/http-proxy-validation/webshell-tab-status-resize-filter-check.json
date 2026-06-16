@@ -1,0 +1,49 @@
+{
+  "pass": true,
+  "checks": {
+    "pageOpened": true,
+    "loginConfirmed": true,
+    "idleBeforeResize": true,
+    "resizeActionPerformed": true,
+    "resizeDidNotActivateLoading": true,
+    "normalOutputActivatedLoading": true,
+    "noConsoleErrors": true,
+    "noPageErrors": true,
+    "noRequestFailed": true
+  },
+  "details": {
+    "beforeResize": {
+      "exists": true,
+      "className": "webshell-tab-status-dot is-stopped",
+      "active": false,
+      "stopped": true,
+      "title": "已停止或暂无输出"
+    },
+    "resize": {
+      "method": "viewport-resize-fallback"
+    },
+    "afterResize": {
+      "exists": true,
+      "className": "webshell-tab-status-dot is-stopped",
+      "active": false,
+      "stopped": true,
+      "title": "已停止或暂无输出"
+    },
+    "afterOutput": {
+      "exists": true,
+      "className": "webshell-tab-status-dot is-active",
+      "active": true,
+      "stopped": false,
+      "title": "运行中，有输出"
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshots": {
+    "afterResize": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-after-resize-no-loading.png",
+    "afterOutput": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-after-text-output-loading.png"
+  },
+  "reportPath": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-resize-filter-check.json",
+  "error": ""
+}

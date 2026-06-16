@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent 测试回归 PC 精简原型</title>
+  <style>
+    :root {
+      --blue: #1677ff;
+      --blue-dark: #0758d9;
+      --bg: #eef4fb;
+      --panel: #fff;
+      --line: #dbe6f3;
+      --line-hot: #b8d7ff;
+      --text: #13233a;
+      --muted: #60738d;
+      --soft: #f7fbff;
+      --ok: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      color: var(--text);
+      font-family: "Noto Sans SC", "Microsoft YaHei", "PingFang SC", sans-serif;
+      background: var(--bg);
+    }
+
+    .history-toggle {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .workspace {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 336px minmax(0, 1fr);
+      gap: 10px;
+      padding: 12px;
+      transition: grid-template-columns .18s ease;
+    }
+
+    .history-toggle:checked + .workspace {
+      grid-template-columns: 58px minmax(0, 1fr);
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(20, 48, 84, .06);
+    }
+
+    .sidebar,
+    .main {
+      min-height: 0;
+      min-width: 0;
+    }
+
+    .sidebar {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 10px;
+    }
+
+    .history-toggle:checked + .workspace .sidebar {
+      display: block;
+      overflow: hidden;
+    }
+
+    .history-toggle:checked + .workspace .side-head,
+    .history-toggle:checked + .workspace .search,
+    .history-toggle:checked + .workspace .history {
+      display: none;
+    }
+
+    .history-rail {
+      display: none;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 0;
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+      writing-mode: vertical-rl;
+      letter-spacing: .2em;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .history-toggle:checked + .workspace .history-rail {
+      display: flex;
+    }
+
+    .side-head {
+      padding: 12px 14px;
+    }
+
+    .title-row,
+    .toolbar,
+    .compose-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid #d5e2f1;
+      border-radius: 7px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      background: #fff;
+    }
+
+    .btn.primary {
+      color: #fff;
+      border-color: var(--blue);
+      background: linear-gradient(180deg, #2d8cff, var(--blue));
+    }
+
+    .collapse-btn {
+      flex: 0 0 auto;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border: 1px solid #d5e2f1;
+      border-radius: 7px;
+      color: #38516f;
+      font-size: 13px;
+      font-weight: 700;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .search {
+      padding: 8px;
+    }
+
+    .search-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 58px;
+      gap: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #d8e3f1;
+      border-radius: 7px;
+      outline: none;
+      color: var(--text);
+      background: #fff;
+      font: inherit;
+    }
+
+    input,
+    select {
+      height: 30px;
+      padding: 0 10px;
+    }
+
+    .history {
+      min-height: 0;
+      overflow: auto;
+      padding: 10px;
+    }
+
+    .history-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.25fr) 72px;
+      gap: 8px;
+      padding: 0 8px 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      border-bottom: 1px solid #eef3f8;
+    }
+
+    .session-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.25fr) 72px;
+      gap: 8px;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px;
+      border-bottom: 1px solid #edf2f7;
+      font-size: 12px;
+      transition: background .12s ease, border-color .12s ease;
+    }
+
+    .session-row:hover {
+      background: #f8fbff;
+    }
+
+    .session-row.active {
+      margin: 6px 0;
+      border: 1px solid var(--line-hot);
+      border-radius: 9px;
+      background: #edf6ff;
+    }
+
+    .ellipsis {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .status {
+      justify-self: end;
+      padding: 2px 8px;
+      color: #047857;
+      border-radius: 999px;
+      background: #d8f8ef;
+    }
+
+    .row-tail {
+      justify-self: end;
+      min-width: 0;
+    }
+
+    .session-actions {
+      display: none;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+
+    .session-row:hover .session-actions {
+      display: flex;
+    }
+
+    .session-row:hover .status {
+      display: none;
+    }
+
+    .action {
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 7px;
+      border: 1px solid #d8e3f1;
+      border-radius: 6px;
+      color: #526985;
+      background: #fff;
+      font-size: 12px;
+    }
+
+    .action.danger {
+      color: #d4380d;
+      border-color: #ffd8bf;
+      background: #fff7f0;
+    }
+
+    .main {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 10px;
+    }
+
+    .main-head {
+      padding: 10px 14px;
+    }
+
+    .session-title {
+      min-width: 0;
+    }
+
+    .model-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px;
+      border: 1px solid #d6e5f5;
+      border-radius: 8px;
+      background: #f7fbff;
+    }
+
+    .model-label {
+      margin-right: 4px;
+      padding-left: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .model {
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 6px;
+      color: #38516f;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .model.active {
+      color: #fff;
+      background: var(--blue);
+    }
+
+    .run-ok {
+      margin-top: 8px;
+      padding: 7px 10px;
+      color: #237804;
+      border: 1px solid #b7eb8f;
+      border-radius: 7px;
+      background: #f0ffe8;
+      font-size: 13px;
+    }
+
+    .messages {
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 10px 14px;
+    }
+
+    .message-top {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #edf2f7;
+    }
+
+    .ids {
+      display: flex;
+      gap: 18px;
+      color: #7186a3;
+      font-size: 12px;
+    }
+
+    .message-list {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow: auto;
+      padding-top: 12px;
+    }
+
+    .msg {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .msg-role {
+      padding-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .bubble {
+      width: fit-content;
+      max-width: min(760px, 86%);
+      padding: 10px 12px;
+      border: 1px solid #e1eaf5;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(20, 48, 84, .04);
+      font-size: 14px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
+
+    .msg.user .bubble {
+      margin-left: auto;
+      border-color: #bad9ff;
+      background: #eaf4ff;
+    }
+
+    .time {
+      display: block;
+      margin-top: 3px;
+      color: #8ba0bc;
+      font-size: 11px;
+    }
+
+    .compose {
+      padding: 10px 14px;
+    }
+
+    .compose-input {
+      min-height: 72px;
+      padding: 10px 12px;
+      resize: none;
+      line-height: 1.6;
+    }
+
+    .compose-foot {
+      margin-top: 8px;
+    }
+
+    .chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chip {
+      padding: 3px 8px;
+      border: 1px solid #dce8f6;
+      border-radius: 999px;
+      background: var(--soft);
+    }
+  </style>
+</head>
+<body>
+  <input class="history-toggle" id="historyCollapse" type="checkbox">
+  <main class="workspace">
+    <aside class="sidebar">
+      <label class="panel history-rail" for="historyCollapse">展开历史 · 26</label>
+      <section class="panel side-head">
+        <div class="title-row">
+          <div>
+            <h1>Agent Chat 回归</h1>
+            <p class="muted">PC 精简版：历史、模型、消息、输入。</p>
+          </div>
+          <div class="toolbar">
+            <label class="collapse-btn" for="historyCollapse">收起</label>
+            <div class="btn primary">新建</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel search">
+        <div class="search-line">
+          <input placeholder="搜索会话 Key / 标题">
+          <div class="btn primary">查询</div>
+        </div>
+      </section>
+
+      <section class="panel history">
+        <div class="history-head">
+          <span>会话历史 · 26</span>
+          <span>最近消息</span>
+          <span>状态</span>
+        </div>
+        <div class="session-row active">
+          <div>
+            <strong class="ellipsis">Agent 测试回归页</strong>
+            <div class="muted ellipsis">agent-regression-browser-20260423080724</div>
+          </div>
+          <div class="ellipsis">页面浏览器自测通过</div>
+          <div class="row-tail">
+            <div class="status">active</div>
+            <div class="session-actions">
+              <span class="action" title="编辑当前会话">编辑</span>
+              <span class="action danger" title="删除当前会话">删除</span>
+            </div>
+          </div>
+        </div>
+        <div class="session-row">
+          <div>
+            <strong class="ellipsis">Agent 测试回归页</strong>
+            <div class="muted ellipsis">agent-regression-bottom-1776931020203</div>
+          </div>
+          <div class="ellipsis">等待接口回读验证</div>
+          <div class="row-tail">
+            <div class="status">active</div>
+            <div class="session-actions">
+              <span class="action" title="编辑当前会话">编辑</span>
+              <span class="action danger" title="删除当前会话">删除</span>
+            </div>
+          </div>
+        </div>
+        <div class="session-row">
+          <div>
+            <strong class="ellipsis">Agent 测试回归页</strong>
+            <div class="muted ellipsis">agent-regression-browser-20260423075700</div>
+          </div>
+          <div class="ellipsis">页面打开无错误</div>
+          <div class="row-tail">
+            <div class="status">active</div>
+            <div class="session-actions">
+              <span class="action" title="编辑当前会话">编辑</span>
+              <span class="action danger" title="删除当前会话">删除</span>
+            </div>
+          </div>
+        </div>
+        <div class="session-row">
+          <div>
+            <strong class="ellipsis">接口回归定位</strong>
+            <div class="muted ellipsis">agent-regression-api-check</div>
+          </div>
+          <div class="ellipsis">回归定位建议</div>
+          <div class="row-tail">
+            <div class="status">active</div>
+            <div class="session-actions">
+              <span class="action" title="编辑当前会话">编辑</span>
+              <span class="action danger" title="删除当前会话">删除</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </aside>
+
+    <section class="main">
+      <section class="panel main-head">
+        <div class="toolbar">
+          <div class="session-title">
+            <h2>当前会话：agent-regression-browser-20260423080724</h2>
+            <p class="muted">场景：agent_regression_page · 最近活跃：2026-04-23 16:07:28</p>
+          </div>
+          <div class="toolbar">
+            <div class="model-switch" aria-label="模型切换">
+              <span class="model-label">模型</span>
+              <span class="model active">gpt-5-mini</span>
+              <span class="model">gpt-5.4-mini</span>
+              <span class="model">gpt-5.4</span>
+            </div>
+            <div class="btn">刷新</div>
+          </div>
+        </div>
+        <div class="run-ok">消息已发送，最新回复已回读。</div>
+      </section>
+
+      <section class="panel messages">
+        <div class="message-top">
+          <h2>对话消息</h2>
+          <div class="ids">
+            <span>时间顺序：最早在上，最新在下</span>
+            <span>最新回复：刚刚</span>
+          </div>
+        </div>
+        <div class="message-list">
+          <article class="msg user">
+            <div class="msg-role">我<span class="time">16:07:26</span></div>
+            <div class="bubble">请只回复：页面浏览器自测通过-20260423080724</div>
+          </article>
+          <article class="msg">
+            <div class="msg-role">Agent<span class="time">16:07:28</span></div>
+            <div class="bubble">页面浏览器自测通过-20260423080724</div>
+          </article>
+          <article class="msg user">
+            <div class="msg-role">我<span class="time">刚刚</span></div>
+            <div class="bubble">请根据最新错误日志给出回归定位步骤。</div>
+          </article>
+          <article class="msg">
+            <div class="msg-role">Agent<span class="time">刚刚</span></div>
+            <div class="bubble">建议按三步检查：1. 确认页面资源加载；2. 核对 session 与 run 回读；3. 监听 console error、pageerror、requestfailed。</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel compose">
+        <textarea class="compose-input" placeholder="给 Agent 发送一条消息，支持多行输入。"></textarea>
+        <div class="compose-foot">
+          <div class="chips">
+            <span>Enter 换行，Ctrl+Enter / Cmd+Enter 发送。</span>
+            <span class="chip">回归定位</span>
+            <span class="chip">验收计划</span>
+            <span class="chip">代码审查</span>
+          </div>
+          <div class="btn primary">发送消息</div>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

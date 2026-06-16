@@ -1,0 +1,8 @@
+# Agent 运行时路由
+service:
+  - name: 会话
+    path: "session/index.yml"
+  - name: 消息
+    path: "message/index.yml"
+  - name: 运行
+    path: "run/index.yml"

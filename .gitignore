@@ -1,0 +1,46 @@
+# Build
+moon.exe
+run-dev-main
+dist/
+
+# Runtime
+run-dev.log
+run-dev.pid
+database/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dependencies
+frontend/*/node_modules/
+
+# Test artifacts
+test/bin/
+
+# Build artifacts
+windows/
+*.tar.gz
+*.zip
+*.exe
+
+# Uploads / attachments
+file_data/
+
+# Temp / debug
+.tmp-playwright/
+backend.log
+example.pdf
+
+# Frontend build assets (large, generated)
+frontend/collect-ui/assets/
+frontend/data/vs/
+frontend/data/autodesk/
+frontend/data/img/

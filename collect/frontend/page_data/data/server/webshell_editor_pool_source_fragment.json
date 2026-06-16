@@ -1,0 +1,1376 @@
+{
+  "key": "source",
+  "label": "源码目录",
+  "children": [
+    {
+      "tag": "layout-fit",
+      "className": "workspace-source-tree-layout",
+      "searchToolBar": [
+        {
+          "tag": "form",
+          "name": "workspace-tree-filter-form",
+          "layout": "inline",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "width": "100%",
+            "minWidth": 0,
+            "marginBottom": 0
+          },
+          "initialValues": {
+            "keyword": ""
+          },
+          "submitOnEnter": true,
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "workspaceFileTreeKeyword": "${(()=>{const fn='workspace-tree-filter-form';const v=(getFormValue(fn,'keyword')||'').trim();return v.length>=2?v:'';})()}"
+              }
+            },
+            {
+              "tag": "reload-init-action",
+              "group": "reload-workspace-file-tree"
+            }
+          ],
+          "children": [
+            {
+              "tag": "form-item",
+              "style": {
+                "marginInlineEnd": "6px",
+                "marginBottom": 0
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "inline-flex",
+                    "alignItems": "center",
+                    "border": "1px solid #d8dee6",
+                    "borderRadius": "6px",
+                    "overflow": "hidden",
+                    "background": "#ffffff"
+                  },
+                  "children": [
+                    {
+                      "tag": "button",
+                      "type": "text",
+                      "size": "small",
+                      "icon": "PlusOutlined",
+                      "title": "新增",
+                      "style": {
+                        "border": 0,
+                        "borderRadius": 0,
+                        "borderRight": "1px solid #d8dee6",
+                        "width": "28px",
+                        "minWidth": "28px",
+                        "padding": 0
+                      },
+                      "action": [
+                        {
+                          "tag": "check",
+                          "check": "${!!workspaceCurrent}",
+                          "title": "请先选择项目"
+                        },
+                        {
+                          "tag": "ajax",
+                          "api": "post:/template_data/data?service=webshell.workspace_file_query",
+                          "data": {
+                            "project_code": "${workspaceCurrent}",
+                            "is_dir": "1",
+                            "pagination": false
+                          },
+                          "adapt": {
+                            "workspaceFileParentTreeFresh": "${(()=>{const seen={};const src=(Array.isArray(data)?data:[]).filter(raw=>{const k=String((raw&&raw.path)||(raw&&raw.file_id)||'');if(!k||seen[k]){return false;}seen[k]=true;return true;});const map={};src.forEach(raw=>{if(!raw||!raw.file_id){return;}map[String(raw.file_id)]=Object.assign({},raw,{key:raw.file_id,title:raw.name,children:[]});});const roots=[];src.forEach(raw=>{if(!raw||!raw.file_id){return;}const item=map[String(raw.file_id)];const pid=String(raw.parent_id||'');if(pid&&map[pid]){map[pid].children.push(item);}else{roots.push(item);}});const sort=(arr)=>{if(!Array.isArray(arr)){return [];}arr.sort((a,b)=>String(a.title||a.name||'').localeCompare(String(b.title||b.name||'')));arr.forEach(n=>{if(Array.isArray(n.children)&&n.children.length>0){sort(n.children);}else{delete n.children;}});return arr;};return sort(roots);})()}"
+                          }
+                        },
+                        {
+                          "tag": "update-store",
+                          "description": "打开文件管理表单，设置store变量",
+                          "targetStore": "__parent__",
+                          "value": {
+                            "workspaceFileOp": "add",
+                            "activeStore": "${__this__}",
+                            "workspaceFileParentTree": "${Array.isArray(workspaceFileParentTreeFresh)&&workspaceFileParentTreeFresh.length?[...workspaceFileParentTreeFresh]:(Array.isArray(workspaceTree)?[...workspaceTree]:[])}",
+                            "workspaceFileCurrentProject": "${workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}}",
+                            "workspaceFileForm": {
+                              "file_id": "",
+                              "project_code": "${workspaceCurrent}",
+                              "name": "",
+                              "path": "${(()=>{const isDir=(v)=>v==='1'||v===1||v===true||v==='true';const selected=workspaceTreeSelected||{};if(selected&&isDir(selected.is_dir)&&selected.path){return selected.path;}const current=workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{};return current.project_dir||'';})()}",
+                              "parent_id": "${(()=>{const isDir=(v)=>v==='1'||v===1||v===true||v==='true';return workspaceTreeSelected&&isDir(workspaceTreeSelected.is_dir)?workspaceTreeSelected.file_id:'';})()}",
+                              "is_dir": "1"
+                            },
+                            "workspaceFileDialogVisible": true
+                          }
+                        },
+                        {
+                          "tag": "reset-form",
+                          "targetStore": "__parent__",
+                          "formName": "workspace-file-form"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "button",
+                      "type": "text",
+                      "size": "small",
+                      "icon": "ReloadOutlined",
+                      "title": "同步",
+                      "style": {
+                        "border": 0,
+                        "borderRadius": 0,
+                        "borderRight": "1px solid #d8dee6",
+                        "width": "28px",
+                        "minWidth": "28px",
+                        "padding": 0
+                      },
+                      "action": [
+                        {
+                          "tag": "check",
+                          "check": "${!!workspaceCurrent}",
+                          "title": "请先选择项目"
+                        },
+                        {
+                          "tag": "check",
+                          "check": "${!!(workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}).webshell_workspace_project_id}",
+                          "title": "当前项目缺少同步配置"
+                        },
+                        {
+                          "tag": "confirm",
+                          "title": "确认同步",
+                          "content": "${(()=>{const p=workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{};return '确认同步项目【'+(p.project_name||workspaceCurrent||'')+'】目录到工作空间吗？';})()}"
+                        },
+                        {
+                          "tag": "ajax",
+                          "api": "post:/template_data/data?service=webshell.workspace_project_sync_files",
+                          "showResultMsg": true,
+                          "data": {
+                            "webshell_workspace_project_id": "${(workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}).webshell_workspace_project_id}",
+                            "exclude_dirs": "${(workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}).exclude_dirs || 'node_modules,.git,dist,.next'}"
+                          }
+                        },
+                        {
+                          "tag": "reload-init-action",
+                          "group": "reload-workspace-file-tree"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "button",
+                      "type": "text",
+                      "size": "small",
+                      "icon": "FileSearchOutlined",
+                      "title": "内容搜索",
+                      "style": {
+                        "border": 0,
+                        "borderRadius": 0,
+                        "width": "28px",
+                        "minWidth": "28px",
+                        "padding": 0
+                      },
+                      "action": [
+                        {
+                          "tag": "check",
+                          "check": "${!!workspaceCurrent}",
+                          "title": "请先选择项目"
+                        },
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "workspaceContentSearchVisible": true
+                          }
+                        },
+                        {
+                          "tag": "method",
+                          "method": "${(()=>{const sync=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return;}const hide=!!doc.querySelector('.ant-modal-wrap');const nodes=[...doc.querySelectorAll('.webshell-container .co-ui-panel-resize,.webshell-container .panel-resize,.webshell-container .Resizer')];const fixedHandles=[...doc.querySelectorAll('div')].filter(el=>{const st=window.getComputedStyle(el);const r=el.getBoundingClientRect();if(st.position!=='fixed'){return false;}if(!(st.cursor==='grab'||st.cursor==='col-resize'||st.cursor==='ew-resize'||st.cursor==='row-resize'||st.cursor==='ns-resize')){return false;}if(r.width<=14&&r.height>120){return true;}if(r.height<=14&&r.width>120){return true;}return false;});[...nodes,...fixedHandles].forEach(el=>{el.style.opacity=hide?'0':'1';el.style.pointerEvents=hide?'none':'';});};window.setTimeout(sync,0);window.setTimeout(sync,120);window.setTimeout(sync,360);})()}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "keyword",
+              "className": "flex1",
+              "style": {
+                "marginInlineEnd": "0",
+                "minWidth": 0,
+                "marginBottom": 0
+              },
+              "children": [
+                {
+                  "tag": "input",
+                  "size": "small",
+                  "allowClear": true,
+                  "placeholder": "回车搜索(至少2个字符)",
+                  "addonAfterIcon": "SearchOutlined",
+                  "addonAfterTitle": "搜索",
+                  "style": {
+                    "width": "100%"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "children": [
+        {
+          "tag": "css",
+          "css": ".workspace-source-tree .ant-tree-list{overflow-x:auto !important;overflow-y:auto !important;}.workspace-source-tree .ant-tree-list-holder{overflow:visible !important;}.workspace-source-tree .ant-tree-treenode{align-items:center !important;min-width:max-content !important;}.workspace-source-tree .ant-tree-switcher{align-self:center !important;}.workspace-source-tree .ant-tree-node-content-wrapper{display:inline-flex !important;align-items:center !important;max-width:none !important;min-width:0 !important;white-space:nowrap !important;}.workspace-source-tree .ant-tree-title{display:inline-flex !important;align-items:center !important;min-height:22px !important;white-space:nowrap !important;word-break:normal !important;overflow-wrap:normal !important;line-height:18px !important;}"
+        },
+        {
+          "tag": "tree",
+          "showLine": true,
+          "showIcon": false,
+          "virtual": false,
+          "height": "100%",
+          "openLevel": "${!(workspaceFileTreeKeyword&&workspaceFileTreeKeyword.trim())?0:99}",
+          "className": "h100 workspace-source-tree",
+          "multiple": true,
+          "draggable": "${!(workspaceFileTreeKeyword&&workspaceFileTreeKeyword.trim())}",
+          "dragIconMode": "dragging",
+          "allowDrop": "${(()=>{if(String(workspaceFileTreeKeyword||'').trim()){return false;}const isDir=(v)=>v==='1'||v===1||v===true||v==='true';if(dropPosition===0&&!isDir(item&&item.is_dir)){return false;}return true;})()}",
+          "treeSelected": "${workspaceTreeSelected}",
+          "selectedKeys": "${(()=>{if(Array.isArray(workspaceTreeSelectedKeys)&&workspaceTreeSelectedKeys.length){return workspaceTreeSelectedKeys.map(item=>String(item));}const selected=workspaceTreeSelected||{};const key=selected.key||selected.file_id||selected.path||'';return key?[String(key)]:[];})()}",
+          "highlightKeyword": "${workspaceFileTreeKeyword}",
+          "treeData": "${[...workspaceTree]}",
+          "treeKey": "${item.key}",
+          "treeTitle": "${item.title}",
+          "expandAction": [
+            {
+              "tag": "ajax",
+              "enable": "${expanded && !(workspaceFileTreeKeyword&&workspaceFileTreeKeyword.trim()) && node && (node.is_dir==='1'||node.is_dir===1||node.is_dir===true) && !node.__lazy_loaded}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_query",
+              "data": {
+                "project_code": "${project_code || workspaceCurrent}",
+                "parent_id": "${node.file_id}",
+                "keyword": "${workspaceFileTreeKeyword||''}",
+                "pagination": false
+              },
+              "adapt": {
+                "workspaceTreeLazyChildren": "${(()=>{const seen={};return (Array.isArray(data)?data:[]).filter(item=>{const k=String((item&&item.path)||(item&&item.file_id)||'');if(!k||seen[k]){return false;}seen[k]=true;return true;}).map(item=>Object.assign({}, item, { children: undefined, isLeaf: !(item.is_dir==='1'||item.is_dir===1||item.is_dir===true), key: item.file_id, title: item.name, __lazy_loaded: false }));})()}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${expanded && !(workspaceFileTreeKeyword&&workspaceFileTreeKeyword.trim()) && node && !!node.file_id && (node.is_dir==='1'||node.is_dir===1||node.is_dir===true) && !node.__lazy_loaded}",
+              "value": {
+                "workspaceTree": "${(()=>{const setChildren=(nodes)=>{if(!Array.isArray(nodes)){return [];}return nodes.map(n=>{if(!n){return n;}if(n.file_id===node.file_id){return Object.assign({}, n, { children: workspaceTreeLazyChildren||[], __lazy_loaded: true });}if(Array.isArray(n.children)&&n.children.length>0){return Object.assign({}, n, { children: setChildren(n.children) });}return n;});};return setChildren(Array.isArray(workspaceTree)?workspaceTree:[]);})()}"
+              }
+            }
+          ],
+          "dragAction": [
+            {
+              "tag": "check",
+              "check": "${!!(project_code || workspaceCurrent)}",
+              "title": "请先选择项目"
+            },
+            {
+              "tag": "check",
+              "check": "${!!(item&&item.file_id)}",
+              "title": "移动节点不能为空"
+            },
+            {
+              "tag": "ajax",
+              "api": "post:/template_data/data?service=webshell.workspace_file_move_with_sync",
+              "data": {
+                "project_code": "${project_code || workspaceCurrent}",
+                "file_id": "${item&&item.file_id?item.file_id:''}",
+                "target_parent_id": "${parent&&parent.file_id?parent.file_id:''}",
+                "rows": "${rows}",
+                "debug_target": "${target&&target.name?target.name:''}",
+                "debug_drop_position": "${dropPosition}",
+                "debug_drop_to_gap": "${dropToGap}"
+              }
+            },
+            {
+              "tag": "reload-init-action",
+              "group": "reload-workspace-file-tree"
+            }
+          ],
+          "rightMenu": [
+            {
+              "type": "item",
+              "icon": "PlusOutlined",
+              "code": "add",
+              "label": "新增"
+            },
+            {
+              "type": "item",
+              "icon": "EditOutlined",
+              "code": "edit",
+              "label": "编辑"
+            },
+            {
+              "type": "item",
+              "icon": "DeleteOutlined",
+              "code": "delete",
+              "label": "删除"
+            }
+          ],
+          "rightMenuAction": [
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='add'||item.code==='edit'}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_query",
+              "data": {
+                "project_code": "${workspaceCurrent}",
+                "is_dir": "1",
+                "pagination": false
+              },
+              "adapt": {
+                "workspaceFileParentTreeFresh": "${(()=>{const seen={};const src=(Array.isArray(data)?data:[]).filter(raw=>{const k=String((raw&&raw.path)||(raw&&raw.file_id)||'');if(!k||seen[k]){return false;}seen[k]=true;return true;});const map={};src.forEach(raw=>{if(!raw||!raw.file_id){return;}map[String(raw.file_id)]=Object.assign({},raw,{key:raw.file_id,title:raw.name,children:[]});});const roots=[];src.forEach(raw=>{if(!raw||!raw.file_id){return;}const item=map[String(raw.file_id)];const pid=String(raw.parent_id||'');if(pid&&map[pid]){map[pid].children.push(item);}else{roots.push(item);}});const sort=(arr)=>{if(!Array.isArray(arr)){return [];}arr.sort((a,b)=>String(a.title||a.name||'').localeCompare(String(b.title||b.name||'')));arr.forEach(n=>{if(Array.isArray(n.children)&&n.children.length>0){sort(n.children);}else{delete n.children;}});return arr;};return sort(roots);})()}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='add'}",
+              "targetStore": "__parent__",
+              "value": {
+                "workspaceFileOp": "add",
+                "activeStore": "${__this__}",
+                "workspaceFileParentTree": "${Array.isArray(workspaceFileParentTreeFresh)&&workspaceFileParentTreeFresh.length?[...workspaceFileParentTreeFresh]:(Array.isArray(workspaceTree)?[...workspaceTree]:[])}",
+                "workspaceFileCurrentProject": "${workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}}",
+                "workspaceFileCurrentRow": {},
+                "workspaceFileForm": {
+                  "file_id": "",
+                  "project_code": "${workspaceCurrent}",
+                  "name": "",
+                  "path": "${(()=>{const isDir=(v)=>v==='1'||v===1||v===true||v==='true';const find=(arr,id)=>{if(!Array.isArray(arr)||!id){return null;}for(const item of arr){if(!item){continue;}if(String(item.file_id||'')===String(id)){return item;}const child=find(item.children,id);if(child){return child;}}return null;};if(node&&isDir(node.is_dir)&&node.path){return node.path;}if(node&&node.parent_id){const parentNode=find(Array.isArray(workspaceTree)?workspaceTree:[],node.parent_id);if(parentNode&&parentNode.path){return parentNode.path;}}const current=workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{};return current.project_dir||'';})()}",
+                  "parent_id": "${node&&((node.is_dir==='1'||node.is_dir===1||node.is_dir===true||node.is_dir==='true'))?node.file_id:(node&&node.parent_id?node.parent_id:'')}",
+                  "is_dir": "1"
+                },
+                "workspaceFileDialogVisible": true
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='edit'}",
+              "targetStore": "__parent__",
+              "value": {
+                "workspaceFileOp": "edit",
+                "workspaceFileCurrentRow": "${node}",
+                "activeStore": "${__this__}",
+                "workspaceFileParentTree": "${Array.isArray(workspaceFileParentTreeFresh)&&workspaceFileParentTreeFresh.length?[...workspaceFileParentTreeFresh]:(Array.isArray(workspaceTree)?[...workspaceTree]:[])}",
+                "workspaceFileCurrentProject": "${workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}}",
+                "workspaceFileForm": {
+                  "file_id": "${node&&node.file_id?node.file_id:''}",
+                  "project_code": "${workspaceCurrent}",
+                  "name": "${node&&node.name?node.name:(node&&node.title?node.title:'')}",
+                  "path": "${node&&node.path?node.path:''}",
+                  "parent_id": "${node&&node.parent_id?node.parent_id:''}",
+                  "is_dir": "${node&&node.is_dir!==undefined?String(node.is_dir):'1'}"
+                },
+                "workspaceFileDialogVisible": true
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='delete'}",
+              "targetStore": "__parent__",
+              "value": {
+                "workspaceTreeKeepProjectDir": "${(workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}).project_dir||''}",
+                "workspaceTreeKeepExpandPath": "${(()=>{const raw=String(node&&node.path?node.path:'').replace(/\\\\/g,'/');const seg=raw.split('/').filter(Boolean);if(seg.length<=1){return raw.startsWith('/')?'/':'';}return '/' + seg.slice(0,-1).join('/');})()}",
+                "workspaceTreeKeepTargetName": "${(()=>{const raw=String(node&&node.path?node.path:'').replace(/\\\\/g,'/');const seg=raw.split('/').filter(Boolean);return seg.length>1?seg[seg.length-2]:(node&&node.name?node.name:'');})()}",
+                "workspaceTreeKeepTargetPath": "${(()=>{const raw=String(node&&node.path?node.path:'').replace(/\\\\/g,'/');const seg=raw.split('/').filter(Boolean);if(seg.length<=1){return raw.startsWith('/')?'/':'';}return '/' + seg.slice(0,-1).join('/');})()}",
+                "workspaceTreeKeepTargetIsDir": "1"
+              }
+            },
+            {
+              "tag": "confirm",
+              "enable": "${item.code==='delete'}",
+              "title": "确认提示",
+              "content": "${node.is_dir?'确认删除目录【'+(node.name||node.title)+'】吗？删除后将同时删除该目录下所有子目录和文件。':'确认删除文件【'+(node.name||node.title)+'】吗？'}"
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='delete'}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_delete_with_sync",
+              "data": {
+                "project_code": "${workspaceCurrent}",
+                "file_id": "${node&&node.file_id?node.file_id:''}",
+                "path": "${node&&node.path?node.path:''}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='delete'}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_query",
+              "data": {
+                "project_code": "${workspaceCurrent}",
+                "parent_id": "${node&&node.parent_id?node.parent_id:''}",
+                "root_only": "${!(node&&node.parent_id)}",
+                "pagination": false
+              },
+              "adapt": {
+                "workspaceTreeLazyChildren": "${(()=>{const seen={};return (Array.isArray(data)?data:[]).filter(item=>{const k=String((item&&item.path)||(item&&item.file_id)||'');if(!k||seen[k]){return false;}seen[k]=true;return true;}).map(item=>Object.assign({}, item, { children: undefined, isLeaf: !(item.is_dir==='1'||item.is_dir===1||item.is_dir===true), key: item.file_id, title: item.name, __lazy_loaded: false }));})()}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='delete'}",
+              "value": {
+                "workspaceTree": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const targetId=String(node&&node.parent_id?node.parent_id:'');const targetPath=norm(workspaceTreeKeepExpandPath||'');const projectDir=norm(workspaceTreeKeepProjectDir||'');const children=Array.isArray(workspaceTreeLazyChildren)?workspaceTreeLazyChildren:[];if(!targetId&&(!targetPath||(projectDir&&targetPath===projectDir))){return children;}const setChildren=(nodes)=>{if(!Array.isArray(nodes)){return [];}return nodes.map(n=>{if(!n){return n;}const idMatch=targetId&&String(n.file_id||'')===targetId;const pathMatch=targetPath&&norm(n.path||'')===targetPath;if(idMatch||pathMatch){return Object.assign({}, n, { children: children, __lazy_loaded: true });}if(Array.isArray(n.children)&&n.children.length>0){return Object.assign({}, n, { children: setChildren(n.children) });}return n;});};return setChildren(Array.isArray(workspaceTree)?workspaceTree:[]);})()}",
+                "workspaceFileParentTree": "${Array.isArray(workspaceTree)?[...workspaceTree]:[]}",
+                "workspaceTreeSelected": {},
+                "workspaceTreeSelectedKeys": [],
+                "workspaceTreeSelectedRows": []
+              }
+            },
+            {
+              "tag": "method",
+              "enable": "${item.code==='delete' && !!workspaceTreeKeepExpandPath}",
+              "method": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const projectDir=norm(workspaceTreeKeepProjectDir||'');const expandPath=norm(workspaceTreeKeepExpandPath||'');const targetName=String(workspaceTreeKeepTargetName||'').trim();const relative=expandPath&&projectDir&&expandPath.indexOf(projectDir)===0?expandPath.slice(projectDir.length):expandPath;const chain=relative.split('/').filter(Boolean);const getSwitcher=(titleEl,root)=>{let node=titleEl;while(node&&node!==root){if(node.classList&&node.classList.contains('ant-tree-treenode')){const list=node.getElementsByClassName('ant-tree-switcher');return list&&list.length>0?list[0]:null;}node=node.parentElement;}return null;};let tick=0;const tryRestore=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return false;}const root=doc.querySelector('.workspace-source-tree');if(!root){return false;}for(const seg of chain){const titles=[...root.querySelectorAll('.ant-tree-title')].filter(el=>String((el.textContent||'')).trim()===seg);for(const titleEl of titles){const switcher=getSwitcher(titleEl,root);if(!switcher||typeof switcher.click!=='function'){continue;}const cls=String(switcher.className||'');if(cls.indexOf('ant-tree-switcher_close')>=0){switcher.click();return false;}}}if(targetName){const target=[...root.querySelectorAll('.ant-tree-title')].find(el=>String((el.textContent||'')).trim()===targetName);if(target&&typeof target.click==='function'){target.click();return true;}}return chain.length===0||tick>6;};const timer=window.setInterval(()=>{tick+=1;const ok=tryRestore();if(ok||tick>=28){window.clearInterval(timer);}},240);window.setTimeout(tryRestore,180);})()}"
+            }
+          ],
+          "keyboardAction": [
+            {
+              "tag": "check",
+              "enable": "${item.code==='delete'||item.code==='copy'}",
+              "check": "${(Array.isArray(rows)?rows:[]).filter(item=>item&&item.file_id).length>0}",
+              "title": "请先选择文件或目录"
+            },
+            {
+              "tag": "check",
+              "enable": "${item.code==='paste'}",
+              "check": "${Array.isArray(workspaceTreeClipboardRows)&&workspaceTreeClipboardRows.length>0}",
+              "title": "请先复制文件或目录"
+            },
+            {
+              "tag": "check",
+              "enable": "${item.code==='paste'}",
+              "check": "${!workspaceTreeClipboardProject||workspaceTreeClipboardProject===workspaceCurrent}",
+              "title": "只能在同一个项目内粘贴"
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='copy'}",
+              "value": {
+                "workspaceTreeClipboardRows": "${(Array.isArray(rows)?rows:[]).filter(item=>item&&item.file_id).map(item=>Object.assign({},item))}",
+                "workspaceTreeClipboardProject": "${workspaceCurrent}",
+                "workspaceTreeClipboardTime": "${uuid()}"
+              }
+            },
+            {
+              "tag": "message",
+              "enable": "${item.code==='copy'}",
+              "type": "success",
+              "content": "${'已复制 '+((Array.isArray(rows)?rows:[]).filter(item=>item&&item.file_id).length)+' 个文件/目录'}"
+            },
+            {
+              "tag": "confirm",
+              "enable": "${item.code==='delete'}",
+              "title": "确认删除",
+              "content": "${(()=>{const count=(Array.isArray(rows)?rows:[]).filter(item=>item&&item.file_id).length;return '确认删除 '+count+' 个文件/目录吗？目录会同时删除其子目录和文件。';})()}",
+              "okText": "删除",
+              "okButtonProps": {
+                "danger": true
+              }
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='delete'}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_delete_with_sync",
+              "showResultMsg": true,
+              "data": {
+                "project_code": "${workspaceCurrent}",
+                "file_id_list": "${(Array.isArray(rows)?rows:[]).map(item=>item&&item.file_id).filter(Boolean)}",
+                "path_list": "${(Array.isArray(rows)?rows:[]).map(item=>item&&item.path).filter(Boolean)}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='delete'}",
+              "value": {
+                "workspaceTreeSelected": {},
+                "workspaceTreeSelectedKeys": [],
+                "workspaceTreeSelectedRows": []
+              }
+            },
+            {
+              "tag": "reload-init-action",
+              "enable": "${item.code==='delete'}",
+              "group": "reload-workspace-file-tree"
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='paste'}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_copy_with_sync",
+              "showResultMsg": true,
+              "data": {
+                "project_code": "${workspaceCurrent}",
+                "target_parent_id": "${(()=>{const isDir=(v)=>v==='1'||v===1||v===true||v==='true';const target=node||{};if(target&&target.file_id&&isDir(target.is_dir)){return target.file_id;}return target&&target.parent_id?target.parent_id:'';})()}",
+                "file_id_list": "${(Array.isArray(workspaceTreeClipboardRows)?workspaceTreeClipboardRows:[]).map(item=>item&&item.file_id).filter(Boolean)}"
+              },
+              "adapt": {
+                "workspaceTreePasteTargetParentId": "${(()=>{const isDir=(v)=>v==='1'||v===1||v===true||v==='true';const target=node||{};if(target&&target.file_id&&isDir(target.is_dir)){return target.file_id;}return target&&target.parent_id?target.parent_id:'';})()}",
+                "workspaceTreePasteTargetParentPath": "${(()=>{const remote=(data&&data.remote_result)||{};if(remote.target_parent_path){return remote.target_parent_path;}const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const dirname=(p)=>{const raw=norm(p);const seg=raw.split('/').filter(Boolean);if(seg.length<=1){return raw.startsWith('/')?'/':'';}return '/' + seg.slice(0,-1).join('/');};const isDir=(v)=>v==='1'||v===1||v===true||v==='true';const target=node||{};if(target&&target.path&&isDir(target.is_dir)){return norm(target.path);}if(target&&target.path){return dirname(target.path);}return (workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}).project_dir||'';})()}",
+                "workspaceTreePasteProjectDir": "${(workspaceOptions.find(item=>item.project_code===workspaceCurrent)||{}).project_dir||''}",
+                "workspaceTreePastedRows": "${(()=>{const copied=((((data||{}).remote_result)||{}).copied)||[];const isDir=(v)=>v==='1'||v===1||v===true||v==='true';return (Array.isArray(copied)?copied:[]).map(item=>{const p=String((item&&item.target_path)||(item&&item.path)||'');const name=String((item&&item.name)||p.split('/').pop()||'');return Object.assign({}, item, { path:p, target_path:p, key:(item&&item.file_id)||p, title:name, name:name, isLeaf: !isDir(item&&item.is_dir), __lazy_loaded:false });});})()}",
+                "workspaceTreePasteSelectedKeys": "${(()=>{const copied=((((data||{}).remote_result)||{}).copied)||[];const rows=Array.isArray(copied)?copied.filter(item=>item&&item.file_id):[];return rows.length?[rows[rows.length-1].file_id]:[];})()}",
+                "workspaceTreePasteTargetName": "${(()=>{const copied=((((data||{}).remote_result)||{}).copied)||[];const last=(Array.isArray(copied)&&copied.length)?copied[copied.length-1]:{};const p=String((last&&last.target_path)||(last&&last.path)||'');return String((last&&last.name)||p.split('/').pop()||'');})()}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='paste'}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_query",
+              "data": {
+                "project_code": "${workspaceCurrent}",
+                "parent_id": "${workspaceTreePasteTargetParentId||''}",
+                "root_only": "${!workspaceTreePasteTargetParentId}",
+                "pagination": false
+              },
+              "adapt": {
+                "workspaceTreeLazyChildren": "${(()=>{const seen={};return (Array.isArray(data)?data:[]).filter(item=>{const k=String((item&&item.path)||(item&&item.file_id)||'');if(!k||seen[k]){return false;}seen[k]=true;return true;}).map(item=>Object.assign({}, item, { children: undefined, isLeaf: !(item.is_dir==='1'||item.is_dir===1||item.is_dir===true), key: item.file_id, title: item.name, __lazy_loaded: false }));})()}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='paste'}",
+              "value": {
+                "workspaceTree": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const targetId=String(workspaceTreePasteTargetParentId||'');const targetPath=norm(workspaceTreePasteTargetParentPath||'');const projectDir=norm(workspaceTreePasteProjectDir||'');const children=Array.isArray(workspaceTreeLazyChildren)?workspaceTreeLazyChildren:[];if(!targetId&&(!targetPath||(projectDir&&targetPath===projectDir))){return children;}const setChildren=(nodes)=>{if(!Array.isArray(nodes)){return [];}return nodes.map(n=>{if(!n){return n;}const idMatch=targetId&&String(n.file_id||'')===targetId;const pathMatch=targetPath&&norm(n.path||'')===targetPath;if(idMatch||pathMatch){return Object.assign({}, n, { children: children, __lazy_loaded: true });}if(Array.isArray(n.children)&&n.children.length>0){return Object.assign({}, n, { children: setChildren(n.children) });}return n;});};return setChildren(Array.isArray(workspaceTree)?workspaceTree:[]);})()}",
+                "workspaceTreeSelected": "${(()=>{const rows=Array.isArray(workspaceTreePastedRows)?workspaceTreePastedRows:[];return rows.length?Object.assign({}, rows[rows.length-1]):{};})()}",
+                "workspaceTreeSelectedKeys": "${Array.isArray(workspaceTreePasteSelectedKeys)?workspaceTreePasteSelectedKeys:[]}",
+                "workspaceTreeSelectedRows": "${(()=>{const rows=Array.isArray(workspaceTreePastedRows)?workspaceTreePastedRows:[];return rows.length?[Object.assign({}, rows[rows.length-1])]:[];})()}"
+              }
+            },
+            {
+              "tag": "method",
+              "enable": "${item.code==='paste' && !!workspaceTreePasteTargetName}",
+              "method": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const projectDir=norm(workspaceTreePasteProjectDir||'');const expandPath=norm(workspaceTreePasteTargetParentPath||'');const targetName=String(workspaceTreePasteTargetName||'').trim();const relative=expandPath&&projectDir&&expandPath.indexOf(projectDir)===0?expandPath.slice(projectDir.length):expandPath;const chain=relative.split('/').filter(Boolean);const getSwitcher=(titleEl,root)=>{let node=titleEl;while(node&&node!==root){if(node.classList&&node.classList.contains('ant-tree-treenode')){const list=node.getElementsByClassName('ant-tree-switcher');return list&&list.length>0?list[0]:null;}node=node.parentElement;}return null;};let tick=0;const tryRestore=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return false;}const root=doc.querySelector('.workspace-source-tree');if(!root){return false;}for(const seg of chain){const titles=[...root.querySelectorAll('.ant-tree-title')].filter(el=>String((el.textContent||'')).trim()===seg);for(const titleEl of titles){const switcher=getSwitcher(titleEl,root);if(!switcher||typeof switcher.click!=='function'){continue;}const cls=String(switcher.className||'');if(cls.indexOf('ant-tree-switcher_close')>=0){switcher.click();return false;}}}const selected=root.querySelector('.ant-tree-node-selected .ant-tree-title');if(selected&&(!targetName||String((selected.textContent||'')).trim()===targetName)){if(typeof selected.scrollIntoView==='function'){selected.scrollIntoView({block:'nearest'});}if(typeof selected.click==='function'){selected.click();return true;}}if(targetName){const target=[...root.querySelectorAll('.ant-tree-title')].find(el=>String((el.textContent||'')).trim()===targetName);if(target&&typeof target.click==='function'){target.click();return true;}}return chain.length===0||tick>6;};const timer=window.setInterval(()=>{tick+=1;const ok=tryRestore();if(ok||tick>=28){window.clearInterval(timer);}},240);window.setTimeout(tryRestore,180);})()}"
+            }
+          ],
+          "selectAction": [
+            {
+              "tag": "update-store",
+              "value": {
+                "workspaceTreeSelected": "${Object.assign({}, row, { title: row.title||row.name||((row.path||'').split('/').pop()), is_dir: row.is_dir })}",
+                "workspaceTreeSelectedKeys": "${Array.isArray(selectedKeys)?selectedKeys:[]}",
+                "workspaceTreeSelectedRows": "${Array.isArray(rows)?rows.map(item=>Object.assign({}, item, { title: item.title||item.name||((item.path||'').split('/').pop()), is_dir: item.is_dir })):[]}",
+                "workspaceActivePath": "${row.path}",
+                "workspaceActiveName": "${row.title||row.name||((row.path||'').split('/').pop())}",
+                "workspaceCurrentFilePath": "${row.path}",
+                "workspaceToken": "${uuid()}",
+                "workspaceHasOpenToken": ""
+              }
+            },
+            {
+              "tag": "method",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "method": "${(()=>{const activePath=String(row.path||workspaceActivePath||'');const activeName=String(row.title||row.name||((row.path||'').split('/').pop())||workspaceActiveName||'');const clonePanels=(Array.isArray(workspacePanelList)?workspacePanelList:[]).map(g=>Object.assign({},g,{children:(Array.isArray(g&&g.children)?g.children:[]).map(s=>Object.assign({},s,{content:(Array.isArray(s&&s.content)?s.content:[]).map(i=>Object.assign({},i))}))}));let group=clonePanels.find(item=>String(item&&item.id||'')===String(workspaceLastGroupId||''))||clonePanels[0];if(!group){group={id:uuid(),order:1,description:'横向分组',children:[]};clonePanels.push(group);}if(!Array.isArray(group.children)){group.children=[];}let shell=group.children.find(item=>String(item&&item.id||'')===String(workspaceLastShellId||''))||group.children[0];if(!shell){shell={id:uuid(),order:1,description:'纵向分组',activeKey:'',content:[]};group.children.push(shell);}if(!Array.isArray(shell.content)){shell.content=[];}const existed=shell.content.find(item=>String(item&&item.path||'')===activePath);if(existed){shell.activeKey=String(existed.token||'');}else{const token=String(workspaceToken||uuid());shell.content=[...shell.content,{token:token,title:activeName,path:activePath,project_code:workspaceCurrent}];shell.activeKey=token;}store.setValue('workspacePanelList',clonePanels);window.setTimeout(()=>{const current=Array.isArray(store.getValue('workspacePanelList'))?store.getValue('workspacePanelList'):[];current.forEach(item=>item&&item.initialize&&item.initialize());},0);store.setValue('workspaceLastGroupId',String(group&&group.id||''));store.setValue('workspaceLastShellId',String(shell&&shell.id||''));store.setValue('workspaceHasOpenToken',String(shell&&shell.activeKey||''));store.setValue('workspaceCurrentFilePath',activePath);store.setValue('workspaceActivePath',activePath);store.setValue('workspaceActiveName',activeName);})()}"
+            },
+            {
+              "tag": "arr-push",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true) && workspacePanelList.length<=0}",
+              "from": "workspacePanelList",
+              "value": {
+                "id": "${uuid()}",
+                "order": 1,
+                "description": "横向分组",
+                "children": [
+                  {
+                    "id": "${uuid()}",
+                    "order": 1,
+                    "description": "纵向分组",
+                    "activeKey": "${workspaceToken}",
+                    "content": [
+                      {
+                        "token": "${workspaceToken}",
+                        "title": "${workspaceActiveName}",
+                        "path": "${workspaceActivePath}",
+                        "project_code": "${workspaceCurrent}"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "tag": "method",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "method": "${workspacePanelList.forEach(item=>item.initialize())}"
+            },
+            {
+              "tag": "ajax",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "api": "post:/template_data/data?service=webshell.workspace_file_recent_open",
+              "data": {
+                "project_code": "${project_code || workspaceCurrent}",
+                "file_path": "${workspaceActivePath}",
+                "file_name": "${workspaceActiveName}"
+              }
+            },
+            {
+              "tag": "reload-init-action",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "group": "reload-workspace-recent-files"
+            }
+          ]
+        }
+      ],
+      "bottomToolBar": [
+        {
+          "tag": "layout-fit",
+          "title": "最近常用文件",
+          "collapsible": true,
+          "collapsed": false,
+          "collapseTrigger": "icon",
+          "style": {
+            "minHeight": "120px",
+            "maxHeight": "260px",
+            "overflow": "auto"
+          },
+          "children": [
+            {
+              "tag": "listview",
+              "itemData": "${[...workspaceRecentFileList]}",
+              "keyField": "recent_id",
+              "rowClickAction": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "workspaceTreeSelected": "${Object.assign({}, row, { path: row.file_path, title: row.file_name, is_dir: '0' })}",
+                    "workspaceTreeSelectedKeys": [],
+                    "workspaceTreeSelectedRows": [],
+                    "workspaceActivePath": "${row.file_path}",
+                    "workspaceActiveName": "${row.file_name||((row.file_path||'').split('/').pop())}",
+                    "workspaceCurrentFilePath": "${row.file_path}",
+                    "workspaceOpenPath": "${row.file_path}",
+                    "workspaceOpenLineNumber": "${Number(row.line_no||1)||1}",
+                    "workspaceOpenLocationNonce": "${uuid()}",
+                    "workspaceToken": "${uuid()}",
+                    "workspaceHasOpenToken": ""
+                  }
+                },
+                {
+                  "tag": "method",
+                  "method": "${(()=>{const activePath=String(row.file_path||workspaceActivePath||'');const activeName=String(row.file_name||((row.file_path||'').split('/').pop())||workspaceActiveName||'');const clonePanels=(Array.isArray(workspacePanelList)?workspacePanelList:[]).map(g=>Object.assign({},g,{children:(Array.isArray(g&&g.children)?g.children:[]).map(s=>Object.assign({},s,{content:(Array.isArray(s&&s.content)?s.content:[]).map(i=>Object.assign({},i))}))}));let group=clonePanels.find(item=>String(item&&item.id||'')===String(workspaceLastGroupId||''))||clonePanels[0];if(!group){group={id:uuid(),order:1,description:'横向分组',children:[]};clonePanels.push(group);}if(!Array.isArray(group.children)){group.children=[];}let shell=group.children.find(item=>String(item&&item.id||'')===String(workspaceLastShellId||''))||group.children[0];if(!shell){shell={id:uuid(),order:1,description:'纵向分组',activeKey:'',content:[]};group.children.push(shell);}if(!Array.isArray(shell.content)){shell.content=[];}const existed=shell.content.find(item=>String(item&&item.path||'')===activePath);if(existed){shell.activeKey=String(existed.token||'');}else{const token=String(workspaceToken||uuid());shell.content=[...shell.content,{token:token,title:activeName,path:activePath,project_code:project_code||workspaceCurrent}];shell.activeKey=token;}store.setValue('workspacePanelList',clonePanels);window.setTimeout(()=>{const current=Array.isArray(store.getValue('workspacePanelList'))?store.getValue('workspacePanelList'):[];current.forEach(item=>item&&item.initialize&&item.initialize());},0);store.setValue('workspaceLastGroupId',String(group&&group.id||''));store.setValue('workspaceLastShellId',String(shell&&shell.id||''));store.setValue('workspaceHasOpenToken',String(shell&&shell.activeKey||''));store.setValue('workspaceCurrentFilePath',activePath);store.setValue('workspaceActivePath',activePath);store.setValue('workspaceActiveName',activeName);if(Number(row.line_no||0)>0){window.__workspaceOpenLineRequest={path:activePath,line:Number(row.line_no||1)||1,nonce:String(Date.now())+'-'+String(Math.random()).slice(2)};}})()}"
+                },
+                {
+                  "tag": "arr-push",
+                  "enable": "${workspacePanelList.length<=0}",
+                  "from": "workspacePanelList",
+                  "value": {
+                    "id": "${uuid()}",
+                    "order": 1,
+                    "description": "横向分组",
+                    "children": [
+                      {
+                        "id": "${uuid()}",
+                        "order": 1,
+                        "description": "纵向分组",
+                        "activeKey": "${workspaceToken}",
+                        "content": [
+                          {
+                            "token": "${workspaceToken}",
+                            "title": "${workspaceActiveName}",
+                            "path": "${workspaceActivePath}",
+                            "project_code": "${project_code || workspaceCurrent}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tag": "method",
+                  "method": "${workspacePanelList.forEach(item=>item.initialize())}"
+                },
+                {
+                  "tag": "ajax",
+                  "api": "post:/template_data/data?service=webshell.workspace_file_recent_open",
+                  "data": {
+                    "project_code": "${project_code || workspaceCurrent}",
+                    "file_path": "${workspaceActivePath}",
+                    "file_name": "${workspaceActiveName}"
+                  }
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "reload-workspace-recent-files"
+                }
+              ],
+              "itemAttr": {
+                "tag": "div",
+                "visible": "${!!row.file_path}",
+                "style": {
+                  "padding": "4px 8px",
+                  "borderBottom": "1px solid #f3f4f6",
+                  "cursor": "pointer"
+                },
+                "children": [
+                  {
+                    "tag": "div",
+                    "style": {
+                      "display": "flex",
+                      "alignItems": "center",
+                      "justifyContent": "space-between",
+                      "fontSize": "12px",
+                      "fontWeight": 500,
+                      "whiteSpace": "nowrap",
+                      "overflow": "hidden",
+                      "textOverflow": "ellipsis"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "style": {
+                          "whiteSpace": "nowrap",
+                          "overflow": "hidden",
+                          "textOverflow": "ellipsis",
+                          "paddingRight": "8px"
+                        },
+                        "children": "${row.file_name||((row.file_path||'').split('/').pop())}"
+                      },
+                      {
+                        "tag": "span",
+                        "style": {
+                          "fontSize": "10px",
+                          "fontWeight": 400,
+                          "color": "#475569",
+                          "background": "#e2e8f0",
+                          "padding": "0 6px",
+                          "borderRadius": "10px",
+                          "lineHeight": "16px",
+                          "flexShrink": 0
+                        },
+                        "children": "${'打开'+(row.open_count||0)+'次'}"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "style": {
+                      "display": "flex",
+                      "alignItems": "center",
+                      "justifyContent": "space-between",
+                      "fontSize": "11px",
+                      "color": "#6b7280",
+                      "whiteSpace": "nowrap",
+                      "overflow": "hidden",
+                      "textOverflow": "ellipsis"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "style": {
+                          "whiteSpace": "nowrap",
+                          "overflow": "hidden",
+                          "textOverflow": "ellipsis",
+                          "paddingRight": "8px",
+                          "direction": "rtl",
+                          "textAlign": "left"
+                        },
+                        "children": "${(row.file_path||'').replace(/^\\/+/, '').replace(/\\/+$/, '')}"
+                      },
+                      {
+                        "tag": "button",
+                        "type": "text",
+                        "size": "small",
+                        "icon": "DeleteOutlined",
+                        "stopPropagation": true,
+                        "action": [
+                          {
+                            "tag": "ajax",
+                            "showResultMsg": true,
+                            "api": "post:/template_data/data?service=webshell.workspace_file_recent_delete",
+                            "data": {
+                              "project_code": "${project_code || workspaceCurrent}",
+                              "recent_id": "${row.recent_id}"
+                            }
+                          },
+                          {
+                            "tag": "reload-init-action",
+                            "group": "reload-workspace-recent-files"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "action": []
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "title": "内容搜索",
+      "width": "60%",
+      "footer": false,
+      "open": "${workspaceContentSearchVisible}",
+      "cancelAction": [
+        {
+          "tag": "update-store",
+          "value": {
+            "workspaceContentSearchVisible": false
+          }
+        },
+        {
+          "tag": "method",
+          "method": "${(()=>{const sync=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return;}const hide=!!doc.querySelector('.ant-modal-wrap');const nodes=[...doc.querySelectorAll('.webshell-container .co-ui-panel-resize,.webshell-container .panel-resize,.webshell-container .Resizer')];const fixedHandles=[...doc.querySelectorAll('div')].filter(el=>{const st=window.getComputedStyle(el);const r=el.getBoundingClientRect();if(st.position!=='fixed'){return false;}if(!(st.cursor==='grab'||st.cursor==='col-resize'||st.cursor==='ew-resize'||st.cursor==='row-resize'||st.cursor==='ns-resize')){return false;}if(r.width<=14&&r.height>120){return true;}if(r.height<=14&&r.width>120){return true;}return false;});[...nodes,...fixedHandles].forEach(el=>{el.style.opacity=hide?'0':'1';el.style.pointerEvents=hide?'none':'';});};window.setTimeout(sync,0);window.setTimeout(sync,120);window.setTimeout(sync,360);})()}"
+        }
+      ],
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "workspaceContentSearchVisible": false
+          }
+        },
+        {
+          "tag": "method",
+          "method": "${(()=>{const sync=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return;}const hide=!!doc.querySelector('.ant-modal-wrap');const nodes=[...doc.querySelectorAll('.webshell-container .co-ui-panel-resize,.webshell-container .panel-resize,.webshell-container .Resizer')];const fixedHandles=[...doc.querySelectorAll('div')].filter(el=>{const st=window.getComputedStyle(el);const r=el.getBoundingClientRect();if(st.position!=='fixed'){return false;}if(!(st.cursor==='grab'||st.cursor==='col-resize'||st.cursor==='ew-resize'||st.cursor==='row-resize'||st.cursor==='ns-resize')){return false;}if(r.width<=14&&r.height>120){return true;}if(r.height<=14&&r.width>120){return true;}return false;});[...nodes,...fixedHandles].forEach(el=>{el.style.opacity=hide?'0':'1';el.style.pointerEvents=hide?'none':'';});};window.setTimeout(sync,0);window.setTimeout(sync,120);window.setTimeout(sync,360);})()}"
+        }
+      ],
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "height": "68vh",
+            "overflow": "hidden",
+            "background": "#f8fafc",
+            "border": "1px solid #e2e8f0",
+            "borderRadius": "12px",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+            {
+              "tag": "form",
+              "name": "workspace-content-search-form",
+              "layout": "inline",
+              "style": {
+                "padding": "8px 10px 6px 10px",
+                "gap": "6px",
+                "position": "sticky",
+                "top": 0,
+                "zIndex": 6,
+                "background": "linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)",
+                "borderBottom": "1px solid #e2e8f0"
+              },
+              "initialValues": "${workspaceContentSearchForm}",
+              "submitOnEnter": true,
+              "action": [
+                {
+                  "tag": "check",
+                  "check": "${!!(project_code || workspaceCurrent)}",
+                  "title": "请先选择项目"
+                },
+                {
+                  "tag": "check",
+                  "check": "${(()=>{const v=(getFormValue('workspace-content-search-form','keyword')||'').trim();return v.length>=2;})()}",
+                  "title": "关键字至少2个字符"
+                },
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "workspaceContentSearchLoading": true,
+                    "workspaceContentSearchError": "",
+                    "workspaceContentSearchVisible": true
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "showResultMsg": true,
+                  "api": "post:/template_data/data?service=webshell.workspace_file_content_search",
+                  "data": {
+                    "project_code": "${project_code || workspaceCurrent}",
+                    "keyword": "${(getFormValue('workspace-content-search-form','keyword')||'').trim()}",
+                    "include_glob": "${(getFormValue('workspace-content-search-form','include_glob')||'').trim()}",
+                    "match_case": "${!!getFormValue('workspace-content-search-form','match_case')}",
+                    "max_results": "${Number(getFormValue('workspace-content-search-form','max_results')||100)}",
+                    "max_scan_files": 5000,
+                    "context_lines": 3
+                  },
+                  "adapt": {
+                    "workspaceContentSearchLoading": "${false}",
+                    "workspaceContentSearchError": "${''}",
+                    "workspaceContentSearchSummary": "${data&&data.summary?data.summary:{}}",
+                    "workspaceContentSearchResults": "${Array.isArray(data&&data.items)?data.items:[]}",
+                    "workspaceContentSearchForm": "${(()=>{return {keyword:(getFormValue('workspace-content-search-form','keyword')||'').trim(),include_glob:(getFormValue('workspace-content-search-form','include_glob')||'').trim(),match_case:!!getFormValue('workspace-content-search-form','match_case'),max_results:Number(getFormValue('workspace-content-search-form','max_results')||100)};})()}"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "keyword",
+                  "style": {
+                    "marginBottom": 0
+                  },
+                  "children": [
+                    {
+                      "tag": "input",
+                      "size": "small",
+                      "allowClear": true,
+                      "placeholder": "输入关键字(至少2个字符)",
+                      "style": {
+                        "width": "240px"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "name": "include_glob",
+                  "style": {
+                    "marginBottom": 0
+                  },
+                  "children": [
+                    {
+                      "tag": "select",
+                      "size": "small",
+                      "allowClear": true,
+                      "placeholder": "后缀筛选(可选)",
+                      "style": {
+                        "width": "170px"
+                      },
+                      "options": [
+                        {
+                          "label": "全部后缀",
+                          "value": ""
+                        },
+                        {
+                          "label": "Python (*.py)",
+                          "value": "*.py"
+                        },
+                        {
+                          "label": "SQL (*.sql)",
+                          "value": "*.sql"
+                        },
+                        {
+                          "label": "Go (*.go)",
+                          "value": "*.go"
+                        },
+                        {
+                          "label": "TypeScript (*.ts)",
+                          "value": "*.ts"
+                        },
+                        {
+                          "label": "TSX (*.tsx)",
+                          "value": "*.tsx"
+                        },
+                        {
+                          "label": "JavaScript (*.js)",
+                          "value": "*.js"
+                        },
+                        {
+                          "label": "Vue (*.vue)",
+                          "value": "*.vue"
+                        },
+                        {
+                          "label": "JSON (*.json)",
+                          "value": "*.json"
+                        },
+                        {
+                          "label": "Properties (*.properties)",
+                          "value": "*.properties"
+                        },
+                        {
+                          "label": "应用配置(conf/application.properties)",
+                          "value": "conf/application.properties"
+                        },
+                        {
+                          "label": "YAML (*.yaml,*.yml)",
+                          "value": "*.yaml,*.yml"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "name": "match_case",
+                  "style": {
+                    "marginBottom": 0
+                  },
+                  "children": [
+                    {
+                      "tag": "switch",
+                      "size": "small",
+                      "checkedChildren": "区分大小写",
+                      "unCheckedChildren": "忽略大小写"
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "name": "max_results",
+                  "style": {
+                    "marginBottom": 0
+                  },
+                  "children": [
+                    {
+                      "tag": "select",
+                      "size": "small",
+                      "style": {
+                        "width": "100px"
+                      },
+                      "options": [
+                        {
+                          "label": "50条",
+                          "value": 50
+                        },
+                        {
+                          "label": "100条",
+                          "value": 100
+                        },
+                        {
+                          "label": "200条",
+                          "value": 200
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "style": {
+                    "marginBottom": 0,
+                    "marginInlineEnd": "4px"
+                  },
+                  "children": [
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "type": "primary",
+                      "icon": "SearchOutlined",
+                      "children": "搜索",
+                      "submit": true,
+                      "action": [
+                        {
+                          "tag": "check",
+                          "check": "${!!(project_code || workspaceCurrent)}",
+                          "title": "请先选择项目"
+                        },
+                        {
+                          "tag": "check",
+                          "check": "${(()=>{const v=(getFormValue('workspace-content-search-form','keyword')||'').trim();return v.length>=2;})()}",
+                          "title": "关键字至少2个字符"
+                        },
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "workspaceContentSearchLoading": true,
+                            "workspaceContentSearchError": "",
+                            "workspaceContentSearchVisible": true
+                          }
+                        },
+                        {
+                          "tag": "ajax",
+                          "showResultMsg": true,
+                          "api": "post:/template_data/data?service=webshell.workspace_file_content_search",
+                          "data": {
+                            "project_code": "${project_code || workspaceCurrent}",
+                            "keyword": "${(getFormValue('workspace-content-search-form','keyword')||'').trim()}",
+                            "include_glob": "${(getFormValue('workspace-content-search-form','include_glob')||'').trim()}",
+                            "match_case": "${!!getFormValue('workspace-content-search-form','match_case')}",
+                            "max_results": "${Number(getFormValue('workspace-content-search-form','max_results')||100)}",
+                            "max_scan_files": 5000,
+                            "context_lines": 3
+                          },
+                          "adapt": {
+                            "workspaceContentSearchLoading": "${false}",
+                            "workspaceContentSearchError": "${''}",
+                            "workspaceContentSearchSummary": "${data&&data.summary?data.summary:{}}",
+                            "workspaceContentSearchResults": "${Array.isArray(data&&data.items)?data.items:[]}",
+                            "workspaceContentSearchForm": "${(()=>{return {keyword:(getFormValue('workspace-content-search-form','keyword')||'').trim(),include_glob:(getFormValue('workspace-content-search-form','include_glob')||'').trim(),match_case:!!getFormValue('workspace-content-search-form','match_case'),max_results:Number(getFormValue('workspace-content-search-form','max_results')||100)};})()}"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "style": {
+                    "marginBottom": 0,
+                    "marginInlineEnd": 0
+                  },
+                  "children": [
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "children": "清空",
+                      "action": [
+                        {
+                          "tag": "reset-form",
+                          "formName": "workspace-content-search-form"
+                        },
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "workspaceContentSearchLoading": false,
+                            "workspaceContentSearchError": "",
+                            "workspaceContentSearchSummary": {},
+                            "workspaceContentSearchResults": []
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "fontSize": "11px",
+                "color": "#64748b",
+                "padding": "6px 10px 6px 10px",
+                "background": "#ffffff",
+                "borderBottom": "1px solid #e2e8f0",
+                "lineHeight": "16px"
+              },
+              "children": "${(()=>{const s=workspaceContentSearchSummary||{};if(!s||Object.keys(s).length===0){return '';};const matched=Number(s.matched_files||0);const hit=Number(s.hit_count||0);const scanned=Number(s.scanned_files||0);const duration=Number(s.duration_ms||0);const tail=s.truncated?'，结果已截断':'';return '命中文件 '+matched+'，命中 '+hit+'，扫描 '+scanned+'，耗时 '+duration+'ms'+tail;})()}"
+            },
+            {
+              "tag": "div",
+              "visible": "${workspaceContentSearchLoading}",
+              "style": {
+                "padding": "6px 10px",
+                "fontSize": "12px",
+                "color": "#334155",
+                "background": "#ffffff",
+                "borderBottom": "1px solid #e2e8f0"
+              },
+              "children": "正在搜索..."
+            },
+            {
+              "tag": "listview",
+              "itemData": "${Array.isArray(workspaceContentSearchResults)?workspaceContentSearchResults:[]}",
+              "virtual": {
+                "enabled": true,
+                "height": 560,
+                "defaultItemHeight": 166,
+                "overscan": 380
+              },
+              "keyField": "file_path",
+              "rowClickAction": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "workspaceContentSearchVisible": false
+                  }
+                },
+                {
+                  "tag": "method",
+                  "method": "${(()=>{const sync=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return;}const hide=!!doc.querySelector('.ant-modal-wrap');const nodes=[...doc.querySelectorAll('.webshell-container .co-ui-panel-resize,.webshell-container .panel-resize,.webshell-container .Resizer')];const fixedHandles=[...doc.querySelectorAll('div')].filter(el=>{const st=window.getComputedStyle(el);const r=el.getBoundingClientRect();if(st.position!=='fixed'){return false;}if(!(st.cursor==='grab'||st.cursor==='col-resize'||st.cursor==='ew-resize'||st.cursor==='row-resize'||st.cursor==='ns-resize')){return false;}if(r.width<=14&&r.height>120){return true;}if(r.height<=14&&r.width>120){return true;}return false;});[...nodes,...fixedHandles].forEach(el=>{el.style.opacity=hide?'0':'1';el.style.pointerEvents=hide?'none':'';});};window.setTimeout(sync,0);window.setTimeout(sync,120);window.setTimeout(sync,360);})()}"
+                },
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "workspaceTreeSelected": "${Object.assign({}, row, { path: row.file_path, title: row.file_name, is_dir: '0' })}",
+                    "workspaceTreeSelectedKeys": [],
+                    "workspaceTreeSelectedRows": [],
+                    "workspaceActivePath": "${row.file_path}",
+                    "workspaceActiveName": "${row.file_name||((row.file_path||'').split('/').pop())}",
+                    "workspaceCurrentFilePath": "${row.file_path}",
+                    "workspaceToken": "${uuid()}",
+                    "workspaceHasOpenToken": ""
+                  }
+                },
+                {
+                  "tag": "method",
+                  "method": "${(()=>{const activePath=String(row.file_path||workspaceActivePath||'');const activeName=String(row.file_name||((row.file_path||'').split('/').pop())||workspaceActiveName||'');const clonePanels=(Array.isArray(workspacePanelList)?workspacePanelList:[]).map(g=>Object.assign({},g,{children:(Array.isArray(g&&g.children)?g.children:[]).map(s=>Object.assign({},s,{content:(Array.isArray(s&&s.content)?s.content:[]).map(i=>Object.assign({},i))}))}));let group=clonePanels.find(item=>String(item&&item.id||'')===String(workspaceLastGroupId||''))||clonePanels[0];if(!group){group={id:uuid(),order:1,description:'横向分组',children:[]};clonePanels.push(group);}if(!Array.isArray(group.children)){group.children=[];}let shell=group.children.find(item=>String(item&&item.id||'')===String(workspaceLastShellId||''))||group.children[0];if(!shell){shell={id:uuid(),order:1,description:'纵向分组',activeKey:'',content:[]};group.children.push(shell);}if(!Array.isArray(shell.content)){shell.content=[];}const existed=shell.content.find(item=>String(item&&item.path||'')===activePath);if(existed){shell.activeKey=String(existed.token||'');}else{const token=String(workspaceToken||uuid());shell.content=[...shell.content,{token:token,title:activeName,path:activePath,project_code:project_code||workspaceCurrent}];shell.activeKey=token;}store.setValue('workspacePanelList',clonePanels);window.setTimeout(()=>{const current=Array.isArray(store.getValue('workspacePanelList'))?store.getValue('workspacePanelList'):[];current.forEach(item=>item&&item.initialize&&item.initialize());},0);store.setValue('workspaceLastGroupId',String(group&&group.id||''));store.setValue('workspaceLastShellId',String(shell&&shell.id||''));store.setValue('workspaceHasOpenToken',String(shell&&shell.activeKey||''));store.setValue('workspaceCurrentFilePath',activePath);store.setValue('workspaceActivePath',activePath);store.setValue('workspaceActiveName',activeName);if(Number(row.line_no||0)>0){window.__workspaceOpenLineRequest={path:activePath,line:Number(row.line_no||1)||1,nonce:String(Date.now())+'-'+String(Math.random()).slice(2)};}})()}"
+                },
+                {
+                  "tag": "arr-push",
+                  "enable": "${workspacePanelList.length<=0}",
+                  "from": "workspacePanelList",
+                  "value": {
+                    "id": "${uuid()}",
+                    "order": 1,
+                    "description": "横向分组",
+                    "children": [
+                      {
+                        "id": "${uuid()}",
+                        "order": 1,
+                        "description": "纵向分组",
+                        "activeKey": "${workspaceToken}",
+                        "content": [
+                          {
+                            "token": "${workspaceToken}",
+                            "title": "${workspaceActiveName}",
+                            "path": "${workspaceActivePath}",
+                            "project_code": "${project_code || workspaceCurrent}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tag": "method",
+                  "method": "${workspacePanelList.forEach(item=>item.initialize())}"
+                },
+                {
+                  "tag": "ajax",
+                  "api": "post:/template_data/data?service=webshell.workspace_file_recent_open",
+                  "data": {
+                    "project_code": "${project_code || workspaceCurrent}",
+                    "file_path": "${workspaceActivePath}",
+                    "file_name": "${workspaceActiveName}"
+                  }
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "reload-workspace-recent-files"
+                }
+              ],
+              "itemAttr": {
+                "tag": "div",
+                "style": {
+                  "margin": "6px 8px",
+                  "padding": "8px 10px",
+                  "border": "1px solid #e2e8f0",
+                  "borderRadius": "8px",
+                  "background": "#ffffff",
+                  "boxShadow": "0 1px 2px rgba(15,23,42,0.04)",
+                  "cursor": "pointer"
+                },
+                "children": [
+                  {
+                    "tag": "div",
+                    "style": {
+                      "display": "flex",
+                      "alignItems": "center",
+                      "justifyContent": "space-between",
+                      "fontSize": "12px",
+                      "fontWeight": 600,
+                      "color": "#1e293b",
+                      "gap": "8px"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "style": {
+                          "whiteSpace": "nowrap",
+                          "overflow": "hidden",
+                          "textOverflow": "ellipsis"
+                        },
+                        "children": "${row.file_name||((row.file_path||'').split('/').pop())}"
+                      },
+                      {
+                        "tag": "span",
+                        "style": {
+                          "fontSize": "11px",
+                          "color": "#1d4ed8",
+                          "background": "#dbeafe",
+                          "padding": "1px 6px",
+                          "borderRadius": "999px",
+                          "fontWeight": 600,
+                          "flexShrink": 0
+                        },
+                        "children": "${'第'+(row.line_no||0)+'行'}"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "style": {
+                      "fontSize": "11px",
+                      "color": "#64748b",
+                      "marginTop": "4px",
+                      "padding": "2px 6px",
+                      "background": "#f8fafc",
+                      "borderRadius": "4px",
+                      "whiteSpace": "nowrap",
+                      "overflow": "hidden",
+                      "textOverflow": "ellipsis"
+                    },
+                    "children": "${(row.path||row.file_path||'').replace(/^\\/+/, '').replace(/\\/+$/, '')}"
+                  },
+                  {
+                    "tag": "pre",
+                    "visible": "${!!row.before_text}",
+                    "style": {
+                      "margin": "4px 0 0 0",
+                      "padding": "6px 8px",
+                      "background": "#f8fafc",
+                      "border": "1px solid #e2e8f0",
+                      "borderBottom": "0",
+                      "borderRadius": "6px 6px 0 0",
+                      "fontSize": "11px",
+                      "lineHeight": "17px",
+                      "whiteSpace": "pre-wrap",
+                      "wordBreak": "break-word",
+                      "fontFamily": "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
+                      "color": "#64748b"
+                    },
+                    "children": "${row.before_text}"
+                  },
+                  {
+                    "tag": "div",
+                    "style": {
+                      "margin": "0",
+                      "padding": "6px 8px",
+                      "background": "#fff7ed",
+                      "border": "1px solid #fed7aa",
+                      "borderRadius": "0",
+                      "fontSize": "11px",
+                      "lineHeight": "17px",
+                      "whiteSpace": "pre-wrap",
+                      "wordBreak": "break-word",
+                      "fontFamily": "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
+                      "color": "#9a3412"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "children": "${(()=>{const text=String(row.match_text||'');const form=workspaceContentSearchForm||{};const keyword=String(form.keyword||'').trim();if(!keyword){return text;}const matchCase=!!form.match_case;const source=matchCase?text:text.toLowerCase();const key=matchCase?keyword:keyword.toLowerCase();const idx=source.indexOf(key);if(idx<0){return text;}return text.slice(0,idx);})()}"
+                      },
+                      {
+                        "tag": "span",
+                        "visible": "${(()=>{const text=String(row.match_text||'');const form=workspaceContentSearchForm||{};const keyword=String(form.keyword||'').trim();if(!keyword){return false;}const matchCase=!!form.match_case;const source=matchCase?text:text.toLowerCase();const key=matchCase?keyword:keyword.toLowerCase();return source.indexOf(key)>=0;})()}",
+                        "style": {
+                          "background": "#fde68a",
+                          "borderRadius": "3px",
+                          "padding": "0 2px",
+                          "fontWeight": 700,
+                          "color": "#7c2d12"
+                        },
+                        "children": "${(()=>{const text=String(row.match_text||'');const form=workspaceContentSearchForm||{};const keyword=String(form.keyword||'').trim();if(!keyword){return '';}const matchCase=!!form.match_case;const source=matchCase?text:text.toLowerCase();const key=matchCase?keyword:keyword.toLowerCase();const idx=source.indexOf(key);if(idx<0){return '';}return text.slice(idx,idx+keyword.length);})()}"
+                      },
+                      {
+                        "tag": "span",
+                        "children": "${(()=>{const text=String(row.match_text||'');const form=workspaceContentSearchForm||{};const keyword=String(form.keyword||'').trim();if(!keyword){return '';}const matchCase=!!form.match_case;const source=matchCase?text:text.toLowerCase();const key=matchCase?keyword:keyword.toLowerCase();const idx=source.indexOf(key);if(idx<0){return '';}return text.slice(idx+keyword.length);})()}"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "pre",
+                    "visible": "${!!row.after_text}",
+                    "style": {
+                      "margin": "0",
+                      "padding": "6px 8px",
+                      "background": "#f8fafc",
+                      "border": "1px solid #e2e8f0",
+                      "borderTop": "0",
+                      "borderRadius": "0 0 6px 6px",
+                      "fontSize": "11px",
+                      "lineHeight": "17px",
+                      "whiteSpace": "pre-wrap",
+                      "wordBreak": "break-word",
+                      "fontFamily": "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace",
+                      "color": "#64748b"
+                    },
+                    "children": "${row.after_text}"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "editorTextIncludesContinue": true,
+    "toolFloatDoesNotOverlapEditor": true,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  "layout": {
+    "float": null,
+    "editor": {
+      "top": 819.296875,
+      "bottom": 914,
+      "height": 94.703125
+    },
+    "overlap": false
+  },
+  "screenshotPath": "test/lowcode-page/results/latest/agent-regression-validation/agent-http-192-input-not-covered-check.png"
+}

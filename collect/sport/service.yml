@@ -1,0 +1,17 @@
+# 项目点路由
+service:
+  - name: "训练项目"
+    path: "training_project/index.yml"
+  - name: "课程"
+    path: "course/index.yml"
+  - name: "课程签到"
+    path: "course_attendance/index.yml"
+
+  - name: "上传"
+    path: "upload/index.yml"
+
+  - name: "课程视频"
+    path: "course_video/index.yml"
+
+  - name: "课程成绩"
+    path: "course_grade/index.yml"

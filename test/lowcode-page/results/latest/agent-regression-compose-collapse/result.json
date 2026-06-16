@@ -1,0 +1,70 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/agent_regression",
+  "loginResult": {
+    "success": false,
+    "skipped": true,
+    "reason": "login failed: 【admin】用户名不存在"
+  },
+  "paneAResult": {
+    "before": {
+      "composeHeight": 292,
+      "messageHeight": 481,
+      "collapsed": false,
+      "quickRowVisible": true,
+      "editorVisible": true,
+      "collapseButtonVisible": true,
+      "expandButtonVisible": false
+    },
+    "collapsed": {
+      "composeHeight": 45,
+      "messageHeight": 728,
+      "collapsed": true,
+      "quickRowVisible": false,
+      "editorVisible": false,
+      "collapseButtonVisible": false,
+      "expandButtonVisible": true
+    },
+    "expanded": {
+      "composeHeight": 292,
+      "messageHeight": 481,
+      "collapsed": false,
+      "quickRowVisible": true,
+      "editorVisible": true,
+      "collapseButtonVisible": true,
+      "expandButtonVisible": false
+    }
+  },
+  "paneBResult": {
+    "before": {
+      "composeHeight": 292,
+      "messageHeight": 481,
+      "collapsed": false,
+      "quickRowVisible": true,
+      "editorVisible": true,
+      "collapseButtonVisible": true,
+      "expandButtonVisible": false
+    },
+    "collapsed": {
+      "composeHeight": 45,
+      "messageHeight": 728,
+      "collapsed": true,
+      "quickRowVisible": false,
+      "editorVisible": false,
+      "collapseButtonVisible": false,
+      "expandButtonVisible": true
+    },
+    "expanded": {
+      "composeHeight": 292,
+      "messageHeight": 481,
+      "collapsed": false,
+      "quickRowVisible": true,
+      "editorVisible": true,
+      "collapseButtonVisible": true,
+      "expandButtonVisible": false
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-compose-collapse/compose-collapse-20260525091542.png"
+}

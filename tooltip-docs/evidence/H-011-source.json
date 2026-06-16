@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "active_tab_text": "params2result",
+  "title": "params2result(多参数转结果)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "将参数中的多个字段返回"
+  ],
+  "textarea_count": 3,
+  "textarea_values": [
+    "handler_params:\n      - key: params2result\n        fields:\n          - from: \"{{.userid}}\"\n            to: userid\n          - from: \"{{.user_id}}\"\n            to: user_id\n          - from: \"{{.nick}}\"\n            to: nick\n          - from: \"{{.username}}\"\n            to: username",
+    "将参数中的多个字段返回",
+    "- key: params2result\n        fields:\n          - from: \"[change_list]\"\n            to: change_list\n          - from: \"[local_detail_list]\"\n            to: local_detail_list"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "params2result"
+        ],
+        [
+          "fields",
+          "array",
+          "是",
+          "返回参数的内容"
+        ],
+        [
+          "fields[from]",
+          "template",
+          "是",
+          "来源哪个字段，支持[你的变量]"
+        ],
+        [
+          "fields[to]",
+          "string",
+          "是",
+          "目标字段"
+        ]
+      ]
+    }
+  ],
+  "body_text": "params2result(多参数转结果)  \n示例\n将参数中的多个字段返回\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nparams2result\n\n\nfields\n\t\narray\n\t\n是\n\t\n返回参数的内容\n\n\nfields[from]\n\t\ntemplate\n\t\n是\n\t\n来源哪个字段，支持[你的变量]\n\n\nfields[to]\n\t\nstring\n\t\n是\n\t\n目标字段\n示例\n1. 使用[变量]\n菜单导航\n示例\n参数\n示例\n1.使用[变量]",
+  "task_id": "H-011",
+  "source_group": "参数处理",
+  "source_title": "params2result",
+  "source_doc_text": "8.params2result\n多参数转结果",
+  "read_at": "2026-05-07T08:21:31.286Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-011-source.png"
+}

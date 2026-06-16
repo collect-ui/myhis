@@ -1,0 +1,68 @@
+{
+  "ok": true,
+  "active_tab_text": "什么是参数处理",
+  "title": "什么是参数处理(服务描述)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "handler_params 针对请求参数处理，模块执行前的处理。",
+    "result_handler 针对结果执行后进行处理，模块执行后的处理。",
+    "handler_params和result_handler 可以通过service2field调用内部任何服务"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "handler_params\n  - key：xxx\nresult_handler:\n  - key:xxx",
+    "参数处理是对请求参数进行二次处理，增加、修改、校验一些字段。\n    我们一般执行模块前，一般前台传过来数据对象，不完全符合我们的预期。比如前台的编码唯一，一般是后台保证，查一下数据库，然后校验一波。前台提交过来的对象，几乎都不是单表保存，数据可能需要保存到好几张表，我们需要根据参数中部分字段存到特定的表里。我之前遇到一个编辑传的全量数据的接口，需要保存20-30张表，根据字段标志存到不同的表\n参数处理，是对前台传过来的参数进行特殊处理。\n  1.比如前台传了一个ID数组列表，我们需要转换成一个数组对象，批量存入数据表\n  2.比如我们要查询一个接口，来校验编码是否唯一\n参数处理包括2个部分，请求参数处理，就是模块执行前进行参数处理。结果处理，就是执行完成，针对结果进行处理。\nkey:xxx 表示用xxx处理器进行处理\n是一个数组，表示可以接入多个处理器"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "运行哪个参数处理器，核心字段，根据这个参数决定运行哪个代码"
+        ],
+        [
+          "enable",
+          "template",
+          "",
+          "判断这个参数是否可以用，可以用 [你的变量]，一般会配置个enable 变量，则 [enable],比模板快些"
+        ],
+        [
+          "template",
+          "template",
+          "",
+          "判断参数处理器的结果是否正常，true 表示正常，false表示异常。模板生成数据。系统里面template类型 是采用golang 模板https://pkg.go.dev/text/template。通过计算返回值，同时也增加额外模板自定义函数，详情见模块【模板函数】"
+        ],
+        [
+          "err_msg",
+          "template",
+          "",
+          "错误提示信息"
+        ],
+        [
+          "save_field",
+          "string",
+          "",
+          "如果有结果，结果存储在哪个字段"
+        ]
+      ]
+    }
+  ],
+  "body_text": "什么是参数处理(服务描述)  \n示例\nhandler_params 针对请求参数处理，模块执行前的处理。\nresult_handler 针对结果执行后进行处理，模块执行后的处理。\nhandler_params和result_handler 可以通过service2field调用内部任何服务\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\n运行哪个参数处理器，核心字段，根据这个参数决定运行哪个代码\n\n\nenable\n\t\ntemplate\n\t\n\t\n判断这个参数是否可以用，可以用 [你的变量]，一般会配置个enable 变量，则 [enable],比模板快些\n\n\ntemplate\n\t\ntemplate\n\t\n\t\n判断参数处理器的结果是否正常，true 表示正常，false表示异常。模板生成数据。系统里面template类型 是采用golang 模板https://pkg.go.dev/text/template。通过计算返回值，同时也增加额外模板自定义函数，详情见模块【模板函数】\n\n\nerr_msg\n\t\ntemplate\n\t\n\t\n错误提示信息\n\n\nsave_field\n\t\nstring\n\t\n\t\n如果有结果，结果存储在哪个字段\n菜单导航\n示例\n参数\n示例",
+  "task_id": "K-004",
+  "source_group": "如何编写服务",
+  "source_title": "什么是参数处理",
+  "source_doc_text": "3.什么是参数处理\n服务描述",
+  "read_at": "2026-05-07T08:22:08.106Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/K-004-source.png"
+}

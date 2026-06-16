@@ -1,0 +1,740 @@
+{
+  "tag": "layout-fit",
+  "initStore": {
+    "searchForm": {
+      "search": ""
+    },
+    "panelList": [],
+    "lastGroupId": "",
+    "lastSubGroupId": "",
+    "lastWebshellToken": "",
+    "lastWebshellTitle": "",
+    "panelKeyList": [],
+    "subMap": {},
+    "lastNewKey": "",
+    "addNodeForm": {
+      "type": "1",
+      "server_env_id": null,
+      "parent_id": null,
+      "server_env_code": "",
+      "server_env_name": "",
+      "order_id": 0,
+      "server_busi_name": "",
+      "server_ip": "",
+      "root_username": "",
+      "root_password": "",
+      "normal_username": "",
+      "normal_password": ""
+    },
+    "updateNodeForm": {},
+    "treeSelected": {
+      "server_id": null,
+      "server_env_id": null
+    },
+    "addNodeVisible": false,
+    "nodeOp": "add",
+    "server_env_data": [],
+    "env_data": [],
+    "loginVisible": false,
+    "userList": [],
+    "lastDblData": {},
+    "last_webshell_token": "",
+    "last_webshell_x": 0,
+    "last_webshell_y": 0,
+    "fileManageShow": false,
+    "last_webshell_title": "",
+    "fileInfoList": [],
+    "current_dir": "",
+    "lastRightSsh": [],
+    "lastDownloadRowName": "",
+    "downloadingPercent": 0,
+    "project_list": []
+  },
+  "initAction": [
+
+    {
+      "tag": "ajax",
+      "description": "获取项目列表",
+      "group": "project_list",
+      "api": "post:/template_data/data?service=autodesk.price_doc_project_query",
+      "adapt": {
+        "project_list": "${data}"
+      }
+    },
+    {
+      "tag": "update-form",
+      "enable": "${getFormValue('server-search-form','project_id')?false:true}",
+      "description": "设置第一个项目project_id",
+      "formName": "server-search-form",
+      "value": {
+        "project_id": "${project_list[0].price_doc_project_id}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${project_list.length>0}",
+      "description": "请求目录树",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=autodesk.price_doc_tree_query",
+      "appendFormFields": "server-search-form",
+      "data": {
+        "to_tree":true
+      },
+      "adapt": {
+        "server_env_data": "${data}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "layout",
+      "children": [
+        {
+          "tag": "sider",
+          "width": "320px",
+          "className": "border-right",
+          "style": {
+            "backgroundColor": "#fafafa"
+          },
+          "collapsible": true,
+          "collapsedWidth": "40",
+          "children": [
+            {
+              "tag": "layout-fit",
+              "searchToolBar": [
+                {
+                  "tag": "row",
+                  "children": [
+                    {
+                      "tag": "upload",
+                      "uploadConfig": {
+                        "showUploadList": false,
+                        "api": "post:/template_data/data?service=autodesk.doc_tree_save_all"
+                      },
+                      "finish_action":[
+                        {
+                          "tag": "reload-init-action",
+                          "group": "*"
+                        }
+                      ],
+                      "children": [
+
+                        {
+                          "tag": "button",
+                          "style": {
+                            "margin": "0px 0px 10px"
+                          },
+                          "icon": "ImportOutlined",
+                          "type": "primary",
+                          "danger": true,
+                          "children": "导入目录"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "form",
+                  "name": "server-search-form",
+                  "initialValues": "${searchForm}",
+                  "wrapperCol": {
+                    "span": 24
+                  },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "查询"
+                    }
+                  ],
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "project_id",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "placeholder": "请选择价格库",
+                          "fieldNames":{
+                            "label": "name",
+                            "value": "price_doc_project_id"
+                          },
+                          "options": "${project_list}"
+                        }
+                      ]
+                    },
+
+
+                    {
+                      "tag": "row",
+                      "className": "w100",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "style": {
+                            "marginInlineEnd": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "icon": "FaPlus",
+                              "title": "新增节点",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "addNodeVisible": true
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "add-node-form"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "add-node-form",
+                                  "value": {
+                                    "parent_id": "${treeSelected.server_env_id}",
+                                    "server_env_id": "${treeSelected.server_env_id}",
+                                    "type": "${treeSelected.server_id?'2':'1'}"
+                                  }
+                                }
+
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "search",
+                          "className": "flex1",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "名称",
+                              "allowClear": true
+                            }
+                          ]
+                        }
+
+                      ]
+                    }
+
+
+                  ]
+                }
+              ],
+              "children": [
+
+                {
+                  "tag": "tree",
+                  "showLine": true,
+                  "className": "h100",
+                  "treeSelected": "${treeSelected}",
+
+                  "treeKey": "${item.price_doc_tree_id}",
+                  "treeTitle": "${item.name}",
+                  "treeData":"${server_env_data}",
+                  "openLevel": 1,
+                  "selectAction": [
+                    {
+                      "tag": "update-store",
+                      "targetStore": "priceList",
+                      "value": {
+                        "treeSelected": "${selected?row:{}}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "targetStore": "priceList",
+                      "group": "*"
+                    }
+                  ],
+                  "rightMenu": [
+                    {
+                      "type": "item",
+                      "icon": "PlusOutlined",
+                      "code": "add",
+                      "label": "新增数据"
+                    },
+                    {
+                      "type": "item",
+                      "icon": "EditOutlined",
+                      "code": "edit",
+                      "label": "修改数据"
+                    },
+                    {
+                      "type": "separator"
+                    },
+                    {
+                      "type": "submenu",
+                      "label": "其他",
+                      "children": [
+                        {
+                          "type": "item",
+                          "icon": "DeleteOutlined",
+                          "code": "delete",
+                          "label": "删除数据"
+                        }
+                      ]
+                    }
+                  ],
+                  "rightMenuAction": [
+                    {
+                      "tag": "reset-form",
+                      "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='add'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "add",
+                        "updateNodeForm": {}
+                      }
+                    },
+                    {
+                      "enable": "${item.code==='add'}",
+                      "tag": "update-form",
+                      "formName": "add-node-form",
+                      "value": {
+                        "parent_id": "${node.price_doc_tree_id}"
+
+                      }
+                    },
+
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='edit'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "edit",
+                        "updateNodeForm": "${node}"
+                      }
+                    },
+
+                    {
+                      "tag": "update-form",
+                      "name": " 更新表单",
+                      "enable": "${item.code==='edit'}",
+                      "formName": "add-node-form",
+                      "useStore": true,
+                      "value": "${updateNodeForm}"
+                    },
+                    {
+                      "tag": "check",
+                      "enable": "${item.code=='delete' && node?.children }",
+                      "title": "${'【'+node.name+'】下存在'+node?.children.length+'个节点，请先删除节点'}",
+                      "check": "${!node.children || (node.children && node.children.length<=0)}"
+                    },
+                    {
+                      "tag": "confirm",
+                      "title": "确认提示",
+                      "content": "${'确认删除所选【'+node.name+'】节点吗'}",
+                      "enable": "${item.code==='delete'}"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "删除环境",
+                      "enable": "${item.code=='delete'}",
+                      "group": "server-env-tree",
+                      "api": "post:/template_data/data?service=autodesk.priceDocTreeDelete",
+                      "data": {
+                        "price_doc_tree_id_list": "${[node.price_doc_tree_id]}"
+                      }
+                    },
+
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "enable": "${item.code=='delete'}",
+                      "description": "页面初始化请求"
+                    }
+                  ]
+                },
+                {
+                  "tag": "dialog",
+                  "title": "${nodeOp==='add'?'新增节点':'修改节点'}",
+                  "open": "${addNodeVisible}",
+                  "action": [
+                    {
+                      "tag": "submit-form",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "添加环境节点",
+                      "enable": "${nodeOp==='add'}",
+                      "api": "post:/template_data/data?service=autodesk.priceDocTreeSave",
+                      "appendFormFields": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "修改环境节点",
+                      "enable": "${nodeOp==='edit'}",
+                      "api": "post:/template_data/data?service=autodesk.priceDocTreeUpdate",
+                      "appendFormFields": "add-node-form",
+
+                      "appendFields": "${updateNodeForm}"
+                    },
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "addNodeVisible": false
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "form",
+                      "name": "add-node-form",
+                      "initialValues": "${addNodeForm}",
+                      "labelCol": {
+                        "span": 4
+                      },
+                      "wrapperCol": {
+                        "span": 20
+                      },
+                      "children": [
+
+                        {
+                          "tag": "form-item",
+                          "name": "parent_id",
+                          "label": "上级",
+                          "children": [
+                            {
+                              "tag": "tree-select",
+                              "placeholder": "请输入名称",
+                              "allowClear": true,
+                              "openLevel": 2,
+                              "valueKey": "${item.price_doc_tree_id}",
+                              "treeTitle": "${item.name}",
+                              "treeIcon": "FolderOutlined",
+                              "treeData": "${server_env_data}",
+                              "treeLine": true,
+                              "showIcon": true,
+                              "showSearch": true
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "name",
+                          "label": "名称",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "名称不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入名称"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "order_index",
+                          "label": "排序",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "isNumber": true,
+                              "placeholder": "请输入排序"
+                            }
+                          ]
+                        }
+
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "content",
+          "style": {
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+            {
+              "tag": "layout-fit",
+              "className": "border",
+              "title": "${treeSelected.price_doc_tree_id?'价格库【'+treeSelected.name+'】':'价格库'}",
+              "storeName": "priceList",
+              "initStore": {
+                "selection": [],
+                "dataList": [
+
+                ],
+                "treeSelected": {},
+                "searchForm": {
+                  "search": "",
+                  "page": 1,
+                  "size": 20
+                },
+                "count": 0
+              },
+              "initAction": [
+                {
+                  "tag": "ajax",
+                  "group": "price-doc-list",
+                  "api": "post:/template_data/data?service=autodesk.doc_price_query",
+                  "appendFormFields": "price-search-form",
+                  "appendFields": "${searchForm}",
+                  "data": {
+                     "doc_tree_id": "${treeSelected.price_doc_tree_id}"
+                  },
+                  "adapt": {
+                    "dataList": "${data}",
+                    "count": "${count}"
+                  }
+                }
+              ],
+              "topRight": [
+
+                {
+                  "tag": "upload",
+                  "uploadConfig": {
+                    "showUploadList": false,
+                    "api": "post:/template_data/data?service=autodesk.doc_price_save_all"
+                  },
+                  "finish_action":[
+                    {
+                      "tag": "reload-init-action",
+                      "group": "*"
+                    }
+                  ],
+                  "children": [
+
+                    {
+                      "tag": "button",
+                      "style": {
+                        "margin": "0px 0px 10px"
+                      },
+                      "icon": "ImportOutlined",
+                      "type": "primary",
+                      "danger": true,
+                      "children": "导入价格库"
+                    }
+                  ]
+                }
+              ],
+              "searchToolBar": [
+                {
+                  "tag": "form",
+                  "name": "price-search-form",
+                  "initialValues": "${searchForm}",
+                  "labelCol": {
+                    "span": 4
+                  },
+                  "wrapperCol": {
+                    "span": 19
+                  },
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "row",
+                      "children": [
+                        {
+                          "tag": "col",
+                          "span": 10,
+                          "children": [
+                            {
+                              "tag": "form-item",
+                              "name": "search",
+                              "label": "搜索",
+                              "children": [
+                                {
+                                  "tag": "input",
+                                  "placeholder": "编码/名称",
+                                  "allowClear": true
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "col",
+                          "span": 10,
+                          "children": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "children": "搜索",
+                              "icon": "FaSearch",
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "price-doc-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "action": [
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "price-search-form"
+                                }
+                              ],
+                              "icon": "FaUndo",
+                              "children": "重置"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "children": [
+                {
+                  "tag": "table",
+                  "selection": "${selection}",
+                  "rowSelection": "multiple",
+                  "rowData": "${dataList}",
+                  "columnDefs": [
+                    {
+                      "headerName": "#",
+                      "width": 60,
+                      "suppressSizeToFit": true,
+                      "valueGetter": "node.rowIndex + 1",
+                      "sortable": false,
+                      "pinned": "left"
+                    },
+                    {
+                      "pinned": "left",
+                      "width": 150,
+                      "suppressSizeToFit": true,
+                      "checkboxSelection": true,
+                      "headerCheckboxSelection": true,
+                      "headerName": "编号",
+                      "field": "code"
+                    },
+                    {
+                      "width": 200,
+                      "suppressSizeToFit": true,
+                      "headerName": "名称",
+                      "field": "name"
+                    },
+                    {
+                      "width": 100,
+                      "suppressSizeToFit": true,
+                      "headerName": "单位",
+                      "field": "unit"
+
+                    },
+                    {
+                      "width": 100,
+                      "suppressSizeToFit": true,
+                      "headerName": "价格",
+                      "field": "price"
+                    },
+                    {
+                      "headerName": "目录",
+                      "field": "ancestors"
+                    },
+                    {
+                      "headerName": "操作",
+                      "width": 200,
+                      "suppressSizeToFit": true,
+                      "field": "op",
+                      "cellRender": [
+                        {
+                          "tag": "button",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "dialogVisible": true,
+                                "op": "edit"
+                              }
+                            },
+                            {
+                              "tag": "reset-form",
+                              "formName": "opForm"
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "opForm",
+                              "value": "${row}"
+                            }
+                          ],
+                          "type": "primary",
+                          "size": "small",
+                          "children": "编辑"
+                        },
+                        {
+                          "tag": "button",
+                          "danger": true,
+                          "size": "small",
+                          "children": [
+                            "删除"
+                          ],
+                          "confirm": {
+                            "title": "确认删除吗？",
+                            "description": "${'确认删除【'+row.nick+'（'+row.username+'）】记录吗？'}"
+                          },
+                          "action": [
+                            {
+                              "tag": "ajax",
+                              "description": "删除用户",
+                              "api": "post:/template_data/data?service=hrm.delete_user_by_user_id_list",
+                              "data": {
+                                "user_id_list": "${[row.user_id]}"
+                              }
+                            },
+                            {
+                              "tag": "reload-init-action",
+                              "group": "price-doc-list",
+                              "description": "页面初始化请求"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "bottomToolBar": [
+                {
+                  "tag": "pagination",
+                  "showSizeChanger": true,
+                  "align": "right",
+                  "pageSize": "${searchForm.size}",
+                  "current": "${searchForm.page}",
+                  "total": "${count}",
+                  "showTotal": true,
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "price-doc-list",
+                      "description": "页面初始化请求"
+                    }
+                  ]
+                }
+              ]
+            }
+
+          ]
+        }
+      ]
+    }
+  ]
+}

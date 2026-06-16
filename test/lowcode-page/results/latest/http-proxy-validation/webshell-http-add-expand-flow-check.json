@@ -1,0 +1,31 @@
+{
+  "caseName": "ui_expand_1777945861380",
+  "pass": true,
+  "createdId": "14beac4e-54ae-48db-9374-2681f6a22504",
+  "detailRequestModel": {
+    "uri": "file:///workspace-http-request-14beac4e-54ae-48db-9374-2681f6a22504.json",
+    "value": "{}"
+  },
+  "detailMethodText": "POST",
+  "detailPathText": "/template_data/data",
+  "detailDoc": {
+    "code": "{}",
+    "code_desc": "",
+    "code_result": "",
+    "collect_doc_id": "14beac4e-54ae-48db-9374-2681f6a22504",
+    "create_time": "2026-05-05 09:51:07",
+    "create_user": "",
+    "is_delete": "0",
+    "order_index": "1",
+    "parent_dir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+    "request_headers": "{}",
+    "request_method": "post",
+    "request_mode": "frontend",
+    "request_url": "/template_data/data",
+    "sub_title": "",
+    "title": "ui_expand_1777945861380",
+    "type": "2"
+  },
+  "deleteOk": true,
+  "errors": []
+}

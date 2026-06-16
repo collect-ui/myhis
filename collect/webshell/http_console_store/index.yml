@@ -1,0 +1,31 @@
+service:
+  - key: http_console_store_query
+    http: true
+    module: empty
+    params:
+      target_file:
+        default: "./test2/http_console_store.json"
+    handler_params:
+      - key: read_file
+        value: "[target_file]"
+        save_field: content
+      - key: param2result
+        field: "[content]"
+
+  - key: http_console_store_save
+    http: true
+    module: empty
+    params:
+      target_file:
+        default: "./test2/http_console_store.json"
+      content:
+        check:
+          template: "{{must .content}}"
+          err_msg: "content 不能为空"
+    handler_params:
+      - key: local_file_write
+        field: "[target_file]"
+        value: "[content]"
+        save_field: save_result
+      - key: param2result
+        field: "[save_result]"

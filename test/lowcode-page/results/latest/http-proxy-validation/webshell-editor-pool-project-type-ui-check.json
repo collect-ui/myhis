@@ -1,0 +1,48 @@
+{
+  "pass": true,
+  "pageUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "startedAt": "2026-05-11T14:01:50.539Z",
+  "steps": {
+    "apiProjectTypeCheck": true,
+    "openProjectManage": true,
+    "openProjectDialog": true,
+    "verifyTypeOptions": true,
+    "verifyPythonVisibility": true,
+    "verifyGoVisibility": true,
+    "verifyFrontendVisibility": true
+  },
+  "details": {
+    "projectTypeByCode": {
+      "test": "python",
+      "autodesk": "go",
+      "frontend": "frontend",
+      "auto-check": "go",
+      "backend": "python",
+      "sport-ui": "frontend",
+      "collect-ui": "frontend"
+    },
+    "dropdownOptions": [
+      "Go 项目",
+      "Python 项目",
+      "前端项目",
+      "Node 项目",
+      "Java 项目"
+    ],
+    "pythonMode": {
+      "pythonPkgPathVisible": true,
+      "goCollectPathVisible": false
+    },
+    "goMode": {
+      "goCollectPathVisible": true,
+      "pythonPkgPathVisible": false
+    },
+    "frontendMode": {
+      "goCollectPathVisible": false,
+      "pythonPkgPathVisible": false
+    }
+  },
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-project-type-ui-check.png",
+  "error": "",
+  "endedAt": "2026-05-11T14:01:56.021Z"
+}

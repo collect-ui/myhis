@@ -1,0 +1,38 @@
+{
+  "pass": true,
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "targetFile": "/data/project/moongod-backend/backend/config/service_imp/request_handlers/handlers/render_doc_tpl.py",
+  "startedAt": "2026-05-06T12:34:16.290Z",
+  "before": {
+    "language": "python",
+    "uri": "file:///virtual/workspace-editor-pool-gssvvlx0/slot-1.txt",
+    "line1": "# -*- coding: utf-8 -*-",
+    "line2": "import os",
+    "line3": "from datetime import datetime"
+  },
+  "dirty": {
+    "line1": "# -*- coding: utf-8 -*-",
+    "line2": "import os  ",
+    "line3": "",
+    "line4": ""
+  },
+  "after": {
+    "language": "python",
+    "uri": "file:///virtual/workspace-editor-pool-gssvvlx0/slot-1.txt",
+    "line1": "# -*- coding: utf-8 -*-",
+    "line2": "import os",
+    "line3": "",
+    "line4": ""
+  },
+  "checks": {
+    "changedByFormat": true,
+    "hasTrailingSpacesLine2": false,
+    "hasInsertedBlankLine3": true,
+    "normalized": true
+  },
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-format-render-doc-tpl-2026-05-06T12-34-16-194Z.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "finishedAt": "2026-05-06T12:34:26.268Z"
+}

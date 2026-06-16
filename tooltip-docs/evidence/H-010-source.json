@@ -1,0 +1,48 @@
+{
+  "ok": true,
+  "active_tab_text": "param2result",
+  "title": "param2result(参数转结果)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "参数中的某个字段转结果"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "result_handler:\n      - key: param2result\n        field: \"[access_token]\"",
+    "参数中字段转结果，一般用于只需要返回一个字段"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "param2result"
+        ],
+        [
+          "field",
+          "string",
+          "是",
+          "[你参数变量]"
+        ]
+      ]
+    }
+  ],
+  "body_text": "param2result(参数转结果)  \n示例\n参数中的某个字段转结果\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nparam2result\n\n\nfield\n\t\nstring\n\t\n是\n\t\n[你参数变量]\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-010",
+  "source_group": "参数处理",
+  "source_title": "param2result",
+  "source_doc_text": "7.param2result\n参数转结果",
+  "read_at": "2026-05-07T08:21:27.080Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-010-source.png"
+}

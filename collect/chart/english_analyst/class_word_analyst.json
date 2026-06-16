@@ -1,0 +1,129 @@
+{
+  "legend": {
+    "show": false
+  },
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "label": {
+        "show": true,
+        "backgroundColor": "#fff",
+        "color": "#556677",
+        "borderColor": "rgba(0,0,0,0)",
+        "shadowColor": "rgba(0,0,0,0)",
+        "shadowOffsetY": 0
+      },
+      "lineStyle": {
+        "width": 0
+      }
+    },
+    "backgroundColor": "#fff",
+    "textStyle": {
+      "color": "#5c6c7c"
+    },
+    "padding": [10, 10],
+    "extraCssText": "box-shadow: 1px 0 2px 0 rgba(163,163,163,0.5)"
+  },
+  "grid": {
+    "top": "15%",
+    "bottom": "18%",
+    "left": "5%",
+    "right": "15%"
+  },
+  "xAxis": [{
+    "name": "词汇量",
+    "type": "category",
+    "data": ["300~500", "500~700", "700~900", "900~1100", "1100~1500", "1500~2000"],
+    "nameTextStyle": {
+      "fontSize": 14
+    },
+    "axisLine": {
+      "lineStyle": {
+        "width": 2,
+        "color": "#3EB4E8"
+      }
+    },
+    "axisTick": {
+      "show": true
+    },
+    "axisLabel": {
+      "textStyle": {
+        "color": "#fff"
+      },
+      "fontSize": 12,
+      "margin": 10,
+      "interval": 0
+    },
+    "boundaryGap": false
+  }],
+  "yAxis": [{
+    "type": "value",
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false,
+      "lineStyle": {
+        "width": 2,
+        "color": "#3EB4E8"
+      }
+    },
+    "axisLabel": {
+      "show": false,
+      "textStyle": {
+        "color": "#fff"
+      },
+      "fontSize": 12,
+      "margin": 15
+    },
+    "splitLine": {
+      "show": false,
+      "width": 0.5,
+      "color": "#707070"
+    }
+  }],
+  "series": [{
+    "name": "占比",
+    "type": "line",
+    "stack": "all",
+    "data": [3.8, 3.8, 7.96, 69.2, 11.5, 3.8],
+    "symbolSize": 8,
+    "symbol": "emptyCircle",
+    "lineStyle": {
+      "width": 2,
+      "color": "#2E9DE1"
+    },
+    "label": {
+      "show": true,
+      "formatter": "{c}%",
+      "color": "#FFFFFF",
+      "fontSize": 14
+    },
+    "areaStyle": {
+      "color": {
+        "colorStops": [{
+          "offset": 0,
+          "color": "#0098F7"
+        }, {
+          "offset": 0.55,
+          "color": "rgba(15,125,195,0.51)"
+        }, {
+          "offset": 0.9,
+          "color": "rgba(0,0,0,0)"
+        }],
+        "x": 0,
+        "y": 0,
+        "x2": 0,
+        "y2": 1,
+        "type": "linear",
+        "global": false
+      }
+    },
+    "itemStyle": {
+      "normal": {
+        "color": "#2E9DE1",
+        "borderColor": "#2E9DE1"
+      }
+    }
+  }]
+}

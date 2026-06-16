@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "active_tab_text": "must",
+  "title": "must(判断是否存在参数)",
+  "sub_titles": [
+    "示例"
+  ],
+  "list_items": [],
+  "textarea_count": 2,
+  "textarea_values": [
+    "enable: \"{{must .remove_list}}\"",
+    "存在参数返回true,boolean 变量为false 也是返回true ，因为它只校验存在.\n数组判断长度"
+  ],
+  "tables": [],
+  "body_text": "must(判断是否存在参数)  \n示例\n菜单导航\n示例\n参数\n示例",
+  "task_id": "K-006",
+  "source_group": "模板函数",
+  "source_title": "must",
+  "source_doc_text": "3.must\n判断是否存在参数",
+  "read_at": "2026-05-07T08:22:16.063Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/K-006-source.png"
+}

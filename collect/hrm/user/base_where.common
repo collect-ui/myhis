@@ -1,0 +1,71 @@
+{{ if .exclude }}
+and a.user_id != {{.exclude}}
+{{ end }}
+
+
+{{  if .user_id }}
+and a.user_id = {{.user_id}}
+{{ end }}
+{{  if  .nick }}
+and a.nick = {{.nick}}
+{{ end }}
+{{ if .search }}
+and (
+    a.nick like {{.search}}
+    or a.username like {{.search}}
+)
+{{ end  }}
+
+{{  if  .username }}
+and a.username = {{.username}}
+{{ end }}
+
+{{  if  .username_list }}
+and a.username in  ({{.username_list}})
+{{ end }}
+
+{{ if .role_code }}
+and exists(
+    select 1
+    from user_role_id_list ur
+    where a.user_id = ur.user_id and ur.role_id = {{.role_code}}
+)
+{{ end }}
+{{ if .not_role_code }}
+and not exists(
+    select 1
+    from user_role_id_list ur
+    where a.user_id = ur.user_id and ur.role_id = {{.not_role_code}}
+)
+{{ end }}
+{{ if .role_id_list }}
+and exists(
+    select 1
+    from user_role_id_list ur
+    where a.user_id = ur.user_id and ur.role_id in ({{.role_id_list}})
+)
+{{ end }}
+
+{{ if .has_tel}}
+and ifnull(a.tel,"") != ""
+{{ end }}
+
+{{ if .status }}
+and a.status ={{.status}}
+{{ end }}
+{{ if .wechat_id_list}}
+and a.wechat_userid in ({{.wechat_id_list}})
+{{ end }}
+
+{{ if .has_wechat_id }}
+and ifnull(a.wechat_id,'') !=''
+{{ end }}
+
+{{ if .work_number_list}}
+and a.work_number in ({{.work_number_list}})
+{{ end }}
+
+order by a.username
+{{ if  .pagination  }}
+limit {{.start}} , {{.size}}
+{{ end }}

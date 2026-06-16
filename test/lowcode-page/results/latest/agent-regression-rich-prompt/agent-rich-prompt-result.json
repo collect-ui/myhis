@@ -1,0 +1,59 @@
+{
+  "ok": true,
+  "pageUrl": "http://127.0.0.1:8015/collect-ui/#/collect-ui/framework/agent_regression",
+  "loadMs": 1902,
+  "richTextInitialCount": 1,
+  "richTextSplitCount": 2,
+  "cssInfo": {
+    "resize": "vertical",
+    "overflow": "hidden",
+    "height": 132
+  },
+  "resizedHeight": 214,
+  "dragResized": true,
+  "normalizedText": "第一行\n第二行",
+  "streamInputText": "第一行\n第二行",
+  "sessionInputText": "第一行\n第二行",
+  "timed": [
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:8015/template_data/data?service=system.menu_query",
+      "status": 200,
+      "elapsedMs": 10
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:8015/template_data/data?service=frontend.framework",
+      "status": 200,
+      "elapsedMs": 6
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:8015/template_data/data?service=frontend.agent_regression",
+      "status": 200,
+      "elapsedMs": 13
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:8015/template_data/data?service=agent.session_query",
+      "status": 200,
+      "elapsedMs": 296
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:8015/template_data/data?service=agent.session_upsert",
+      "status": 200,
+      "elapsedMs": 38
+    },
+    {
+      "method": "POST",
+      "url": "http://127.0.0.1:8015/template_data/agent/run_stream",
+      "status": 200,
+      "elapsedMs": 6
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-rich-prompt/agent-rich-prompt.png"
+}

@@ -1,0 +1,126 @@
+{
+  "color": [
+    "#2096FF",
+    "#FFD96A",
+    "#3CFFC4",
+    "#FF996A"
+  ],
+  "tooltip": {
+    "trigger": "axis"
+  },
+  "grid": {
+    "top": "10%",
+    "left": "5%",
+    "right": "5%",
+    "bottom": "10%",
+    "containLabel": true
+  },
+  "xAxis": {
+    "name": "姓名",
+    "type": "category",
+    "axisPointer": {
+      "type": "shadow"
+    },
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#4cdcfe"
+      }
+    },
+    "axisLabel": {
+      "interval": 0,
+      "textStyle": {
+        "fontSize": "12"
+      },
+      "rotate": 30
+    },
+    "data": [
+      "任家乐",
+      "张文曙",
+      "林敏",
+      "陈梓豪",
+      "刘思阳",
+      "周皓",
+      "谭剑飞",
+      "王同地",
+      "朱雯萱",
+      "王静怡",
+      "吴凯",
+      "欧阳玲玉",
+      "莫鑫宇",
+      "周定",
+      "陈瑜婷",
+      "周士杰",
+      "熊鑫卓",
+      "刘子明",
+      "彭成霖",
+      "王浩",
+      "李杨",
+      "盛繁莹",
+      "周施旋",
+      "谷佳乐",
+      "李云映",
+      "邓慧婷"
+    ]
+  },
+  "yAxis": {
+    "name": "分数",
+    "type": "value",
+    "min": 0,
+    "max": 100,
+    "interval": 15,
+    "axisLabel": {
+      "formatter": "{value}分"
+    },
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "#4cdcfe"
+      }
+    },
+    "splitLine": {
+      "show": false
+    }
+  },
+  "series": [
+    {
+      "animationDuration": 1500,
+      "animationEasing": "cubicInOut",
+      "name": "得分",
+      "type": "bar",
+      "showBackground": true,
+      "backgroundStyle": {
+        "color": "rgba(180, 180, 180, 0.2)"
+      },
+      "tooltip": {},
+      "data": [
+        60,
+        71,
+        66,
+        80,
+        75,
+        69,
+        85,
+        83,
+        60,
+        60,
+        61,
+        83,
+        83,
+        61,
+        76,
+        86,
+        74,
+        84,
+        75,
+        86,
+        70,
+        62,
+        84,
+        81,
+        76,
+        75
+      ]
+    }
+  ]
+}

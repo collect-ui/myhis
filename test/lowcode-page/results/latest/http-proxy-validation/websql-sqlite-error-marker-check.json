@@ -1,0 +1,826 @@
+{
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "cases": [
+    {
+      "name": "sqlite-syntax",
+      "sql": "SELECT name, type FROM  WHERE type IN ('table','view') ORDER BY type, name;",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)",
+        "errorLocation": {
+          "column": 25,
+          "context_after": "type IN ('table','view') ORDER BY type, name;",
+          "context_before": "SELECT name, type FROM",
+          "direction": "before",
+          "direction_label": "重点检查：标记前方",
+          "driver": "sqlite",
+          "end_column": 30,
+          "end_line": 1,
+          "hint": "数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "kind": "syntax_error",
+          "line": 1,
+          "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)",
+          "sql_column": 25,
+          "sql_end_column": 30,
+          "sql_end_line": 1,
+          "sql_line": 1,
+          "token": "WHERE"
+        },
+        "marker": {
+          "direction": "before",
+          "direction_label": "重点检查：标记前方",
+          "endColumn": 30,
+          "endLineNumber": 1,
+          "hint": "数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)（行 1，列 25）。重点检查：标记前方：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "raw_message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 25,
+          "startLineNumber": 1,
+          "token": "WHERE"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "SELECT name, type FROM  WHERE type IN ('table','view') ORDER BY type, name;",
+        "selectionStartLine": 1,
+        "selectionStartColumn": 1
+      },
+      "selected": null,
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)（行 1，列 25）。重点检查：标记前方：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 1,
+        "startColumn": 25,
+        "endLineNumber": 1,
+        "endColumn": 30
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)（行 1，列 25）。重点检查：标记前方：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 1,
+          "startColumn": 25,
+          "endLineNumber": 1,
+          "endColumn": 30
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 重点检查：标记前方：WHERE原始 SQL 错误日志：执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 179,
+          "widgetLeft": 605,
+          "expectedLineTop": 159,
+          "expectedLineBottom": 177,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 2
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)\n位置：第 1 行，第 25 列，标记 WHERE\n问题侧：重点检查：标记前方\n提示：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。\n标记前：SELECT name, type FROM\n标记后：type IN ('table','view') ORDER BY type, name;",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-syntax-error-marker-check.png"
+    },
+    {
+      "name": "sqlite-field",
+      "sql": "SELECT definitely_missing_col FROM sqlite_master;",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: no such column: definitely_missing_col (1)",
+        "errorLocation": {
+          "column": 8,
+          "context_after": "FROM sqlite_master;",
+          "context_before": "SELECT",
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "driver": "sqlite",
+          "end_column": 30,
+          "end_line": 1,
+          "hint": "字段 「definitely_missing_col」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "kind": "unknown_column",
+          "line": 1,
+          "message": "执行查询失败: SQL logic error: no such column: definitely_missing_col (1)",
+          "sql_column": 8,
+          "sql_end_column": 30,
+          "sql_end_line": 1,
+          "sql_line": 1,
+          "token": "definitely_missing_col"
+        },
+        "marker": {
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "endColumn": 30,
+          "endLineNumber": 1,
+          "hint": "字段 「definitely_missing_col」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "message": "执行查询失败: SQL logic error: no such column: definitely_missing_col (1)（行 1，列 8）。问题点：标记字段：字段 「definitely_missing_col」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "raw_message": "执行查询失败: SQL logic error: no such column: definitely_missing_col (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 8,
+          "startLineNumber": 1,
+          "token": "definitely_missing_col"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "SELECT definitely_missing_col FROM sqlite_master;",
+        "selectionStartLine": 1,
+        "selectionStartColumn": 1
+      },
+      "selected": null,
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: no such column: definitely_missing_col (1)（行 1，列 8）。问题点：标记字段：字段 「definitely_missing_col」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 1,
+        "startColumn": 8,
+        "endLineNumber": 1,
+        "endColumn": 30
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: no such column: definitely_missing_col (1)（行 1，列 8）。问题点：标记字段：字段 「definitely_missing_col」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 1,
+          "startColumn": 8,
+          "endLineNumber": 1,
+          "endColumn": 30
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 问题点：标记字段：definitely_missing_col原始 SQL 错误日志：执行查询失败: SQL logic error: no such column: definitely_missing_col (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 179,
+          "widgetLeft": 472,
+          "expectedLineTop": 159,
+          "expectedLineBottom": 177,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 2
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: no such column: definitely_missing_col (1)\n位置：第 1 行，第 8 列，标记 definitely_missing_col\n问题侧：问题点：标记字段\n提示：字段 「definitely_missing_col」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。\n标记前：SELECT\n标记后：FROM sqlite_master;",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-field-error-marker-check.png"
+    },
+    {
+      "name": "sqlite-multiline-where-field",
+      "sql": "select *\nfrom attachment\nwhere attachment_id1=1",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+        "errorLocation": {
+          "column": 7,
+          "context_after": "=1",
+          "context_before": "select * from attachment where",
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "driver": "sqlite",
+          "end_column": 21,
+          "end_line": 3,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "kind": "unknown_column",
+          "line": 3,
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "sql_column": 7,
+          "sql_end_column": 21,
+          "sql_end_line": 3,
+          "sql_line": 3,
+          "token": "attachment_id1"
+        },
+        "marker": {
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "endColumn": 21,
+          "endLineNumber": 3,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 7）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "raw_message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 7,
+          "startLineNumber": 3,
+          "token": "attachment_id1"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "select *\nfrom attachment\nwhere attachment_id1=1",
+        "selectionStartLine": 1,
+        "selectionStartColumn": 1
+      },
+      "selected": null,
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 7）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 3,
+        "startColumn": 7,
+        "endLineNumber": 3,
+        "endColumn": 21
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 7）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 3,
+          "startColumn": 7,
+          "endLineNumber": 3,
+          "endColumn": 21
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 问题点：标记字段：attachment_id1原始 SQL 错误日志：执行查询失败: SQL logic error: no such column: attachment_id1 (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 215,
+          "widgetLeft": 464,
+          "expectedLineTop": 195,
+          "expectedLineBottom": 213,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 38
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: no such column: attachment_id1 (1)\n位置：第 3 行，第 7 列，标记 attachment_id1\n问题侧：问题点：标记字段\n提示：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。\n标记前：select * from attachment where\n标记后：=1",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-multiline-where-field-error-marker-check.png"
+    },
+    {
+      "name": "sqlite-button-leading-blank-field",
+      "sql": "select * from attachment where attachment_id1=1",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+        "errorLocation": {
+          "column": 32,
+          "context_after": "=1",
+          "context_before": "select * from attachment where",
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "driver": "sqlite",
+          "end_column": 46,
+          "end_line": 3,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "kind": "unknown_column",
+          "line": 3,
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "sql_column": 32,
+          "sql_end_column": 46,
+          "sql_end_line": 1,
+          "sql_line": 1,
+          "token": "attachment_id1"
+        },
+        "marker": {
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "endColumn": 46,
+          "endLineNumber": 3,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 32）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "raw_message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 32,
+          "startLineNumber": 3,
+          "token": "attachment_id1"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "select * from attachment where attachment_id1=1",
+        "selectionStartLine": 3,
+        "selectionStartColumn": 1
+      },
+      "selected": null,
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 32）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 3,
+        "startColumn": 32,
+        "endLineNumber": 3,
+        "endColumn": 46
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 32）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 3,
+          "startColumn": 32,
+          "endLineNumber": 3,
+          "endColumn": 46
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 问题点：标记字段：attachment_id1原始 SQL 错误日志：执行查询失败: SQL logic error: no such column: attachment_id1 (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 215,
+          "widgetLeft": 660,
+          "expectedLineTop": 195,
+          "expectedLineBottom": 213,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 38
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: no such column: attachment_id1 (1)\n位置：第 3 行，第 32 列，标记 attachment_id1\n问题侧：问题点：标记字段\n提示：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。\n标记前：select * from attachment where\n标记后：=1",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-button-leading-blank-field-error-marker-check.png"
+    },
+    {
+      "name": "sqlite-selected-line-field",
+      "sql": "select attachment_id1 from attachment;",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+        "errorLocation": {
+          "column": 8,
+          "context_after": "from attachment;",
+          "context_before": "select",
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "driver": "sqlite",
+          "end_column": 22,
+          "end_line": 3,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "kind": "unknown_column",
+          "line": 3,
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "sql_column": 8,
+          "sql_end_column": 22,
+          "sql_end_line": 1,
+          "sql_line": 1,
+          "token": "attachment_id1"
+        },
+        "marker": {
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "endColumn": 22,
+          "endLineNumber": 3,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 8）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "raw_message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 8,
+          "startLineNumber": 3,
+          "token": "attachment_id1"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "select attachment_id1 from attachment;",
+        "selectionStartLine": 3,
+        "selectionStartColumn": 1
+      },
+      "selected": {
+        "ok": true,
+        "selectedText": "select attachment_id1 from attachment;",
+        "selection": {
+          "startLineNumber": 3,
+          "startColumn": 1,
+          "endLineNumber": 3,
+          "endColumn": 39
+        }
+      },
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 8）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 3,
+        "startColumn": 8,
+        "endLineNumber": 3,
+        "endColumn": 22
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 3，列 8）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 3,
+          "startColumn": 8,
+          "endLineNumber": 3,
+          "endColumn": 22
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 问题点：标记字段：attachment_id1原始 SQL 错误日志：执行查询失败: SQL logic error: no such column: attachment_id1 (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 215,
+          "widgetLeft": 472,
+          "expectedLineTop": 195,
+          "expectedLineBottom": 213,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 38
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: no such column: attachment_id1 (1)\n位置：第 3 行，第 8 列，标记 attachment_id1\n问题侧：问题点：标记字段\n提示：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。\n标记前：select\n标记后：from attachment;",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-selected-line-field-error-marker-check.png"
+    },
+    {
+      "name": "sqlite-multiline-select-list-field",
+      "sql": "select\n  attachment_id,\n  filename,\n  attachment_id1,\n  path\nfrom attachment;",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+        "errorLocation": {
+          "column": 3,
+          "context_after": ", path from attachment;",
+          "context_before": "select attachment_id, filename,",
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "driver": "sqlite",
+          "end_column": 17,
+          "end_line": 4,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "kind": "unknown_column",
+          "line": 4,
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "sql_column": 3,
+          "sql_end_column": 17,
+          "sql_end_line": 4,
+          "sql_line": 4,
+          "token": "attachment_id1"
+        },
+        "marker": {
+          "direction": "at",
+          "direction_label": "问题点：标记字段",
+          "endColumn": 17,
+          "endLineNumber": 4,
+          "hint": "字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 4，列 3）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "raw_message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 3,
+          "startLineNumber": 4,
+          "token": "attachment_id1"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "select\n  attachment_id,\n  filename,\n  attachment_id1,\n  path\nfrom attachment;",
+        "selectionStartLine": 1,
+        "selectionStartColumn": 1
+      },
+      "selected": null,
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 4，列 3）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 4,
+        "startColumn": 3,
+        "endLineNumber": 4,
+        "endColumn": 17
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: no such column: attachment_id1 (1)（行 4，列 3）。问题点：标记字段：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 4,
+          "startColumn": 3,
+          "endLineNumber": 4,
+          "endColumn": 17
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 问题点：标记字段：attachment_id1原始 SQL 错误日志：执行查询失败: SQL logic error: no such column: attachment_id1 (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 233,
+          "widgetLeft": 433,
+          "expectedLineTop": 213,
+          "expectedLineBottom": 231,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 56
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: no such column: attachment_id1 (1)\n位置：第 4 行，第 3 列，标记 attachment_id1\n问题侧：问题点：标记字段\n提示：字段 「attachment_id1」 不存在；请检查字段名是否写错，或检查它前后的表名、别名是否正确。\n标记前：select attachment_id, filename,\n标记后：, path from attachment;",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-multiline-select-list-field-error-marker-check.png"
+    },
+    {
+      "name": "sqlite-multiline-syntax-before-where",
+      "sql": "SELECT attachment_id\nFROM\nWHERE attachment_id=1;",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)",
+        "errorLocation": {
+          "column": 1,
+          "context_after": "attachment_id=1;",
+          "context_before": "SELECT attachment_id FROM",
+          "direction": "before",
+          "direction_label": "重点检查：标记前方",
+          "driver": "sqlite",
+          "end_column": 6,
+          "end_line": 3,
+          "hint": "数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "kind": "syntax_error",
+          "line": 3,
+          "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)",
+          "sql_column": 1,
+          "sql_end_column": 6,
+          "sql_end_line": 3,
+          "sql_line": 3,
+          "token": "WHERE"
+        },
+        "marker": {
+          "direction": "before",
+          "direction_label": "重点检查：标记前方",
+          "endColumn": 6,
+          "endLineNumber": 3,
+          "hint": "数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)（行 3，列 1）。重点检查：标记前方：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "raw_message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 1,
+          "startLineNumber": 3,
+          "token": "WHERE"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "SELECT attachment_id\nFROM\nWHERE attachment_id=1;",
+        "selectionStartLine": 1,
+        "selectionStartColumn": 1
+      },
+      "selected": null,
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)（行 3，列 1）。重点检查：标记前方：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 3,
+        "startColumn": 1,
+        "endLineNumber": 3,
+        "endColumn": 6
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)（行 3，列 1）。重点检查：标记前方：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 3,
+          "startColumn": 1,
+          "endLineNumber": 3,
+          "endColumn": 6
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 重点检查：标记前方：WHERE原始 SQL 错误日志：执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 215,
+          "widgetLeft": 417,
+          "expectedLineTop": 195,
+          "expectedLineBottom": 213,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 38
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: near \"WHERE\": syntax error (1)\n位置：第 3 行，第 1 列，标记 WHERE\n问题侧：重点检查：标记前方\n提示：数据库在 「WHERE」 附近报错，但它前面的 FROM 后面缺少对象或语法不完整；请先检查标记前方。\n标记前：SELECT attachment_id FROM\n标记后：attachment_id=1;",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-multiline-syntax-before-where-error-marker-check.png"
+    },
+    {
+      "name": "sqlite-multiline-table",
+      "sql": "select attachment_id\nfrom attachment_missing\nwhere attachment_id=1;",
+      "response": {
+        "success": false,
+        "msg": "执行查询失败: SQL logic error: no such table: attachment_missing (1)",
+        "errorLocation": {
+          "column": 6,
+          "context_after": "where attachment_id=1;",
+          "context_before": "select attachment_id from",
+          "direction": "at",
+          "direction_label": "问题点：标记表名",
+          "driver": "sqlite",
+          "end_column": 24,
+          "end_line": 2,
+          "hint": "表或视图 「attachment_missing」 不存在；请检查表名、库名/schema 和连接的数据库是否正确。",
+          "kind": "unknown_table",
+          "line": 2,
+          "message": "执行查询失败: SQL logic error: no such table: attachment_missing (1)",
+          "sql_column": 6,
+          "sql_end_column": 24,
+          "sql_end_line": 2,
+          "sql_line": 2,
+          "token": "attachment_missing"
+        },
+        "marker": {
+          "direction": "at",
+          "direction_label": "问题点：标记表名",
+          "endColumn": 24,
+          "endLineNumber": 2,
+          "hint": "表或视图 「attachment_missing」 不存在；请检查表名、库名/schema 和连接的数据库是否正确。",
+          "message": "执行查询失败: SQL logic error: no such table: attachment_missing (1)（行 2，列 6）。问题点：标记表名：表或视图 「attachment_missing」 不存在；请检查表名、库名/schema 和连接的数据库是否正确。",
+          "raw_message": "执行查询失败: SQL logic error: no such table: attachment_missing (1)",
+          "severity": "error",
+          "source": "websql",
+          "startColumn": 6,
+          "startLineNumber": 2,
+          "token": "attachment_missing"
+        }
+      },
+      "request": {
+        "service": "webshell.websql_execute",
+        "driver": "sqlite",
+        "sqlitePath": "./database/price.db",
+        "sql": "select attachment_id\nfrom attachment_missing\nwhere attachment_id=1;",
+        "selectionStartLine": 1,
+        "selectionStartColumn": 1
+      },
+      "selected": null,
+      "editorMarker": {
+        "message": "执行查询失败: SQL logic error: no such table: attachment_missing (1)（行 2，列 6）。问题点：标记表名：表或视图 「attachment_missing」 不存在；请检查表名、库名/schema 和连接的数据库是否正确。",
+        "severity": 8,
+        "source": "websql",
+        "startLineNumber": 2,
+        "startColumn": 6,
+        "endLineNumber": 2,
+        "endColumn": 24
+      },
+      "editorMarkers": [
+        {
+          "message": "执行查询失败: SQL logic error: no such table: attachment_missing (1)（行 2，列 6）。问题点：标记表名：表或视图 「attachment_missing」 不存在；请检查表名、库名/schema 和连接的数据库是否正确。",
+          "severity": 8,
+          "source": "websql",
+          "startLineNumber": 2,
+          "startColumn": 6,
+          "endLineNumber": 2,
+          "endColumn": 24
+        }
+      ],
+      "editorDecoration": {
+        "inlineCount": 1,
+        "widgetTexts": [
+          "↑ 问题点：标记表名：attachment_missing原始 SQL 错误日志：执行查询失败: SQL logic error: no such table: attachment_missing (1)×"
+        ],
+        "glyphCount": 0,
+        "widgetPosition": {
+          "widgetTop": 197,
+          "widgetLeft": 456,
+          "expectedLineTop": 177,
+          "expectedLineBottom": 195,
+          "firstLineTop": 159,
+          "firstLineBottom": 177,
+          "distanceToExpectedLine": 2,
+          "distanceToFirstLine": 20
+        }
+      },
+      "decorationAfterClose": {
+        "inlineCount": 1,
+        "widgetTexts": [],
+        "glyphCount": 0,
+        "widgetPosition": null
+      },
+      "closeButtonPlacement": {
+        "topGap": 3,
+        "rightGap": 5,
+        "buttonWidth": 18,
+        "buttonHeight": 18
+      },
+      "errorPanelText": "错误信息：执行查询失败: SQL logic error: no such table: attachment_missing (1)\n位置：第 2 行，第 6 列，标记 attachment_missing\n问题侧：问题点：标记表名\n提示：表或视图 「attachment_missing」 不存在；请检查表名、库名/schema 和连接的数据库是否正确。\n标记前：select attachment_id from\n标记后：where attachment_id=1;",
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-multiline-table-error-marker-check.png"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "report": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sqlite-error-marker-check.json"
+}

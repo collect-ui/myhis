@@ -1,0 +1,16 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "storeFile": "/data/project/sport/test2/http_console_store.json",
+  "beforeCount": 5,
+  "afterCount": 5,
+  "createdName": "crud-case-create",
+  "updatedName": "crud-case-updated",
+  "createdVisible": true,
+  "updatedVisible": true,
+  "deletedSuccess": true,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true,
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-console-store-crud-check.png"
+}

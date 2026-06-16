@@ -1,0 +1,168 @@
+{
+  "color": [
+    "#00FF68",
+    "#0001F7",
+    "#00B8FE",
+    "#00FFFF"
+  ],
+  "tooltip": {
+    "show": false,
+    "trigger": "axis"
+  },
+  "grid": {
+    "top": 70,
+    "bottom": 70
+  },
+  "legend": {
+    "data": [
+      "成绩"
+    ],
+    "itemGap": 10,
+    "itemWidth": 15,
+    "itemHeight": 12,
+    "orient": "horizontal",
+    "show": true,
+    "right": "8",
+    "top": "20",
+    "icon": "roundRect",
+    "textStyle": {
+      "color": "#FFFFFF"
+    }
+  },
+  "xAxis": [
+    {
+      "name": "学员",
+      "type": "category",
+      "axisTick": {
+        "alignWithLabel": true
+      },
+      "axisLabel": {
+        "color": "#FFFFFF",
+        "fontSize": 14,
+        "padding": [
+          30,
+          0,
+          0,
+          0
+        ]
+      },
+      "splitLine": {
+        "show": false
+      },
+      "axisLine": {
+        "show": true,
+        "lineStyle": {
+          "color": "rgba(255,255,255,0.8)"
+        }
+      },
+      "data": {{to_json .group_name_list}}
+    }
+  ],
+  "yAxis": {
+    "type": "value",
+    "name": "分",
+    "axisLabel": {
+      "color": "#ffffff"
+    },
+    "max": 100,
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "rgba(255,255,255,0.8)"
+      }
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "rgba(255,255,255,.4)"
+      }
+    }
+  },
+  "series": [
+    {
+      "type": "bar",
+      "stack": "r0",
+      "markLine": {
+        "symbol": "none",
+        "data": [
+          {
+            "silent": false,
+            "lineStyle": {
+              "type": "dashed",
+              "color": "#FA3934"
+
+            },
+            "label": {
+              "show": false,
+              "position": "end",
+              "formatter": "100",
+              "fontSize": "15"
+            },
+            "yAxis": 60
+          }
+        ]
+      }
+    },
+
+    {{ $group_list :=.group_list }}
+    {{ $group_size :=.group_size }}
+    {{ range $x := range_number .student_size}}
+    {{if $x}},{{end}}
+    {
+      "type": "bar",
+      "stack": "r{{$x}}",
+      "data": [
+        {{ range $y := range_number $group_size }}
+          {{if $y}},{{end}}
+            {
+              "name": "{{sub_arr_attr $group_list $y `children` $x `student_name` }}",
+              "value": 0
+            }
+        {{ end }}
+      ],
+      "label": {
+        "rotate": -45,
+        "show": true,
+        "formatter": "{b}",
+        "fontSize": 10,
+        "color": "#FFFFFF",
+        "offset": [
+          15,
+          5
+        ]
+      }
+
+    },
+    {
+      "data": [
+        {{ range $y := range_number $group_size }}
+        {{if $y}},{{end}}
+         {{sub_arr_attr $group_list $y `children` $x `score` }}
+        {{ end }}
+      ],
+      "name": "成绩",
+      "stack": "r{{$x}}",
+      "type": "bar",
+      "barWidth": 18,
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "x2": 0,
+          "y": 0,
+          "y2": 1,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#12B3F8"
+            },
+            {
+              "offset": 1,
+              "color": "#7DE8FF"
+            }
+          ]
+        }
+      }
+    }
+    {{ end }}
+  ]
+}

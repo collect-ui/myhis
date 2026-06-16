@@ -1,0 +1,415 @@
+{
+  "tag": "dialog",
+  "title": "项目管理",
+  "width": "66%",
+  "open": "${workspaceManageVisible}",
+  "cancelAction": [
+    {
+      "tag": "method",
+      "method": "${(()=>{const sync=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return;}const hide=!!doc.querySelector('.ant-modal-wrap');const nodes=[...doc.querySelectorAll('.webshell-container .co-ui-panel-resize,.webshell-container .panel-resize,.webshell-container .Resizer')];const fixedHandles=[...doc.querySelectorAll('div')].filter(el=>{const st=window.getComputedStyle(el);const r=el.getBoundingClientRect();if(st.position!=='fixed'){return false;}if(!(st.cursor==='grab'||st.cursor==='col-resize'||st.cursor==='ew-resize'||st.cursor==='row-resize'||st.cursor==='ns-resize')){return false;}if(r.width<=14&&r.height>120){return true;}if(r.height<=14&&r.width>120){return true;}return false;});[...nodes,...fixedHandles].forEach(el=>{el.style.opacity=hide?'0':'1';el.style.pointerEvents=hide?'none':'';});};window.setTimeout(sync,0);window.setTimeout(sync,120);window.setTimeout(sync,360);})()}"
+    },
+    {
+      "tag": "reload-init-action",
+      "group": "reload-workspace-project"
+    }
+  ],
+  "action": [
+    {
+      "tag": "update-store",
+      "description": "打开对话框",
+      "value": {
+        "workspaceManageVisible": false
+      }
+    },
+    {
+      "tag": "reload-init-action",
+      "group": "reload-workspace-project"
+    },
+    {
+      "tag": "method",
+      "method": "${(()=>{const sync=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return;}const hide=!!doc.querySelector('.ant-modal-wrap');const nodes=[...doc.querySelectorAll('.webshell-container .co-ui-panel-resize,.webshell-container .panel-resize,.webshell-container .Resizer')];const fixedHandles=[...doc.querySelectorAll('div')].filter(el=>{const st=window.getComputedStyle(el);const r=el.getBoundingClientRect();if(st.position!=='fixed'){return false;}if(!(st.cursor==='grab'||st.cursor==='col-resize'||st.cursor==='ew-resize'||st.cursor==='row-resize'||st.cursor==='ns-resize')){return false;}if(r.width<=14&&r.height>120){return true;}if(r.height<=14&&r.width>120){return true;}return false;});[...nodes,...fixedHandles].forEach(el=>{el.style.opacity=hide?'0':'1';el.style.pointerEvents=hide?'none':'';});};window.setTimeout(sync,0);window.setTimeout(sync,120);window.setTimeout(sync,360);})()}"
+    }
+  ],
+  "children": [
+    {
+      "tag": "layout-fit",
+      "title": "工作空间项目管理（提示：仅在首页展示的项目会出现在顶部快捷切换）",
+      "searchToolBar": [
+        {
+          "tag": "form",
+          "name": "workspace-project-search-form",
+          "layout": "inline",
+          "initialValues": {},
+          "submitOnEnter": true,
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "workspaceProjectSearchForm": "${Object.assign({}, workspaceProjectSearchForm || {}, { page: 1 })}"
+              }
+            },
+            {
+              "tag": "reload-init-action",
+              "group": "reload-workspace-project-manage"
+            }
+          ],
+          "children": [
+            {
+              "tag": "form-item",
+              "name": "project_name",
+              "label": "项目名称",
+              "children": [
+                {
+                  "tag": "input",
+                  "allowClear": true,
+                  "placeholder": "请输入项目名称"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "project_code_keyword",
+              "label": "项目编码",
+              "children": [
+                {
+                  "tag": "input",
+                  "allowClear": true,
+                  "placeholder": "请输入项目编码"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "server_id",
+              "label": "服务器",
+              "style": {
+                "minWidth": "200px"
+              },
+              "children": [
+                {
+                  "tag": "tree-select",
+                  "allowClear": true,
+                  "placeholder": "请选择服务器",
+                  "openLevel": 2,
+                  "treeData": "${server_env_data}",
+                  "valueKey": "${item.server_id}",
+                  "treeTitle": "${item.server_id?item.server_env_name+'-'+item.server_ip+'（'+item.server_busi_name+'）':item.server_env_name+'（'+item.server_env_code+'）'}",
+                  "treeIcon": "${item.server_id?'DesktopOutlined':'FolderOutlined'}",
+                  "treeLine": true,
+                  "showIcon": true,
+                  "showSearch": true
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "git_keyword",
+              "label": "Git",
+              "children": [
+                {
+                  "tag": "input",
+                  "allowClear": true,
+                  "placeholder": "请输入 Git 关键字"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "children": [
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "htmlType": "submit",
+                  "children": "搜索",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "workspaceProjectSearchForm": "${Object.assign({}, workspaceProjectSearchForm || {}, { page: 1 })}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "reload-workspace-project-manage"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "children": [
+                {
+                  "tag": "button",
+                  "children": "重置",
+                  "action": [
+                    {
+                      "tag": "reset-form",
+                      "formName": "workspace-project-search-form"
+                    },
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "workspaceProjectSearchForm": "${Object.assign({}, workspaceProjectSearchForm || {}, { page: 1 })}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "reload-workspace-project-manage"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "topRight": [
+        {
+          "tag": "button",
+          "type": "primary",
+          "icon": "PlusOutlined",
+          "children": "新增项目",
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "workspaceProjectOp": "add",
+                "workspaceProjectEditCode": "",
+                "workspaceUserList": [],
+                "workspaceLastServerId": null,
+                "workspaceProjectDialogVisible": true,
+                "workspaceProjectForm": {
+                  "project_name": "",
+                  "project_code": "",
+                  "order_id": "${workspaceProjectTotal+1}",
+                  "show_home": "1",
+                  "project_type": "go",
+                  "collect_source_root": "",
+                  "python_pkg_path": "",
+                  "server_id": null,
+                  "server_os_users_id": null,
+                  "project_dir": "",
+                  "git_repo_url": "",
+                  "exclude_dirs": "node_modules,.git,dist,.next"
+                }
+              }
+            },
+            {
+              "tag": "reset-form",
+              "formName": "workspace-project-form"
+            },
+            {
+              "tag": "update-form",
+              "formName": "workspace-project-form",
+              "useStore": true,
+              "value": "${workspaceProjectForm}"
+            }
+          ]
+        }
+      ],
+      "children": [
+        {
+          "tag": "css",
+          "css": ".workspace-project-card-wrap{max-height:480px;overflow:auto;padding-right:4px;padding-top:10px;}.workspace-project-card-wrap .listview-component{display:flex;flex-wrap:wrap;margin:0 -6px;}.workspace-project-card-item{width:33.3333%;padding:0 6px 8px;box-sizing:border-box;}.workspace-project-card{height:100%;border-radius:12px;background:#ffffff;box-shadow:0 4px 14px rgba(15,23,42,0.08);color:#1d1d1f;border:1px solid #f0f0f0;}.workspace-project-card .ant-card-body{height:100%;display:flex;flex-direction:column;padding:12px;}.workspace-project-main{display:flex;align-items:center;min-width:0;}.workspace-project-avatar-wrap{display:flex;justify-content:center;align-items:center;flex:0 0 44px;}.workspace-project-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#e6f4ff;color:#1677ff;font-size:14px;font-weight:700;border:1px solid #dbeafe;font-family:'SF Pro Display','SF Pro Text','Helvetica Neue',Arial,sans-serif;}.workspace-project-content{flex:1 1 auto;min-width:0;}.workspace-project-head{display:flex;align-items:center;gap:8px;min-width:0;margin-bottom:4px;}.workspace-project-head-main{display:flex;align-items:center;gap:6px;min-width:0;flex:1 1 auto;}.workspace-project-title{min-width:0;font-family:'SF Pro Text','Helvetica Neue',Arial,sans-serif;font-size:14px;line-height:22px;font-weight:600;color:#1f2937;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.workspace-project-home-icon{flex:0 0 auto;font-size:12px;color:#1677ff;line-height:1;}.workspace-project-ops{display:flex;align-items:center;gap:8px;flex:0 0 auto;}.workspace-project-op{padding:0;border:none;background:transparent;height:auto;min-width:auto;font-family:'SF Pro Text','Helvetica Neue',Arial,sans-serif;font-size:12px;line-height:20px;letter-spacing:-0.08px;color:#1677ff;box-shadow:none;}.workspace-project-op.ant-btn-dangerous{color:#6b7280;}.workspace-project-server{font-family:'SF Pro Text','Helvetica Neue',Arial,sans-serif;font-size:13px;line-height:20px;color:#6b7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;}.workspace-project-empty{height:140px;display:flex;align-items:center;justify-content:center;color:rgba(29,29,31,0.55);font-size:14px;letter-spacing:-0.12px;}@media (max-width:1440px){.workspace-project-card-item{width:50%;}}@media (max-width:900px){.workspace-project-card-item{width:100%;}}"
+        },
+        {
+          "tag": "div",
+          "className": "workspace-project-card-wrap",
+          "children": [
+            {
+              "tag": "listview",
+              "keyField": "project_code",
+              "itemData": "${workspaceProjectList}",
+              "emptyText": [
+                {
+                  "tag": "div",
+                  "className": "workspace-project-empty",
+                  "children": "暂无项目数据"
+                }
+              ],
+              "itemAttr": {
+                "tag": "div",
+                "className": "workspace-project-card-item",
+                "style": {
+                  "display": "inline-block",
+                  "verticalAlign": "top"
+                },
+                "children": [
+                  {
+                    "tag": "card",
+                    "className": "workspace-project-card",
+                    "size": "small",
+                    "hoverable": true,
+                    "children": [
+                      {
+                        "tag": "div",
+                        "className": "workspace-project-main",
+                        "children": [
+                          {
+                            "tag": "div",
+                            "className": "workspace-project-avatar-wrap",
+                            "children": [
+                              {
+                                "tag": "div",
+                                "className": "workspace-project-avatar",
+                                "children": "${(row.project_name||'项').slice(0,1)}"
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "className": "workspace-project-content",
+                            "children": [
+                              {
+                                "tag": "div",
+                                "className": "workspace-project-head",
+                                "children": [
+                                  {
+                                    "tag": "div",
+                                    "className": "workspace-project-head-main",
+                                    "children": [
+                                      {
+                                        "tag": "div",
+                                        "className": "workspace-project-title",
+                                        "children": "${(row.project_name||'-')+' · '+(row.project_code||'-')}"
+                                      },
+                                      {
+                                        "tag": "icon",
+                                        "visible": "${row.show_home==='1'}",
+                                        "className": "workspace-project-home-icon",
+                                        "icon": "HomeFilled"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "tag": "div",
+                                    "className": "workspace-project-ops",
+                                    "children": [
+                                      {
+                                        "tag": "button",
+                                        "type": "text",
+                                        "size": "small",
+                                        "className": "workspace-project-op",
+                                        "children": "编辑",
+                                        "action": [
+                                          {
+                                            "tag": "update-store",
+                                            "value": {
+                                            "workspaceProjectOp": "edit",
+                                            "workspaceProjectDialogVisible": true,
+                                              "workspaceProjectForm": "${Object.assign({ project_type: 'go', collect_source_root: '', python_pkg_path: '', exclude_dirs: 'node_modules,.git,dist,.next' }, row, { webshell_workspace_project_id: row.webshell_workspace_project_id })}"
+                                          }
+                                        },
+                                          {
+                                            "tag": "ajax",
+                                            "api": "post:/template_data/data?service=project.server_os_users_query",
+                                            "data": {
+                                              "server_id": "${row.server_id}"
+                                            },
+                                            "adapt": {
+                                              "workspaceUserList": "${data}"
+                                            }
+                                          },
+                                          {
+                                            "tag": "reset-form",
+                                            "formName": "workspace-project-form"
+                                          },
+                                          {
+                                            "tag": "update-form",
+                                            "formName": "workspace-project-form",
+                                            "value": "${Object.assign({ project_type: 'go', collect_source_root: '', python_pkg_path: '', exclude_dirs: 'node_modules,.git,dist,.next' }, row)}"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "tag": "button",
+                                        "type": "text",
+                                        "size": "small",
+                                        "className": "workspace-project-op",
+                                        "children": "同步",
+                                        "confirm": {
+                                          "title": "确认同步",
+                                          "description": "${'确认同步项目【'+row.project_name+'】目录到工作空间吗？'}"
+                                        },
+                                        "action": [
+                                          {
+                                            "tag": "ajax",
+                                            "api": "post:/template_data/data?service=webshell.workspace_project_sync_files",
+                                            "showResultMsg": true,
+                                            "data": {
+                                              "webshell_workspace_project_id": "${row.webshell_workspace_project_id}",
+                                              "exclude_dirs": "${row.exclude_dirs || 'node_modules,.git,dist,.next'}"
+                                            }
+                                          },
+                                          {
+                                            "tag": "reload-init-action",
+                                            "group": "reload-workspace-file-manage"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "tag": "button",
+                                        "type": "text",
+                                        "danger": true,
+                                        "size": "small",
+                                        "className": "workspace-project-op",
+                                        "children": "删除",
+                                        "confirm": {
+                                          "title": "二次确认删除",
+                                          "description": "${'请再次确认删除项目【'+row.project_name+'】？删除后将不可在列表中查看。'}"
+                                        },
+                                        "action": [
+                                          {
+                                            "tag": "ajax",
+                                            "api": "post:/template_data/data?service=webshell.workspace_project_delete",
+                                            "data": {
+                                              "webshell_workspace_project_id": "${row.webshell_workspace_project_id}"
+                                            }
+                                          },
+                                          {
+                                            "tag": "reload-init-action",
+                                            "group": "reload-workspace-project-manage"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "div",
+                                "className": "workspace-project-server",
+                                "children": "${(row.server_name || '-')+' · '+(row.project_dir || '-')}"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "tag": "pagination",
+          "showSizeChanger": true,
+          "align": "end",
+          "pageSize": "${workspaceProjectSearchForm.size}",
+          "current": "${workspaceProjectSearchForm.page}",
+          "total": "${workspaceProjectTotal}",
+          "action": [
+            {
+              "tag": "reload-init-action",
+              "group": "reload-workspace-project-manage",
+              "description": "项目管理分页触发查询"
+            }
+          ],
+          "showTotal": true
+        }
+      ]
+    }
+  ]
+}

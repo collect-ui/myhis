@@ -1,0 +1,30 @@
+{
+  "patient_id": "{{if .patient_id}}{{.patient_id}}{{else}}P20260612001{{end}}",
+  "items": [
+    {
+      "field": "patient_id",
+      "label": "患者ID",
+      "value": "{{if .patient_id}}{{.patient_id}}{{else}}P20260612001{{end}}"
+    },
+    {
+      "field": "allergy",
+      "label": "过敏史",
+      "value": "青霉素过敏"
+    },
+    {
+      "field": "insurance",
+      "label": "医保类型",
+      "value": "城镇职工医保"
+    },
+    {
+      "field": "contact",
+      "label": "联系人",
+      "value": "模拟联系人"
+    },
+    {
+      "field": "source",
+      "label": "数据来源",
+      "value": "mock文件"
+    }
+  ]
+}

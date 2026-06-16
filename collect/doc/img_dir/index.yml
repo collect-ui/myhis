@@ -1,0 +1,172 @@
+service:
+  - key: img_dir_save
+    http: true
+    module: model_save
+    params:
+      img_dir_id:
+        template: "{{uuid}}"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+      parent_id:
+        default: "0"
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      code:
+        check:
+          template: "{{must .code}}"
+          err_msg: 名称不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: doc.img_dir_query
+          code: "[code]"
+        save_field: "local_dir"
+        template: "{{eq (len .local_dir) 0}}"
+        err_msg: "【{{.code}}】已经存在"
+    table: "img_dir"
+
+  - key: img_dir_delete
+    http: true
+    module: model_delete
+    params:
+      img_dir_id_list:
+        check:
+          template: "{{must .img_dir_id_list}}"
+          err_msg: "img_dir_id_list不能为空"
+    table: img_dir
+    filter:
+      img_dir_id__in: "[img_dir_id_list]"
+  - key: img_dir_update
+    http: true
+    module: model_update
+    params:
+      img_dir_id:
+        check:
+          template: "{{must .img_dir_id}}"
+          err_msg: "img_dir_id不能为空"
+      code:
+        check:
+          template: "{{must .code}}"
+          err_msg: "name不能为空"
+    table: "img_dir"
+    handler_params:
+      - key: service2field
+        service:
+          service: doc.img_dir_query
+          code: "[code]"
+          exclude: "[img_dir_id]"
+        save_field: "local_dir"
+        template: "{{eq (len .local_dir) 0}}"
+        err_msg: "【{{.code}}】已经存在"
+    filter:
+      img_dir_id: "[img_dir_id]"
+
+
+  - key: img_dir_detail
+    http: true
+    module: empty
+    params:
+      img_dir_id:
+        check:
+          template: "{{must .img_dir_id}}"
+          err_msg: "img_dir_id不能为空"
+    handler_params:
+      - key: service2field
+        service:
+          service: doc.img_dir_query
+          img_dir_id: "[img_dir_id]"
+          to_obj: true
+        save_field: dir
+      - key: param2result
+        field: dir
+
+  - key: handler_dir_order
+    http: true
+    module: empty
+    params:
+      change_parent:
+        default: false
+      parent:
+        default: {"parent_id":"0","sys_menu_id":"0"}
+      dir:
+        check:
+          template: "{{must .dir}}"
+          err_msg: "dir不能为空"
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    handler_params:
+      - key: service2field
+        enable: "[change_parent]"
+        service:
+          service: doc.img_dir_update
+          img_dir_id: "[dir.img_dir_id]"
+          parent_id: "[parent.img_dir_id]"
+          code: "[dir.code]"
+      - key: service2field
+        service:
+          service: doc.update_order
+          rows: "[rows]"
+
+  - key: update_order
+    http: true
+    module: bulk_upsert
+    params:
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    table: img_dir
+    update_fields:
+      - order_index
+    model_field: "[rows]"
+  - key: img_dir_query
+    http: true
+    module: sql
+    must_login: false
+    params:
+      search:
+        template: "{{ if .search}}%{{.search}}%{{ end }}"
+      to_tree:
+        default: false
+      to_obj:
+        default: false
+      page:
+        type: int
+        default: 1
+      size:
+        default: 20
+        type: int
+      end_time:
+        default: ""
+      start:
+        template: " ({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+    count_file: count.sql
+    pagination: pagination
+    data_file: img_dir_query.sql
+    result_handler:
+      - key: result2params
+        enable: "[to_tree]"
+        fields:
+          - to: "[dir_list]"
+      - key: to_tree
+        enable: "[to_tree]"
+        foreach: "[dir_list]"
+        id: img_dir_id
+        pid: parent_id
+        children: children
+        save_field: dir_tree
+      - key: param2result
+        enable: "[to_tree]"
+        field: "[dir_tree]"
+      - key: arr2obj
+        enable: "[to_obj]"

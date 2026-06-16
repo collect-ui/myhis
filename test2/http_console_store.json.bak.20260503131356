@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "updated_at": "2026-05-03T05:13:55.573Z",
+  "items": [
+    {
+      "id": "8ca12336-eb79-48b6-b6f4-f26734a5d06c",
+      "name": "GET https://jsonplaceholder.typicode.com/todos/1",
+      "method": "get",
+      "url": "https://jsonplaceholder.typicode.com/todos/2",
+      "mode": "backend",
+      "headers_text": "{}",
+      "request_text": "{}",
+      "response_text": "{\n  \"userId\": 1,\n  \"id\": 1,\n  \"title\": \"delectus aut autem\",\n  \"completed\": false\n}",
+      "created_at": "2026-05-03T05:13:54.591Z",
+      "updated_at": "2026-05-03T05:13:55.573Z"
+    },
+    {
+      "id": "demo-1",
+      "name": "demo",
+      "method": "get",
+      "url": "https://jsonplaceholder.typicode.com/todos/1",
+      "mode": "backend",
+      "headers_text": "{}",
+      "request_text": "{}",
+      "response_text": "",
+      "created_at": "2026-05-03T03:33:00Z",
+      "updated_at": "2026-05-03T03:33:00Z"
+    }
+  ]
+}

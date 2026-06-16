@@ -1,0 +1,111 @@
+{
+  "fields": [
+    {
+      "name": "项目名称",
+      "key": "project_name"
+    },
+    {
+      "name": "招标人",
+      "key": "zb_man"
+    },
+    {
+      "name": "招标金额或投资金额",
+      "key": "tender_amount"
+    },
+    {
+      "name": "开标日期",
+      "key": "date"
+    },
+    {
+      "name": "项目经理合同款号内容的章节号,需要给出第几节比如`第三节专用合同条款3.2 项目经理`",
+      "key": "project_manager_contract_provision_number"
+    },
+    {
+      "name": "工期原文,不要只是12个月，比如包含原文中天月年,比如`12 □天☑ 月□年`",
+      "key": "project_duration"
+    },
+    {
+      "name": "工期合同款号的章节号比如第三节专用合同条款7.工期和进度",
+      "key": "project_duration_contract_provision_number"
+    },
+    {
+      "name": "质量标准内容",
+      "key": "project_quality"
+    },
+    {
+      "name": "质量标准合同款号,比如第三节专用合同条款5.工程质量",
+      "key": "project_quality_contract_provision_number"
+    },
+    {
+      "name": "保修要求内容",
+      "key": "maintenance_requirements"
+    },
+    {
+      "name": "保修要求合同款号,比如第三节专用合同条款15.4 保修",
+      "key": "maintenance_requirements_contract_provision_number"
+    },
+    {
+      "name": "缺陷责任期内容",
+      "key": "defects_liability_period"
+    },
+    {
+      "name": "缺陷责任期合同款号,比如第三节专用合同条款15.2缺陷责任期 ",
+      "key": "defects_liability_period_contract_provision_number"
+    },
+    {
+      "name": "承包人履约担保金额内容,保持这个的格式`中标金额低于最高投标限价 10%以内的，不超过中标合同金额的 10%。中标金额低于最高投标限价 10%以上的，为最高投标限价减去中标合同金额后的差额`",
+      "key": "amount_performance_guarantee"
+    },
+    {
+      "name": "承包人履约担保金额合同款号,比如投标人须知前附表7.3.1履约担保",
+      "key": "amount_performance_guarantee_contract_provision_number"
+    },
+    {
+      "name": "分包内容",
+      "key": "subcontract"
+    },
+    {
+      "name": "分包合同款号，比如第三节专用合同条款3.5 分包",
+      "key": "subcontract_contract_provision_number"
+    },
+    {
+      "name": "逾期竣工违约金内容",
+      "key": "liquidated_damages"
+    },
+    {
+      "name": "逾期竣工违约金合同款号，比如第三节专用合同条款7.5 工期延误 ",
+      "key": "liquidated_damages_contract_provision_number"
+    },
+    {
+      "name": "逾期竣工违约金最高限额内容",
+      "key": "maximum_limit_liquidated_damages"
+    },
+    {
+      "name": "逾期竣工违约金最高限额合同款号，比如第三节专用合同条款7.5 工期延误 ",
+      "key": "maximum_limit_liquidated_damages_contract_provision_number"
+    },
+    {
+      "name": "预付款额度内容。保持着的格式`工程预付款为中标工程价金额的10%，招标人在收到中标人的履约保后即向中标人支付工程预付款或程支付担保（具体签订合同时约定）`",
+      "key": "advance_payment_limit"
+    },
+    {
+      "name": "预付款额度合同款号，比如第三节专用合同条款12.2 预付款",
+      "key": "advance_payment_limit_contract_provision_number"
+    },
+    {
+      "name": "质量保证金额度内容,保持这个格式`支付结算工程款时，按工程结算总价的 3%扣留 `",
+      "key": "limit_quality_assurance_bond"
+    },
+    {
+      "name": "质量保证金额度合同款号,比如第三节专用合同条款15.3 质量保证金",
+      "key": "limit_quality_assurance_bond_contract_provision_number"
+    },
+    {
+      "name": "投标有效期内容",
+      "key": "validity_period_bid"
+    }
+  ],
+  "fileIds": [
+    "{{.file_id}}"
+  ]
+}

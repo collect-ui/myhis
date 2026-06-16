@@ -1,0 +1,81 @@
+service:
+
+  - key: save_tender
+    http: true
+    module: empty
+    params:
+      path:
+        default: ""
+      tb_project_id:
+        default: ""
+      groupList:
+        default: []
+    handler_params:
+      - key: file2str
+        path: "[path]"
+        save_field: "xml_data"
+      - key: xml2json
+        value: "[xml_data]"
+        save_field: "dataList"
+      - key: to_list
+        foreach: "[dataList]"
+        children: children
+        id: id
+        pid: parent_id
+        save_field: dataList
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: doc_project_id
+            template: "{{uuid}}"
+      - key: gen_doc_project
+        name: 生成分组，生成清单
+        foreach: "[dataList]"
+#      - key: service2field
+#        service:
+#          service: autodesk.doc_project_query
+#          code: "[project.code]"
+#        save_field: tb
+#        template: "{{ eq (len .tb) 0}}"
+#        err_msg: "【{{.project.code}}】 已经存在"
+      - key: service2field
+        service:
+          service: autodesk.doc_project_save
+          doc_project_id: "[doc_project_id]"
+          tb_project_id: "[tb_project_id]"
+          name: "[project.name]"
+          code: "[project.code]"
+          address: "[project.address]"
+          company: "[project.company]"
+      - key: update_array
+        foreach: "[danList]"
+        item: item
+        fields:
+          - field: doc_project_id
+            template: "[doc_project_id]"
+          - field: doc_project_detail_id
+            template: "{{uuid}}"
+      - key: update_array
+        foreach: "[groupList]"
+        item: item
+        fields:
+          - field: doc_project_id
+            template: "[doc_project_id]"
+          - field: doc_project_content_id
+            template: "{{uuid}}"
+      - key: service2field
+        service:
+          service: autodesk.doc_project_detail_bulk_create
+          doc_project_detail_list: "[danList]"
+
+#      - key: service2field
+#        enable: "{{gt (len .groupList) 0}}"
+#        service:
+#          service: autodesk.doc_project_content_bulk_create
+#          data_list: "[groupList]"
+
+      - key: params2result
+        fields:
+          - from: "[dataList]"
+            to: dataList
+

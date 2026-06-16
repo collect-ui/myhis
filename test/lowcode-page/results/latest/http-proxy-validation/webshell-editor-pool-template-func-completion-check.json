@@ -1,0 +1,17 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-07T12:56:35.814Z",
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-template-func-completion-check.png",
+  "targetPath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+  "openedPath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+  "containsMust": true,
+  "containsMust2datetime": false,
+  "suggestionsTop": [
+    "md5",
+    "must",
+    "must_list"
+  ],
+  "endedAt": "2026-05-07T12:56:44.740Z"
+}

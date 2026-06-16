@@ -1,0 +1,43 @@
+{
+  "ok": true,
+  "active_tab_text": "empty",
+  "title": "empty(空模块)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "主要为了处理参数，一般搭配handler_params",
+    "在handler_params可以通过enable模板动态判断是否需要运行某个服务"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "- key: project_router\n    http: true\n    handler_params:\n      - key: file2datajson\n        save_field: data\n      - key: param2result\n        field: data\n    data_file: project_router.json\n    module: empty",
+    "空模块是个非常常用的模块，其主要目的是为了处理参数。\n空模块就是主体没有做任何事情，主要在handler_params 运行你服务。比如要运行数据保存的服务，先调主体空服务，空服务在转service2field 调用你的数据保存服务，本质没有任何区别。可能就一些传参区别"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "module",
+          "string",
+          "是",
+          "empty"
+        ]
+      ]
+    }
+  ],
+  "body_text": "empty(空模块)  \n示例\n主要为了处理参数，一般搭配handler_params\n在handler_params可以通过enable模板动态判断是否需要运行某个服务\n参数\n参数\t类型\t必须\t说明\nmodule\n\t\nstring\n\t\n是\n\t\nempty\n菜单导航\n示例\n参数\n示例",
+  "task_id": "M-008",
+  "source_group": "模块处理",
+  "source_title": "empty",
+  "source_doc_text": "8.empty\n空模块",
+  "read_at": "2026-05-07T08:19:59.681Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/M-008-source.png"
+}

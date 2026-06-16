@@ -1,0 +1,203 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "targetHost": "192.168.232.130",
+  "marker": "WSH_SCROLL_1779176754667",
+  "steps": [
+    "clicked recent server login",
+    "confirmed login dialog",
+    "dragged inferred vertical split boundary"
+  ],
+  "checks": {
+    "pageOpened": true,
+    "loginOpened": true,
+    "loginConfirmed": true,
+    "terminalVisible": true,
+    "markerOutputVisible": true,
+    "manualScrollUpStayed": true,
+    "horizontalSplitCreated": true,
+    "verticalSplitCreated": true,
+    "resizeDragged": true,
+    "viewportResizeChecked": true,
+    "pinInstalled": true,
+    "allVisibleTerminalsPinned": true,
+    "noConsoleErrors": true,
+    "noPageErrors": true,
+    "noRequestFailed": true
+  },
+  "details": {
+    "httpStatus": "200",
+    "resizeHandleCount": 3,
+    "resizeHandleBoxes": [
+      {
+        "index": 0,
+        "x": 320,
+        "y": 495,
+        "width": 639,
+        "height": 0
+      },
+      {
+        "index": 1,
+        "x": 960,
+        "y": 76,
+        "width": 0,
+        "height": 836
+      },
+      {
+        "index": 2,
+        "missing": true
+      }
+    ],
+    "scrollChecks": [
+      {
+        "label": "after-output",
+        "pinInstalled": true,
+        "metrics": [
+          {
+            "index": 0,
+            "scrollTop": 1751,
+            "scrollHeight": 2550,
+            "clientHeight": 799,
+            "bottomDistance": 0,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "after-manual-scroll-up",
+        "pinInstalled": true,
+        "metrics": [
+          {
+            "index": 0,
+            "scrollTop": 0,
+            "scrollHeight": 2550,
+            "clientHeight": 799,
+            "bottomDistance": 1751,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "after-horizontal-split",
+        "pinInstalled": true,
+        "metrics": [
+          {
+            "index": 0,
+            "scrollTop": 1819,
+            "scrollHeight": 2618,
+            "clientHeight": 799,
+            "bottomDistance": 0,
+            "visible": true
+          },
+          {
+            "index": 1,
+            "scrollTop": 0,
+            "scrollHeight": 799,
+            "clientHeight": 799,
+            "bottomDistance": 0,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "after-vertical-split",
+        "pinInstalled": true,
+        "metrics": [
+          {
+            "index": 0,
+            "scrollTop": 2244,
+            "scrollHeight": 2618,
+            "clientHeight": 374,
+            "bottomDistance": 0,
+            "visible": true
+          },
+          {
+            "index": 1,
+            "scrollTop": 204,
+            "scrollHeight": 578,
+            "clientHeight": 374,
+            "bottomDistance": 0,
+            "visible": true
+          },
+          {
+            "index": 2,
+            "scrollTop": 0,
+            "scrollHeight": 799,
+            "clientHeight": 799,
+            "bottomDistance": 0,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "after-drag",
+        "pinInstalled": true,
+        "metrics": [
+          {
+            "index": 0,
+            "scrollTop": 2176,
+            "scrollHeight": 2550,
+            "clientHeight": 374,
+            "bottomDistance": 0,
+            "visible": true
+          },
+          {
+            "index": 1,
+            "scrollTop": 153,
+            "scrollHeight": 527,
+            "clientHeight": 374,
+            "bottomDistance": 0,
+            "visible": true
+          },
+          {
+            "index": 2,
+            "scrollTop": 0,
+            "scrollHeight": 799,
+            "clientHeight": 799,
+            "bottomDistance": 0,
+            "visible": true
+          }
+        ]
+      },
+      {
+        "label": "after-window-resize",
+        "pinInstalled": true,
+        "metrics": [
+          {
+            "index": 0,
+            "scrollTop": 2329,
+            "scrollHeight": 2652,
+            "clientHeight": 323,
+            "bottomDistance": 0,
+            "visible": true
+          },
+          {
+            "index": 1,
+            "scrollTop": 289,
+            "scrollHeight": 612,
+            "clientHeight": 323,
+            "bottomDistance": 0,
+            "visible": true
+          },
+          {
+            "index": 2,
+            "scrollTop": 102,
+            "scrollHeight": 765,
+            "clientHeight": 663,
+            "bottomDistance": 0,
+            "visible": true
+          }
+        ]
+      }
+    ],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "requestFailed": []
+  },
+  "screenshots": {
+    "final": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-scroll-bottom-check.png",
+    "fail": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-scroll-bottom-check.fail.png"
+  },
+  "reportPath": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-scroll-bottom-check.json",
+  "pass": true,
+  "error": ""
+}

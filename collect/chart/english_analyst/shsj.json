@@ -1,0 +1,110 @@
+{
+  "color": [
+    "#1890FF"
+  ],
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "shadow"
+    }
+  },
+  "grid": {
+    "left": "5%",
+    "right": "5%",
+    "bottom": "10%",
+    "containLabel": true
+  },
+  "xAxis": [
+    {
+      "type": "category",
+      "data": [
+        "任务1",
+        "任务2",
+        "任务3",
+        "任务4",
+        "任务5"
+      ],
+      "boundaryGap": false,
+      "axisTick": {
+        "show": false
+      },
+      "splitLine": {
+        "show": false
+      },
+      "axisLine": {
+        "show": true
+      },
+      "axisLabel": {
+        "color": "rgba(255, 255, 255, 0.80)",
+        "fontSize": 14
+      }
+    }
+  ],
+  "yAxis": [
+    {
+      "type": "value",
+      "axisLabel": {
+        "color": "rgba(230, 247, 255, 0.50)",
+        "fontSize": 16
+      },
+      "splitLine": {
+        "show": true,
+        "lineStyle": {
+          "type": "dashed",
+          "color": "rgba(230, 247, 255, 0.20)"
+        }
+      }
+    }
+  ],
+  "series": [
+    {
+      "name": "社会实践参与度",
+      "type": "line",
+      "smooth": true,
+      "symbol": "none",
+      "tooltip": {
+        "trigger": "axis",
+        "axisPointer": {
+          "type": "line"
+        }
+      },
+      "lineStyle": {
+        "width": 3,
+        "shadowColor": "#1890FF",
+        "shadowBlur": 20
+      },
+      "areaStyle": {
+        "opacity": 1,
+        "color": {
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "rgba(24, 144, 255, .5)"
+            },
+            {
+              "offset": 0.3,
+              "color": "rgba(24, 144, 255, 0.2)"
+            },
+            {
+              "offset": 1,
+              "color": "rgba(24, 144, 255, 0)"
+            }
+          ],
+          "x": 0,
+          "y": 0,
+          "x2": 0,
+          "y2": 1,
+          "type": "linear",
+          "global": false
+        }
+      },
+      "data": [
+        8,
+        11,
+        13,
+        16,
+        22
+      ]
+    }
+  ]
+}

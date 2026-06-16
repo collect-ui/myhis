@@ -1,0 +1,19 @@
+{
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "openedDrawer": true,
+  "closeVisible": false,
+  "headerHeight": {
+    "height": 0,
+    "borderBottom": "0px"
+  },
+  "workspaceTextCount": 3,
+  "dividerOpacityDefault": null,
+  "projectManageOpened": false,
+  "dividerOpacityWhenProjectManage": null,
+  "contentSearchClicked": false,
+  "contentSearchDialogOpened": false,
+  "dividerOpacityWhenContentSearch": null,
+  "errors": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-header-divider-check-2026-05-05T12-43-40-681Z.png",
+  "pass": false
+}

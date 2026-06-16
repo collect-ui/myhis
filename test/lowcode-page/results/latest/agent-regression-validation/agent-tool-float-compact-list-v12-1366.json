@@ -1,0 +1,49 @@
+{
+  "selectedText": "新会话 A\nactive\n16:49",
+  "top": {
+    "status": "29 次调用",
+    "itemCount": 29,
+    "visibleCount": 7,
+    "firstVisible": "第 1 步 · 找文件",
+    "lastVisible": "第 7 步 · 读文件片段",
+    "bodyHeight": 454,
+    "bodyScrollHeight": 1971,
+    "firstItemHeight": 68,
+    "inputDisplay": "none",
+    "detailDisplay": "none",
+    "detailMaxHeight": "140px"
+  },
+  "bottom": {
+    "status": "29 次调用",
+    "itemCount": 29,
+    "visibleCount": 7,
+    "firstVisible": "第 23 步 · 搜关键字",
+    "lastVisible": "第 29 步 · 读文件片段",
+    "bodyHeight": 454,
+    "bodyScrollHeight": 1971,
+    "firstItemHeight": 68,
+    "inputDisplay": "none",
+    "detailDisplay": "none",
+    "detailMaxHeight": "140px"
+  },
+  "expanded": {
+    "status": "29 次调用",
+    "itemCount": 29,
+    "visibleCount": 2,
+    "firstVisible": "第 7 步 · 读文件片段",
+    "lastVisible": "第 8 步 · 读文件片段",
+    "bodyHeight": 510,
+    "bodyScrollHeight": 7610,
+    "firstItemHeight": 219,
+    "inputDisplay": "block",
+    "detailDisplay": "block",
+    "detailMaxHeight": "360px"
+  },
+  "screenshots": {
+    "top": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-compact-list-v12-1366.png",
+    "expanded": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-expanded-detail-v12-1366.png"
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

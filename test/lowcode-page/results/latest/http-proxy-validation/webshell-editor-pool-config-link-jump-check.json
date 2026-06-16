@@ -1,0 +1,109 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectCode": "backend",
+  "projectName": "月神后端",
+  "startedAt": "2026-05-07T07:39:09.945Z",
+  "expected": {
+    "serviceRouterPath": "/data/project/moongod-backend/backend_data_service/service_router.yml",
+    "checkArrayHandlerPath": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/request_handlers/handlers/check_array.py",
+    "checkArrayClassLine": 13,
+    "jiraServicePath": "/data/project/moongod-backend/backend_data_service/jira/service.yml",
+    "commentsIndexPath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+    "sqlPath": "/data/project/moongod-backend/backend_data_service/jira/comments/issue_commit_count.sql",
+    "issueCommitCountLine": 124,
+    "blackIndexPath": "/data/project/moongod-backend/backend_data_service/black_list/black/index.yml",
+    "blackDataJsonPath": "/data/project/moongod-backend/backend_data_service/black_list/black/query_black_list.json",
+    "msgSendLogIndexPath": "/data/project/moongod-backend/backend_data_service/message/message_send_log/index.yml",
+    "msgSendLogSqlPath": "/data/project/moongod-backend/backend_data_service/message/message_send_log/message_send_log_query.sql",
+    "msgSendLogRequirePath": "/data/project/moongod-backend/backend_data_service/message/message_send_log/base.sql",
+    "msgSendRuleIndexPath": "/data/project/moongod-backend/backend_data_service/message/msg_send_rule/index.yml",
+    "modelFilePath": "/data/project/moongod-backend/backend/models/models.py",
+    "modelClassLine": 3370
+  },
+  "steps": {
+    "openProject": true,
+    "openServiceRouter": true,
+    "jumpCheckArrayHandler": true,
+    "jumpPathToServiceYml": true,
+    "openCommentsIndex": true,
+    "jumpSqlFile": true,
+    "jumpServiceRef": true,
+    "openBlackIndex": true,
+    "jumpDataJson": true,
+    "openMsgSendLogIndex": true,
+    "jumpMsgSendLogSqlFile": true,
+    "jumpRequireFile": true,
+    "openMsgSendRuleIndex": true,
+    "jumpModelFile": true
+  },
+  "details": {
+    "checkArrayJump": {
+      "clickLine": 356,
+      "clickColumn": 11,
+      "clickText": "  - key: check_array",
+      "ctrlHoverHint": true,
+      "openedPath": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/request_handlers/handlers/check_array.py",
+      "expectedLine": 13,
+      "finalLine": 13
+    },
+    "pathJump": {
+      "clickLine": 20,
+      "clickColumn": 13,
+      "clickText": "    path: 'jira/service.yml'",
+      "ctrlHoverHint": true,
+      "openedPath": "/data/project/moongod-backend/backend_data_service/jira/service.yml"
+    },
+    "sqlJump": {
+      "clickLine": 142,
+      "clickColumn": 16,
+      "clickText": "    sql_file: issue_commit_count.sql",
+      "ctrlHoverHint": true,
+      "openedPath": "/data/project/moongod-backend/backend_data_service/jira/comments/issue_commit_count.sql"
+    },
+    "serviceJump": {
+      "clickLine": 52,
+      "clickColumn": 21,
+      "clickText": "          service: jira.issue_commit_count",
+      "ctrlHoverHint": true,
+      "expectedLine": 124,
+      "finalLine": 124,
+      "openedPath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml"
+    },
+    "dataJsonJump": {
+      "clickLine": 7,
+      "clickColumn": 17,
+      "clickText": "    data_json: query_black_list.json",
+      "ctrlHoverHint": true,
+      "openedPath": "/data/project/moongod-backend/backend_data_service/black_list/black/query_black_list.json"
+    },
+    "requireJump": {
+      "sqlClickLine": 26,
+      "sqlClickColumn": 16,
+      "sqlClickText": "    sql_file: message_send_log_query.sql",
+      "sqlCtrlHoverHint": true,
+      "openedSqlPath": "/data/project/moongod-backend/backend_data_service/message/message_send_log/message_send_log_query.sql",
+      "requireClickLine": 11,
+      "requireClickColumn": 12,
+      "requireClickText": " require(\"./base.sql\")",
+      "requireCtrlHoverHint": true,
+      "openedRequirePath": "/data/project/moongod-backend/backend_data_service/message/message_send_log/base.sql"
+    },
+    "modelJump": {
+      "clickLine": 36,
+      "clickColumn": 13,
+      "clickText": "    model: MsgSendRule",
+      "ctrlHoverHint": true,
+      "expectedLine": 3370,
+      "finalLine": 3370,
+      "openedPath": "/data/project/moongod-backend/backend/models/models.py"
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-config-link-jump-check.png",
+  "error": "",
+  "pass": true,
+  "finishedAt": "2026-05-07T07:39:48.587Z"
+}

@@ -1,0 +1,59 @@
+service:
+  - key: issue_save
+    http: true
+    module: empty
+    params:
+      issue_id:
+        template: "{{uuid}}"
+      schema_page_code_list:
+        default: [ "next_version_main" ]
+    handler_params:
+      - key: service2field
+        name: 获取字段信息
+        service:
+          service: system.get_page_schema_field
+          schema_page_code_list: "[schema_page_code_list]"
+        save_field: schema_fields
+      - key: to_tree
+        name: 转成树，方便将map 转list
+        foreach: "[schema_fields]"
+        id: key
+        pid: parent_key
+        children: children
+        save_field: schema_fields_tree
+      - key: schema_transfer
+        name: 转成树
+        operation: "transfer"
+        foreach: "[schema_fields_tree]"
+        save_field: remote_data
+      - key: params2result
+        fields:
+          - from: "[change_list]"
+            to: change_list
+          - from: "[remote_data]"
+            to: remote_data
+
+    log: true
+  - key: get_next_issue_key
+    http: true
+    module: sql
+    params:
+      project_code:
+        check:
+          template: "{{.project_code|must}}"
+          err_msg: 项目不能为空
+    data_file: get_next_issue_key.sql
+    result_handler:
+      - key: arr2obj
+      - key: result2params
+        fields:
+          - to: "[issue]"
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: issue_key
+            template: "{{.project_code}}-{{.issue.max_number}}"
+      - key: param2result
+        field: issue_key
+
+

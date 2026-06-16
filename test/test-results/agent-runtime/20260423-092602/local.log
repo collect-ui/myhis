@@ -1,0 +1,15 @@
+2026-04-23T09:26:03.202460497+08:00	moon/model		skip	0
+2026-04-23T09:26:03.202486746+08:00	moon/model/autodesk		skip	0
+2026-04-23T09:26:03.202494482+08:00	moon/model/base		skip	0
+2026-04-23T09:26:03.202537607+08:00	moon/model/devops		skip	0
+2026-04-23T09:26:03.202545971+08:00	moon/model/doc		skip	0
+2026-04-23T09:26:03.202555885+08:00	moon/model/sport		skip	0
+2026-04-23T09:26:03.202566694+08:00	moon/model/work_task		skip	0
+2026-04-23T09:26:03.202575074+08:00	moon/plugins		skip	0
+2026-04-23T09:26:03.202582552+08:00	moon/test		skip	0
+2026-04-23T09:26:03.393823926+08:00	moon	TestAgentRuntimeSessionRunFlow	pass	0.02
+2026-04-23T09:26:03.407129303+08:00	moon	TestAgentRuntimeSessionRunFlowWithoutCredentialFallsBackToMock	pass	0.01
+2026-04-23T09:26:03.415402858+08:00	moon	TestLoadAgentConversationInputPreservesOrderAndRoleMapping	pass	0.01
+2026-04-23T09:26:03.415675017+08:00	moon	TestResolveAgentCredentialFromCodexAuth	pass	0
+2026-04-23T09:26:03.416003372+08:00	moon	TestResolveAgentCredentialEmptyWhenNoEnvAndNoAuth	pass	0
+2026-04-23T09:26:03.420552436+08:00	moon		pass	0.218

@@ -1,0 +1,34 @@
+{
+  "html": "/data/project/sport/feature/原型设计/agent/index.html",
+  "screenshot": "/data/project/sport/feature/原型设计/agent/prototype-check.png",
+  "hoverScreenshot": "/data/project/sport/feature/原型设计/agent/prototype-hover-check.png",
+  "collapsedScreenshot": "/data/project/sport/feature/原型设计/agent/prototype-collapsed-check.png",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "requiredTexts": {
+    "Agent Chat 回归": true,
+    "会话历史 · 26": true,
+    "最近消息": true,
+    "模型": true,
+    "gpt-5.4-mini": true,
+    "时间顺序：最早在上，最新在下": true,
+    "发送消息": true
+  },
+  "forbiddenTexts": {
+    "resp_0037cd1b": false,
+    "run_id=agent_run": false,
+    "Session ID": false
+  },
+  "sessionRowCount": 4,
+  "messageCount": 4,
+  "sidebarWidth": 336,
+  "collapsedSidebarWidth": 58,
+  "hoverEditVisible": true,
+  "hoverDeleteVisible": true,
+  "collapsedVisible": true,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "passed": true
+}

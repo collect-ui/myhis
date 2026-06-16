@@ -1,0 +1,373 @@
+service:
+  - key: websql_execute
+    http: true
+    module: websql
+    params:
+      project_code:
+        default: "standalone"
+      operation:
+        default: execute
+      driver:
+        default: mysql
+      dsn:
+        default: ""
+      host:
+        default: ""
+      port:
+        default: ""
+      username:
+        default: ""
+      password:
+        default: ""
+      database:
+        default: ""
+      schema:
+        default: ""
+      sqlite_path:
+        default: ""
+      schema_scope:
+        default: ""
+      folder_type:
+        default: ""
+      query:
+        default: ""
+      object_type:
+        default: ""
+      object_name:
+        default: ""
+      table_name:
+        default: ""
+      sql:
+        default: ""
+      selection_start_line:
+        type: int
+        default: 1
+      selection_start_column:
+        type: int
+        default: 1
+      max_rows:
+        type: int
+        default: 500
+      cursor_offset:
+        type: int
+        default: 0
+      page_size:
+        type: int
+        default: 50
+      commit_mode:
+        default: direct
+      transaction_ttl_seconds:
+        type: int
+        default: 120
+      event_id:
+        default: ""
+      event_status:
+        default: ""
+      connection_id:
+        default: ""
+      connection_name:
+        default: ""
+      size:
+        type: int
+        default: 20
+      timeout_seconds:
+        type: int
+        default: 30
+
+  - key: websql_recent_query
+    http: true
+    module: sql
+    params:
+      project_code:
+        default: "standalone"
+      size:
+        type: int
+        default: 20
+    data_file: websql_recent_query.sql
+
+  - key: websql_recent_upsert
+    http: true
+    module: sql
+    params:
+      recent_sql_id:
+        check:
+          template: "{{must .recent_sql_id}}"
+          err_msg: 最近SQL主键不能为空
+      recent_sql_hash:
+        default: ""
+      project_code:
+        default: "standalone"
+      driver:
+        default: ""
+      connection_id:
+        default: ""
+      connection_name:
+        default: ""
+      statement_type:
+        default: ""
+      sql_text:
+        check:
+          template: "{{must .sql_text}}"
+          err_msg: SQL不能为空
+      execute_status:
+        default: "success"
+      error_text:
+        default: ""
+      row_count:
+        type: int
+        default: 0
+      rows_affected:
+        type: int
+        default: 0
+      duration_ms:
+        type: int
+        default: 0
+      size:
+        type: int
+        default: 20
+      last_executed_at:
+        template: "{{current_date_time}}"
+      now_time:
+        template: "{{current_date_time}}"
+    data_file: websql_recent_upsert.sql
+    result_handler:
+      - key: service2field
+        service:
+          service: webshell.websql_recent_query
+          project_code: "[project_code]"
+          size: "[size]"
+        save_field: recent_list
+      - key: param2result
+        field: "[recent_list]"
+
+  - key: websql_favorite_query
+    http: true
+    module: sql
+    params:
+      project_code:
+        default: "standalone"
+      item_type:
+        default: ""
+      path_exact:
+        default: ""
+      folder_exact:
+        default: ""
+      sql_text_exact:
+        default: ""
+      exclude_id:
+        default: ""
+      keyword:
+        template: "{{ if .keyword }}%{{.keyword}}%{{ end }}"
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 200
+      start:
+        template: "({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: false
+    data_file: websql_favorite_query.sql
+    count_file: websql_favorite_count.sql
+    pagination: pagination
+
+  - key: websql_favorite_add
+    http: true
+    module: model_save
+    table: websql_favorite
+    params:
+      websql_favorite_id:
+        template: "{{uuid}}"
+      project_code:
+        default: "standalone"
+      item_type:
+        default: "sql"
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      path:
+        default: ""
+        check:
+          template: "{{if eq .item_type \"folder\"}}{{must .path}}{{else}}true{{end}}"
+          err_msg: 目录路径不能为空
+      folder:
+        default: "默认"
+      sql_text:
+        default: ""
+        check:
+          template: "{{if eq .item_type \"sql\"}}{{must .sql_text}}{{else}}true{{end}}"
+          err_msg: SQL不能为空
+      connection_id:
+        default: ""
+      connection_name:
+        default: ""
+      driver:
+        default: ""
+      is_delete:
+        default: "0"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    handler_params:
+      - key: service2field
+        enable: "{{eq .item_type \"folder\"}}"
+        service:
+          service: webshell.websql_favorite_query
+          project_code: "[project_code]"
+          item_type: "folder"
+          path_exact: "[path]"
+          pagination: false
+        save_field: current_favorite
+        template: "{{is_empty .current_favorite}}"
+        err_msg: "目录[{{.path}}]已存在"
+    result_handler:
+      - key: service2field
+        service:
+          service: webshell.websql_favorite_query
+          project_code: "[project_code]"
+          pagination: false
+        save_field: favorite_list
+      - key: param2result
+        field: "[favorite_list]"
+
+  - key: websql_favorite_update
+    http: true
+    module: model_update
+    table: websql_favorite
+    params:
+      websql_favorite_id:
+        check:
+          template: "{{must .websql_favorite_id}}"
+          err_msg: 主键不能为空
+      project_code:
+        default: "standalone"
+      item_type:
+        default: "sql"
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      path:
+        default: ""
+      folder:
+        default: "默认"
+      sql_text:
+        default: ""
+      connection_id:
+        default: ""
+      connection_name:
+        default: ""
+      driver:
+        default: ""
+      is_delete:
+        default: "0"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    update_fields:
+      - item_type
+      - name
+      - path
+      - folder
+      - sql_text
+      - connection_id
+      - connection_name
+      - driver
+      - is_delete
+      - modify_time
+      - modify_user
+    filter:
+      websql_favorite_id: "[websql_favorite_id]"
+      project_code: "[project_code]"
+    result_handler:
+      - key: service2field
+        service:
+          service: webshell.websql_favorite_query
+          project_code: "[project_code]"
+          pagination: false
+        save_field: favorite_list
+      - key: param2result
+        field: "[favorite_list]"
+
+  - key: websql_favorite_bulk_upsert
+    http: true
+    module: bulk_upsert
+    table: websql_favorite
+    model_field: "[favorite_list]"
+    params:
+      project_code:
+        default: "standalone"
+      favorite_list:
+        check:
+          template: "{{must .favorite_list}}"
+          err_msg: 收藏列表不能为空
+    handler_params:
+      - key: update_array
+        foreach: "[favorite_list]"
+        item: item
+        fields:
+          - field: websql_favorite_id
+            template: "{{if .item.websql_favorite_id}}{{.item.websql_favorite_id}}{{else}}{{uuid}}{{end}}"
+          - field: project_code
+            template: "{{if .item.project_code}}{{.item.project_code}}{{else}}{{.project_code}}{{end}}"
+          - field: is_delete
+            template: "{{if .item.is_delete}}{{.item.is_delete}}{{else}}0{{end}}"
+          - field: create_time
+            template: "{{if .item.create_time}}{{.item.create_time}}{{else}}{{current_date_time}}{{end}}"
+          - field: modify_time
+            template: "{{current_date_time}}"
+          - field: modify_user
+            template: "{{.session_user_id}}"
+    result_handler:
+      - key: service2field
+        service:
+          service: webshell.websql_favorite_query
+          project_code: "[project_code]"
+          pagination: false
+        save_field: favorite_list_latest
+      - key: param2result
+        field: "[favorite_list_latest]"
+
+  - key: websql_favorite_delete
+    http: true
+    module: model_update
+    table: websql_favorite
+    params:
+      project_code:
+        default: "standalone"
+      websql_favorite_id_list:
+        check:
+          template: "{{must .websql_favorite_id_list}}"
+          err_msg: 主键列表不能为空
+      is_delete:
+        default: "1"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    update_fields:
+      - is_delete
+      - modify_time
+      - modify_user
+    filter:
+      project_code: "[project_code]"
+      websql_favorite_id__in: "[websql_favorite_id_list]"
+    result_handler:
+      - key: service2field
+        service:
+          service: webshell.websql_favorite_query
+          project_code: "[project_code]"
+          pagination: false
+        save_field: favorite_list
+      - key: param2result
+        field: "[favorite_list]"

@@ -1,0 +1,78 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://192.168.232.130:8015/template_data/data",
+  "projectCode": "backend",
+  "created": {
+    "groupTitle": "test2",
+    "groupId": "22d4a5db-aa91-4a9b-a49b-053649358969",
+    "frontendDocId": "2a4848a6-480e-46ef-b064-07bd9c455c03",
+    "backendDocId": "6f9080ff-183b-4997-a123-00a2604b53a5",
+    "frontendName": "auto_frontend_mode_1777972421575",
+    "backendName": "auto_backend_mode_1777972421575"
+  },
+  "displayChecks": {
+    "frontend": {
+      "modeShown": true,
+      "methodShown": true,
+      "urlShown": true
+    },
+    "backend": {
+      "modeShown": true,
+      "methodShown": true,
+      "urlShown": true
+    }
+  },
+  "requestChecks": {
+    "frontendSend": {
+      "ok": true,
+      "statusKeyword": "直发完成(按响应)",
+      "responsePreview": "{\n  \"success\": true,\n  \"code\": \"0\",\n  \"msg\": \"执行成功\",\n  \"data\": [\n    {\n      \"children\": [\n        {\n          \"cn_title\": \"tset\",\n          \"collect_doc_id\": \"61ccc2a5-df6f-41b2-ac55-b42e3ea23eb6\",\n          \"display_title\": \"登录(tset)\",\n          \"doc_group_id\": \"22d4a5db-aa91-4a9b-a49b-053649358969\",\n          \"id\": \"d_61ccc2a5-df6f-41b2-ac55-b42e3ea23eb6\",\n          \"is_dir\": \"0\",\n          \"node_type\": \"2\",\n          \"order_index\": \"1\",\n          \"parent_id\": \"g_22d4a5db-aa91-4a9b-a49b-053649358969\",\n          \"title\": \"登录\"\n        },\n        {\n          \"cn_title\": \"\",\n          \"collect_doc_id\": \"00411a41-a299-4b9c-967f-4d1f266c127f\",\n          \"display_title\": \"获取用户信息\",\n          \"doc_group_id\": \"22d4a5db-aa91-4a9b-a49b-053649358969\",\n          \"id\": \"d_00411a41-a299-4b9c-967f-4d1f266c127f\",\n          \"is_dir\": \"0\",\n          \"node_type\": \"2\",\n          \"order_index\": \"1\",\n          \"parent_id\": \"g_22d4a5db-aa91-4a9b-a49b-053649358969\",\n          \"title\": \"获取用户信息\"\n        },\n   "
+    },
+    "backendSend": {
+      "ok": true,
+      "statusKeyword": "代发完成",
+      "responsePreview": "{\n  \"success\": true,\n  \"code\": \"0\",\n  \"msg\": \"请求发送成功\",\n  \"status_code\": 200,\n  \"status_text\": \"200 OK\",\n  \"response\": {\n    \"args\": {\n      \"source\": \"webshell-mode-check\"\n    },\n    \"headers\": {\n      \"accept-encoding\": \"gzip, br\",\n      \"cookie\": \"sails.sid=s%3An5BfoPkgUBdQIGEPVCuOZvgIFc89DYOg.W42%2BdgHn9S8O9g40hjOvDVdBQEDfQQnEajXGabPEwDI; __cf_bm=l7cQX_eKDkODVUFKDXtMiV0MV6ynMYKSHeqVCLVlt2s-1777972191.1569476-1.0.1.1-KnQdKcnUKcJWKF9EZfFTZzZ9m7.FakWZ3vgYOLJK4KPwvdrm7_uXgxF3uHSqWBjQ5Sc3D2bqt8OPS6lVM6jmgrxvteBms4RwgJkz6KczHZwLppNzGkQHld_BOzuC5STY; _cfuvid=NrOMZQ1y6dc52WQxNy44il0iYjad5cY1_1OHDSLolp0-1777972191.1569476-1.0.1.1-V_dBWMY2ZseM44Xp3AHYu9ARW7tt_iHvp3hM12OAs48\",\n      \"host\": \"postman-echo.com\",\n      \"user-agent\": \"Go-http-client/2.0\",\n      \"x-forwarded-proto\": \"https\"\n    },\n    \"url\": \"https://postman-echo.com/get?source=webshell-mode-check\"\n  },\n  \"response_text\": \"{\\n  \\\"args\\\": {\\n    \\\"source\\\": \\\"webshell-mode-check\\\"\\n  },\\n  \\\"headers\\\": {\\n    \\\"accept-encoding\\\": \\\""
+    }
+  },
+  "addPanelDefaults": {
+    "ok": true,
+    "requestUrl": "/template_data/data",
+    "modeText": "前台直发",
+    "methodText": "POST"
+  },
+  "dbFieldChecks": {
+    "frontend": {
+      "ok": true,
+      "request_mode": "frontend",
+      "request_method": "post",
+      "request_url": "/template_data/data",
+      "code": "{\n  \"service\": \"config.doc_group_http_service_tree_query\",\n  \"to_tree\": true\n}"
+    },
+    "backend": {
+      "ok": true,
+      "request_mode": "backend",
+      "request_method": "get",
+      "request_url": "https://postman-echo.com/get?source=webshell-mode-check",
+      "code": "{}"
+    }
+  },
+  "cleanup": {
+    "frontendDeleted": true,
+    "backendDeleted": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [
+    "Canceled: Canceled",
+    "Canceled: Canceled",
+    "Canceled: Canceled",
+    "Canceled: Canceled",
+    "Canceled: Canceled",
+    "Canceled: Canceled",
+    "Canceled: Canceled",
+    "Canceled: Canceled"
+  ],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell-editor-pool-http-mode-flow-check.png",
+  "pass": true,
+  "nonCanceledPageErrors": []
+}

@@ -1,0 +1,29 @@
+{
+  "reached": true,
+  "samples": [
+    {
+      "dt": 1779440369499,
+      "status": "运行中",
+      "itemCount": 15,
+      "visibleCount": 7,
+      "first": "第 1 步 · 找文件",
+      "last": "第 15 步 · 读文件片段",
+      "toolStateCount": 15
+    }
+  ],
+  "final": {
+    "status": "运行中",
+    "itemCount": 15,
+    "visibleCount": 7,
+    "firstVisible": "第 1 步 · 找文件",
+    "lastVisible": "第 7 步 · 读文件片段",
+    "lastItem": "第 15 步 · 读文件片段",
+    "toolStateCount": 15,
+    "bodyHeight": 454,
+    "bodyScrollHeight": 1019
+  },
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-live-growth-v13.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "finalURL": "http://192.168.232.130:8026/collect-ui/#/collect-ui/framework/question-bank",
+  "title": "AI Study 管理后台",
+  "steps": [
+    {
+      "name": "open_question_bank",
+      "url": "http://192.168.232.130:8026/collect-ui/#/collect-ui/login"
+    },
+    {
+      "name": "login_admin",
+      "url": "http://192.168.232.130:8026/collect-ui/#/collect-ui/framework/question-bank"
+    },
+    {
+      "name": "open_question_bank_after_login",
+      "url": "http://192.168.232.130:8026/collect-ui/#/collect-ui/framework/question-bank"
+    }
+  ],
+  "visibleTextSample": "AI Study\n首页\n系统管理\n题库管理\n年级科目维护\n管理员\n题库管理\n全学科题库管理\nK12教育数字化平台\n科目\n全部科目\n教程类型\n人教版\n年级\n一年级上学期\n一年级下学期\n二年级上学期\n二年级下学期\n三年级上学期\n三年级下学期\n四年级上学期\n四年级下学期\n五年级上学期\n五年级下学期\n六年级上学期\n六年级下学期\n七年级上学期\n七年级下学期\n八年级上学期\n八年级下学期\n九年级上学期\n九年级下学期\n高一上学期\n高一下学期\n高二上学期\n高二下学期\n高三上学期\n高三下学期\n单元\n知识点\n全部知识点\n难度系数\n全部难度\n题目类型\n全部题型\n新建题目\n关键字\n属性\n全部属性\n状态\n全部状态\n搜索\n批量删除\nAI解析导入\n当前查询条件：科目：全部科目 / 年级：七年级上学期 / 教材：人教版 / 属性：全部属性 / 类型：全部类型 / 难度：全部难度 / 状态：全部状态 / 单元：全部单元 / 知识点：全部知识点\n▤\n题库总数\n232\n✓\n今日新增\n0\n英语\n普通题型\n单选题\n基础\n序号 1\nQe34a1ece-9fcd-4af9-b29e-610c2807d2c5\nThis box is _____ heavy for me _____ carry.\n七年级上学期\n·\n未分单元\n·\n2026-05-20 16:59:53\n英语\n普通题型\n单选题\n基础\n序号 1\nQe34a1ece-9fcd-4af9-b29e-610c2807d2c5\nThis box is _____ heavy for me _____ carry.\n七年级上学期\n·\n未分单元\n·\n2026-05-20 16:59:53\n英语\n语法/单项选择\n单选题\n基础\n序号 1\n第1套 一、语法巩固 第1题\nWhat _____ useful dictionary it is!\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n英语\n语法/单项选择\n单选题\n基础\n序号 1\n第1套 一、语法巩固 第1题\nWhat _____ useful dictionary it is!\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n英语\n语法/单项选择\n单选题\n基础\n序号 2\n第1套 一、语法巩固 第2题\nMr. Green has little time today, _____?\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n英语\n语法/单项选择\n单选题\n基础\n序号 2\n第1套 一、语法巩固 第2题\nMr. Green has little time today, _____?\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n英语\n语法/单项选择\n单选题\n基础\n序号 3\n第1套 一、语法巩固 第3题\nThey will go to the Great Wall if it _____ tomorrow.\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n英语\n语法/单项选择\n单选题\n基础\n序号 3\n第1套 一、语法巩固 第3题\nThey will go to the Great Wall if it _____ tomorrow.\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n英语\n语法/单项选择\n单选题\n基础\n序号 4\n第1套 一、语法巩固 第4题\nThis box is _____ heavy for me _____ carry.\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n英语\n语法/单项选择\n单选题\n基础\n序号 4\n第1套 一、语法巩固 第4题\nThis box is _____ heavy for me _____ carry.\n七年级上学期\n·\n未分单元\n·\n2026-05-20 07:11:19\n新建题目\n保存题目\n题目设置\n科目\n英语\n年级\n七年级上学期\n单元\n可不选择\n知识点\n可不选择\n属性\n普通题型\n题型\n单选题\n难度\n基础\n序号\n分值\n题干内容\n单选题\n\n\n\n\n+\n-\n×\n÷\n=\n<\n>\n≤\n≥\n≠\n≈\n±\n%\n°\n选项配置\n正确答案 A\n答案\n多选\n单选\n模式\n富\n文\nA\nB\nC\nD\n题目解析\n\n\n\n\n+\n-\n×\n÷\n=\n<\n>\n≤\n≥\n≠\n≈\n±\n%\n°\n解析音视频\n上传文件\n共 232 条\n1\n2\n3\n4\n5\n•••\n24\n10 条/页\n跳至页",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "badResponses": [],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/question-bank-flow/question-bank-8026-after-login.png"
+}

@@ -1,0 +1,1 @@
+select * from (select a.*, rownum rn from (require('./doctor_options.sql')) a where rownum <= {{.end}}) where rn > {{.start}}

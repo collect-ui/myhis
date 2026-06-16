@@ -1,0 +1,26 @@
+{
+  "ok": false,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-connection-edit-dialog-regression.png",
+  "standalone": {
+    "ok": false,
+    "rowCountBefore": 2,
+    "editFormVisible": true,
+    "rowCountAfterDelete": 2,
+    "localStorage": "{\"items\":[{\"id\":\"auto-delete-mysql\",\"name\":\"Auto Delete MySQL\",\"driver\":\"mysql\",\"dsn\":\"\",\"host\":\"127.0.0.1\",\"port\":\"3306\",\"username\":\"root\",\"password\":\"\",\"database\":\"demo\",\"sqlite_path\":\"\"},{\"id\":\"auto-keep-sqlite\",\"name\":\"Auto Keep SQLite\",\"driver\":\"sqlite\",\"dsn\":\"\",\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"database\":\"\",\"sqlite_path\":\"./database/price.db\"}]}",
+    "localStorageItems": 2
+  },
+  "editorPool": {
+    "ok": true,
+    "sqlButtonCount": 1,
+    "websqlVisible": 1,
+    "formText": "名称\n类型\nSQLite\nSQLite Path\nDSN"
+  },
+  "webshell": {
+    "ok": false,
+    "sqlButtonCount": 0,
+    "websqlVisible": 0
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "ok": false,
+  "errors": [
+    "connection edit/delete flow failed"
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "details": {
+    "rowCountBefore": 2,
+    "editCount": 2,
+    "deleteCount": 2,
+    "editFormVisible": 1,
+    "formVisibleAfterClose": 0,
+    "formHasName": false,
+    "rowCountAfter": 2,
+    "activeText": "本地 SQLite\n./database/price.db",
+    "stored": "{\"items\":[{\"id\":\"builtin-local-sqlite\",\"name\":\"本地 SQLite\",\"driver\":\"sqlite\",\"dsn\":\"\",\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"database\":\"\",\"sqlite_path\":\"./database/price.db\"}]}"
+  }
+}

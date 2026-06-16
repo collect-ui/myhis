@@ -1,0 +1,22 @@
+{
+  "url": "{{get_key `chat_url`}}/v3/chat",
+  "method": "POST",
+  "header": {
+    "Authorization": "{{get_key `chat_token`}}",
+    "Content-Type": "application/json"
+  },
+  "result_json": true,
+  "data": {
+    "bot_id": "{{get_key `bot_id`}}",
+    "user_id": "test",
+    "stream": false,
+    "auto_save_history": true,
+    "additional_messages": [
+      {
+        "role": "user",
+        "content": "{\"name\":\"{{.name}}\",\"feature\":\"{{.feature}}\"}",
+        "content_type": "text"
+      }
+    ]
+  }
+}

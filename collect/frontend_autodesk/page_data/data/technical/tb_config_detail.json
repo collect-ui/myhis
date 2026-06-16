@@ -1,0 +1,8 @@
+[
+  {
+    "service": "system.restoreConfig",
+    "schema_page_code": "tb_project_tech_manage",
+    "target_field": "tb_config_technical"
+  }
+
+]

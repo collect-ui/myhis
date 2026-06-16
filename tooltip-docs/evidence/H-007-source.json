@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "active_tab_text": "filter_arr",
+  "title": "filter_arr(过滤数组)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "从数组中过滤数组"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "- key: filter_arr\n        foreach: \"[change_list]\"\n        item: item\n        if_template: \"{{and (eq .item.operation \\\"remove\\\") (ne .item.has_group \\\"0\\\") }}\"\n        save_field: remove_list",
+    "过滤数组，一般把增、删、改的数据过滤，分别对应操作"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "filter_arr"
+        ],
+        [
+          "foreach",
+          "string",
+          "是",
+          "循环数组对象取值，[你的变量]"
+        ],
+        [
+          "item",
+          "string",
+          "是",
+          "item 变量取值"
+        ],
+        [
+          "if_template",
+          "template",
+          "是",
+          "过滤条件，true 保留下来"
+        ]
+      ]
+    }
+  ],
+  "body_text": "filter_arr(过滤数组)  \n示例\n从数组中过滤数组\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nfilter_arr\n\n\nforeach\n\t\nstring\n\t\n是\n\t\n循环数组对象取值，[你的变量]\n\n\nitem\n\t\nstring\n\t\n是\n\t\nitem 变量取值\n\n\nif_template\n\t\ntemplate\n\t\n是\n\t\n过滤条件，true 保留下来\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-007",
+  "source_group": "参数处理",
+  "source_title": "filter_arr",
+  "source_doc_text": "22.filter_arr\n过滤数组",
+  "read_at": "2026-05-07T08:21:14.414Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-007-source.png"
+}

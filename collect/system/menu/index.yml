@@ -1,0 +1,230 @@
+service:
+  - key: menu_save
+    http: true
+    module: model_save
+    params:
+      sys_menu_id:
+        template: "{{uuid}}"
+      create_time:
+        template: "{{current_date_time}}"
+      menu_code:
+        check:
+          template: "{{must .menu_code}}"
+          err_msg: "菜单编码不能为空"
+      belong_project:
+        template: "{{get_key `project`}}"
+      role_id_list:
+        default: []
+
+    table: "sys_menu"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.menu_query
+          menu_code: "[menu_code]"
+        save_field: menu
+        template: "{{ if eq (len .menu) 0}}true{{else}}false{{ end}}"
+        err_msg: "[{{.menu_code}}] 菜单编码已经存在"
+      - key: service2field
+        enable: "{{must .role_id_list}}"
+        service:
+          service: hrm.role_query
+          role_id_list: "[role_id_list]"
+        save_field: role_list
+      - key: update_array
+        enable: "{{must .role_list}}"
+        foreach: role_list
+        item: item
+        fields:
+          - field: sys_menu_id
+            template: "[sys_menu_id]"
+          - field: role_menu_id
+            template: "{{uuid}}"
+      - key: service2field
+        enable: "{{must .role_list}}"
+        service:
+          service: system.role_menu_save_bulk
+          role_menu_list: "[role_list]"
+  - key: menu_delete
+    http: true
+    module: model_delete
+    params:
+      sys_menu_id_list:
+        check:
+          template: "{{must .sys_menu_id_list}}"
+          err_msg: "sys_menu_id_list不能为空"
+    table: sys_menu
+    filter:
+      sys_menu_id__in: "[sys_menu_id_list]"
+  - key: menu_update
+    http: true
+    module: model_update
+    params:
+      sys_menu_id:
+        check:
+          template: "{{must .sys_menu_id}}"
+          err_msg: "sys_menu_id不能为空"
+      menu_code:
+        check:
+          template: "{{must .menu_code}}"
+          err_msg: "menu_code不能为空"
+      local_role_menu_list:
+        default: []
+      remote_role_menu_list:
+        default: []
+    table: "sys_menu"
+    modify_config: menu_modify.json
+    handler_params:
+      - key: service2field
+        service:
+          service: system.menu_query
+          menu_code: "[menu_code]"
+          exclude: "[sys_menu_id]"
+        save_field: menu
+        template: "{{ if eq (len .menu) 0}}true{{else}}false{{ end}}"
+        err_msg: "[{{.menu_code}}] 菜单编码已经存在"
+      - key: service2field
+        service:
+          service: hrm.role_query
+          sys_menu_id: "[sys_menu_id]"
+        save_field: local_role_menu_list
+      - key: service2field
+        enable: "{{must .role_id_list}}"
+        service:
+          service: hrm.role_query
+          role_id_list: "[role_id_list]"
+        save_field: remote_role_menu_list
+      - key: get_modify_data
+        save_field: change_list
+      - key: filter_arr
+        enable: "{{must .change_list}}"
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation \"add\"}}"
+        save_field: role_menu_list
+      - key: update_array
+        enable: "{{must .role_menu_list}}"
+        foreach: role_menu_list
+        item: item
+        fields:
+          - field: sys_menu_id
+            template: "[sys_menu_id]"
+          - field: role_menu_id
+            template: "{{uuid}}"
+      - key: service2field
+        enable: "{{must .role_menu_list}}"
+        service:
+          service: system.role_menu_save_bulk
+          role_menu_list: "[role_menu_list]"
+      - key: filter_arr
+        enable: "{{must .change_list}}"
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation \"remove\"}}"
+        save_field: role_menu_list
+      - key: prop_arr
+        foreach: "[role_menu_list]"
+        value: "[role_id]"
+        save_field: role_id_list
+      - key: service2field
+        enable: "{{must .role_id_list}}"
+        service:
+          service: system.role_menu_delete
+          role_id_list: "[role_id_list]"
+          sys_menu_id: "[sys_menu_id]"
+    filter:
+      sys_menu_id: "[sys_menu_id]"
+    result_handler:
+      - key: param2result
+        field: change_list
+
+  - key: menu_detail
+    http: true
+    module: empty
+    params:
+      sys_menu_id:
+        check:
+          template: "{{must .sys_menu_id}}"
+          err_msg: "sys_menu_id不能为空"
+      role_list:
+        default: []
+      role_id_list:
+        default: []
+    handler_params:
+      - key: service2field
+        service:
+          service: system.menu_query
+          sys_menu_id: "[sys_menu_id]"
+        save_field: menu
+      - key: service2field
+        service:
+          service: hrm.role_query
+          sys_menu_id: "[sys_menu_id]"
+        save_field: role_list
+      - key: prop_arr
+        enable: "{{gt (len .role_list) 0}}"
+        foreach: "[role_list]"
+        value: "[role_id]"
+        save_field: role_id_list
+      - key: arr2obj
+        field: "[menu]"
+      - key: update_field
+        fields:
+          - field: "[menu.role_id_list]"
+            template: "[role_id_list]"
+          - field: "[menu.role_list]"
+            template: "[role_list]"
+      - key: param2result
+        field: menu
+
+  - key: handler_menu_order
+    http: true
+    module: empty
+    params:
+      change_parent:
+        default: false
+      parent:
+        default: {"parent_id":"0","sys_menu_id":"0"}
+      menu:
+        check:
+          template: "{{must .menu}}"
+          err_msg: "menu不能为空"
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    handler_params:
+      - key: service2field
+        enable: "[change_parent]"
+        service:
+          service: system.menu_update
+          sys_menu_id: "[menu.sys_menu_id]"
+          menu_code: "[menu.menu_code]"
+          parent_id: "[parent.sys_menu_id]"
+      - key: service2field
+        service:
+          service: system.update_order
+          rows: "[rows]"
+
+  - key: update_order
+    http: true
+    module: bulk_upsert
+    params:
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    table: sys_menu
+    update_fields:
+      - order_index
+    model_field: "[rows]"
+  - key: menu_query
+    http: true
+    module: empty
+    must_login: false
+    handler_params:
+      - key: file2datajson
+        save_field: menu_tree
+      - key: param2result
+        field: menu_tree
+    data_file: mock/menu_tree.json

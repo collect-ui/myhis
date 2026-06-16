@@ -1,0 +1,120 @@
+{
+  "ok": true,
+  "active_tab_text": "ldap",
+  "title": "ldap(ldap)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "支持ldap增删改查",
+    "支持require 引入公共文件"
+  ],
+  "textarea_count": 12,
+  "textarea_values": [
+    "- key: ldap_search\n    http: true\n    module: ldap\n    params:\n      search_username:\n        check:\n          template: \"{{must .search_username}}\"\n          err_msg: 用户名不能为空\n    handler_params:\n      - key: service2field\n        service:\n          service: config.conf单独ig_detail_query\n          group_name: ldap_config\n        save_field: ldap_config\n        template: \"{{must .ldap_config}}\"\n        err_msg: ldap配置不存在\n    data_file: search.json",
+    "支持ldap模块的增删改查对对对，示例中config_detail_query 是查询ldap 的配置，我将ldap配置到数据库了。\n    本模块不太属于公共模块，只是我工作中需要对接，属于业务模块没有过多介绍，至于参数配置请到https://github.com/go-ldap/ldap",
+    "{\n  \"connection\": {\n    \"server\": \"{{.ldap_config.ldap_addr}}\",\n    \"user\": \"cn={{.username}},{{if .is_not_admin}}{{.ldap_config.ldap_users}},{{end}}{{.ldap_config.ldap_base_dn}}\",\n    \"password\": \"{{.password}}\"\n  }\n}",
+    "{\n  require(login.common),\n  \"method\": \"search\",\n  \"scope_desc\": \"ScopeBaseObject   = 0\\n\\tScopeSingleLevel  = 1\\n\\tScopeWholeSubtree = 2\",\n  \"SearchParams\": {\n    \"BaseDN\": \"{{.ldap_config.ldap_users}},{{.ldap_config.ldap_base_dn}}\",\n    \"Scope\":2,\n    \"DerefAliases\": 0,\n    \"filter\": \"(&(objectClass=inetOrgPerson)(cn={{.search_username}}))\",\n    \"attributes\": [\n      \"cn\",\n      \"sn\",\n      \"givenName\",\n      \"mail\",\n      \"mobile\"\n    ]\n  }\n\n}",
+    "{\n  require(login.common),\n  \"method\": \"add\",\n  \"AddParams\": {\n    \"DN\": \"ou={{.name}},{{.ldap_config.ldap_groups}},{{.ldap_config.ldap_base_dn}}\",\n    \"Attributes\": [\n      {\"TYPE\": \"cn\",\"Vals\": [\"{{.name}}\"]},\n      {\"TYPE\": \"ou\",\"Vals\": [\"{{.name}}\"]},\n      {\"TYPE\": \"objectClass\",\"Vals\": [\"top\", \"groupOfUniqueNames\"]},\n      {\"TYPE\": \"uniqueMember\",\"Vals\": [\"\"]}\n    ]\n  }\n\n}",
+    "{\n  require(login.common),\n  \"method\": \"add\",\n  \"AddParams\": {\n    \"DN\": \"cn={{.add_username}},{{.ldap_config.ldap_users}},{{.ldap_config.ldap_base_dn}}\",\n    \"Attributes\": [\n      {\"TYPE\": \"cn\",\"Vals\": [\"{{.add_username}}\"]},\n      {\"TYPE\": \"sn\",\"Vals\": [\"{{.nick}}\"]},\n      {\"TYPE\": \"givenName\",\"Vals\": [\"{{.nick}}\"]},\n      {{if .email}}\n      {\"TYPE\": \"mail\",\"Vals\": [\"{{.email}}\"]},\n      {{ end }}\n      {{if .phone}}\n      {\"TYPE\": \"mobile\",\"Vals\": [\"{{.phone}}\"]},\n      {{end}}\n      {\"TYPE\": \"objectClass\",\"Vals\": [\"top\", \"inetOrgPerson\"]},\n      {\"TYPE\": \"userpassword\",\"Vals\": [\"{{hash_sha .add_password}}\"]}\n    ]\n  }\n\n}",
+    "{\n  require(login.common),\n  \"method\": \"modify\",\n  \"ModifyParams\": {\n    \"DN\": \"ou={{.old_name}},{{.ldap_config.ldap_groups}},{{.ldap_config.ldap_base_dn}}\",\n    \"Changes\": [\n      {\n        \"Desc\": \"AddAttribute       = 0\\n\\tDeleteAttribute    = 1\\n\\tReplaceAttribute   = 2\\n\\tIncrementAttribute = 3\",\n        \"Operation\": 2,\n        \"Modification\": {\n          \"TYPE\": \"cn\",\n          \"Vals\": [\n            \"{{.new_name}}\"\n          ]\n        }\n      }\n\n    ]\n  }\n}",
+    "{\n  require(login.common),\n  \"method\": \"modify\",\n  \"ModifyParams\": {\n    \"DN\": \"ou={{.name}},{{.ldap_config.ldap_groups}},{{.ldap_config.ldap_base_dn}}\",\n    \"Changes\": [\n      {\n        \"Desc\": \"AddAttribute       = 0\\n\\tDeleteAttribute    = 1\\n\\tReplaceAttribute   = 2\\n\\tIncrementAttribute = 3\",\n        \"Operation\": 0,\n        \"Modification\": {\n          \"TYPE\": \"uniqueMember\",\n          \"Vals\": [\n            \"cn={{.add_username}},{{.ldap_config.ldap_groups}},{{.ldap_config.ldap_base_dn}}\"\n          ]\n        }\n      }\n\n    ]\n  }\n}",
+    "{\n  require(login.common),\n  \"method\": \"modify\",\n  \"ModifyParams\": {\n    \"DN\": \"ou={{.ou}},{{.ldap_config.ldap_groups}},{{.ldap_config.ldap_base_dn}}\",\n    \"Changes\": [\n      {\n        \"Desc\": \"AddAttribute       = 0\\n\\tDeleteAttribute    = 1\\n\\tReplaceAttribute   = 2\\n\\tIncrementAttribute = 3\",\n        \"Operation\": 1,\n        \"Modification\": {\n          \"TYPE\": \"uniqueMember\",\n          \"Vals\": [\n            \"cn={{.remove_username}},{{.ldap_config.ldap_users}},{{.ldap_config.ldap_base_dn}}\"\n          ]\n        }\n      }\n\n    ]\n  }\n}",
+    "{\n  require(login.common),\n  \"method\": \"delete\",\n  \"DeleteParams\": {\n    \"DN\": \"cn={{.remove_username}},{{.ldap_config.ldap_users}},{{.ldap_config.ldap_base_dn}}\"\n  }\n\n}",
+    "{\n  require(login.common),\n  \"method\": \"delete\",\n  \"DeleteParams\": {\n    \"DN\": \"ou={{.name}},{{.ldap_config.ldap_groups}},{{.ldap_config.ldap_base_dn}}\"\n  }\n\n}",
+    "{\n  require(login.common),\n  \"method\": \"modifyDn\",\n  \"ModifyDnParams\": {\n    \"DN\": \"ou={{.old_name}},{{.ldap_config.ldap_groups}},{{.ldap_config.ldap_base_dn}}\",\n    \"NewRDN\": \"ou={{.new_name}}\",\n    \"DeleteOldRDN\": true\n  }\n}"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "module",
+          "string",
+          "是",
+          "ldap,运行ldap模块"
+        ],
+        [
+          "data_file",
+          "string",
+          "是",
+          "ldap 配置路径地址"
+        ],
+        [
+          "data_file.connection",
+          "json",
+          "是",
+          "ldap 连接信息"
+        ],
+        [
+          "data_file.connection.server",
+          "string",
+          "是",
+          "服务器地址"
+        ],
+        [
+          "data_file.connection.user",
+          "string",
+          "是",
+          "登陆的用户信息"
+        ],
+        [
+          "data_file.connection.password",
+          "string",
+          "是",
+          "登陆的密码"
+        ],
+        [
+          "data_file.method",
+          "string",
+          "是",
+          "执行方法。search:搜索，add:添加；modify:修改;delete:删除;modifyDn修改dn信息"
+        ],
+        [
+          "data_file.SearchParams",
+          "json",
+          "",
+          "搜索对应的参数，具体参数看示例"
+        ],
+        [
+          "data_file.AddParams",
+          "json",
+          "",
+          "添加对应的参数，具体参数看示例"
+        ],
+        [
+          "data_file.ModifyParams",
+          "json",
+          "",
+          "修改对应的参数，具体参数看示例"
+        ],
+        [
+          "data_file.DeleteParams",
+          "json",
+          "",
+          "删除对应的参数，具体参数看示例"
+        ],
+        [
+          "data_file.ModifyDnParams",
+          "json",
+          "",
+          "修改ou对应的参数"
+        ]
+      ]
+    }
+  ],
+  "body_text": "ldap(ldap)  \n示例\n支持ldap增删改查\n支持require 引入公共文件\n参数\n参数\t类型\t必须\t说明\nmodule\n\t\nstring\n\t\n是\n\t\nldap,运行ldap模块\n\n\ndata_file\n\t\nstring\n\t\n是\n\t\nldap 配置路径地址\n\n\ndata_file.connection\n\t\njson\n\t\n是\n\t\nldap 连接信息\n\n\ndata_file.connection.server\n\t\nstring\n\t\n是\n\t\n服务器地址\n\n\ndata_file.connection.user\n\t\nstring\n\t\n是\n\t\n登陆的用户信息\n\n\ndata_file.connection.password\n\t\nstring\n\t\n是\n\t\n登陆的密码\n\n\ndata_file.method\n\t\nstring\n\t\n是\n\t\n执行方法。search:搜索，add:添加；modify:修改;delete:删除;modifyDn修改dn信息\n\n\ndata_file.SearchParams\n\t\njson\n\t\n\t\n搜索对应的参数，具体参数看示例\n\n\ndata_file.AddParams\n\t\njson\n\t\n\t\n添加对应的参数，具体参数看示例\n\n\ndata_file.ModifyParams\n\t\njson\n\t\n\t\n修改对应的参数，具体参数看示例\n\n\ndata_file.DeleteParams\n\t\njson\n\t\n\t\n删除对应的参数，具体参数看示例\n\n\ndata_file.ModifyDnParams\n\t\njson\n\t\n\t\n修改ou对应的参数\n示例\n1. common 公共文件\n2. 搜索用户信息\n3. 添加分组\n4. 添加用户\n5. 分组编辑\n6. 分组添加用户\n7. 分组删除用户\n8. 删除用户\n9. 删除分组\n10. 修改ou\n菜单导航\n示例\n参数\n示例\n1.common 公共文件\n2.搜索用户信息\n3.添加分组\n4.添加用户\n5.分组编辑\n6.分组添加用户\n7.分组删除用户\n8.删除用户\n9.删除分组\n10.修改ou",
+  "task_id": "M-010",
+  "source_group": "模块处理",
+  "source_title": "ldap",
+  "source_doc_text": "10.ldap\nldap",
+  "read_at": "2026-05-07T08:20:08.143Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/M-010-source.png"
+}

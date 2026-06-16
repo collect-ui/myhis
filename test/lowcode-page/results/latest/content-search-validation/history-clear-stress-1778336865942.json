@@ -1,0 +1,111 @@
+{
+  "pass": true,
+  "steps": [
+    {
+      "step": "seed-open-f1",
+      "count": 1
+    },
+    {
+      "step": "after-refresh",
+      "count": 1
+    },
+    {
+      "step": "cycle-1-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-1-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-2-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-2-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-3-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-3-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-4-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-4-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-5-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-5-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-6-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-6-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-7-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-7-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-8-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-8-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-9-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-9-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-10-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-10-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-11-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-11-after-open",
+      "count": 1
+    },
+    {
+      "step": "cycle-12-after-clear",
+      "count": 0
+    },
+    {
+      "step": "cycle-12-after-open",
+      "count": 1
+    }
+  ],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/content-search-validation/history-clear-stress-1778336865942.png",
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool"
+}

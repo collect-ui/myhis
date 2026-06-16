@@ -1,0 +1,28 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "controls": {
+    "send": true,
+    "url": true,
+    "mode": true,
+    "method": true
+  },
+  "picks": {
+    "methodPost": true,
+    "modeFrontend": true,
+    "modeBackend": true,
+    "methodGet": true
+  },
+  "frontend": {
+    "len": 63419,
+    "ok": true,
+    "preview": "{\n  \"success\": true,\n  \"code\": \"0\",\n  \"msg\": \"执行成功\",\n  \"data\": [\n    {\n      \"children\": [\n        {\n          \"cn_title\": \"tset\",\n          \"collect_doc_id\": \"61ccc2a5-df6f-41b2-a"
+  },
+  "backend": {
+    "len": 1679,
+    "ok": true,
+    "preview": "{\n  \"success\": true,\n  \"code\": \"0\",\n  \"msg\": \"请求发送成功\",\n  \"status_code\": 200,\n  \"status_text\": \"200 OK\",\n  \"response\": {\n    \"args\": {\n      \"source\": \"custom-console-flow-3\"\n    },\n    \"headers\": {\n      \"accept-encoding"
+  },
+  "consoleErrors": [],
+  "failedRequests": [],
+  "pass": true
+}

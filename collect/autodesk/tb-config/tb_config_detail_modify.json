@@ -1,0 +1,29 @@
+{
+  "desc": "替换前和替换后，概念调整下，方便对比，从左往右，传过来的数据，是前段的数据，left。已有的后台数据是right",
+  "left_save_field": "after",
+  "right_save_field": "before",
+  "op_field_transfer": {
+    "name": "op_name"
+  },
+  "fields": [
+    {
+      "rule": "array_obj_value",
+      "left_field": "[key]",
+      "right_field": "[key]",
+      "field": "[page_data]",
+      "name": "值",
+      "with_add_remove": true,
+      "left": "[remote_data]",
+      "right": "[local_data]",
+      "left_value_field": "[value]",
+      "right_value_field": "[value]",
+      "operation": "modify",
+      "append_left_fields": [
+        "[*]"
+      ],
+      "append_right_fields": [
+        "[*]"
+      ]
+    }
+  ]
+}

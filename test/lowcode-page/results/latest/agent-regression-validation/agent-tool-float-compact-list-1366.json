@@ -1,0 +1,55 @@
+{
+  "selectedText": "新会话 A\nactive\n16:49",
+  "top": {
+    "status": "29 次调用",
+    "itemCount": 29,
+    "visibleCount": 6,
+    "firstVisible": "第 1 步 · 找文件",
+    "lastVisible": "第 6 步 · 读文件片段",
+    "bodyHeight": 454,
+    "bodyClientHeight": 454,
+    "bodyScrollHeight": 2580,
+    "bodyOverflowY": "auto",
+    "floatHeight": 496,
+    "firstItemHeight": 89,
+    "firstDetailDisplay": "none",
+    "firstDetailMaxHeight": "140px"
+  },
+  "bottom": {
+    "status": "29 次调用",
+    "itemCount": 29,
+    "visibleCount": 6,
+    "firstVisible": "第 24 步 · 读文件片段",
+    "lastVisible": "第 29 步 · 读文件片段",
+    "bodyHeight": 454,
+    "bodyClientHeight": 454,
+    "bodyScrollHeight": 2580,
+    "bodyOverflowY": "auto",
+    "floatHeight": 496,
+    "firstItemHeight": 89,
+    "firstDetailDisplay": "none",
+    "firstDetailMaxHeight": "140px"
+  },
+  "expanded": {
+    "status": "29 次调用",
+    "itemCount": 29,
+    "visibleCount": 2,
+    "firstVisible": "第 9 步 · 读文件片段",
+    "lastVisible": "第 10 步 · 读文件片段",
+    "bodyHeight": 510,
+    "bodyClientHeight": 510,
+    "bodyScrollHeight": 7610,
+    "bodyOverflowY": "auto",
+    "floatHeight": 552,
+    "firstItemHeight": 219,
+    "firstDetailDisplay": "block",
+    "firstDetailMaxHeight": "360px"
+  },
+  "screenshots": {
+    "top": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-compact-list-1366.png",
+    "expanded": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-expanded-detail-1366.png"
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

@@ -1,0 +1,10 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "baseline": 0,
+  "afterOpenFirst": 1,
+  "afterClear": 0,
+  "afterOpenSecond": 1,
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/content-search-validation/history-clear-regression-1778335335226.png"
+}

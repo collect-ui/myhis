@@ -1,0 +1,21 @@
+[
+  {
+    "type": "code",
+    "service": "system.get_bcs_code",
+    "params": {
+      "standard_code": "[from]"
+    },
+    "preload_params": {
+      "service": "system.get_bcs_code",
+      "standard_code_list": ["PIX0018", "PIX0021", "PIX0022"]
+    },
+    "key_field": "ITEM_VALUE",
+    "text_field": "ITEM_NAME",
+    "cache": {
+      "room": "code",
+      "key": "[from#key_field]",
+      "preload_key": "[STANDARD_CODE#key_field]",
+      "seconds": 3600
+    }
+  }
+]

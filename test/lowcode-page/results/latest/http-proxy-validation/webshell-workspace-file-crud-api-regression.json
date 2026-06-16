@@ -1,0 +1,122 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectCode": "test",
+  "rounds": 3,
+  "rootDirPath": "/data/project/test/test",
+  "roundResults": [
+    {
+      "round": 1,
+      "paths": {
+        "level1Path": "/data/project/test/test/lvl1_1778501864438",
+        "level2Path": "/data/project/test/test/lvl1_1778501864438/lvl2_1778501864438",
+        "filePath": "/data/project/test/test/lvl1_1778501864438/lvl2_1778501864438/case_1778501864438.txt",
+        "renamedFilePath": "/data/project/test/test/lvl1_1778501864438/lvl2_1778501864438/case_1778501864438_renamed.txt"
+      },
+      "checks": {
+        "addRoot": true,
+        "addL1": true,
+        "addL2": true,
+        "addFile": true,
+        "serverFileCreated": true,
+        "rename": true,
+        "serverFileRenamed": true,
+        "deleteFile": true,
+        "serverFileDeleted": true,
+        "multiLevelVisibleInDb": true,
+        "cleanupRoot": true
+      },
+      "errors": []
+    },
+    {
+      "round": 2,
+      "paths": {
+        "level1Path": "/data/project/test/test/lvl1_1778501865962",
+        "level2Path": "/data/project/test/test/lvl1_1778501865962/lvl2_1778501865962",
+        "filePath": "/data/project/test/test/lvl1_1778501865962/lvl2_1778501865962/case_1778501865962.txt",
+        "renamedFilePath": "/data/project/test/test/lvl1_1778501865962/lvl2_1778501865962/case_1778501865962_renamed.txt"
+      },
+      "checks": {
+        "addRoot": true,
+        "addL1": true,
+        "addL2": true,
+        "addFile": true,
+        "serverFileCreated": true,
+        "rename": true,
+        "serverFileRenamed": true,
+        "deleteFile": true,
+        "serverFileDeleted": true,
+        "multiLevelVisibleInDb": true,
+        "cleanupRoot": true
+      },
+      "errors": []
+    },
+    {
+      "round": 3,
+      "paths": {
+        "level1Path": "/data/project/test/test/lvl1_1778501867479",
+        "level2Path": "/data/project/test/test/lvl1_1778501867479/lvl2_1778501867479",
+        "filePath": "/data/project/test/test/lvl1_1778501867479/lvl2_1778501867479/case_1778501867479.txt",
+        "renamedFilePath": "/data/project/test/test/lvl1_1778501867479/lvl2_1778501867479/case_1778501867479_renamed.txt"
+      },
+      "checks": {
+        "addRoot": true,
+        "addL1": true,
+        "addL2": true,
+        "addFile": true,
+        "serverFileCreated": true,
+        "rename": true,
+        "serverFileRenamed": true,
+        "deleteFile": true,
+        "serverFileDeleted": true,
+        "multiLevelVisibleInDb": true,
+        "cleanupRoot": true
+      },
+      "errors": []
+    }
+  ],
+  "lockCheck": {
+    "ok": true,
+    "details": {
+      "first": {
+        "ok": true,
+        "parsed": {
+          "count": 0,
+          "success": true,
+          "code": "0",
+          "msg": "成功",
+          "data": {
+            "add_change_list": null,
+            "change_list": [],
+            "current_dir": "/data/project/test",
+            "elapsed_ms": 17,
+            "exclude_dirs_effective": "node_modules,.git,dist,.next",
+            "project_code": "test",
+            "remove_change_list": null,
+            "remove_file_id_list": null
+          }
+        },
+        "error": ""
+      },
+      "second": {
+        "ok": false,
+        "parsed": {
+          "count": 0,
+          "success": false,
+          "code": "-1",
+          "msg": "同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=11997）",
+          "data": null
+        },
+        "error": "同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=11997）"
+      },
+      "secondMsg": "同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=11997）"
+    }
+  },
+  "smoke": {
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-workspace-file-crud-api-regression-smoke.png"
+  },
+  "pass": true
+}

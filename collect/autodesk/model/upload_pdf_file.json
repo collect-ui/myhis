@@ -1,0 +1,12 @@
+{
+  "url": "{{get_key `chat_url_v2`}}/apizj/uploadChatFile",
+  "method": "POST",
+  "header": {
+    "Sign": "{{.sign}}",
+    "Content-Type": "multipart/form-data"
+  },
+  "result_json": true,
+  "data": {
+    "file": "[path]"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "active_tab_text": "update_array",
+  "title": "update_array(更新数组)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "批量更新数组"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "handler_params:\n      - key: update_array\n        foreach: \"[ldap_group_list]\"\n        item: item\n        fields:\n          - field: ldap_group_id\n            template: \"{{ uuid }}\"\n          - field: name\n            template: \"{{.item.after}}\"\n          - field: has_group\n            template: \"1\"\n          - field: last_sync_time\n            template: \"{{current_date_time}}\"",
+    "更新参数中数组里面对象字段。一般用于批量保存，批量修改，批量服务流程化中。 \n比如批量新增生成唯一的uuid，生成创建人，创建时间"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "update_array"
+        ],
+        [
+          "foreach",
+          "string",
+          "是",
+          "循环数组的对象，[你数组变量]"
+        ],
+        [
+          "item",
+          "string",
+          "是",
+          "循环时候模板变量名"
+        ],
+        [
+          "fields",
+          "array",
+          "是",
+          "字段内容"
+        ],
+        [
+          "fields[field]",
+          "string",
+          "是",
+          "字段名"
+        ],
+        [
+          "fields[fields[field]]",
+          "template",
+          "是",
+          "字段渲染的模板内容，item是当前行数据，可以直接取params中的变量"
+        ]
+      ]
+    }
+  ],
+  "body_text": "update_array(更新数组)  \n示例\n批量更新数组\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nupdate_array\n\n\nforeach\n\t\nstring\n\t\n是\n\t\n循环数组的对象，[你数组变量]\n\n\nitem\n\t\nstring\n\t\n是\n\t\n循环时候模板变量名\n\n\nfields\n\t\narray\n\t\n是\n\t\n字段内容\n\n\nfields[field]\n\t\nstring\n\t\n是\n\t\n字段名\n\n\nfields[fields[field]]\n\t\ntemplate\n\t\n是\n\t\n字段渲染的模板内容，item是当前行数据，可以直接取params中的变量\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-005",
+  "source_group": "参数处理",
+  "source_title": "update_array",
+  "source_doc_text": "5.update_array\n更新数组",
+  "read_at": "2026-05-07T08:21:05.939Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-005-source.png"
+}

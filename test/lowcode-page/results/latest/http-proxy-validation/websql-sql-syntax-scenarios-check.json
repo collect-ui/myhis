@@ -1,0 +1,1919 @@
+{
+  "standaloneUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "webshellUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "tableName": "websql_syntax_1779093724540",
+  "checks": {
+    "tokenizerMatrix": true,
+    "standaloneMainSyntax": true,
+    "standaloneNewTabSyntax": true,
+    "standaloneDdlSyntax": true,
+    "webshellEmbeddedSyntax": true
+  },
+  "tokenizer": {
+    "select-cte-pagination-comment": {
+      "tokenCount": 48,
+      "checked": 13,
+      "samples": [
+        {
+          "offset": 0,
+          "text": "WITH",
+          "normalizedText": "WITH",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 5,
+          "text": "RECURSIVE",
+          "normalizedText": "RECURSIVE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 15,
+          "text": "cnt",
+          "normalizedText": "cnt",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 18,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 19,
+          "text": "x",
+          "normalizedText": "x",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 20,
+          "text": ")",
+          "normalizedText": ")",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 22,
+          "text": "AS",
+          "normalizedText": "AS",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 25,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 26,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 33,
+          "text": "1",
+          "normalizedText": "1",
+          "type": "number.sql"
+        },
+        {
+          "offset": 35,
+          "text": "UNION",
+          "normalizedText": "UNION",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 41,
+          "text": "ALL",
+          "normalizedText": "ALL",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 45,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 52,
+          "text": "x",
+          "normalizedText": "x",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 54,
+          "text": "+",
+          "normalizedText": "+",
+          "type": "operator.sql"
+        },
+        {
+          "offset": 56,
+          "text": "1",
+          "normalizedText": "1",
+          "type": "number.sql"
+        },
+        {
+          "offset": 58,
+          "text": "FROM",
+          "normalizedText": "FROM",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 63,
+          "text": "cnt",
+          "normalizedText": "cnt",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 67,
+          "text": "WHERE",
+          "normalizedText": "WHERE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 73,
+          "text": "x",
+          "normalizedText": "x",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 75,
+          "text": "<",
+          "normalizedText": "<",
+          "type": "operator.sql"
+        },
+        {
+          "offset": 77,
+          "text": "10",
+          "normalizedText": "10",
+          "type": "number.sql"
+        },
+        {
+          "offset": 79,
+          "text": ")",
+          "normalizedText": ")",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 81,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        }
+      ]
+    },
+    "insert-update-delete-returning": {
+      "tokenCount": 38,
+      "checked": 11,
+      "samples": [
+        {
+          "offset": 0,
+          "text": "INSERT",
+          "normalizedText": "INSERT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 7,
+          "text": "INTO",
+          "normalizedText": "INTO",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 12,
+          "text": "users",
+          "normalizedText": "users",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 17,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 18,
+          "text": "id",
+          "normalizedText": "id",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 20,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 21,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 25,
+          "text": ")",
+          "normalizedText": ")",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 27,
+          "text": "VALUES",
+          "normalizedText": "VALUES",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 34,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 35,
+          "text": "1",
+          "normalizedText": "1",
+          "type": "number.sql"
+        },
+        {
+          "offset": 36,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 37,
+          "text": "'a'",
+          "normalizedText": "'a'",
+          "type": "string.sql"
+        },
+        {
+          "offset": 40,
+          "text": ");",
+          "normalizedText": ");",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 43,
+          "text": "UPDATE",
+          "normalizedText": "UPDATE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 50,
+          "text": "users",
+          "normalizedText": "users",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 56,
+          "text": "SET",
+          "normalizedText": "SET",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 60,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 65,
+          "text": "=",
+          "normalizedText": "=",
+          "type": "operator.sql"
+        },
+        {
+          "offset": 67,
+          "text": "'b'",
+          "normalizedText": "'b'",
+          "type": "string.sql"
+        },
+        {
+          "offset": 71,
+          "text": "WHERE",
+          "normalizedText": "WHERE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 77,
+          "text": "id",
+          "normalizedText": "id",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 80,
+          "text": "=",
+          "normalizedText": "=",
+          "type": "operator.sql"
+        },
+        {
+          "offset": 82,
+          "text": "1",
+          "normalizedText": "1",
+          "type": "number.sql"
+        }
+      ]
+    },
+    "ddl-create-alter-drop": {
+      "tokenCount": 38,
+      "checked": 18,
+      "samples": [
+        {
+          "offset": 0,
+          "text": "CREATE",
+          "normalizedText": "CREATE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 7,
+          "text": "TEMP",
+          "normalizedText": "TEMP",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 12,
+          "text": "TABLE",
+          "normalizedText": "TABLE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 18,
+          "text": "IF",
+          "normalizedText": "IF",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 21,
+          "text": "NOT",
+          "normalizedText": "NOT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 25,
+          "text": "EXISTS",
+          "normalizedText": "EXISTS",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 32,
+          "text": "users",
+          "normalizedText": "users",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 38,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 39,
+          "text": "id",
+          "normalizedText": "id",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 42,
+          "text": "INTEGER",
+          "normalizedText": "INTEGER",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 50,
+          "text": "PRIMARY",
+          "normalizedText": "PRIMARY",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 58,
+          "text": "KEY",
+          "normalizedText": "KEY",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 61,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 63,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 68,
+          "text": "TEXT",
+          "normalizedText": "TEXT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 73,
+          "text": "DEFAULT",
+          "normalizedText": "DEFAULT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 81,
+          "text": "'n'",
+          "normalizedText": "'n'",
+          "type": "string.sql"
+        },
+        {
+          "offset": 84,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 86,
+          "text": "CONSTRAINT",
+          "normalizedText": "CONSTRAINT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 97,
+          "text": "uk",
+          "normalizedText": "uk",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 100,
+          "text": "UNIQUE",
+          "normalizedText": "UNIQUE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 106,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 107,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 111,
+          "text": "));",
+          "normalizedText": "));",
+          "type": "delimiter.sql"
+        }
+      ]
+    },
+    "transaction-control": {
+      "tokenCount": 13,
+      "checked": 6,
+      "samples": [
+        {
+          "offset": 0,
+          "text": "BEGIN",
+          "normalizedText": "BEGIN",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 6,
+          "text": "TRANSACTION",
+          "normalizedText": "TRANSACTION",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 17,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 19,
+          "text": "SAVEPOINT",
+          "normalizedText": "SAVEPOINT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 29,
+          "text": "s1",
+          "normalizedText": "s1",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 31,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 33,
+          "text": "RELEASE",
+          "normalizedText": "RELEASE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 41,
+          "text": "s1",
+          "normalizedText": "s1",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 43,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 45,
+          "text": "COMMIT",
+          "normalizedText": "COMMIT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 51,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 53,
+          "text": "ROLLBACK",
+          "normalizedText": "ROLLBACK",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 61,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        }
+      ]
+    },
+    "join-window-operators": {
+      "tokenCount": 44,
+      "checked": 13,
+      "samples": [
+        {
+          "offset": 0,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 7,
+          "text": "u",
+          "normalizedText": "u",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 8,
+          "text": ".",
+          "normalizedText": ".",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 9,
+          "text": "id",
+          "normalizedText": "id",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 11,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 13,
+          "text": "ROW_NUMBER",
+          "normalizedText": "ROW_NUMBER",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 23,
+          "text": "()",
+          "normalizedText": "()",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 26,
+          "text": "OVER",
+          "normalizedText": "OVER",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 31,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 32,
+          "text": "PARTITION",
+          "normalizedText": "PARTITION",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 42,
+          "text": "BY",
+          "normalizedText": "BY",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 45,
+          "text": "u",
+          "normalizedText": "u",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 46,
+          "text": ".",
+          "normalizedText": ".",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 47,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 52,
+          "text": "ORDER",
+          "normalizedText": "ORDER",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 58,
+          "text": "BY",
+          "normalizedText": "BY",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 61,
+          "text": "u",
+          "normalizedText": "u",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 62,
+          "text": ".",
+          "normalizedText": ".",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 63,
+          "text": "id",
+          "normalizedText": "id",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 65,
+          "text": ")",
+          "normalizedText": ")",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 67,
+          "text": "AS",
+          "normalizedText": "AS",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 70,
+          "text": "rn",
+          "normalizedText": "rn",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 73,
+          "text": "FROM",
+          "normalizedText": "FROM",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 78,
+          "text": "users",
+          "normalizedText": "users",
+          "type": "identifier.sql"
+        }
+      ]
+    },
+    "quoted-identifiers-block-comment": {
+      "tokenCount": 17,
+      "checked": 7,
+      "samples": [
+        {
+          "offset": 0,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 7,
+          "text": "`tick_name`",
+          "normalizedText": "`tick_name`",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 18,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 19,
+          "text": " [",
+          "normalizedText": "[",
+          "type": "source.sql"
+        },
+        {
+          "offset": 21,
+          "text": "odd",
+          "normalizedText": "odd",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 25,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 29,
+          "text": "]",
+          "normalizedText": "]",
+          "type": "source.sql"
+        },
+        {
+          "offset": 30,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "offset": 32,
+          "text": "'literal'",
+          "normalizedText": "'literal'",
+          "type": "string.sql"
+        },
+        {
+          "offset": 42,
+          "text": "FROM",
+          "normalizedText": "FROM",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 47,
+          "text": "\"quoted table\"",
+          "normalizedText": "\"quoted table\"",
+          "type": "string.sql"
+        },
+        {
+          "offset": 62,
+          "text": "WHERE",
+          "normalizedText": "WHERE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 68,
+          "text": "note",
+          "normalizedText": "note",
+          "type": "identifier.sql"
+        },
+        {
+          "offset": 73,
+          "text": "LIKE",
+          "normalizedText": "LIKE",
+          "type": "keyword.sql"
+        },
+        {
+          "offset": 78,
+          "text": "'%--x%'",
+          "normalizedText": "'%--x%'",
+          "type": "string.sql"
+        },
+        {
+          "offset": 86,
+          "text": "/* block comment */",
+          "normalizedText": "/* block comment */",
+          "type": "comment.sql"
+        },
+        {
+          "offset": 105,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        }
+      ]
+    }
+  },
+  "editors": {
+    "standaloneMain": {
+      "scope": "websql",
+      "found": true,
+      "language": "sql",
+      "value": "SELECT COUNT(*) AS total FROM websql_syntax_1779093724540 WHERE type = 'table' AND name LIKE 'syntax_1779093724540%'; -- syntax_1779093724540",
+      "localTheme": "light",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "tokens": [
+        {
+          "line": 1,
+          "offset": 0,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 7,
+          "text": "COUNT",
+          "normalizedText": "COUNT",
+          "type": "predefined.sql"
+        },
+        {
+          "line": 1,
+          "offset": 12,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 13,
+          "text": "*",
+          "normalizedText": "*",
+          "type": "operator.sql"
+        },
+        {
+          "line": 1,
+          "offset": 14,
+          "text": ")",
+          "normalizedText": ")",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 16,
+          "text": "AS",
+          "normalizedText": "AS",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 19,
+          "text": "total",
+          "normalizedText": "total",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 25,
+          "text": "FROM",
+          "normalizedText": "FROM",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 30,
+          "text": "websql_syntax_1779093724540",
+          "normalizedText": "websql_syntax_1779093724540",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 58,
+          "text": "WHERE",
+          "normalizedText": "WHERE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 64,
+          "text": "type",
+          "normalizedText": "type",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 69,
+          "text": "=",
+          "normalizedText": "=",
+          "type": "operator.sql"
+        },
+        {
+          "line": 1,
+          "offset": 71,
+          "text": "'table'",
+          "normalizedText": "'table'",
+          "type": "string.sql"
+        },
+        {
+          "line": 1,
+          "offset": 79,
+          "text": "AND",
+          "normalizedText": "AND",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 83,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 88,
+          "text": "LIKE",
+          "normalizedText": "LIKE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 93,
+          "text": "'syntax_1779093724540%'",
+          "normalizedText": "'syntax_1779093724540%'",
+          "type": "string.sql"
+        },
+        {
+          "line": 1,
+          "offset": 116,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 118,
+          "text": "-- syntax_1779093724540",
+          "normalizedText": "-- syntax_1779093724540",
+          "type": "comment.sql"
+        }
+      ],
+      "domTokens": [
+        {
+          "text": "SELECT COUNT(*) AS total FROM websql_syntax_1779093724540 WHERE type = 'table' AND name LIKE 'syntax_1779093724540%'; -- syntax_1779093724540",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "SELECT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "COUNT",
+          "className": "mtk18",
+          "color": "rgb(126, 34, 206)"
+        },
+        {
+          "text": "(",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "*",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": ")",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "AS",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "total",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "FROM",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "websql_syntax_1779093724540",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "WHERE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "type",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "=",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": "'table'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": "AND",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "name",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "LIKE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "'syntax_1779093724540%'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": ";",
+          "className": "mtk9",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "-- syntax_1779093724540",
+          "className": "mtk7",
+          "color": "rgb(21, 128, 61)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(17, 24, 39)",
+        "rgb(29, 78, 216)",
+        "rgb(126, 34, 206)",
+        "rgb(71, 85, 105)",
+        "rgb(100, 116, 139)",
+        "rgb(180, 83, 9)",
+        "rgb(21, 128, 61)"
+      ],
+      "distinctTokenColorCount": 7
+    },
+    "standaloneNewTab": {
+      "scope": "websql",
+      "found": true,
+      "language": "sql",
+      "value": "SELECT COUNT(*) AS total FROM websql_syntax_1779093724540 WHERE type = 'table' AND name LIKE 'syntax_1779093724540_tab%'; -- syntax_1779093724540_tab",
+      "localTheme": "light",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "tokens": [
+        {
+          "line": 1,
+          "offset": 0,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 7,
+          "text": "COUNT",
+          "normalizedText": "COUNT",
+          "type": "predefined.sql"
+        },
+        {
+          "line": 1,
+          "offset": 12,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 13,
+          "text": "*",
+          "normalizedText": "*",
+          "type": "operator.sql"
+        },
+        {
+          "line": 1,
+          "offset": 14,
+          "text": ")",
+          "normalizedText": ")",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 16,
+          "text": "AS",
+          "normalizedText": "AS",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 19,
+          "text": "total",
+          "normalizedText": "total",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 25,
+          "text": "FROM",
+          "normalizedText": "FROM",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 30,
+          "text": "websql_syntax_1779093724540",
+          "normalizedText": "websql_syntax_1779093724540",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 58,
+          "text": "WHERE",
+          "normalizedText": "WHERE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 64,
+          "text": "type",
+          "normalizedText": "type",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 69,
+          "text": "=",
+          "normalizedText": "=",
+          "type": "operator.sql"
+        },
+        {
+          "line": 1,
+          "offset": 71,
+          "text": "'table'",
+          "normalizedText": "'table'",
+          "type": "string.sql"
+        },
+        {
+          "line": 1,
+          "offset": 79,
+          "text": "AND",
+          "normalizedText": "AND",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 83,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 88,
+          "text": "LIKE",
+          "normalizedText": "LIKE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 93,
+          "text": "'syntax_1779093724540_tab%'",
+          "normalizedText": "'syntax_1779093724540_tab%'",
+          "type": "string.sql"
+        },
+        {
+          "line": 1,
+          "offset": 120,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 122,
+          "text": "-- syntax_1779093724540_tab",
+          "normalizedText": "-- syntax_1779093724540_tab",
+          "type": "comment.sql"
+        }
+      ],
+      "domTokens": [
+        {
+          "text": "SELECT COUNT(*) AS total FROM websql_syntax_1779093724540 WHERE type = 'table' AND name LIKE 'syntax_1779093724540_tab%'; -- syntax_1779093724540_tab",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "SELECT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "COUNT",
+          "className": "mtk18",
+          "color": "rgb(126, 34, 206)"
+        },
+        {
+          "text": "(",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "*",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": ")",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "AS",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "total",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "FROM",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "websql_syntax_1779093724540",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "WHERE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "type",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "=",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": "'table'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": "AND",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "name",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "LIKE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "'syntax_1779093724540_tab%'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": ";",
+          "className": "mtk9",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "-- syntax_1779093724540_tab",
+          "className": "mtk7",
+          "color": "rgb(21, 128, 61)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(17, 24, 39)",
+        "rgb(29, 78, 216)",
+        "rgb(126, 34, 206)",
+        "rgb(71, 85, 105)",
+        "rgb(100, 116, 139)",
+        "rgb(180, 83, 9)",
+        "rgb(21, 128, 61)"
+      ],
+      "distinctTokenColorCount": 7
+    },
+    "standaloneDdl": {
+      "scope": "ddl",
+      "found": true,
+      "language": "sql",
+      "value": "CREATE TABLE websql_syntax_1779093724540 (\n  id INTEGER PRIMARY KEY,\n  type TEXT DEFAULT 'table',\n  name TEXT,\n  created_at DATETIME DEFAULT CURRENT_TIMESTAMP\n);",
+      "localTheme": "light",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "tokens": [
+        {
+          "line": 1,
+          "offset": 0,
+          "text": "CREATE",
+          "normalizedText": "CREATE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 7,
+          "text": "TABLE",
+          "normalizedText": "TABLE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 13,
+          "text": "websql_syntax_1779093724540",
+          "normalizedText": "websql_syntax_1779093724540",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 41,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 2,
+          "offset": 45,
+          "text": "id",
+          "normalizedText": "id",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 2,
+          "offset": 48,
+          "text": "INTEGER",
+          "normalizedText": "INTEGER",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 2,
+          "offset": 56,
+          "text": "PRIMARY",
+          "normalizedText": "PRIMARY",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 2,
+          "offset": 64,
+          "text": "KEY",
+          "normalizedText": "KEY",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 2,
+          "offset": 67,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 3,
+          "offset": 71,
+          "text": "type",
+          "normalizedText": "type",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 3,
+          "offset": 76,
+          "text": "TEXT",
+          "normalizedText": "TEXT",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 3,
+          "offset": 81,
+          "text": "DEFAULT",
+          "normalizedText": "DEFAULT",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 3,
+          "offset": 89,
+          "text": "'table'",
+          "normalizedText": "'table'",
+          "type": "string.sql"
+        },
+        {
+          "line": 3,
+          "offset": 96,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 4,
+          "offset": 100,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 4,
+          "offset": 105,
+          "text": "TEXT",
+          "normalizedText": "TEXT",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 4,
+          "offset": 109,
+          "text": ",",
+          "normalizedText": ",",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 5,
+          "offset": 113,
+          "text": "created_at",
+          "normalizedText": "created_at",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 5,
+          "offset": 124,
+          "text": "DATETIME",
+          "normalizedText": "DATETIME",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 5,
+          "offset": 133,
+          "text": "DEFAULT",
+          "normalizedText": "DEFAULT",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 5,
+          "offset": 141,
+          "text": "CURRENT_TIMESTAMP",
+          "normalizedText": "CURRENT_TIMESTAMP",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 6,
+          "offset": 159,
+          "text": ");",
+          "normalizedText": ");",
+          "type": "delimiter.sql"
+        }
+      ],
+      "domTokens": [
+        {
+          "text": "CREATE TABLE websql_syntax_1779093724540 (",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "CREATE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "TABLE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "websql_syntax_1779093724540",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "(",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "id INTEGER PRIMARY KEY,",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "id",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "INTEGER",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "PRIMARY",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "KEY",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": ",",
+          "className": "mtk9",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "type TEXT DEFAULT 'table',",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "type",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "TEXT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "DEFAULT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "'table'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": ",",
+          "className": "mtk9",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "name TEXT,",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "name",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "TEXT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": ",",
+          "className": "mtk9",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "created_at DATETIME DEFAULT CURRENT_TIMESTAMP",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "created_at",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "DATETIME",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "DEFAULT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "CURRENT_TIMESTAMP",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": ");",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": ")",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": ";",
+          "className": "mtk9",
+          "color": "rgb(71, 85, 105)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(17, 24, 39)",
+        "rgb(29, 78, 216)",
+        "rgb(71, 85, 105)",
+        "rgb(180, 83, 9)"
+      ],
+      "distinctTokenColorCount": 4
+    },
+    "webshellEmbedded": {
+      "scope": "websql",
+      "found": true,
+      "language": "sql",
+      "value": "SELECT COUNT(*) AS total FROM websql_syntax_1779093724540 WHERE type = 'table' AND name LIKE 'syntax_1779093724540_webshell%'; -- syntax_1779093724540_webshell",
+      "localTheme": "light",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "tokens": [
+        {
+          "line": 1,
+          "offset": 0,
+          "text": "SELECT",
+          "normalizedText": "SELECT",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 7,
+          "text": "COUNT",
+          "normalizedText": "COUNT",
+          "type": "predefined.sql"
+        },
+        {
+          "line": 1,
+          "offset": 12,
+          "text": "(",
+          "normalizedText": "(",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 13,
+          "text": "*",
+          "normalizedText": "*",
+          "type": "operator.sql"
+        },
+        {
+          "line": 1,
+          "offset": 14,
+          "text": ")",
+          "normalizedText": ")",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 16,
+          "text": "AS",
+          "normalizedText": "AS",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 19,
+          "text": "total",
+          "normalizedText": "total",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 25,
+          "text": "FROM",
+          "normalizedText": "FROM",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 30,
+          "text": "websql_syntax_1779093724540",
+          "normalizedText": "websql_syntax_1779093724540",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 58,
+          "text": "WHERE",
+          "normalizedText": "WHERE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 64,
+          "text": "type",
+          "normalizedText": "type",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 69,
+          "text": "=",
+          "normalizedText": "=",
+          "type": "operator.sql"
+        },
+        {
+          "line": 1,
+          "offset": 71,
+          "text": "'table'",
+          "normalizedText": "'table'",
+          "type": "string.sql"
+        },
+        {
+          "line": 1,
+          "offset": 79,
+          "text": "AND",
+          "normalizedText": "AND",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 83,
+          "text": "name",
+          "normalizedText": "name",
+          "type": "identifier.sql"
+        },
+        {
+          "line": 1,
+          "offset": 88,
+          "text": "LIKE",
+          "normalizedText": "LIKE",
+          "type": "keyword.sql"
+        },
+        {
+          "line": 1,
+          "offset": 93,
+          "text": "'syntax_1779093724540_webshell%'",
+          "normalizedText": "'syntax_1779093724540_webshell%'",
+          "type": "string.sql"
+        },
+        {
+          "line": 1,
+          "offset": 125,
+          "text": ";",
+          "normalizedText": ";",
+          "type": "delimiter.sql"
+        },
+        {
+          "line": 1,
+          "offset": 127,
+          "text": "-- syntax_1779093724540_webshell",
+          "normalizedText": "-- syntax_1779093724540_webshell",
+          "type": "comment.sql"
+        }
+      ],
+      "domTokens": [
+        {
+          "text": "SELECT COUNT(*) AS total FROM websql_syntax_1779093724540 WHERE type =",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "SELECT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "COUNT",
+          "className": "mtk18",
+          "color": "rgb(126, 34, 206)"
+        },
+        {
+          "text": "(",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "*",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": ")",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "AS",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "total",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "FROM",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "websql_syntax_1779093724540",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "WHERE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "type",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "=",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": "'table' AND name LIKE 'syntax_1779093724540_webshell%'; --",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "'table'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": "AND",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "name",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "LIKE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "'syntax_1779093724540_webshell%'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": ";",
+          "className": "mtk9",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "--",
+          "className": "mtk7",
+          "color": "rgb(21, 128, 61)"
+        },
+        {
+          "text": "syntax_1779093724540_webshell",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "syntax_1779093724540_webshell",
+          "className": "mtk7",
+          "color": "rgb(21, 128, 61)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(17, 24, 39)",
+        "rgb(29, 78, 216)",
+        "rgb(126, 34, 206)",
+        "rgb(71, 85, 105)",
+        "rgb(100, 116, 139)",
+        "rgb(180, 83, 9)",
+        "rgb(21, 128, 61)"
+      ],
+      "distinctTokenColorCount": 7
+    }
+  },
+  "screenshots": {
+    "standalone": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sql-syntax-standalone.png",
+    "ddl": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sql-syntax-ddl.png",
+    "webshell": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-sql-syntax-webshell.png"
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true
+}

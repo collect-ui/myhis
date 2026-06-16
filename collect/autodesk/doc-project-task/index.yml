@@ -1,0 +1,49 @@
+service:
+  - key: doc_project_task_query
+    http: true
+    module: sql
+    data_file: doc_project_task_query.sql
+    params:
+      to_obj:
+        default: false
+    result_handler:
+      - key: arr2obj
+        enable: "[to_obj]"
+
+  - key: doc_project_task_save
+    http: true
+    module: model_save
+    params:
+      doc_project_id:
+        check:
+          template: "{{must .doc_project_id}}"
+          err_msg: 项目不能为空
+      event_id:
+        check:
+          template: "{{must .event_id}}"
+          err_msg: 事件不能为空
+      doc_project_task_id:
+        template: "{{uuid}}"
+      status:
+        default: "start"
+      create_time:
+        template: "{{current_date_time}}"
+
+    table: doc_project_task
+  - key: doc_project_task_finish
+    http: true
+    module: model_update
+    params:
+      doc_project_id:
+        check:
+          template: "{{must .doc_project_id}}"
+          err_msg: 项目不能为空
+      status:
+       default: "finish"
+      finish_time:
+        template: "{{current_date_time}}"
+    table: doc_project_task
+    filter:
+      doc_project_id: "[doc_project_id]"
+      status: "start"
+

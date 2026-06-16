@@ -1,0 +1,483 @@
+{
+  "tag": "layout-fit",
+  "className": "overflow-auto",
+  "storeName": "dashboard",
+  "initStore": {
+  },
+  "initAction": [
+  ],
+  "children": [
+    {
+      "tag": "div",
+      "className": "padding20",
+      "style": {
+        "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "className": "margin-bottom20",
+          "style": {
+            "textAlign": "center"
+          },
+          "children": [
+            {
+              "tag": "h1",
+              "style": {
+                "color": "white",
+                "marginBottom": 8,
+                "textShadow": "0 2px 4px rgba(0,0,0,0.1)"
+              },
+              "children": "🤖 智能问答助手"
+            },
+            {
+              "tag": "p",
+              "style": {
+                "color": "rgba(255,255,255,0.8)",
+                "fontSize": 16,
+                "marginBottom": 0
+              },
+              "children": "基于大语言模型的智能对话系统"
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "className": "margin-bottom20",
+          "style": {
+            "maxWidth": 800,
+            "margin": "0 auto"
+          },
+          "children": [
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 20,
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "请输入您的问题，例如：什么是人工智能？如何学习编程？",
+                      "variant": "filled",
+                      "size": "large",
+                      "id": "question-input",
+                      "style": {
+                        "width": "100%",
+                        "background": "white",
+                        "borderRadius": "8px 0 0 8px",
+                        "border": "none",
+                        "boxShadow": "0 4px 12px rgba(0,0,0,0.1)"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 4,
+                  "children": [
+                    {
+                      "tag": "button",
+                      "type": "primary",
+                      "size": "large",
+                      "children": "🚀 发送",
+                      "style": {
+                        "width": "100%",
+                        "borderRadius": "0 8px 8px 0",
+                        "height": "100%",
+                        "background": "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+                        "border": "none",
+                        "boxShadow": "0 4px 12px rgba(0,0,0,0.15)"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "style": {
+            "maxWidth": 1000,
+            "margin": "0 auto",
+            "background": "white",
+            "borderRadius": 12,
+            "boxShadow": "0 8px 30px rgba(0,0,0,0.12)",
+            "overflow": "hidden"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "style": {
+                "padding": 20,
+                "borderBottom": "1px solid #f0f0f0"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "className": "margin-bottom10",
+                  "children": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "display": "inline-block",
+                        "background": "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
+                        "color": "white",
+                        "padding": "4px 12px",
+                        "borderRadius": 16,
+                        "fontSize": 14,
+                        "fontWeight": 500
+                      },
+                      "children": "👤 用户提问"
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "style": {
+                    "fontSize": 16,
+                    "lineHeight": 1.6,
+                    "marginBottom": 0,
+                    "color": "#333"
+                  },
+                  "children": "什么是人工智能？它有哪些主要应用领域？"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "textAlign": "right",
+                    "marginTop": 10
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "color": "#999",
+                        "fontSize": 12
+                      },
+                      "children": "提问时间：2024-01-15 14:30:25"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "padding": 20
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "className": "margin-bottom10",
+                  "children": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "display": "inline-block",
+                        "background": "linear-gradient(135deg, #00b09b 0%, #96c93d 100%)",
+                        "color": "white",
+                        "padding": "4px 12px",
+                        "borderRadius": 16,
+                        "fontSize": 14,
+                        "fontWeight": 500
+                      },
+                      "children": "🤖 AI回答"
+                    }
+                  ]
+                },
+                {
+                  "tag": "markdown",
+                  "children": "# 什么是人工智能？\n\n人工智能（Artificial Intelligence，简称AI）是指由人制造出来的系统所表现出来的智能。它是计算机科学的一个分支，旨在研究和开发能够模拟、延伸和扩展人类智能的理论、方法、技术及应用系统。\n\n## 🎯 主要应用领域\n\n### 1. **自然语言处理（NLP）**\n- **文本分类**：自动分类文档\n- **机器翻译**：如Google翻译\n- **情感分析**：分析文本情感倾向\n- **聊天机器人**：智能客服系统\n\n### 2. **计算机视觉（CV）**\n- **图像识别**：人脸识别、物体识别\n- **目标检测**：自动驾驶中的障碍物检测\n- **图像生成**：AI绘画（如DALL-E）\n\n### 3. **机器学习**\n```python\n# 机器学习示例代码\nfrom sklearn.datasets import load_iris\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.ensemble import RandomForestClassifier\n\n# 加载数据\ndata = load_iris()\nX_train, X_test, y_train, y_test = train_test_split(data.data, data.target)\n\n# 训练模型\nmodel = RandomForestClassifier()\nmodel.fit(X_train, y_train)\n\n# 评估模型\naccuracy = model.score(X_test, y_test)\nprint(f\"模型准确率：{accuracy:.2%}\")\n```\n\n### 4. **语音识别与合成**\n- **语音转文本**：会议记录、字幕生成\n- **文本转语音**：有声读物、语音助手\n- **声纹识别**：身份验证\n\n### 5. **推荐系统**\n- **电商推荐**：商品推荐（如淘宝、亚马逊）\n- **内容推荐**：视频推荐（如抖音、YouTube）\n- **社交推荐**：好友推荐（如微信、Facebook）\n\n### 6. **自动驾驶**\n- **感知系统**：环境感知\n- **决策系统**：路径规划\n- **控制系统**：车辆控制\n\n## 📊 技术架构\n\n| 层级 | 技术 | 说明 |\n|------|------|------|\n| 基础层 | 深度学习框架 | TensorFlow、PyTorch |\n| 中间层 | 模型服务 | ONNX、TensorRT |\n| 应用层 | 业务系统 | 推荐系统、客服系统 |\n\n## 🔮 发展趋势\n\n1. **大模型时代**：如GPT系列、文心一言\n2. **多模态AI**：文本+图像+语音融合\n3. **AI for Science**：AI辅助科研\n4. **边缘AI**：设备端AI推理\n\n> 💡 **温馨提示**：人工智能正在快速发展，建议持续关注最新研究进展！",
+                  "style": {
+                    "fontSize": 15,
+                    "lineHeight": 1.8
+                  }
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "marginTop": 20,
+                    "padding": 16,
+                    "background": "#f8f9fa",
+                    "borderRadius": 8
+                  },
+                  "children": [
+                    {
+                      "tag": "h4",
+                      "style": {
+                        "marginTop": 0,
+                        "marginBottom": 12,
+                        "color": "#666",
+                        "fontSize": 14
+                      },
+                      "children": "📚 参考来源"
+                    },
+                    {
+                      "tag": "table",
+                      "domLayout": "autoHeight",
+                      "rowData": [
+                        {
+                          "title": "《人工智能：现代方法》",
+                          "author": "Stuart Russell",
+                          "type": "教材",
+                          "relevance": "98%"
+                        },
+                        {
+                          "title": "自然语言处理综论",
+                          "author": "Daniel Jurafsky",
+                          "type": "专著",
+                          "relevance": "92%"
+                        },
+                        {
+                          "title": "计算机视觉：算法与应用",
+                          "author": "Richard Szeliski",
+                          "type": "教材",
+                          "relevance": "88%"
+                        },
+                        {
+                          "title": "机器学习实战",
+                          "author": "Peter Harrington",
+                          "type": "实战指南",
+                          "relevance": "85%"
+                        }
+                      ],
+                      "columnDefs": [
+                        {
+                          "headerName": "序号",
+                          "width": 60,
+                          "valueGetter": "node.rowIndex + 1",
+                          "sortable": false,
+                          "cellStyle": {
+                            "textAlign": "center"
+                          }
+                        },
+                        {
+                          "headerName": "标题",
+                          "field": "title",
+                          "tooltipField": "title",
+                          "autoHeight": true
+                        },
+                        {
+                          "headerName": "作者",
+                          "width": 120,
+                          "field": "author"
+                        },
+                        {
+                          "headerName": "类型",
+                          "width": 100,
+                          "field": "type",
+                          "cellStyle": {
+                            "textAlign": "center"
+                          }
+                        },
+                        {
+                          "headerName": "相关度",
+                          "width": 100,
+                          "field": "relevance",
+                          "cellStyle": {
+                            "textAlign": "center",
+                            "color": "#52c41a",
+                            "fontWeight": "bold"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "justifyContent": "space-between",
+                    "alignItems": "center",
+                    "marginTop": 20,
+                    "paddingTop": 16,
+                    "borderTop": "1px solid #f0f0f0"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "flex",
+                        "gap": 12
+                      },
+                      "children": [
+                        {
+                          "tag": "button",
+                          "type": "default",
+                          "size": "small",
+                          "icon": "FaThumbsUp",
+                          "children": "👍 有帮助"
+                        },
+                        {
+                          "tag": "button",
+                          "type": "default",
+                          "size": "small",
+                          "icon": "FaThumbsDown",
+                          "children": "👎 没帮助"
+                        },
+                        {
+                          "tag": "button",
+                          "type": "default",
+                          "size": "small",
+                          "icon": "FaCopy",
+                          "children": "📋 复制"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "children": [
+                        {
+                          "tag": "span",
+                          "style": {
+                            "color": "#999",
+                            "fontSize": 12
+                          },
+                          "children": "生成时间：2024-01-15 14:31:05 • 耗时：1.2秒"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "style": {
+            "maxWidth": 1000,
+            "margin": "20px auto 0",
+            "background": "white",
+            "borderRadius": 12,
+            "boxShadow": "0 4px 20px rgba(0,0,0,0.08)",
+            "padding": 20
+          },
+          "children": [
+            {
+              "tag": "h3",
+              "style": {
+                "marginTop": 0,
+                "marginBottom": 16,
+                "color": "#333",
+                "display": "flex",
+                "alignItems": "center",
+                "gap": 8
+              },
+              "children": [
+                {
+                  "tag": "span",
+                  "children": "📖"
+                },
+                "历史对话"
+              ]
+            },
+            {
+              "tag": "table",
+              "domLayout": "autoHeight",
+              "rowData": [
+                {
+                  "question": "如何学习机器学习？",
+                  "time": "2024-01-15 10:25",
+                  "status": "已完成",
+                  "length": "约1200字"
+                },
+                {
+                  "question": "深度学习和传统机器学习的区别？",
+                  "time": "2024-01-14 16:42",
+                  "status": "已完成",
+                  "length": "约850字"
+                },
+                {
+                  "question": "Transformer架构的原理是什么？",
+                  "time": "2024-01-14 09:15",
+                  "status": "已完成",
+                  "length": "约1500字"
+                },
+                {
+                  "question": "如何评估AI模型的性能？",
+                  "time": "2024-01-13 14:33",
+                  "status": "已完成",
+                  "length": "约950字"
+                }
+              ],
+              "columnDefs": [
+                {
+                  "headerName": "问题",
+                  "field": "question",
+                  "tooltipField": "question",
+                  "autoHeight": true,
+                  "wrapText": true
+                },
+                {
+                  "headerName": "时间",
+                  "width": 120,
+                  "field": "time",
+                  "sortable": true,
+                  "cellStyle": {
+                    "textAlign": "center"
+                  }
+                },
+                {
+                  "headerName": "状态",
+                  "width": 100,
+                  "field": "status",
+                  "cellStyle": {
+                    "textAlign": "center"
+                  },
+                  "cellRenderer": "agGridTag",
+                  "cellRendererParams": {
+                    "typeMap": {
+                      "已完成": "success"
+                    }
+                  }
+                },
+                {
+                  "headerName": "长度",
+                  "width": 100,
+                  "field": "length",
+                  "cellStyle": {
+                    "textAlign": "center",
+                    "color": "#666"
+                  }
+                },
+                {
+                  "headerName": "操作",
+                  "width": 120,
+                  "cellRenderer": "agGridAction",
+                  "cellRendererParams": {
+                    "actions": [
+                      {
+                        "text": "查看",
+                        "type": "link",
+                        "icon": "FaEye"
+                      },
+                      {
+                        "text": "复用",
+                        "type": "primary",
+                        "icon": "FaRedo"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "style": {
+            "textAlign": "center",
+            "marginTop": 20,
+            "color": "rgba(255,255,255,0.6)",
+            "fontSize": 12
+          },
+          "children": "© 2024 智能问答系统 • 基于大语言模型技术"
+        }
+      ]
+    }
+  ]
+}

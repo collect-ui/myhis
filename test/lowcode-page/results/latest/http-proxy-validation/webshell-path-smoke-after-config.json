@@ -1,0 +1,6 @@
+{
+  "value": "/data",
+  "requests": [
+    "{\"path\":\"/data\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492190146531328\"}"
+  ]
+}

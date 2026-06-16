@@ -1,0 +1,218 @@
+{
+  "href": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "title": "智投标书",
+  "treeTitles": [
+    {
+      "i": 0,
+      "text": "我的电脑（my-computer）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 1,
+      "text": "本机（local）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 2,
+      "text": "虚拟机（virtual）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 3,
+      "text": "演示环境（ys）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 4,
+      "text": "开发环境（kf）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 5,
+      "text": "本地月神（ys_local）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 6,
+      "text": "阿里云（only_office）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 7,
+      "text": "公司环境（gs）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 8,
+      "text": "演示环境（gs_yshj）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 9,
+      "text": "阿吉泰（gs_ys）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 10,
+      "text": "威海市立（sl）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 11,
+      "text": "月神（slys）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 12,
+      "text": "天伦院（tly）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 13,
+      "text": "月神（ys_tly）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 14,
+      "text": "利民（lm_ys）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 15,
+      "text": "月神（ys_lm）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 16,
+      "text": "新环境（new）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 17,
+      "text": "10.96.1.15（petal-server）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 18,
+      "text": "虚拟机-192.168.232.130（linux）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 19,
+      "text": "本机-10.96.32.180（主用户）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 20,
+      "text": "虚拟机-10.96.32.116（windows）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 21,
+      "text": "虚拟机-202.140.140.117（江苏云）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 22,
+      "text": "阿吉泰-172.26.0.149（月神数据库）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 23,
+      "text": "阿吉泰-172.26.0.236（月神-开发环境）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 24,
+      "text": "阿吉泰-172.26.0.237（月神测试）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 25,
+      "text": "本机-10.96.32.180（doc文档）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 26,
+      "text": "月神-200.200.200.120（妇幼月神）",
+      "cls": "ant-tree-title"
+    },
+    {
+      "i": 27,
+      "text": "虚拟机-104.197.158.172（google）",
+      "cls": "ant-tree-title"
+    }
+  ],
+  "buttons": [
+    {
+      "i": 0,
+      "text": "",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-icon-only co-ui-button"
+    },
+    {
+      "i": 1,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 2,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 3,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 4,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 5,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 6,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 7,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 8,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 9,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 10,
+      "text": "登录",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "i": 11,
+      "text": "",
+      "cls": "css-mncuj7 ant-float-btn ant-float-btn-default ant-float-btn-circle"
+    }
+  ],
+  "tabs": [
+    {
+      "i": 0,
+      "text": "在线shell",
+      "cls": "ant-tabs-tab ant-tabs-tab-active"
+    }
+  ],
+  "body": "collect\n首页\n大屏管理\n课程管理\n招投标\n运维管理\n文档\n系统管理\n在线shell\n服务器列表（双击登录）\n我的电脑（my-computer）\n本机（local）\n虚拟机（virtual）\n演示环境（ys）\n开发环境（kf）\n本地月神（ys_local）\n阿里云（only_office）\n公司环境（gs）\n演示环境（gs_yshj）\n阿吉泰（gs_ys）\n威海市立（sl）\n月神（slys）\n天伦院（tly）\n月神（ys_tly）\n利民（lm_ys）\n月神（ys_lm）\n新环境（new）\n10.96.1.15（petal-server）\n常用服务器\n虚拟机-192.168.232.130（linux）\n本机-10.96.32.180（主用户）\n虚拟机-10.96.32.116（windows）\n虚拟机-202.140.140.117（江苏云）\n阿吉泰-172.26.0.149（月神数据库）\n阿吉泰-172.26.0.236（月神-开发环境）\n阿吉泰-172.26.0.237（月神测试）\n本机-10.96.32.180（doc文档）\n月神-200.200.200.120（妇幼月神）\n虚拟机-104.197.158.172（google）\n快速开始\n建议优先使用最近连接，右侧目录树支持双击或右键登录，系统会自动带出默认用户。\n服务器管理\n右键树节点可新增、编辑、删除、查看记录。\n终端分割\n右键标签可水平/垂直分割并打开文件管理。\n工作空间\n可切换项目和宽度，支持多文件分组查看。\nTOP1\n192.168.232.130（linux）\n虚拟机 · 使用212次\n登录\nTOP2\n10.96.32.180（主用户）\n本机 · 使用71次\n登录\nTOP3\n10.96.32.116（windows）\n虚拟机 · 使用36次\n登录\nTOP4\n202.140.140.117（江苏云）\n虚拟机 · 使用9次\n登录\nTOP5\n172.26.0.149（月神数据库）\n阿吉泰 · 使用7次\n登录\n172.26.0.236（月神-开发环境）\n阿吉泰 · 使用5次\n登录\n172.26.0.237（月神测试）\n阿吉泰 · 使用4次\n登录\n10.96.32.180（doc文档）\n本机 · 使用4次\n登录\n200.200.200.120（妇幼月神）\n月神 · 使用3次\n登录\n104.197.158.172（google）\n虚拟机 · 使用2次\n登录\n批量执行",
+  "consoleErrors": [],
+  "pageErrors": []
+}

@@ -1,0 +1,111 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-06T14:11:38.458Z",
+  "nodesChecked": 82,
+  "maxCenterDeltaPx": 0,
+  "avgCenterDeltaPx": 0,
+  "pass": true,
+  "thresholdPx": 3,
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-tree-align-check.png",
+  "samples": [
+    {
+      "text": "C:",
+      "delta": 0,
+      "switcherTop": 175,
+      "titleTop": 176,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "assets_operations",
+      "delta": 0,
+      "switcherTop": 203,
+      "titleTop": 204,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "backend",
+      "delta": 0,
+      "switcherTop": 231,
+      "titleTop": 232,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "backend_common",
+      "delta": 0,
+      "switcherTop": 259,
+      "titleTop": 260,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "backend_data_service",
+      "delta": 0,
+      "switcherTop": 293,
+      "titleTop": 287,
+      "switcherH": 24,
+      "titleH": 36
+    },
+    {
+      "text": "backend_monitor",
+      "delta": 0,
+      "switcherTop": 327,
+      "titleTop": 328,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "conf",
+      "delta": 0,
+      "switcherTop": 355,
+      "titleTop": 356,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "deploy_management",
+      "delta": 0,
+      "switcherTop": 383,
+      "titleTop": 384,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "doc",
+      "delta": 0,
+      "switcherTop": 411,
+      "titleTop": 412,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "dynamic_db",
+      "delta": 0,
+      "switcherTop": 439,
+      "titleTop": 440,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "efficient_maintain",
+      "delta": 0,
+      "switcherTop": 467,
+      "titleTop": 468,
+      "switcherH": 24,
+      "titleH": 22
+    },
+    {
+      "text": "fort_service",
+      "delta": 0,
+      "switcherTop": 495,
+      "titleTop": 496,
+      "switcherH": 24,
+      "titleH": 22
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "finishedAt": "2026-05-06T14:11:45.181Z"
+}

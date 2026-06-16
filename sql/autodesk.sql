@@ -1,0 +1,16 @@
+drop table attachment;
+drop table course;
+drop table course_attendance;
+drop table course_grade;
+drop table course_video;
+drop table ldap_group;
+drop table server_env;
+drop table server_install_soft;
+drop table server_instance;
+drop table sys_env;
+drop table sys_projects;
+drop table webshell_log;
+drop table webshell_token;
+drop table training_project;
+drop table server_os_users;
+drop table role_ldap_group;

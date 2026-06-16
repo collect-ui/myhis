@@ -1,0 +1,44 @@
+{
+  "activeConnectionId": "builtin-local-sqlite",
+  "connections": [
+    {
+      "id": "builtin-local-sqlite",
+      "name": "本地 SQLite",
+      "driver": "sqlite",
+      "dsn": "",
+      "host": "",
+      "port": "",
+      "username": "",
+      "password": "",
+      "database": "",
+      "schema": "",
+      "sqlite_path": "./database/price.db"
+    },
+    {
+      "id": "builtin-collect-ui-mysql",
+      "name": "MySQL",
+      "driver": "mysql",
+      "dsn": "",
+      "host": "202.140.140.117",
+      "port": "3306",
+      "username": "root",
+      "password": "",
+      "database": "",
+      "schema": "",
+      "sqlite_path": ""
+    },
+    {
+      "id": "builtin-oracle",
+      "name": "Oracle",
+      "driver": "oracle",
+      "dsn": "",
+      "host": "127.0.0.1",
+      "port": "1521",
+      "username": "",
+      "password": "",
+      "database": "ORCLPDB1",
+      "schema": "",
+      "sqlite_path": ""
+    }
+  ]
+}

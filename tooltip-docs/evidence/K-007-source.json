@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "active_tab_text": "current_date_time",
+  "title": "current_date_time(生成时间)",
+  "sub_titles": [
+    "示例"
+  ],
+  "list_items": [],
+  "textarea_count": 2,
+  "textarea_values": [
+    "params:\n      create_time:\n        template: \"{{current_date_time}}\"",
+    "生成时间年月日时分秒"
+  ],
+  "tables": [],
+  "body_text": "current_date_time(生成时间)  \n示例\n菜单导航\n示例\n参数\n示例",
+  "task_id": "K-007",
+  "source_group": "模板函数",
+  "source_title": "current_date_time",
+  "source_doc_text": "4.current_date_time\n生成时间",
+  "read_at": "2026-05-07T08:22:20.342Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/K-007-source.png"
+}

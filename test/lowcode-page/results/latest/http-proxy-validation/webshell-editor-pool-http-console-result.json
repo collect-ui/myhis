@@ -1,0 +1,41 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "finalUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "openedGroup": "SSH",
+  "clickedService": "get_env_detail_service(获取服务)",
+  "hasConsoleRoot": true,
+  "hasSendButton": true,
+  "hasUrlInput": true,
+  "hasMethodSelect": true,
+  "hasHeadersTitle": true,
+  "headerCollapse": {
+    "defaultCollapsed": true,
+    "expandedAfterClick": true,
+    "collapsedAfterSecondClick": true,
+    "headerTip": "点击展开"
+  },
+  "postmanStyleSignals": {
+    "methodClass": "workspace-http-console-method workspace-http-console-method-post",
+    "hasRequestBar": true,
+    "hasPanelCard": false,
+    "hasOrangeSendButton": "linear-gradient(rgb(255, 154, 61) 0%, rgb(249, 115, 22) 100%)"
+  },
+  "screenshots": {
+    "doc": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-http-doc.png",
+    "consoleCollapsed": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-http-console-collapsed.png",
+    "consoleExpanded": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-http-console-expanded.png",
+    "consoleCollapsedAgain": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-http-console-collapsed-again.png"
+  },
+  "actionTrace": [
+    "clicked: HTTP目录",
+    "opened group: SSH",
+    "opened service: get_env_detail_service(获取服务)",
+    "clicked: 打开控制台",
+    "clicked: Headers expand",
+    "clicked: Headers collapse",
+    "clicked: Send"
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

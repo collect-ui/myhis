@@ -1,0 +1,800 @@
+{
+  "tag": "layout-fit",
+
+  "children": [
+    {
+      "tag": "row",
+      "className": "h100",
+      "children": [
+        {
+          "tag": "col",
+          "span": 12,
+          "className": "border-right",
+          "children": [
+            {
+              "tag": "layout-fit",
+              "title": "角色管理",
+              "initStore": {
+                "dialogVisible": false,
+                "op": "add",
+                "selection": [],
+                "searchForm": {
+                  "search": "",
+                  "page": 1,
+                  "size": 1000
+                },
+                "opForm": {},
+                "dataList": [],
+
+                "clickRowData": {}
+              },
+              "children": [
+                {
+                  "tag": "table",
+                  "className": "padding10",
+                  "selection": "${selection}",
+                  "rowSelection": "multiple",
+                  "rowClick": "${clickRowData}",
+                  "rowClickAction": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "current_role": "${clickRowData}"
+                      },
+                      "targetStore": "userDetail"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "*",
+                      "description": "页面初始化请求",
+                      "targetStore": "userDetail"
+                    }
+                  ],
+                  "columnDefs": [
+                    {
+                      "headerName": "#",
+                      "width": 60,
+                      "suppressSizeToFit": true,
+                      "valueGetter": "node.rowIndex + 1",
+                      "sortable": false,
+                      "pinned": "left"
+                    },
+                    {
+                      "pinned": "left",
+                      "checkboxSelection": true,
+                      "headerCheckboxSelection": true,
+                      "headerName": "角色名称",
+                      "field": "role_name"
+                    },
+                    {
+                      "headerName": "角色编码",
+                      "field": "role_code"
+                    },
+                    {
+                      "headerName": "人数",
+                      "field": "user_count"
+                    },
+
+                    {
+                      "headerName": "排序号",
+                      "field": "order_index"
+                    }
+                  ],
+                  "rowData": "${dataList}"
+                },
+                {
+                  "tag": "dialog",
+                  "title": "${op=='add'?'新增角色':'修改角色'}",
+                  "width": "30%",
+                  "open": "${dialogVisible}",
+                  "action": [
+                    {
+                      "tag": "submit-form",
+                      "description": "提交表单",
+                      "formName": "opForm"
+                    },
+                    {
+                      "tag": "ajax",
+                      "description":
+                      "新增和编辑发送请求到后端,这里role_id取表单的值,也可以利用三元表达式",
+                      "api": "${op=='add'?'post:/template_data/data?service=hrm.create_role':'post:/template_data/data?service=hrm.edit_role'}",
+                      "data": {
+                        "role_id": "${getFormValue('opForm','role_code')}"
+                      },
+                      "appendFormFields": "opForm"
+                    },
+                    {
+                      "tag": "update-store",
+                      "description": "关闭对话框",
+                      "value": {
+                        "dialogVisible": false
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "*",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "form",
+                      "name": "opForm",
+                      "initialValues": "${opForm}",
+
+                      "labelCol": { "span": 4 },
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "role_name",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入名称!"
+                            }
+                          ],
+                          "label": "名称",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入名称"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "role_code",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入编码!"
+                            }
+                          ],
+
+                          "label": "编码",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "disabled": "${op=='edit'}",
+                              "placeholder": "请输入编码"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "order_index",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入排序号!"
+                            }
+                          ],
+                          "label": "排序号",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "isNumber": true,
+                              "min": 0,
+                              "placeholder": "请输入排序号"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storeName": "leftRole",
+
+              "initAction": [
+                {
+                  "tag": "ajax",
+                  "description": "页面初始化请求",
+                  "api": "post:/template_data/data?service=hrm.role_query",
+                  "appendFormFields": "role-form",
+                  "appendFields": "${searchForm}",
+                  "adapt": {
+                    "dataList": "${data}"
+                  }
+                }
+              ],
+              "topRight": [
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "children": "新增",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "dialogVisible": true,
+                        "op": "add"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "opForm"
+                    }
+                  ]
+                },
+
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "dialogVisible": true,
+                        "op": "edit"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "opForm"
+                    },
+                    {
+                      "tag": "update-form",
+                      "formName": "opForm",
+                      "value": "${selection[0]}"
+                    }
+                  ],
+                  "disabled": "${selection.length !=1 }",
+                  "children": "编辑"
+                },
+                {
+                  "tag": "button",
+                  "disabled": "${selection.length <=0 }",
+                  "type": "primary",
+                  "confirm": {
+                    "title": "确认删除吗？",
+                    "description": "${'确认删除'+selection.length+'记录吗？'}"
+                  },
+                  "danger": true,
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "description": "删除角色",
+                      "api": "post:/template_data/data?service=hrm.role_delete",
+                      "data": {
+                        "role_id_list": "${selection.map(item=>item.role_id)}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "description": "页面初始化请求",
+                      "group": "*"
+                    }
+                  ],
+                  "children": "删除"
+                }
+              ],
+              "searchToolBar": [
+                {
+                  "tag": "form",
+                  "name": "role-form",
+                  "initialValues": "${searchForm}",
+                  "labelCol": { "span": 4 },
+                  "wrapperCol": { "span": 19 },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "*",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "row",
+                      "children": [
+                        {
+                          "tag": "col",
+                          "span": 6,
+                          "children": [
+                            {
+                              "tag": "form-item",
+                              "name": "search",
+                              "label": "搜索",
+                              "children": [
+                                {
+                                  "tag": "input",
+                                  "placeholder": "名称/编码",
+                                  "allowClear": true
+                                }
+                              ]
+                            }
+                          ]
+                        },
+
+                        {
+                          "tag": "col",
+                          "span": 1,
+                          "children": [
+                            {
+                              "tag": "button",
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "*",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "type": "primary",
+                              "children": "搜索"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "col",
+          "span": 12,
+          "storeName": "userDetail",
+          "initStore": {
+            "current_role": {
+              "role_code": "",
+              "role_name": "请选择角色"
+            },
+            "userList": [],
+            "not_role_user_list": [],
+            "not_role_ldap_list": [],
+            "userCount": 0,
+            "userSelection": [],
+            "userVisible": false,
+            "ldapVisible": false,
+            "role_list": [],
+            "userForm": {
+              "role_id": "",
+              "username_list": []
+            },
+            "ldapForm": {
+              "role_id": "",
+              "ldap_list": []
+            },
+            "userSearchForm": {
+              "page": 1,
+              "size": 20
+            },
+            "ldapSearchForm": {
+              "page": 1,
+              "size": 20
+            },
+            "ldapGroupSelection": [],
+            "ldapList": [],
+            "activeKey": "user"
+          },
+          "initAction": [
+            {
+              "enable": "${current_role.role_code && activeKey=='user'}",
+              "tag": "ajax",
+
+              "group": "user-list",
+              "description": "页面初始化请求",
+              "api": "post:/template_data/data?service=hrm.user_list",
+              "appendFormFields": "role-user-form",
+              "data": {
+                "role_code": "${current_role.role_code}"
+              },
+              "adapt": {
+                "userList": "${data}",
+                "userCount": "${count}"
+              }
+            },
+            {
+              "enable": "${current_role.role_code && activeKey=='ldap'}",
+              "tag": "ajax",
+              "group": "ldap-list",
+              "description": "页面初始化请求",
+              "api": "post:/template_data/data?service=hrm.ldap_group_query",
+              "appendFormFields": "role-ldap-form",
+              "data": {
+                "role_id_list": "${[current_role.role_code]}"
+              },
+              "adapt": {
+                "ldapList": "${data}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "description": "加载角色",
+              "api": "post:/template_data/data?service=hrm.role_query",
+              "adapt": {
+                "role_list": "${data}"
+              }
+            }
+          ],
+          "children": [
+            {
+              "tag": "layout-fit",
+              "title": "${'【'+current_role.role_name+'】资源配置'}",
+              "children": [
+                {
+                  "style": {
+                    "paddingTop": 10
+                  },
+                  "tag": "tabs",
+                  "size": "small",
+                  "type": "card",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "${activeKey=='user'?'user-list':'ldap-list'}",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "activeKey": "${activeKey}",
+                  "items": [
+                    {
+                      "label": "用户管理",
+                      "key": "user",
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "searchToolBar": [
+                            {
+                              "tag": "form",
+                              "name": "role-user-form",
+                              "initialValues": "${userSearchForm}",
+                              "labelCol": { "span": 4 },
+                              "wrapperCol": { "span": 19 },
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "用户请求"
+                                }
+                              ],
+                              "submitOnChange": true,
+                              "children": [
+                                {
+                                  "tag": "row",
+                                  "children": [
+                                    {
+                                      "tag": "col",
+                                      "span": 8,
+                                      "children": [
+                                        {
+                                          "tag": "form-item",
+                                          "name": "search",
+                                          "label": "搜索",
+                                          "children": [
+                                            {
+                                              "tag": "input",
+                                              "placeholder": "账号/用户名",
+                                              "allowClear": true
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "col",
+                                      "span": 1,
+                                      "children": [
+                                        {
+                                          "tag": "button",
+                                          "action": [
+                                            {
+                                              "tag": "reload-init-action",
+                                              "group": "*",
+                                              "description": "页面初始化请求"
+                                            }
+                                          ],
+                                          "type": "primary",
+                                          "children": "搜索"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "searchBarRight": [
+                            {
+                              "tag": "button",
+                              "children": "新增用户",
+                              "disabled": "${!current_role.role_code}",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "userVisible": true
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "roleUserForm"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "roleUserForm",
+                                  "value": "${current_role}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=hrm.user_list",
+                                  "data": {
+                                    "not_role_code": "${current_role.role_code}"
+                                  },
+                                  "adapt": {
+                                    "not_role_user_list": "${data}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "danger": true,
+                              "children": "删除",
+                              "disabled": "${userSelection.length <=0 }",
+                              "confirm": {
+                                "title": "确认删除吗？",
+                                "description":
+                                "${'确认删除【'+userSelection.map(item=>item.nick+'（'+item.username+'）').join(',')+'】'+userSelection.length+'记录吗？'}"
+                              },
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "description": "删除用户",
+                                  "api": "post:/template_data/data?service=hrm.user_role_id_list_remove",
+                                  "data": {
+                                    "role_id": "${current_role.role_code}",
+                                    "user_id_list":
+                                    "${userSelection.map(item=>item.user_id)}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            }
+                          ],
+                          "children": [
+                            {
+                              "selection": "${userSelection}",
+                              "tag": "table",
+                              "className": "padding10",
+                              "rowSelection": "multiple",
+                              "columnDefs": [
+                                {
+                                  "headerName": "#",
+                                  "width": 60,
+                                  "suppressSizeToFit": true,
+                                  "valueGetter": "node.rowIndex + 1",
+                                  "sortable": false,
+                                  "pinned": "left"
+                                },
+                                {
+                                  "pinned": "left",
+                                  "checkboxSelection": true,
+                                  "headerCheckboxSelection": true,
+                                  "headerName": "账号",
+                                  "field": "username"
+                                },
+                                {
+                                  "headerName": "工号",
+                                  "field": "work_code"
+                                },
+                                {
+                                  "headerName": "昵称",
+                                  "field": "nick"
+                                }
+                              ],
+                              "rowData": "${userList}"
+                            },
+                            {
+                              "tag": "dialog",
+                              "title":
+                              "${'角色【'+current_role.role_name+'】新增用户'}",
+                              "width": "30%",
+                              "action": [
+                                {
+                                  "tag": "submit-form",
+                                  "description": "提交表单",
+                                  "formName": "roleUserForm"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "新增角色用户",
+                                  "api": "post:/template_data/data?service=hrm.role_add_user",
+                                  "appendFormFields": "roleUserForm"
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "userVisible": false
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "tag": "form",
+                                  "name": "roleUserForm",
+                                  "initialValues": "${userForm}",
+
+                                  "labelCol": { "span": 4 },
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "name": "role_id",
+                                      "label": "角色",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "placeholder": "请选择角色",
+                                          "disabled": true,
+                                          "fieldNames": {
+                                            "label": "role_name",
+                                            "value": "role_code"
+                                          },
+                                          "labelRender": "${label+'['+value+']'}",
+                                          "optionRender":
+                                          "${role_name+'['+role_code+']'}",
+                                          "options": "${role_list}"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "username_list",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请选择用户!"
+                                        }
+                                      ],
+                                      "label": "用户",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "mode": "multiple",
+                                          "placeholder": "请选择用户",
+                                          "fieldNames": {
+                                            "label": "nick",
+                                            "value": "username"
+                                          },
+                                          "labelRender": "${label+'('+value+')'}",
+                                          "optionRender":
+                                          "${nick+'('+username+')'}",
+                                          "options": "${not_role_user_list}"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "open": "${userVisible}"
+                            },
+                            {
+                              "tag": "dialog",
+                              "title":
+                              "${'角色【'+current_role.role_name+'】新增Ldap分组'}",
+                              "width": "30%",
+                              "action": [
+                                {
+                                  "tag": "submit-form",
+                                  "description": "提交表单",
+                                  "formName": "roleLdapForm"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "新增角色ldap",
+                                  "api": "post:/template_data/data?service=hrm.role_add_ldap",
+                                  "appendFormFields": "roleLdapForm"
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "ldapVisible": false
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "ldap-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "tag": "form",
+                                  "name": "roleLdapForm",
+                                  "initialValues": "${ldapForm}",
+                                  "valueRule": {},
+                                  "labelCol": { "span": 4 },
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "name": "role_id",
+                                      "label": "角色",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "placeholder": "请选择角色",
+                                          "disabled": true,
+                                          "fieldNames": {
+                                            "label": "role_name",
+                                            "value": "role_code"
+                                          },
+                                          "labelRender": "${label+'['+value+']'}",
+                                          "optionRender":
+                                          "${role_name+'['+role_code+']'}",
+                                          "options": "${role_list}"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "ldap_list",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请选择ldap分组!"
+                                        }
+                                      ],
+                                      "label": "ldap分组",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "mode": "multiple",
+                                          "placeholder": "请选择ldap分组",
+                                          "fieldNames": {
+                                            "label": "name",
+                                            "value": "ldap_group_id"
+                                          },
+                                          "options": "${not_role_ldap_list}"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "open": "${ldapVisible}"
+                            }
+                          ],
+                          "bottomAlign": "right",
+                          "bottomToolBar": [
+                            {
+                              "tag": "pagination",
+                              "showSizeChanger": true,
+                              "pageSize": "${userSearchForm.size}",
+                              "current": "${userSearchForm.page}",
+                              "total": "${userCount}",
+                              "showTotal": true,
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

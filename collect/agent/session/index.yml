@@ -1,0 +1,190 @@
+service:
+  - key: session_upsert
+    http: true
+    must_login: false
+    module: agent_session
+    params:
+      agent_session_id:
+        default: ""
+      session_key:
+        default: ""
+      scene_code:
+        default: "default"
+      title:
+        default: ""
+      input_text:
+        default: ""
+      status:
+        default: "active"
+      system_prompt:
+        default: ""
+      model:
+        default: "gpt-5-mini"
+      tool_policy_json:
+        default: ""
+      mcp_policy_json:
+        default: ""
+      create_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      last_active_time:
+        template: "{{current_date_time}}"
+  - key: session_query
+    http: true
+    must_login: false
+    module: sql
+    params:
+      agent_session_id:
+        default: ""
+      session_key:
+        default: ""
+      scene_code:
+        default: ""
+      status:
+        default: ""
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 20
+      start:
+        template: "({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+      to_obj:
+        default: false
+    data_file: query.sql
+    count_file: count.sql
+    result_handler:
+      - key: arr2obj
+        enable: "[to_obj]"
+  - key: session_save
+    must_login: false
+    module: model_save
+    table: agent_session
+    params:
+      agent_session_id:
+        check:
+          template: "{{must .agent_session_id}}"
+          err_msg: 会话ID不能为空
+      session_key:
+        default: ""
+      scene_code:
+        default: "default"
+      title:
+        default: ""
+      status:
+        default: "active"
+      user_id:
+        default: ""
+      system_prompt:
+        default: ""
+      model:
+        default: "gpt-5-mini"
+      tool_policy_json:
+        default: ""
+      mcp_policy_json:
+        default: ""
+      context_summary:
+        default: ""
+      last_response_id:
+        default: ""
+      last_active_time:
+        template: "{{current_date_time}}"
+      expire_time:
+        default: ""
+      create_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      create_user:
+        default: ""
+      modify_user:
+        default: ""
+      is_delete:
+        default: "0"
+  - key: session_update
+    must_login: false
+    module: model_update
+    table: agent_session
+    params:
+      agent_session_id:
+        check:
+          template: "{{must .agent_session_id}}"
+          err_msg: 会话ID不能为空
+      scene_code:
+        default: ""
+      title:
+        default: ""
+      status:
+        default: ""
+      system_prompt:
+        default: ""
+      model:
+        default: ""
+      tool_policy_json:
+        default: ""
+      mcp_policy_json:
+        default: ""
+      last_active_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        default: ""
+    update_fields:
+      - scene_code
+      - title
+      - status
+      - system_prompt
+      - model
+      - tool_policy_json
+      - mcp_policy_json
+      - last_active_time
+      - modify_time
+      - modify_user
+    filter:
+      agent_session_id: "[agent_session_id]"
+  - key: session_last_response_update
+    must_login: false
+    module: model_update
+    table: agent_session
+    params:
+      agent_session_id:
+        check:
+          template: "{{must .agent_session_id}}"
+          err_msg: 会话ID不能为空
+      last_response_id:
+        default: ""
+      last_active_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - last_response_id
+      - last_active_time
+      - modify_time
+    filter:
+      agent_session_id: "[agent_session_id]"
+  - key: session_delete
+    table: agent_session
+    http: true
+    must_login: false
+    module: model_update
+    params:
+      agent_session_id:
+        check:
+          template: "{{must .agent_session_id}}"
+          err_msg: 会话ID不能为空
+      is_delete:
+        default: "1"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    filter:
+      agent_session_id: "[agent_session_id]"

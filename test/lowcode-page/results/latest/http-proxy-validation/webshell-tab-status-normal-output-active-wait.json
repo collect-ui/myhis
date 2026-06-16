@@ -1,0 +1,116 @@
+{
+  "checks": {
+    "normalOutputActive": true
+  },
+  "details": {
+    "frames": [
+      {
+        "url": "ws://192.168.232.130:8015/template_data/ws/590089173008912384",
+        "sent": [
+          "{\"type\":\"resize\",\"cols\":146,\"rows\":49}",
+          "{\"type\":\"resize\",\"cols\":146,\"rows\":49}",
+          "{\"type\":\"text\",\"data\":\"p\"}",
+          "{\"type\":\"text\",\"data\":\"r\"}",
+          "{\"type\":\"text\",\"data\":\"i\"}",
+          "{\"type\":\"text\",\"data\":\"n\"}",
+          "{\"type\":\"text\",\"data\":\"t\"}",
+          "{\"type\":\"text\",\"data\":\"f\"}",
+          "{\"type\":\"resize\",\"cols\":145,\"rows\":49}",
+          "{\"type\":\"text\",\"data\":\" \"}",
+          "{\"type\":\"text\",\"data\":\"'\"}",
+          "{\"type\":\"text\",\"data\":\"S\"}",
+          "{\"type\":\"text\",\"data\":\"T\"}",
+          "{\"type\":\"text\",\"data\":\"A\"}",
+          "{\"type\":\"text\",\"data\":\"T\"}",
+          "{\"type\":\"text\",\"data\":\"U\"}",
+          "{\"type\":\"text\",\"data\":\"S\"}",
+          "{\"type\":\"text\",\"data\":\"_\"}",
+          "{\"type\":\"text\",\"data\":\"W\"}",
+          "{\"type\":\"text\",\"data\":\"A\"}",
+          "{\"type\":\"text\",\"data\":\"I\"}",
+          "{\"type\":\"text\",\"data\":\"T\"}",
+          "{\"type\":\"text\",\"data\":\"_\"}",
+          "{\"type\":\"text\",\"data\":\"1\"}",
+          "{\"type\":\"text\",\"data\":\"7\"}",
+          "{\"type\":\"text\",\"data\":\"7\"}",
+          "{\"type\":\"text\",\"data\":\"9\"}",
+          "{\"type\":\"text\",\"data\":\"1\"}",
+          "{\"type\":\"text\",\"data\":\"7\"}",
+          "{\"type\":\"text\",\"data\":\"7\"}",
+          "{\"type\":\"text\",\"data\":\"8\"}",
+          "{\"type\":\"text\",\"data\":\"2\"}",
+          "{\"type\":\"text\",\"data\":\"7\"}",
+          "{\"type\":\"text\",\"data\":\"4\"}",
+          "{\"type\":\"text\",\"data\":\"3\"}",
+          "{\"type\":\"text\",\"data\":\"6\"}",
+          "{\"type\":\"text\",\"data\":\"\\\\\"}",
+          "{\"type\":\"text\",\"data\":\"n\"}",
+          "{\"type\":\"text\",\"data\":\"'\"}",
+          "{\"type\":\"text\",\"data\":\"\\r\"}"
+        ],
+        "received": [
+          "Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.8.0-111-generic x86_64)\r\n\r\n * Documentation:  https://help.ubuntu.com\r\n * Management:     https://landscape.canonical",
+          "<ESC>[?2004hzz@zz:~$ ",
+          "p",
+          "r",
+          "i",
+          "n",
+          "t",
+          "f",
+          "\r<ESC>[K\rzz@zz:~$ printf",
+          " ",
+          "'",
+          "S",
+          "T",
+          "A",
+          "T",
+          "U",
+          "S",
+          "_",
+          "W",
+          "A",
+          "I",
+          "T",
+          "_",
+          "1",
+          "7",
+          "7",
+          "9",
+          "1",
+          "7",
+          "7",
+          "8",
+          "2",
+          "7",
+          "4",
+          "3",
+          "6",
+          "\\",
+          "n",
+          "'",
+          "\r\n<ESC>[?2004l\rSTATUS_WAIT_1779177827436\r\n<ESC>[?2004hzz@zz:~$ "
+        ]
+      }
+    ],
+    "dotsBeforeCommand": [
+      {
+        "className": "webshell-tab-status-dot is-stopped",
+        "title": "已停止或暂无输出",
+        "active": false,
+        "token": "590089173008912384"
+      }
+    ],
+    "dotsAfter": [
+      {
+        "className": "webshell-tab-status-dot is-active",
+        "title": "运行中，有输出",
+        "active": true,
+        "token": "590089173008912384"
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "error": ""
+}

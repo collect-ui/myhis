@@ -1,0 +1,87 @@
+service:
+  - key: schema_page_delete
+    http: true
+    module: model_delete
+    table: schema_page
+    params:
+      schema_page_id_list:
+        check:
+          template: "{{must .schema_page_id_list}}"
+          err_msg: 页面编码不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.page_schema_field_delete_by_schema_page_id
+          schema_page_id_list: "[schema_page_id_list]"
+    filter:
+      schema_page_id__in: "[schema_page_id_list]"
+
+  - key: schema_page_update
+    http: true
+    module: model_update
+    table: schema_page
+    params:
+      schema_page_id:
+        check:
+          template: "{{must .schema_page_id}}"
+          err_msg: 记录不能为空
+      code:
+        check:
+          template: "{{must .code}}"
+          err_msg: 编码不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.schema_page_query
+          code: "[code]"
+          exclude: "[schema_page_id]"
+        save_field: current_data
+        template: "{{eq (len .current_data) 0}}"
+        err_msg: "{{.code}}已经存在"
+    filter:
+      schema_page_id: "[schema_page_id]"
+  - key: schema_page_save
+    http: true
+    module: model_save
+    params:
+      schema_page_id:
+        template: "{{uuid}}"
+      code:
+        check:
+          template: "{{must .code}}"
+          err_msg: 编码不能为空
+      belong_project:
+        template: "{{get_key `project`}}"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.schema_page_query
+          code: "[code]"
+        save_field: current_data
+        template: "{{eq (len .current_data) 0}}"
+        err_msg: "【{{.code}}】已经存在"
+    table: schema_page
+  - key: schema_page_query
+    http: true
+    module: sql
+    data_file: schema_page_query.sql
+    params:
+      to_tree:
+        default: false
+      belong_project:
+        template: "{{get_key `project`}}"
+    result_handler:
+      - key: result2params
+        enable: "[to_tree]"
+        fields:
+          - to: "[list]"
+      - key: to_tree
+        enable: "[to_tree]"
+        foreach: "[list]"
+        id: schema_page_id
+        pid: parent_id
+        children: children
+        save_field: tree
+      - key: param2result
+        enable: "[to_tree]"
+        field: "[tree]"

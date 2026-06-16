@@ -1,0 +1,47 @@
+{
+  "pass": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "fewColumnWidths": [
+    597,
+    597
+  ],
+  "metrics": {
+    "headerCount": 12,
+    "visibleHeaders": [
+      "c01",
+      "c02",
+      "c03",
+      "c04",
+      "c05",
+      "c06",
+      "c07",
+      "c08",
+      "c09",
+      "c10",
+      "c11",
+      "c12"
+    ],
+    "widths": [
+      72,
+      72,
+      72,
+      72,
+      72,
+      72,
+      72,
+      72,
+      72,
+      72,
+      72,
+      72
+    ],
+    "maxWidth": 72,
+    "minWidth": 72,
+    "bodyHasC12": true,
+    "hasRows": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-grid-column-width-check.png"
+}

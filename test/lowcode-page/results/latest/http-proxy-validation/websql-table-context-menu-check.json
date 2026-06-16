@@ -1,0 +1,58 @@
+{
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "tableName": "websql_context_menu_1779093797907",
+  "checks": {
+    "pageOpened": true,
+    "contextMenuVisible": true,
+    "fieldsDialog": true,
+    "ddlDialog": true,
+    "mysqlEmptyQuery": true
+  },
+  "responses": {
+    "fields": {
+      "code": "0",
+      "columnCount": 3
+    },
+    "ddl": {
+      "code": "0",
+      "ddlLength": 142
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-table-context-menu-check.png",
+  "report": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-table-context-menu-check.json",
+  "selectMenuTexts": [
+    "Change All Occurrences",
+    "",
+    "Cut",
+    "Copy",
+    "Paste",
+    "",
+    "Command Palette"
+  ],
+  "fromMenuTexts": [
+    "Change All Occurrences",
+    "",
+    "Cut",
+    "Copy",
+    "Paste",
+    "",
+    "Command Palette"
+  ],
+  "menuTexts": [
+    "查字段",
+    "查 DDL",
+    "",
+    "Change All Occurrences",
+    "",
+    "Cut",
+    "Copy",
+    "Paste",
+    "",
+    "Command Palette"
+  ],
+  "mysqlSqlAfterClick": "",
+  "ok": true
+}

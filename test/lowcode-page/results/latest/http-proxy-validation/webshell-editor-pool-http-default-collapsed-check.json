@@ -1,0 +1,13 @@
+{
+  "pass": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "metrics": {
+    "hasExpandHttp": true,
+    "hasCollapseHttp": false,
+    "hasHttpPanel": false,
+    "hasV2Key": false
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": []
+}

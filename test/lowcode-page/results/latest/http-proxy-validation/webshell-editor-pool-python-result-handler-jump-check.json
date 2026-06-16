@@ -1,0 +1,49 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectCode": "backend",
+  "projectName": "月神后端",
+  "startedAt": "2026-05-07T03:34:50.565Z",
+  "expected": {
+    "indexPath": "/data/project/moongod-backend/backend_data_service/perform/his_issue_record/index.yml",
+    "keyPathMap": {
+      "arr2obj": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/result_handlers/handlers/array_2_obj.py",
+      "param2result": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/result_handlers/handlers/param2result.py",
+      "add_param": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/result_handlers/handlers/add_param.py"
+    }
+  },
+  "steps": {
+    "openProject": true,
+    "openIndex": true,
+    "resultHandlerArr2Obj": true,
+    "resultHandlerParam2Result": true,
+    "resultHandlerAddParam": true
+  },
+  "details": {
+    "arr2obj": {
+      "clickLine": 611,
+      "clickColumn": 15,
+      "clickText": "      - key: arr2obj",
+      "ctrlHoverHint": true,
+      "openedPath": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/result_handlers/handlers/array_2_obj.py"
+    },
+    "param2result": {
+      "clickLine": 331,
+      "clickColumn": 15,
+      "clickText": "      - key: param2result",
+      "ctrlHoverHint": true,
+      "openedPath": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/result_handlers/handlers/param2result.py"
+    },
+    "add_param": {
+      "clickLine": 886,
+      "clickColumn": 15,
+      "clickText": "      - key: add_param",
+      "ctrlHoverHint": true,
+      "openedPath": "/data/soft/python27/lib/python2.7/site-packages/collect/service_imp/result_handlers/handlers/add_param.py"
+    }
+  },
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-python-result-handler-jump-check.png",
+  "endedAt": "2026-05-07T03:35:07.849Z"
+}

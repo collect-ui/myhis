@@ -1,0 +1,25 @@
+{
+  "series": [
+    {
+      "type": "liquidFill",
+      "radius": "85%",
+      "data": [
+        0.3,
+        0.22499999999999998,
+        0.15,
+        0.075
+      ],
+      "label": {
+        "normal": {
+          "formatter": "30分"
+        }
+      }
+    }
+  ],
+  "tooltip": {
+    "show": false
+  },
+  "animationDuration": 0,
+  "animationDurationUpdate": 2000,
+  "animationEasingUpdate": "cubicOut"
+}

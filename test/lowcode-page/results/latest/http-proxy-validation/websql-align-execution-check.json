@@ -1,0 +1,73 @@
+{
+  "ok": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "steps": [
+    {
+      "action": "snap",
+      "name": "final-v7",
+      "file": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-align-final-v7.png"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "errors": [],
+  "details": {
+    "initialSqlTabs": 1,
+    "sqlTabsAfterAdd": 2,
+    "sqlTabLabels": [
+      "SQL 1",
+      "SQL 2"
+    ],
+    "headers": [
+      "#",
+      "c01",
+      "c02",
+      "c03",
+      "c04",
+      "c05",
+      "c06",
+      "c07",
+      "c08",
+      "c09",
+      "c10",
+      "c11",
+      "c12"
+    ],
+    "resultTabText": "1 行 · 14:38:22",
+    "resultSqlText": "SELECT 1 AS c01, 2 AS c02, 3 AS c03, 4 AS c04, 5 AS c05, 6 AS c06, 7 AS c07, 8 AS c08, 9 AS c09, 10 AS c10, 11 AS c11, 12 AS c12;",
+    "resultTabsAfter12": 10,
+    "horizontalClass": "co-ui-panel-group websql-main-split direction-horizontal",
+    "verticalClass": "co-ui-panel-group websql-main-split direction-vertical",
+    "horizontalLayout": {
+      "editor": {
+        "x": 316.796875,
+        "y": 135,
+        "width": 516.671875,
+        "height": 785
+      },
+      "result": {
+        "x": 833.46875,
+        "y": 135,
+        "width": 606.53125,
+        "height": 785
+      },
+      "sideBySide": true
+    },
+    "verticalLayout": {
+      "editor": {
+        "x": 316.796875,
+        "y": 135,
+        "width": 1123.203125,
+        "height": 361.09375
+      },
+      "result": {
+        "x": 316.796875,
+        "y": 496.09375,
+        "width": 1123.203125,
+        "height": 423.90625
+      },
+      "stacked": true
+    }
+  }
+}

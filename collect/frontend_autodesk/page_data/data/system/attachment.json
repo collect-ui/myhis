@@ -1,0 +1,427 @@
+{
+  "tag": "layout-fit",
+  "className": "padding10 h100 overflow-auto",
+  "initStore": {
+    "dialogVisible": false,
+    "op": "add",
+    "lastImg": "",
+    "lastRow": {},
+    "user_id_list": [],
+    "role_list": [],
+    "selection": [],
+    "searchForm": {
+      "page": 1,
+      "size": 20,
+      "search": ""
+    },
+    "opTrainingForm": {
+
+    },
+    "count": 0,
+    "dataList": []
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "dataList",
+      "description": "页面初始化请求-加载数据",
+      "api": "post:/template_data/data?service=system.attachment_list",
+      "appendFormFields": "sys-code-search-form",
+      "appendFields": "${searchForm}",
+      "adapt": {
+        "dataList": "${data}",
+        "count": "${count}"
+      }
+    }
+  ],
+  "children": [
+
+    {
+      "tag": "row",
+      "className":"padding10",
+      "children": [
+        {
+          "tag": "listview",
+          "keyField": "attachment_id",
+          "itemData": "${dataList}",
+          "itemAttr": {
+            "tag": "col",
+            "style": {
+              "padding": "0 8px 8px 0px",
+              "width":300
+            },
+
+            "children": [
+              {
+                "tag": "card",
+                "title": "${row.title+'（'+row.filename+'）'}",
+                "hoverable": "true",
+                "extra": "${row.filetype}",
+                "size": "small",
+                "actions": [
+                  {
+                    "tag": "button",
+                    "type": "text",
+                    "children":"编辑",
+                    "action": [
+                      {
+                        "tag": "update-store",
+                        "value": {
+                          "dialogVisible": true,
+                          "op": "edit",
+                          "lastImg": "${row.path}",
+                          "lastFiletype": "${row.filetype}",
+                          "lastRow": "${row}"
+                        }
+                      },
+                      {
+                        "tag": "reset-form",
+                        "formName": "opSysCodeForm"
+                      },
+                      {
+                        "tag": "update-form",
+                        "formName": "opSysCodeForm",
+                        "value": "${row}"
+                      }
+                    ],
+                    "icon": "FaPencilAlt"
+                  },
+                  {
+                    "tag": "button",
+                    "type": "text",
+                    "children": "删除",
+                    "confirm": {
+                      "title": "确认删除吗？",
+                      "description": "${'确认删除【'+row.title+'】记录吗？'}"
+                    },
+                    "action": [
+                      {
+                        "tag": "ajax",
+                        "description": "删除素材",
+                        "api": "post:/template_data/data?service=system.attachment_delete",
+                        "data": {
+                          "attachment_id_list": "${[row.attachment_id]}"
+                        }
+                      },
+                      {
+                        "tag": "reload-init-action",
+                        "group": "dataList",
+                        "description": "行删除-页面初始化请求"
+                      }
+                    ],
+                    "icon": "FaTrashAlt"
+                  }
+                ],
+                "children": [
+                  {
+                    "tag": "attachment-show",
+                    "path": "${row.path}",
+                    "height": 220,
+                    "width": "100%",
+                     "style":{
+                       "objectFit": "cover"
+                     }
+
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "title": "${op=='add'?'新增素材':'修改素材'}",
+      "open": "${dialogVisible}",
+      "action": [
+        {
+          "tag": "submit-form",
+          "description": "提交表单",
+          "formName": "opSysCodeForm"
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op=='add'}",
+          "description": "新增发送请求到后端",
+          "api": "post:/template_data/data?service=system.attachment_save",
+          "appendFormFields": "opSysCodeForm"
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op=='edit'}",
+          "description": "修改发送请求到后端",
+          "api": "post:/template_data/data?service=system.attachment_update",
+          "appendFormFields": "opSysCodeForm",
+          "data": {
+            "attachment_id": "${lastRow.attachment_id}"
+          }
+        },
+        {
+          "tag": "update-store",
+          "description": "关闭对话框",
+          "value": {
+            "dialogVisible": false
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "新增/修改-页面初始化请求"
+        }
+      ],
+      "children": [
+        {
+          "tag": "form",
+          "name": "opSysCodeForm",
+          "initialValues": {},
+          "labelCol": {
+            "span": 5
+          },
+          "children": [
+            {
+              "tag": "form-item",
+              "name": "title",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "标题!"
+                }
+              ],
+              "label": "标题",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入名称"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "order_index",
+              "label": "排序号",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "越小越靠前",
+                  "isNumber": true
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 24,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "path",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请上传文件"
+                        }
+                      ],
+                      "label": "素材路径",
+                      "children": [
+                        {
+                          "tag": "attachment",
+                          "placeholder": "请上传文件",
+                          "attachment_prop": {
+                            "style": {
+                              "marginTop": "10px"
+                            },
+                            "width": "${fileType=='image'?120:fileType=='audio'?'100%':300}",
+                            "height": "${fileType=='image'?'':fileType=='audio'?'30px':'auto'}"
+                          },
+                          "uploadConfig": {
+                            "showUploadList": false,
+                            "api": "post:/template_data/data?service=sport.upload_course_attachment",
+                            "data": {
+                              "type": "attachment",
+                              "only_path": false
+                            }
+                          },
+                          "finish_action": [
+                            {
+                              "tag": "update-form",
+                              "formName": "opSysCodeForm",
+                              "value": "${row.data}"
+                            },
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "lastImg": "${row.data.path}",
+                                "lastFiletype": "${row.data.filetype}"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "filename",
+              "label": "文件名称",
+              "children": [
+                {
+                  "tag": "input",
+                  "disabled": true,
+                  "placeholder": "上传后自动生成"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "filetype",
+              "label": "类型",
+              "children": [
+                {
+                  "tag": "input",
+                  "disabled": true,
+                  "placeholder": "上传后自动生成"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "size",
+              "label": "大小",
+              "children": [
+                {
+                  "tag": "input",
+                  "disabled": true,
+                  "placeholder": "上传后自动生成"
+                }
+              ]
+            },
+
+            {
+              "tag": "form-item",
+              "name": "real_path",
+              "label": "文件路径",
+              "children": [
+                {
+                  "tag": "input",
+                  "disabled": true,
+                  "placeholder": "上传后自动生成"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "素材管理",
+  "topRight": [
+    {
+      "tag": "button",
+      "type": "primary",
+      "children": "新增",
+      "icon": "FaPlus",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dialogVisible": true,
+            "op": "add",
+            "lastImg": "",
+            "lastFiletype": ""
+          }
+        },
+        {
+          "tag": "reset-form",
+          "formName": "opSysCodeForm"
+        }
+      ]
+    }
+  ],
+  "searchToolBar": [
+    {
+      "tag": "form",
+      "name": "sys-code-search-form",
+      "initialValues": "${searchForm}",
+      "labelCol": {
+        "span": 5
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "action": [
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "表单提交-页面初始化请求"
+        }
+      ],
+      "submitOnChange": true,
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "search",
+                  "label": "搜索",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "名称",
+                      "allowClear": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "点击搜索-页面初始化请求"
+                    }
+                  ],
+                  "type": "primary",
+                  "children": "搜索",
+                  "icon": "FaSearch"
+                },
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "reset-form",
+                      "formName": "user-form"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "重置-页面初始化请求"
+                    }
+                  ],
+                  "icon": "FaUndo",
+                  "children": "重置"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+[
+  {
+    "service": "project_list"
+  },
+  {
+    "service": "user_list"
+  },
+  {
+    "service": "fieldConfigList",
+    "schema_page_code": "next_version_field"
+  },
+  {
+    "service": "fieldConfigListMain",
+    "schema_page_code": "next_version_main"
+  },
+  {
+    "service": "module_list"
+  },
+  {
+    "service": "issue_type_list"
+  },
+  {
+    "service": "version_list"
+  },
+  {
+    "service": "priority_list"
+  },
+  {
+    "service": "status_list"
+  },
+  {
+    "service": "label_list"
+  }
+]

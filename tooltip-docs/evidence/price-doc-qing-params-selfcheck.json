@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-05-07 17:19:10 +0800",
+  "file": "/data/project/sport/collect/autodesk/price-doc-qing/index.yml",
+  "service_count": 6,
+  "services_with_params": 4,
+  "param_names": [
+    "count",
+    "doc_price_list",
+    "nick",
+    "page",
+    "pagination",
+    "price_doc_qing_tree_id",
+    "search",
+    "size",
+    "start"
+  ],
+  "param_rule_keys_seen": [
+    "check",
+    "check.err_msg",
+    "check.template",
+    "default",
+    "exec",
+    "template",
+    "type"
+  ],
+  "details": [
+    {
+      "service": "qing_children_ids",
+      "param_field_count": 1,
+      "param_fields": {
+        "price_doc_qing_tree_id": [
+          "check"
+        ]
+      }
+    },
+    {
+      "service": "qing_doc_price_query",
+      "param_field_count": 7,
+      "param_fields": {
+        "search": [
+          "template"
+        ],
+        "nick": [
+          "default"
+        ],
+        "page": [
+          "default",
+          "type"
+        ],
+        "size": [
+          "default",
+          "type"
+        ],
+        "start": [
+          "exec",
+          "template",
+          "type"
+        ],
+        "pagination": [
+          "default"
+        ],
+        "count": [
+          "default"
+        ]
+      }
+    },
+    {
+      "service": "qing_doc_price_bulk_create",
+      "param_field_count": 1,
+      "param_fields": {
+        "doc_price_list": [
+          "check"
+        ]
+      }
+    },
+    {
+      "service": "qing_price_doc_bulk_update",
+      "param_field_count": 1,
+      "param_fields": {
+        "doc_price_list": [
+          "check"
+        ]
+      }
+    },
+    {
+      "service": "qing_doc_price_save_all",
+      "param_field_count": 0,
+      "param_fields": {}
+    },
+    {
+      "service": "qing_doc_price_save_all_data",
+      "param_field_count": 0,
+      "param_fields": {}
+    }
+  ]
+}

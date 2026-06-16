@@ -1,0 +1,393 @@
+{
+  "tag": "layout-fit",
+  "initStoreType": {
+    "panelList": "panelList",
+    "lastRightSsh": "contentReference"
+  },
+  "initStore": {
+    "searchForm": {
+      "search": ""
+    },
+    "panelList": [],
+    "lastGroupId": "",
+    "lastSubGroupId": "",
+    "lastWebshellToken": "",
+    "lastWebshellTitle": "",
+    "panelKeyList": [],
+    "subMap": {},
+    "lastNewKey": "",
+    "addNodeForm": {
+      "type": "1",
+      "server_env_id": null,
+      "parent_id": null,
+      "server_env_code": "",
+      "server_env_name": "",
+      "order_id": 0,
+      "server_busi_name": "",
+      "server_ip": "",
+      "root_username": "",
+      "root_password": "",
+      "normal_username": "",
+      "normal_password": ""
+    },
+    "updateNodeForm": {},
+    "treeSelected": {
+      "server_id": null,
+      "server_env_id": null
+    },
+    "addNodeVisible": false,
+    "nodeOp": "add",
+    "server_env_data": [],
+    "env_data": [],
+    "loginVisible": false,
+    "userList": [],
+    "lastDblData": {},
+    "last_webshell_token": "",
+    "last_webshell_x": 0,
+    "last_webshell_y": 0,
+    "fileManageShow": false,
+    "last_webshell_title": "",
+    "fileInfoList": [],
+    "current_dir": "",
+    "lastRightSsh": [],
+    "lastDownloadRowName": "",
+    "downloadingPercent": 0,
+    "historyShow": false,
+    "historyDialogTitle": "操作记录",
+    "historySearchForm": {
+      "size": 20,
+      "page": 1
+    },
+    "historyCount": 0,
+    "historyList": [],
+    "lastRightServer": {},
+    "playShow": false,
+    "playTitle": "回放",
+    "historyLogList": [],
+    "last_group_id": "",
+    "tmp": -1,
+    "last_shell_id": "",
+    "shellRenameVisible": false,
+    "shellRenameToken": "",
+    "shellRenameForm": {
+      "title": ""
+    },
+    "tmp2": -1,
+    "isCopy": 0,
+    "siderOpen": "1",
+    "recently_server_list": [],
+    "workspaceVisible": false,
+    "workspaceCurrent": "frontend",
+    "workspaceDrawerMode": "middle",
+    "workspaceDrawerWidth": "68%",
+    "workspaceDrawerHeight": "100%",
+    "workspaceOptions": [],
+    "workspaceTreeMap": {},
+    "workspaceTreeLoadedMap": {},
+    "workspaceLoadedMap": {
+      "frontend": true
+    },
+    "workspaceManageVisible": false,
+    "workspaceProjectDialogVisible": false,
+    "workspaceProjectOp": "add",
+    "workspaceProjectEditCode": "",
+    "workspaceProjectSearchForm": {
+      "page": 1,
+      "size": 20,
+      "project_name": "",
+      "project_code": "",
+      "server_id": null,
+      "git_keyword": ""
+    },
+    "workspaceLastServerId": null,
+    "workspaceProjectList": [],
+    "workspaceProjectTotal": 0,
+    "workspaceServerList": [],
+    "workspaceUserList": [],
+    "workspaceProjectForm": {
+      "project_name": "",
+      "project_code": "",
+      "order_id": 1,
+      "show_home": "1",
+      "project_type": "go",
+      "collect_source_root": "",
+      "python_pkg_path": "",
+      "server_id": null,
+      "server_os_users_id": null,
+      "project_dir": "",
+      "git_repo_url": "",
+      "exclude_dirs": "node_modules,.git,dist,.next"
+    },
+    "workspaceFileManageVisible": false,
+    "workspaceFileDialogVisible": false,
+    "workspaceFileOp": "add",
+    "workspaceFileList": [],
+    "workspaceFileTotal": 0,
+    "workspaceFileSearchForm": {
+      "page": 1,
+      "size": 20,
+      "project_code": "",
+      "name": ""
+    },
+    "workspaceFileCurrentProject": {},
+    "workspaceFileCurrentRow": {},
+    "activeStore": null,
+    "workspaceFileTreeKeyword": "",
+    "workspaceFileParentTree": [],
+    "workspaceFileForm": {
+      "file_id": "",
+      "project_code": "",
+      "name": "",
+      "path": "",
+      "parent_id": "",
+      "is_dir": "1"
+    },
+    "workspaceHttpDocDialogVisible": false,
+    "workspaceHttpDocOp": "add",
+    "workspaceHttpDocFormType": "2",
+    "workspaceHttpDocForm": {
+      "collect_doc_id": "",
+      "doc_group_id": "",
+      "type": "2",
+      "title": "",
+      "sub_title": "",
+      "parent_dir": "",
+      "order_index": 1,
+      "code": "{}",
+      "code_desc": "",
+      "code_result": "",
+      "important_list": [],
+      "params": [],
+      "result": [],
+      "demo": []
+    }
+  },
+  "actionGroupDefine": {
+    "reload-sftp-file": [
+      {
+        "tag": "ajax",
+        "enable": "${lastRightSsh.length>0}",
+        "group": "reload-sftp-file",
+        "api": "post:/template_data/data?service=webshell.get_dir_info_by_token",
+        "appendFields": {
+          "path": "${lastRightSsh[0]?.path}"
+        },
+        "appendFormFields": "webshell-file-manage",
+        "data": {
+          "token": "${lastRightSsh[0]?.token}"
+        },
+        "adapt": {
+          "fileInfoList": "${data.dir}",
+          "current_dir": "${data.current_dir}"
+        }
+      },
+      {
+        "tag": "handlerPath",
+        "enable": "${lastRightSsh.length>0}",
+        "path": "current_dir",
+        "group": "reload-sftp-file"
+      },
+      {
+        "tag": "arr-push",
+        "description": "添加根路径",
+        "enable": "${lastRightSsh.length>0 && current_dir!='/'}",
+        "group": "reload-sftp-file",
+        "from": "fileInfoList",
+        "first": true,
+        "value": {
+          "name": "..",
+          "is_dir": true
+        }
+      },
+      {
+        "tag": "update-form",
+        "enable": "${lastRightSsh.length>0}",
+        "group": "reload-sftp-file",
+        "description": "根据结果设置表单路径",
+        "formName": "webshell-file-manage",
+        "value": {
+          "path": "${current_dir}"
+        }
+      },
+      {
+        "tag": "method",
+        "enable": "${lastRightSsh.length>0}",
+        "group": "reload-sftp-file",
+        "description": "设置右键对象路径",
+        "method": "${lastRightSsh[0]?.setPath(current_dir)}"
+      }
+    ],
+    "reload-history": [
+      {
+        "tag": "ajax",
+        "enable": "${lastRightServer.server_id!==undefined}",
+        "group": "reload-history",
+        "api": "post:/template_data/data?service=webshell.webshell_token_query",
+        "appendFormFields": "webshell-history",
+        "appendFields": "${historySearchForm}",
+        "data": {
+          "server_id": "${lastRightServer.server_id}"
+        },
+        "adapt": {
+          "historyList": "${data}",
+          "historyCount": "${count}"
+        }
+      }
+    ],
+    "reload-workspace-project-manage": [
+      {
+        "tag": "ajax",
+        "group": "reload-workspace-project-manage",
+        "appendFormFields": "workspace-project-search-form",
+        "api": "post:/template_data/data?service=webshell.workspace_project_query",
+        "adapt": {
+          "workspaceProjectList": "${data}",
+          "workspaceProjectTotal": "${count}"
+        }
+      }
+    ],
+    "reload-workspace-project": [
+      {
+        "tag": "ajax",
+        "description": "不带条件查询",
+        "group": "reload-workspace-project",
+        "api": "post:/template_data/data?service=webshell.workspace_project_query",
+        "adapt": {
+          "workspaceOptions": "${data.sort((a,b)=>(a.order_id||0)-(b.order_id||0))}",
+          "workspaceCurrent": "${(()=>{const list=data.sort((a,b)=>(a.order_id||0)-(b.order_id||0));const has=list.some(item=>item.project_code===workspaceCurrent);if(has){return workspaceCurrent;}return list[0]?.project_code||'';})()}",
+          "workspaceLoadedMap": "${(()=>{const list=data||[];const map={};list.forEach(item=>{map[item.project_code]=true;});return map;})()}"
+        }
+      }
+    ],
+    "reload-workspace-file-manage": [
+      {
+        "tag": "ajax",
+        "group": "reload-workspace-file-manage",
+        "api": "post:/template_data/data?service=webshell.workspace_file_query",
+        "data": {
+          "project_code": "${workspaceFileCurrentProject.project_code || workspaceCurrent}",
+          "name": "${workspaceFileSearchForm.name || ''}",
+          "page": "${workspaceFileSearchForm.page || 1}",
+          "size": "${workspaceFileSearchForm.size || 20}"
+        },
+        "adapt": {
+          "workspaceFileList": "${data}",
+          "workspaceFileTotal": "${count}"
+        }
+      }
+    ]
+  },
+  "initAction": [
+    {
+      "tag": "reload-init-action",
+      "group": "reload-workspace-project"
+    },
+    {
+      "tag": "ajax",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=project.my_env_tree",
+      "appendFormFields": "server-search-form",
+      "adapt": {
+        "server_env_data": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=project.recently_server_list",
+      "adapt": {
+        "recently_server_list": "${data}"
+      }
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "sider-open",
+      "defaultValue": "1",
+      "storeField": "siderOpen"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-drawer-mode",
+      "defaultValue": "middle",
+      "storeField": "workspaceDrawerMode"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-drawer-width",
+      "defaultValue": "68%",
+      "storeField": "workspaceDrawerWidth"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-drawer-height",
+      "defaultValue": "100%",
+      "storeField": "workspaceDrawerHeight"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-visible",
+      "defaultValue": false,
+      "storeField": "workspaceVisible"
+    },
+    {
+      "tag": "method",
+      "description": "注册 webshell 标签输出状态监听",
+      "method": "${(()=>{const w=window;if(!w.__webshellTabStatus){const state={timers:{},status:{},resizeUntil:{},lastText:{},layoutUntil:0,dragging:false};const tabButton=(key)=>[...w.document.querySelectorAll('.ant-tabs-tab-btn,[role=\"tab\"]')].find(el=>{const id=String(el.id||'');const controls=String(el.getAttribute('aria-controls')||'');const nodeKey=String(el.getAttribute('data-node-key')||'');return nodeKey===key||id.endsWith('-tab-'+key)||controls.endsWith('-panel-'+key)||id.indexOf(key)>=0||controls.indexOf(key)>=0;});const ensureDot=(key)=>{if(!w.document){return [];}const btn=tabButton(key);if(!btn){return [];}let dot=[...btn.querySelectorAll('.webshell-tab-status-dot')].find(el=>String(el.getAttribute('data-webshell-status-token')||'')===key);if(!dot){dot=w.document.createElement('span');dot.className='webshell-tab-status-dot is-stopped';dot.setAttribute('data-webshell-status-token',key);dot.setAttribute('title','已停止或暂无输出');btn.insertBefore(dot,btn.firstChild);}return [dot];};const paint=(token,active)=>{const key=String(token||'');if(!key||!w.document){return;}state.status[key]=active?'active':'stopped';const nodes=[...new Set([...ensureDot(key),...[...w.document.querySelectorAll('.webshell-tab-status-dot')].filter(el=>String(el.getAttribute('data-webshell-status-token')||'')===key)])];nodes.forEach(el=>{el.classList.toggle('is-active',!!active);el.classList.toggle('is-stopped',!active);el.setAttribute('title',active?'运行中，有输出':'已停止或暂无输出');});};const mark=(token,active)=>{const key=String(token||'');if(!key){return;}if(state.timers[key]){w.clearTimeout(state.timers[key]);}paint(key,!!active);if(active){state.timers[key]=w.setTimeout(()=>paint(key,false),1800);}};state.mark=mark;state.paintAll=()=>{Object.keys(state.status).forEach(key=>paint(key,state.status[key]==='active'));};const matchToken=(url)=>{const m=String(url||'').match(/\\/template_data\\/ws\\/([^/?#]+)/);return m?m[1]:'';};const suppress=(token,ms)=>{const key=String(token||'');if(!key){return;}state.resizeUntil[key]=Date.now()+ms;if(state.timers[key]){w.clearTimeout(state.timers[key]);}paint(key,false);};state.suppress=suppress;const payloadType=(raw)=>{if(typeof raw!=='string'){return '';}try{const msg=JSON.parse(raw);return msg&&msg.type?String(msg.type):'';}catch(e){return '';}};const shouldSuppress=(token)=>{const key=String(token||'');const now=Date.now();return now<state.layoutUntil||(key&&now<(state.resizeUntil[key]||0));};const clean=(value)=>String(value||'').replace(/\\u001b\\][^\\u0007]*(?:\\u0007|\\u001b\\\\)/g,'').replace(/\\u001b\\[[0-?]*[ -/]*[@-~]/g,'').replace(/\\u001b[ -/]*[@-~]/g,'').replace(/[\\x00-\\x1f\\x7f]/g,'').trim();const isOutput=(raw,token)=>{if(shouldSuppress(token)){return false;}const text=typeof raw==='string'?raw:'';if(!text||text.indexOf('<<<PWD_START>>>')>=0||text.indexOf('<<<PWD_END>>>')>=0){return false;}try{const msg=JSON.parse(text);if(msg&&msg.type&&String(msg.type)!=='text'){return false;}if(msg&&String(msg.type)==='text'){return !!clean(msg.data);}}catch(e){}return !!clean(text);};const Native=w.WebSocket;const Wrapped=function(url,protocols){const ws=protocols!==undefined?new Native(url,protocols):new Native(url);const token=matchToken(url);if(token){const rawSend=ws.send;ws.send=function(data){const type=payloadType(data);if(type==='text'){state.lastText[token]=Date.now();}else if(type==='resize'&&Date.now()-(state.lastText[token]||0)>1200){suppress(token,1800);}return rawSend.apply(ws,arguments);};ws.addEventListener('open',()=>paint(token,false));ws.addEventListener('message',ev=>{if(isOutput(ev.data,token)){mark(token,true);}});ws.addEventListener('close',()=>mark(token,false));ws.addEventListener('error',()=>mark(token,false));}return ws;};try{Wrapped.prototype=Native.prototype;Object.setPrototypeOf(Wrapped,Native);w.WebSocket=Wrapped;}catch(e){}const isResizeHandle=(el)=>{try{return !!(el&&el.closest&&el.closest('.webshell-container .panel-resize,.webshell-container .co-ui-panel-resize,.webshell-container .Resizer'));}catch(e){return false;}};const bumpLayout=()=>{state.layoutUntil=Date.now()+1800;Object.keys(state.status).forEach(key=>mark(key,false));};if(w.document){w.document.addEventListener('pointerdown',ev=>{if(isResizeHandle(ev.target)){state.dragging=true;bumpLayout();}},true);w.document.addEventListener('pointermove',()=>{if(state.dragging){bumpLayout();}},true);w.document.addEventListener('pointerup',()=>{if(state.dragging){state.dragging=false;bumpLayout();}},true);w.document.addEventListener('pointercancel',()=>{if(state.dragging){state.dragging=false;bumpLayout();}},true);}const observe=()=>{if(state.observer||!w.document||!w.document.body||!w.MutationObserver){return;}const obs=new w.MutationObserver(()=>state.paintAll());obs.observe(w.document.body,{childList:true,subtree:true});state.observer=obs;};observe();if(!state.observer&&w.document){w.document.addEventListener('DOMContentLoaded',observe,{once:true});}w.__webshellTabStatus=state;}return true;})()}"
+    },
+    {
+      "tag": "method",
+      "description": "注册 webshell 终端底部固定监听",
+      "method": "${(()=>{const w=window;const version='20260519-layout-only';if(!w.__webshellTerminalPinBottom||w.__webshellTerminalPinBottom.version!==version){const state={version,timers:[],resizeObserver:null,mutationObserver:null,watched:new Set(),viewportCount:0};const scroll=()=>{try{if(!w.document){return false;}[...w.document.querySelectorAll('.webshell-container .xterm-viewport')].forEach(el=>{el.scrollTop=el.scrollHeight;});return true;}catch(e){return false;}};const schedule=()=>{state.timers.forEach(t=>w.clearTimeout(t));state.timers=[];const run=()=>{scroll();if(w.requestAnimationFrame){w.requestAnimationFrame(scroll);}};[0,50,160,320].forEach(ms=>state.timers.push(w.setTimeout(run,ms)));};const watch=el=>{if(!el||state.watched.has(el)){return;}state.watched.add(el);try{state.resizeObserver&&state.resizeObserver.observe(el);}catch(e){}};const observe=()=>{if(!w.document||!w.document.body){return;}if(!state.resizeObserver&&w.ResizeObserver){state.resizeObserver=new w.ResizeObserver(()=>schedule());}const viewports=[...w.document.querySelectorAll('.webshell-container .xterm-viewport')];[...w.document.querySelectorAll('.webshell-container,.webshell-container .xterm,.webshell-container .xterm-viewport')].forEach(watch);const nextCount=viewports.length;if(nextCount>state.viewportCount){schedule();}state.viewportCount=nextCount;if(!state.mutationObserver&&w.MutationObserver){state.mutationObserver=new w.MutationObserver(()=>observe());state.mutationObserver.observe(w.document.body,{childList:true,subtree:true});}};state.scroll=scroll;state.schedule=schedule;state.observe=observe;const onResize=()=>schedule();state.destroy=()=>{state.timers.forEach(t=>w.clearTimeout(t));state.timers=[];try{state.resizeObserver&&state.resizeObserver.disconnect();}catch(e){}try{state.mutationObserver&&state.mutationObserver.disconnect();}catch(e){}w.removeEventListener('resize',onResize);};w.addEventListener('resize',onResize,{passive:true});if(w.document&&w.document.readyState==='loading'){w.document.addEventListener('DOMContentLoaded',()=>{observe();schedule();},{once:true});}else{observe();schedule();}w.__webshellTerminalPinBottom=state;}else{w.__webshellTerminalPinBottom.observe&&w.__webshellTerminalPinBottom.observe();w.__webshellTerminalPinBottom.schedule&&w.__webshellTerminalPinBottom.schedule();}return true;})()}"
+    }
+  ],
+  "children": [
+    {
+      "tag": "css",
+      "src": "/data/webshell.css"
+    },
+    {
+      "tag": "css",
+      "css": ".webshell-container .ant-tabs-tab-btn{display:inline-flex;align-items:center;min-width:0;}.webshell-tab-status-dot{width:9px;height:9px;box-sizing:border-box;border-radius:50%;display:inline-block;flex:0 0 9px;margin-right:6px;background:#c7cbd1;border:1px solid #c7cbd1;}.webshell-tab-status-dot.is-active{width:10px;height:10px;flex-basis:10px;background:transparent;border:2px solid rgba(249,115,22,.32);border-top-color:#f97316;border-right-color:#f97316;box-shadow:0 0 0 2px rgba(249,115,22,.14);animation:webshell-tab-status-spin .75s linear infinite;}.webshell-tab-status-dot.is-stopped{background:#c7cbd1;border-color:#c7cbd1;box-shadow:none;animation:none;}@keyframes webshell-tab-status-spin{to{transform:rotate(360deg);}}"
+    },
+    {
+      "tag": "layout",
+      "children": [
+        "{{to_json .webshell_ssh_fragment}}",
+        "{{to_json .webshell_editor_fragment}}"
+      ]
+    }
+  ],
+  "bottomToolBar": [
+    {
+      "tag": "form",
+      "name": "shell-form",
+      "submitOnEnter": true,
+      "action": [
+        {
+          "tag": "batch-shell"
+        }
+      ],
+      "children": [
+        {
+          "tag": "form-item",
+          "label": "批量执行",
+          "name": "shell",
+          "style": {
+            "marginBottom": "0px"
+          },
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "激活窗口批量执行"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

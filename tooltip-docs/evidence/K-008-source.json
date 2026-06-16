@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "active_tab_text": "get_key",
+  "title": "get_key(获取配置文件参数)",
+  "sub_titles": [
+    "示例"
+  ],
+  "list_items": [],
+  "textarea_count": 2,
+  "textarea_values": [
+    "enable: \"{{eq (get_key \\\"can_cache\\\") \\\"true\\\"}}\"",
+    "获取conf/application.properties的参数"
+  ],
+  "tables": [],
+  "body_text": "get_key(获取配置文件参数)  \n示例\n菜单导航\n示例\n参数\n示例",
+  "task_id": "K-008",
+  "source_group": "模板函数",
+  "source_title": "get_key",
+  "source_doc_text": "9.get_key\n获取配置文件参数",
+  "read_at": "2026-05-07T08:22:24.556Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/K-008-source.png"
+}

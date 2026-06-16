@@ -1,0 +1,918 @@
+service:
+  - key: get_pdf_data
+    http: true
+    module: empty
+    params:
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: "文件不能为空"
+      file_id:
+        default: ""
+    handler_params:
+      - key: service2field
+        enable: "{{is_empty .file_id}}"
+        service:
+          service: autodesk.upload_pdf_file
+          path: "[path]"
+        save_field: result
+      - key: update_field
+        enable: "{{is_empty .file_id}}"
+        name: 更新字段
+        fields:
+          - field: file_id
+            template: "[result.id]"
+      - key: service2field
+        service:
+          service: autodesk.get_pdf_result
+          file_id: "[file_id]"
+        save_field: pdf_result
+      - key: fix_json
+        value: "[pdf_result]"
+        save_field: pdf_result
+      - key: str2json
+        field: "[pdf_result]"
+        save_field: pdf_result
+      - key: param2result
+        field: "[pdf_result]"
+
+  - key: to_doc_project_content
+    module: empty
+    http: true
+    params:
+      data_tree:
+        default: []
+      doc_project_id:
+        check:
+          template: "{{must .doc_project_id}}"
+          err_msg: 文档不能为空
+    handler_params:
+      - key: to_list
+        foreach: "[data_tree]"
+        children: dir
+        save_field: tree_list
+      - key: update_array
+        foreach: "[tree_list]"
+        item: item
+        fields:
+          - field: doc_project_id
+            template: "[doc_project_id]"
+          - field: doc_project_content_id
+            template: "[item.id]"
+          - field: topic
+            template: "[item.title]"
+          - field: "dir"
+            template: "-"
+          - field: "title"
+            template: "-"
+          - field: order_index
+            template: "[loop_index]"
+      - key: service2field
+        service:
+          service: autodesk.doc_project_content_delete
+          doc_project_id: "[doc_project_id]"
+
+      - key: service2field
+        enable: "{{gt (len .tree_list ) 0}}"
+        service:
+          service: autodesk.doc_project_content_bulk_create
+          data_list: "[tree_list]"
+      - key: param2result
+        field: tree_list
+
+  - key: get_dir_data
+    http: true
+    module: empty
+    params:
+      tb_project_id:
+        check:
+          template: "{{must .tb_project_id}}"
+          err_msg: 项目ID不能为空
+#      path:
+#        check:
+#          template: "{{or (must .path) (must .file_id)}}"
+#          err_msg: "文件不能为空"
+      file_id:
+        default: ""
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.doc_project_query
+          tb_project_id: "[tb_project_id]"
+          to_obj: true
+        save_field: project
+        template: "{{ must .project}}"
+        err_msg: 项目不存在
+      - key: service2field
+        name: 生成excel
+        enable: "{{is_empty .file_id}}"
+        service:
+          service: autodesk.doc_project_detail_folder_download
+          tb_project_id: "[tb_project_id]"
+          download: false
+        save_field: "path"
+      - key: service2field
+        enable: "{{is_empty .file_id}}"
+        service:
+          service: autodesk.upload_dir_file
+          path: "[path]"
+        save_field: result
+      - key: update_field
+        enable: "{{is_empty .file_id}}"
+        name: 更新字段
+        fields:
+          - field: file_id
+            template: "[result.id]"
+      - key: service2field
+        service:
+          service: autodesk.get_dir_result
+          file_id: "[file_id]"
+        save_field: dir_result_str
+      - key: fix_json
+        value: "[dir_result_str]"
+        save_field: dir_result
+      - key: str2json
+        field: "[dir_result]"
+        save_field: dir_result
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: dir_result_dir
+            template: "[dir_result.dir]"
+
+      - key: service2field
+        service:
+          service: autodesk.to_doc_project_content
+          doc_project_id: "[project.doc_project_id]"
+          data_tree: "[dir_result_dir]"
+        save_field: doc_project_content_list
+
+      - key: params2result
+        fields:
+          - from: "[doc_project_content_list]"
+            to: doc_project_content_list
+          - from: "[dir_result]"
+            to: dir_result
+          - from: "[dir_result_dir]"
+            to: dir_result_dir
+          - from: "[dir_result_str]"
+            to: dir_result_str
+
+
+
+
+
+  - key: get_field_detail_service
+    module: empty
+    params:
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: "文件ID不能为空"
+    data_file: field_detail.json
+    handler_params:
+      - key: file2datajson
+        save_field: service_list
+      - key: param2result
+        field: service_list
+  - key: get_pdf_result
+    module: http
+    http: true
+    params:
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: "文件ID不能为空"
+
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.get_field_detail_service
+          file_id: "[file_id]"
+        save_field: data
+      - key: gen_sign
+        field: "[data]"
+    http_json: get_pdf_result.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: param2result
+        field: "[data]"
+  - key: get_file_detail_service
+    http: true
+    module: empty
+    params:
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: "文件ID不能为空"
+    data_file: file_detail.json
+    handler_params:
+      - key: file2datajson
+        save_field: service_list
+      - key: param2result
+        field: service_list
+  - key: get_dir_result
+    module: http
+    http: true
+    log: true
+    params:
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: "文件ID不能为空"
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.get_file_detail_service
+          file_id: "[file_id]"
+        save_field: data
+      - key: gen_sign
+        field: "[data]"
+    http_json: get_dir_result.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: param2result
+        field: "[data]"
+  - key: upload_pdf_file
+    http: true
+    module: http
+    cache:
+      key: "handler_cache"
+      enable: "{{eq (get_key \"can_cache\") \"true\"}}"
+      room: config
+      second: 360000
+      fields:
+        - field: "[service]"
+        - field: "[path]"
+    params:
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: path不能为空
+        template: "{{replace (get_key `local_file_dir`) (get_key `file_prefix`) ``}}{{.path}}"
+    handler_params:
+      - key: gen_sign
+        path: "[path]"
+    http_json: upload_pdf_file.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: param2result
+        field: "[data]"
+  - key: upload_dir_file
+    http: true
+    module: http
+    cache:
+      key: "handler_cache"
+      enable: "{{eq (get_key \"can_cache\") \"true\"}}"
+      room: config
+      second: 360000
+      fields:
+        - field: "[service]"
+        - field: "[path]"
+    params:
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: path不能为空
+#        template: "{{replace (get_key `local_file_dir`) (get_key `file_prefix`) ``}}{{.path}}"
+      to_path:
+        template: "{{.path}}"
+    handler_params:
+#      - key: file_move
+#        left: "[path]"
+#        right: "[to_path]"
+#        encoding: "utf-8bom"
+
+      - key: gen_sign
+        path: "[to_path]"
+    http_json: upload_dir_file.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: param2result
+        field: "[data]"
+
+
+  - key: gen_doc
+    http: true
+    module: empty
+    params:
+      tb_project_id:
+        check:
+          template: "{{must .tb_project_id}}"
+          err_msg: doc_project_id不能为空
+      docx_path:
+        template: './template/{{current_date_format "20220202"}}/docx_{{  replace (sub_str current_date_time -8 0) ":" ""}}_{{sub_str uuid -8 0}}.docx'
+      docx_template_path:
+        default: ""
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.get_tb_common
+        save_field: common
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: docx_template_path
+            template: "[common.tech_doc_template]"
+          - field: docx_template_path
+            template: "{{replace .docx_template_path (get_key `file_prefix`) (get_key `local_file_dir`) }}"
+      - key: service2field
+        service:
+          service: autodesk.doc_project_query
+          tb_project_id: "[tb_project_id]"
+          to_obj: true
+
+        save_field: project
+
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: docx_path
+            template: './template/{{current_date_format "20220202"}}/{{.project.name}}_docx_{{  replace (sub_str current_date_time -8 0) ":" ""}}_{{sub_str uuid -8 0}}.docx'
+      - key: service2field
+        service:
+          service: autodesk.doc_project_content_query
+          doc_project_id: "[project.doc_project_id]"
+          with_content: true
+        save_field: detail_list
+      - key: to_tree
+        foreach: "[detail_list]"
+        id: doc_project_content_id
+        pid: parent_id
+        children: children
+        save_field: detail_list
+      - key: handler_tree_level_order
+        foreach: "[detail_list]"
+      - key: to_list
+        foreach: "[detail_list]"
+        children: children
+        save_field: detail_list
+#      - key: service2field
+#        service:
+#          service: autodesk.doc_project_detail_query
+#          doc_project_id: "[project.doc_project_id]"
+#        save_field: detail_list
+#        template: "{{gt (len .detail_list) 0}}"
+#        err_msg: 招标项目不能为空
+#      - key: group_by
+#        enable: "{{must .detail_list}}"
+#        foreach: "[detail_list]"
+#        children: "children"
+#        append_item_param: true
+#        fields:
+#          - field: "[group]"
+#        save_field: detail_list
+#      - key: param2result
+#        field: detail_list
+      - key: gen_doc
+        path: "[docx_path]"
+        name: "第一章、施工方案与技术措施"
+        file: "[docx_template_path]"
+        foreach: "[detail_list]"
+      - key: file2result
+        path: "[docx_path]"
+  - key: get_transfer_price
+    http: true
+    module: empty
+    params:
+      data_list:
+        check:
+          template: "{{must .data_list}}"
+          err_msg: data_list不能为空
+    handler_params:
+      - key: prop_arr
+        foreach: "[data_list]"
+        fields:
+          - template: "[code]"
+          - template: "[link.code]"
+        save_field: code_list
+      - key: service2field
+        service:
+          service: autodesk.doc_price_query
+          code_list: "[code_list]"
+        save_field: price_list
+      - key: update_array
+        foreach: "[data_list]"
+#        item: item
+        fields:
+          - field: link_code
+            template: "[link.code]"
+          - field: coefficient
+            template: "[link.coefficient]"
+      - key: update_array_from_array
+        name: ""
+        foreach: "[data_list]"
+        item: item
+        field: "[code]"
+        right: "[price_list]"
+        right_field: "[code]"
+        fields:
+          - field: name
+            template: "[right.name]"
+
+      - key: update_array_from_array
+        foreach: "[data_list]"
+        item: item
+        field: "[link_code]"
+        right: "[price_list]"
+        right_field: "[code]"
+        fields:
+          - field: link_name
+            template: "[right.name]"
+      - key: param2result
+        field: data_list
+#      - key: params2result
+#        fields:
+#          - from: "[code_list]"
+#            to: code_list
+#          - from: "[data_list]"
+#            to: data_list
+  - key: chat_bulk
+    module: bulk_service
+    http: true
+    params:
+      chat_list:
+        check:
+          template: "{{must .chat_list}}"
+          err_msg: 列表不能为空
+    batch:
+      loop_max: 5
+      foreach: "[chat_list]"
+      service:
+        service: "autodesk.chart"
+      append_item_param: true
+      save_field: 'result'
+  - key: update_doc_content
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: "autodesk.doc_project_detail_query"
+          size: 1
+          no_doc_content: true
+        save_field: chat_list
+      - key: service2field
+        enable: "{{gt (len .chat_list) 0}}"
+        service:
+          service: autodesk.chat_doc_bulk
+          chat_list: "[chat_list]"
+        save_field: result
+      - key: param2result
+        field: result
+
+  - key: chat_doc_bulk
+    module: bulk_service
+    http: true
+    params:
+      chat_list:
+        check:
+          template: "{{must .chat_list}}"
+          err_msg: 列表不能为空
+    batch:
+      foreach: "[chat_list]"
+      item: item
+      service:
+        service: "autodesk.chat_doc_update_content"
+        name: "[name]"
+        feature: "[detail]"
+        doc_project_detail_id: "[doc_project_detail_id]"
+      save_field: 'result'
+  - key: chat_doc_update_content
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        name: 查找是否有相同的
+        service:
+          service: autodesk.doc_project_detail_query
+          size: 1
+          has_doc_content: true
+          name: "[name]"
+          detail: "[feature]"
+          to_obj: true
+        save_field: doc
+      - key: service2field
+        name: 没有相同的生成
+        enable: "{{not (must .doc.doc_content)}}"
+        service:
+          service: autodesk.chart_doc
+        append_param: true
+        save_field: result
+      - key: service2field
+        name: 没有后旧数据，生成后更新
+        enable: "{{not (must .doc.doc_content)}}"
+        service:
+          service: autodesk.doc_project_detail_update_content
+          doc_content: "[result.content]"
+          doc_project_detail_id: "[doc_project_detail_id]"
+      - key: service2field
+        name: 找到相同的查询后更新
+        enable: "{{must .doc.doc_content}}"
+        service:
+          service: autodesk.doc_project_detail_update_content
+          doc_content: "[doc.doc_content]"
+          doc_project_detail_id: "[doc_project_detail_id]"
+      - key: param2result
+        field: result
+
+
+
+  - key: chart_doc
+    http: true
+    module: empty
+    log: true
+    params:
+      event_id:
+        template: "{{uuid}}"
+      tb_project_id:
+        check:
+          template: "{{must .tb_project_id}}"
+          err_msg: tb_project_id不能为空
+#      chart_list:
+#        check:
+#          template: "{{must .chart_list}}"
+#          err_msg: 列表不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.doc_project_query
+          tb_project_id: "[tb_project_id]"
+          to_obj: true
+        save_field: doc_project
+        template: "{{must .doc_project}}"
+        err_msg: 项目不存在
+      - key: service2field
+        service:
+          service: autodesk.doc_project_task_query
+          status: "start"
+          doc_project_id: "[doc_project.doc_project_id]"
+        save_field: task
+        template: "{{eq (len .task) 0}}"
+        err_msg: 改项目已经有任务了
+      - key: service2field
+        service:
+          service: autodesk.doc_project_content_query
+          doc_project_id: "[doc_project.doc_project_id]"
+          to_tree: true
+          with_content: true
+        save_field: chart_list
+#      - key: service2field
+#        service:
+#          service: autodesk.doc_project_detail_query
+#          doc_project_id: "[doc_project.doc_project_id]"
+#          has_group: true
+#        save_field: chart_list
+#        template: "{{gt (len .chart_list) 0}}"
+#        err_msg: "没有找到任何要生成的文档项，请设置大于0的分组"
+#      - key: group_by
+#        enable: "{{must .chart_list}}"
+#        foreach: "[chart_list]"
+#        children: "children"
+#        append_item_param: true
+#        fields:
+#          - field: "[group]"
+#        save_field: chart_list
+      - key: service2field
+        service:
+          service: autodesk.chart_doc_start
+          project_code: "[event_id]"
+        append_param: true
+      - key: service2field
+        service:
+          service: autodesk.doc_project_task_save
+          event_id: "[event_id]"
+          doc_project_id: "[doc_project.doc_project_id]"
+#      - key: service2field
+#        loop_max: 500
+#        second: 1
+#        service:
+#          service: autodesk.chart_doc_result
+#          project_code: "[event_id]"
+#        save_field: "result"
+#        template: "{{gt (len .result) 0}}"
+#        err_msg: "{{to_json .result}}"
+#      - key: param2result
+#        field: "[result]"
+  - key: handler_project_task
+    module: empty
+    http: true
+    schedule:
+      enable: "{{eq (get_key \"autodesk_schedule_enable\") \"true\"}}"
+      schedule_spec: "@every 30s"
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.doc_project_task_query
+          status: "start"
+        save_field: task_list
+      - key: service2field
+        enable: "{{gt (len .task_list) 0}}"
+        service:
+          service: autodesk.chart_doc_bulk
+          task_list: "[task_list]"
+        save_field: result
+      - key: param2result
+        field: "[result]"
+  - key: chart_doc_bulk
+    http: true
+    params:
+      task_list:
+        check:
+          template: "{{must .task_list}}"
+          err_msg: 列表不能为空
+    module: bulk_service
+    batch:
+      foreach: "[task_list]"
+      item: item
+      service:
+        service: "autodesk.chart_doc_result"
+      append_item_param: true
+      save_field: 'result'
+  - key: chart_doc_detail_service
+    http: true
+    module: empty
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目不能为空
+      chart_list:
+        check:
+          template: "{{must .chart_list}}"
+          err_msg: 目录不能为空
+    data_file: chart_doc_detail_service.json
+    handler_params:
+      - key: file2datajson
+        save_field: service_list
+      - key: param2result
+        field: service_list
+  - key: chart_doc_start
+    http: true
+    module: http
+    log: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: project_code不能为空
+      chart_list:
+        check:
+          template: "{{must .chart_list}}"
+          err_msg: 列表不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.chart_doc_detail_service
+        append_param: true
+        save_field: data
+      - key: gen_sign
+        field: "[data]"
+    http_json: chart_doc_start.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: param2result
+        field: "[data]"
+  - key: chart_doc_result
+    http: true
+    module: http
+    params:
+      event_id:
+        check:
+          template: "{{must .event_id}}"
+          err_msg: 事件id不能为空
+      doc_project_id:
+        check:
+          template: "{{must .doc_project_id}}"
+          err_msg: doc_project_id不能为空
+      project_code:
+        template: "{{.event_id}}"
+    handler_params:
+      - key: gen_sign
+    http_json: chart_doc_result.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: service2field
+        service:
+          service: autodesk.doc_project_content_query
+          doc_project_id: "[doc_project_id]"
+        save_field: chart_list
+#      - key: service2field
+#        enable: "{{gt (len .data) 0}}"
+#        service:
+#          service: autodesk.doc_project_detail_query
+#          doc_project_id: "[doc_project_id]"
+#          has_group: true
+#        save_field: chart_list
+#      - key: group_by
+#        enable: "{{must .chart_list}}"
+#        foreach: "[chart_list]"
+#        children: "children"
+#        fields:
+#          - field: "[group]"
+#        save_field: chart_list
+#        append_item_param: true
+
+#      - key: array_zip
+#        enable: "{{gt (len .data ) 0}}"
+#        foreach: "[chart_list]"
+#        item: item
+#        right: "[data]"
+#        fields:
+#          - field: doc_content
+#            template: "[right.content]"
+      - key: update_array
+        enable: "{{gt (len .data ) 0}}"
+        foreach: "[chart_list]"
+        item: item
+        fields:
+          - field: doc_content
+            template: "{{ if eq .item.parent_id `0`}}## {{.item.topic}}{{ end}}"
+
+      - key: update_array_from_array
+        name: 从数据中查询处理，更新为远程字段
+        enable: "{{gt (len .data ) 0}}"
+        foreach: "[chart_list]"
+        item: item
+        field: "[doc_project_content_id]"
+        right: "[data]"
+        right_field: "[itemNo]"
+        fields:
+          - field: doc_content
+            template: "[right.content]"
+
+      - key: service2field
+        enable: "{{gt (len .data ) 0}}"
+        service:
+          service: autodesk.doc_project_task_finish
+          doc_project_id: "[doc_project_id]"
+      - key: service2field
+        enable: "{{gt (len .data ) 0}}"
+        service:
+          service: autodesk.doc_project_content_bulk_update
+          data_list: "[chart_list]"
+
+      - key: params2result
+        fields:
+          - from: "[data]"
+            to: data
+          - from: "[chart_list]"
+            to: chart_list
+
+#      - key: param2result
+#        enable: "{{gt (len .data) 0}}"
+#        field: "[chart_list]"
+#      - key: param2result
+#        enable: "{{eq (len .data) 0}}"
+#        field: "[data]"
+#      - key: arr2obj
+
+  - key: chart
+    http: true
+    module: empty
+    params:
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      feature:
+        check:
+          template: "{{must .feature}}"
+          err_msg: 功能不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.start_chart
+        save_field: start
+        append_param: true
+      - key: service2field
+        loop_max: 50
+        second: 1
+        service:
+          service: autodesk.chart_status
+          chat_id: "[start.id]"
+          conversation_id: "[start.conversation_id]"
+        save_field: status
+        template: "{{eq .status.status \"completed\"}}"
+        err_msg: "{{to_json .status}}"
+      - key: service2field
+        service:
+          service: autodesk.message_list
+          chat_id: "[start.id]"
+          conversation_id: "[start.conversation_id]"
+        save_field: message_list
+      - key: service2field
+        service:
+          service: autodesk.get_transfer_price
+          data_list: "[message_list.content]"
+        save_field: transfer_price_list
+      - key: param2result
+        field: "[transfer_price_list]"
+#      - key: params2result
+#        fields:
+#          - from: "[start]"
+#            to: start
+#          - from: "[status]"
+#            to: status
+#          - from: "[message_list]"
+#            to: message_list
+
+
+  - key: start_chart
+    http: true
+    module: http
+    params:
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      feature:
+        check:
+          template: "{{must .feature}}"
+          err_msg: 功能不能为空
+        template: "{{replace .feature `\n` ``}}"
+    http_json: start_chart.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: param2result
+        field: "[data]"
+  - key: chart_status
+    http: true
+    log: true
+    module: http
+    params:
+      chat_id:
+        check:
+          template: "{{must .chat_id}}"
+          err_msg: 聊天ID不能为空
+    http_json: chart_status.json
+#    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: param2result
+        field: "[data]"
+  - key: message_list
+    http: true
+    module: http
+    log: true
+    params:
+      chat_id:
+        check:
+          template: "{{must .chat_id}}"
+          err_msg: 聊天ID不能为空
+    http_json: message_list.json
+    success: "{{ if  .code  }}false{{ else }}true{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[data]"
+            to: "[data]"
+      - key: filter_arr
+        foreach: "[data]"
+        item: item
+        if_template: "{{eq .item.type \"tool_response\" }}"
+        save_field: data_tmp
+        template: "{{must .data_tmp}}"
+        err_msg: "{{to_json .data}}"
+      - key: update_array
+        foreach: "[data_tmp]"
+        item: item
+        fields:
+          - field: content
+            template: "[item.content]"
+            type: json
+      - key: arr2obj
+        field: "[data_tmp]"
+      - key: param2result
+        field: "[data_tmp]"

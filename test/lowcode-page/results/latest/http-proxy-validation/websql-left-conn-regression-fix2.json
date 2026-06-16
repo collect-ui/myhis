@@ -1,0 +1,26 @@
+{
+  "ok": false,
+  "errors": [
+    "edit hover background unchanged",
+    "delete hover background unchanged",
+    "page errors"
+  ],
+  "consoleErrors": [],
+  "pageErrors": [
+    "Cannot read properties of undefined (reading 'indexOf')"
+  ],
+  "requestFailed": [],
+  "hover": {
+    "editBgBefore": "rgba(0, 0, 0, 0)",
+    "editBgAfter": "rgba(0, 0, 0, 0)",
+    "delBgBefore": "rgba(0, 0, 0, 0)",
+    "delBgAfter": "rgba(0, 0, 0, 0)"
+  },
+  "formVisibleAfterSave": 0,
+  "firstRowTextAfterSave": "本地 SQLite\n./database/price.db",
+  "localStorageAfterSave": "{\"items\":[{\"id\":\"builtin-local-sqlite\",\"name\":\"Edited Conn V2\",\"driver\":\"sqlite\",\"dsn\":\"\",\"host\":\"\",\"port\":\"\",\"username\":\"\",\"password\":\"\",\"database\":\"\",\"sqlite_path\":\"./database/price.db\"},{\"id\":\"builtin-collect-ui-mysql\",\"name\":\"MySQL\",\"driver\":\"mysql\",\"dsn\":\"\",\"host\":\"202.140.140.117\",\"port\":\"3306\",\"username\":\"root\",\"password\":\"!A23456!\",\"database\":\"\",\"sqlite_path\":\"\"}]}",
+  "tableExpand": {
+    "tableNodeTextBefore": "main",
+    "stillExists": 1
+  }
+}

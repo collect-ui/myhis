@@ -1,0 +1,64 @@
+{
+  "value": "/home/zz",
+  "requests": [
+    "{\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587491902559883264\"}"
+  ],
+  "frames": [
+    {
+      "event": "ws",
+      "url": "ws://192.168.232.130:8015/template_data/ws/587491902559883264"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"c\"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"d\"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\" \"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"/\"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"d\"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"a\"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"t\"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"a\"}"
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"text\",\"data\":\"\\r\"}"
+    },
+    {
+      "event": "recv",
+      "text": "\u001b[?2004hzz@zz:/data$ "
+    },
+    {
+      "event": "sent",
+      "text": "{\"type\":\"pwd\",\"data\":\"\"}"
+    },
+    {
+      "event": "recv",
+      "text": "echo '<<<PWD_START>>>'; pwd; echo '<<<PWD_END>>>';\r\n\u001b[?2004l\r<<<PWD_START>>>\r\n/data\r\n<<<PWD_END>>>\r\n"
+    },
+    {
+      "event": "recv",
+      "text": "\u001b[?2004hzz@zz:/data$ "
+    }
+  ]
+}

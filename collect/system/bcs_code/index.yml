@@ -1,0 +1,10 @@
+service:
+  - key: get_bcs_code
+    http: true
+    module: sql
+    params:
+      standard_code:
+        check:
+          template: "{{must .standard_code}}"
+          err_msg: 码表类型不能为空
+    data_file: get_bcs_code.sql

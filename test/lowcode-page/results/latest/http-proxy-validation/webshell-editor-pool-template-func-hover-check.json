@@ -1,0 +1,14 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-07T12:56:35.768Z",
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-template-func-hover-check.png",
+  "targetPath": "/data/project/sport/collect/wechat/analysis/index.yml",
+  "openedPath": "/data/project/sport/collect/wechat/analysis/index.yml",
+  "hoverText": "未找到悬停文档\n\n当前关键字：unix_time2datetime 上下文 Key：template 上下文 Value：{{ unix_time2datetime .item.checkin_time }}\n\n建议创建文档：/data/project/sport/tooltip-docs/go/key/template/value/unix_time2datetime.md 文档根目录：/data/project/sport/tooltip-docs 固定格式：tooltip-docs/key/<key>.md 或 tooltip-docs/kv/<key>/<value>.md",
+  "containsFuncToken": true,
+  "containsTemplateDocPath": false,
+  "containsFunctionDocHint": true,
+  "endedAt": "2026-05-07T12:56:51.073Z"
+}

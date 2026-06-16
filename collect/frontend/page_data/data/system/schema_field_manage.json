@@ -1,0 +1,1156 @@
+{
+  "tag": "layout-fit",
+  "initStore": {
+    "searchForm": {
+      "search": ""
+    },
+
+    "addNodeForm": {
+      "type": "1"
+
+    },
+    "updateNodeForm": {},
+    "treeSelected": {
+
+    },
+    "addNodeVisible": false,
+    "nodeOp": "add",
+    "server_env_data": [],
+    "server_env_data_dir": [],
+    "last_type": "",
+    "last_parent_id": "",
+    "col": 6,
+    "configDialogVisible": false,
+    "fieldOp": "edit",
+    "fieldSelection": [],
+    "fieldConfigList": [],
+    "pageFieldConfigList": [],
+    "schema_page_code": "page_config",
+    "schema_page_table_code": "page_table_config",
+    "designVisible": false,
+    "children_code": "",
+    "tag_code": "",
+    "config": null,
+    "demo_target_row": "{}",
+    "demo_init_store": "{}",
+    "demo_init_action": "[]"
+
+  },
+  "initAction": [
+
+    {
+      "tag": "ajax",
+      "description": "请求目录树",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=system.schema_page_query",
+      "appendFormFields": "server-search-form",
+      "data": {
+        "to_tree":true
+      },
+      "adapt": {
+        "server_env_data": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "dataConfigList",
+      "enable": "${treeSelected.code?true:false}",
+      "description": "获取项目详情配置列表",
+      "api": "post:/template_data/data?service=system.get_page_schema_field",
+      "appendFormFields": "search-form",
+      "data": {
+        "schema_page_code": "${treeSelected.code}"
+      },
+      "adapt": {
+        "fieldConfigList": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "dataConfigList",
+      "description": "获取项目详情配置列表",
+      "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+      "data": {
+        "schema_page_code": "${schema_page_code}"
+      },
+      "adapt": {
+        "pageFieldConfigList": "${data}"
+      }
+    },
+
+
+    {
+      "tag": "update-store",
+      "group": "reload-preview",
+      "enable": "${!!children_code}",
+      "value": {
+        "config": null
+      }
+    },
+    {
+      "tag": "update-store",
+      "enable": "${!!children_code}",
+      "value": {
+        "config": {
+          "tag": "layout-fit",
+          "initStore": "${JSON.parse(demo_init_store)}",
+          "initAction": "${JSON.parse(demo_init_action)}",
+          "children":"${JSON.parse(children_code)}",
+          "_target":"${JSON.parse(demo_target_row)}"
+        }
+      }
+    },
+    {
+      "tag": "update-store",
+      "group": "reload-preview",
+      "enable": "${!!children_code}",
+      "value": {
+        "config": {
+          "tag": "layout-fit",
+          "initStore": "${JSON.parse(demo_init_store)}",
+          "initAction": "${JSON.parse(demo_init_action)}",
+          "children":"${JSON.parse(children_code)}",
+          "_target":"${JSON.parse(demo_target_row)}"
+        }
+      }
+    }
+
+  ],
+  "children": [
+    {
+      "tag": "layout",
+      "children": [
+        {
+          "tag": "sider",
+          "width": "300px",
+          "className": "border-right",
+          "style": {
+            "backgroundColor": "#fafafa"
+          },
+          "collapsible": true,
+          "collapsedWidth": "40",
+          "children": [
+            {
+              "tag": "layout-fit",
+              "searchToolBar": [
+
+                {
+                  "tag": "form",
+                  "name": "server-search-form",
+                  "initialValues": "${searchForm}",
+                  "wrapperCol": {
+                    "span": 24
+                  },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "查询"
+                    }
+                  ],
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "row",
+                      "className": "w100",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "style": {
+                            "marginInlineEnd": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "icon": "FaPlus",
+                              "title": "新增节点",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "addNodeVisible": true,
+                                    "nodeOp": "add"
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "add-node-form"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "add-node-form",
+                                  "value": {
+                                    "parent_id": "${treeSelected?.schema_page_id||'0'}"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "请求目录树",
+                                  "group": "server-env-tree",
+                                  "api": "post:/template_data/data?service=system.schema_page_query",
+                                  "data": {
+                                    "to_tree":true
+                                  },
+                                  "adapt": {
+                                    "server_env_data_dir": "${data}"
+                                  }
+                                }
+
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "search",
+                          "className": "flex1",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "名称",
+                              "allowClear": true
+                            }
+                          ]
+                        }
+
+                      ]
+                    }
+
+
+                  ]
+                }
+              ],
+              "children": [
+
+                {
+                  "tag": "tree",
+                  "showLine": true,
+                  "className": "h100",
+                  "treeSelected": "${treeSelected}",
+                  "treeKey": "${item.schema_page_id}",
+                  "treeTitle": "${item.name+'('+item.code+')'}",
+                  "treeData":"${server_env_data}",
+                  "openLevel": 2,
+                  "selectAction": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataConfigList"
+                    }
+                  ],
+                  "rightMenu": [
+                    {
+                      "type": "item",
+                      "icon": "PlusOutlined",
+                      "code": "add",
+                      "label": "新增数据"
+                    },
+                    {
+                      "type": "item",
+                      "icon": "EditOutlined",
+                      "code": "edit",
+                      "label": "修改数据"
+                    },
+                    {
+                      "type": "separator"
+                    },
+                    {
+                      "type": "submenu",
+                      "label": "其他",
+                      "children": [
+                        {
+                          "type": "item",
+                          "icon": "DeleteOutlined",
+                          "code": "delete",
+                          "label": "删除数据"
+                        }
+                      ]
+                    }
+                  ],
+                  "rightMenuAction": [
+                    {
+                      "tag": "reset-form",
+                      "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='add'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "add",
+                        "updateNodeForm": {}
+                      }
+                    },
+                    {
+                      "enable": "${item.code==='add'}",
+                      "tag": "update-form",
+                      "formName": "add-node-form",
+                      "value": {
+                        "parent_id": "${node?.schema_page_id}"
+                      }
+                    },
+
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='edit'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "edit",
+                        "updateNodeForm": "${node}"
+                      }
+                    },
+
+                    {
+                      "tag": "ajax",
+                      "description": "请求目录树",
+                      "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                      "api": "post:/template_data/data?service=system.schema_page_query",
+
+                      "data": {
+                        "to_tree":true
+                      },
+                      "adapt": {
+                        "server_env_data_dir": "${data}"
+                      }
+                    },
+
+                    {
+                      "tag": "update-form",
+                      "name": " 更新表单",
+                      "enable": "${item.code==='edit'}",
+                      "formName": "add-node-form",
+                      "useStore": true,
+                      "value": "${updateNodeForm}"
+                    },
+                    {
+                      "tag": "check",
+                      "enable": "${item.code=='delete' && node?.children }",
+                      "title": "${'【'+node.name+'】下存在'+node?.children.length+'个节点，请先删除节点'}",
+                      "check": "${!node.children || (node.children && node.children.length<=0)}"
+                    },
+                    {
+                      "tag": "confirm",
+                      "title": "确认提示",
+                      "content": "${'确认删除所选【'+node.name+'】节点吗'}",
+                      "enable": "${item.code==='delete'}"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "删除环境",
+                      "enable": "${item.code=='delete'}",
+                      "group": "server-env-tree",
+                      "api": "post:/template_data/data?service=system.schema_page_delete",
+                      "data": {
+                        "schema_page_id_list": "${[node.schema_page_id]}"
+                      }
+                    },
+
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "enable": "${item.code=='delete'}",
+                      "description": "页面初始化请求"
+                    }
+                  ]
+                },
+                {
+                  "tag": "dialog",
+                  "title": "${nodeOp==='add'?'新增节点':'修改节点'}",
+                  "open": "${addNodeVisible}",
+
+                  "confirmAndContinue": "${nodeOp==='add'?true:false}",
+                  "action": [
+                    {
+                      "tag": "submit-form",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "添加环境节点",
+                      "enable": "${nodeOp==='add'}",
+                      "api": "post:/template_data/data?service=system.schema_page_save",
+                      "appendFormFields": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "修改环境节点",
+                      "enable": "${nodeOp==='edit'}",
+                      "api": "post:/template_data/data?service=system.schema_page_update",
+                      "appendFormFields": "add-node-form",
+                      "appendFields": "${updateNodeForm}"
+                    },
+
+                    {
+                      "tag": "reset-form",
+                      "enable": "${confirmAndContinue==true}",
+                      "formName": "add-node-form"
+                    },
+
+
+                    {
+                      "tag": "update-store",
+                      "enable": "${confirmAndContinue==false}",
+                      "value": {
+                        "addNodeVisible": false
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "form",
+                      "name": "add-node-form",
+                      "initialValues": {
+                        "is_index": "0"
+                      },
+                      "labelCol": {
+                        "span": 6
+                      },
+                      "wrapperCol": {
+                        "span": 18
+                      },
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "parent_id",
+                          "label": "上级",
+                          "children": [
+                            {
+                              "tag": "tree-select",
+                              "placeholder": "请输入名称",
+                              "allowClear": true,
+                              "openLevel": 1,
+                              "valueKey": "${item.schema_page_id}",
+                              "treeTitle": "${item.name+'('+item.code+')'}",
+                              "treeIcon": "FolderOutlined",
+                              "treeData": "${[{'schema_page_id':'0','code':'','name':'根目录'},...server_env_data_dir]}",
+                              "treeLine": true,
+                              "showIcon": true,
+                              "showSearch": true
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "label": "编码",
+                          "name": "code",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入编码"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入编码"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "label": "名称",
+                          "name": "name",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入名称"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入名称"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "label": "排序号",
+                          "name": "order_index",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "isNumber": true,
+                              "placeholder": "请输入排序号"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "content",
+          "style": {
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+
+
+            {
+              "tag": "layout-fit",
+              "className": "padding10 h100 overflow-auto",
+              "title": "${treeSelected.name?treeSelected.name:'请选择左边的节点'}",
+              "topRight": [
+
+
+                {
+                  "tag": "button",
+                  "disabled": "${!(treeSelected.name && fieldConfigList.find(item=>item.key=='tag')) }",
+                  "children": "页面设计器",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "designVisible": true,
+                        "children_code": "${fieldConfigList.find(item=>item.key=='children')?.value}",
+                        "tag_code": "${fieldConfigList.find(item=>item.key=='tag')?.value}",
+                        "demo_target_row": "${fieldConfigList.find(item=>item.key=='demo_target_row_value')?.value}",
+                        "demo_init_store": "${fieldConfigList.find(item=>item.key=='demo_init_store')?.value}",
+                        "demo_init_action": "${fieldConfigList.find(item=>item.key=='demo_init_action')?.value}"
+                      }
+                    },
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "config": {
+                          "tag": "layout-fit",
+                          "initStore": "${JSON.parse(demo_init_store)}",
+                          "initAction": "${JSON.parse(demo_init_action)}",
+                          "children":"${JSON.parse(children_code)}",
+                          "_target":"${JSON.parse(demo_target_row)}"
+                        }
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "reload-preview"
+                    }
+
+                  ]
+                },
+                {
+                  "tag": "upload",
+                  "uploadConfig": {
+                    "showUploadList": false,
+                    "api": "post:/template_data/data?service=system.page_schema_field_import",
+                    "data": {
+                      "schema_page_code": "${treeSelected.code}"
+                    }
+                  },
+                  "finish_action":[
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataConfigList"
+                    }
+                  ],
+                  "children": [
+
+                    {
+                      "disabled": "${!treeSelected.name}",
+                      "tag": "button",
+                      "style": {
+                        "margin": "0 10px"
+                      },
+                      "type": "primary",
+                      "danger": true,
+                      "children": "导入数据"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "children": "导出",
+                  "icon": "FaFileExport",
+                  "disabled": "${!treeSelected.name}",
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=system.page_schema_field_download",
+                      "download": true,
+                      "data": {
+                        "schema_page_code": "${treeSelected.code}"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "disabled": "${!treeSelected.name?true:false}",
+                  "children": "新增",
+                  "icon": "FaPlus",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "configDialogVisible": true,
+                        "fieldOp": "add"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "opConfigForm"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "configDialogVisible": true,
+                        "fieldOp": "edit"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "opConfigForm"
+                    },
+                    {
+                      "tag": "update-form",
+                      "formName": "opConfigForm",
+                      "value": "${fieldSelection[0]}"
+                    }
+                  ],
+                  "disabled": "${fieldSelection.length !=1 }",
+                  "children": "编辑",
+                  "icon": "FaPencilAlt"
+                },
+                {
+                  "tag": "button",
+                  "disabled": "${fieldSelection.length <=0 }",
+                  "type": "primary",
+                  "confirm": {
+                    "title": "确认删除吗？",
+                    "description": "${'确认删除【'+fieldSelection.map(item=>item.key+'（'+item.name+'）').join(',')+'】'+fieldSelection.length+'记录吗？'}"
+                  },
+                  "danger": true,
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "description": "删除",
+                      "api": "post:/template_data/data?service=system.page_schema_field_delete",
+                      "data": {
+                        "schema_page_field_id_list": "${fieldSelection.map(item=>item.schema_page_field_id)}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataConfigList",
+                      "description": "行删除-页面初始化请求"
+                    }
+                  ],
+                  "children": "删除",
+                  "icon": "FaTrashAlt"
+                }
+              ],
+              "searchToolBar": [
+
+                {
+                  "tag": "form",
+                  "name": "search-form",
+                  "labelCol": { "span": 4 },
+                  "wrapperCol": { "span": 19 },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataConfigList",
+                      "description": "请求"
+                    }
+                  ],
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "row",
+                      "children": [
+                        {
+                          "tag": "col",
+                          "span": 10,
+                          "children": [
+                            {
+                              "tag": "form-item",
+                              "name": "search",
+                              "label": "搜索",
+                              "children": [
+                                {
+                                  "tag": "input",
+                                  "placeholder": "字段/业务分组/所属上级"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+
+                        {
+                          "tag": "col",
+                          "span": 1,
+                          "children": [
+                            {
+                              "tag": "button",
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "dataConfigList",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "type": "primary",
+                              "children": "搜索"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "children":  [
+                "{{to_json .tableConfig}}",
+                {
+                  "tag": "dialog",
+                  "open": "${designVisible}",
+                  "width": "96%",
+                  "title": "页面设计器",
+                  "style":{ "top": 6 },
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=system.page_schema_field_update",
+                      "data": {
+                        "schema_page_field_id": "${fieldConfigList.find(item=>item.key=='children')?.schema_page_field_id}",
+                        "schema_page_code": "${treeSelected.code}",
+                        "value": "${children_code}"
+                      }
+                    },
+                    {
+                      "tag": "update-store",
+                      "description": "关闭对话框",
+                      "value": {
+                        "designVisible": false
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataConfigList",
+                      "description": "新增/修改-页面初始化请求"
+                    }
+                  ],
+                  "styles": {
+                    "body": {
+                      "height": "calc(100vh  - 140px)",
+                      "overflowY": "auto"
+                    }
+                  },
+                  "children": [
+                    {
+                      "tag": "layout-fit",
+
+                      "children": [
+
+                        {
+                          "tag": "tabs",
+                          "size": "small",
+                          "type": "card",
+                          "items": [
+                            {
+                              "label":"界面设计源码",
+                              "key": "code",
+                              "children": [
+                                {
+                                  "tag": "panel-group",
+                                  "direction": "horizontal",
+                                  "children":[
+                                    {
+                                      "tag": "panel",
+                                      "id": "left",
+                                      "minSize": 15,
+                                      "defaultSize": 40,
+                                      "order": 1,
+                                      "children": [
+                                        {
+                                          "tag": "layout-fit",
+                                          "title": "源码",
+                                          "topRight": [
+                                            {
+                                              "tag": "button",
+                                              "children": "格式化",
+                                              "action": [
+                                                {
+                                                  "tag": "update-store",
+                                                  "value": {
+                                                    "children_code":"${JSON.stringify(JSON.parse(children_code),null,2)}"
+                                                  }
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "tag": "button",
+                                              "type": "primary",
+                                              "children": "运行",
+                                              "action": [
+                                                {
+                                                  "tag": "reload-init-action",
+                                                  "group": "reload-preview"
+                                                }
+                                              ]
+                                            }
+                                          ],
+                                          "children": [
+                                            {
+                                              "tag": "editor",
+                                              "theme":"idle",
+                                              "language":"json",
+                                              "value": "${children_code}"
+                                            }
+
+                                          ]
+                                        }
+                                      ],
+                                      "className": "border-right"
+                                    },
+                                    {
+                                      "tag": "panel-resize"
+                                    },
+                                    {
+                                      "tag": "panel",
+                                      "defaultSize": 60,
+                                      "children": [
+                                        {
+                                          "tag": "layout-fit",
+                                          "title": "运行效果",
+                                          "children": [
+                                            {
+                                              "tag": "dynamic-render",
+                                              "namespace": "demo",
+
+
+                                              "config": "${config}"
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      "id": "right",
+                                      "size": 2,
+                                      "order": 2,
+                                      "minSize": 15
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "label": "图片设计",
+                              "key": "img_design",
+                              "children": [
+
+                                "{{to_json .design_content}}"
+
+                              ]
+                            }
+
+
+                          ]
+                        }
+
+
+                      ]
+                    }
+
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "dialog",
+              "title": "${fieldOp=='add'?'新增字段':'修改字段'}",
+              "width": "90%",
+              "open": "${configDialogVisible}",
+              "action": [
+                {
+                  "tag": "submit-form",
+                  "description": "提交表单",
+                  "formName": "opConfigForm"
+                },
+                {
+                  "tag": "ajax",
+                  "enable": "${fieldOp=='add'}",
+                  "description": "新增发送请求到后端",
+                  "api": "post:/template_data/data?service=system.page_schema_field_save",
+                  "appendFormFields": "opConfigForm",
+                  "data": {
+                    "schema_page_code": "${treeSelected.code}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "enable": "${fieldOp=='edit'}",
+                  "description": "修改发送请求到后端",
+                  "api": "post:/template_data/data?service=system.page_schema_field_update",
+                  "appendFormFields": "opConfigForm",
+                  "data": {
+                    "schema_page_field_id": "${fieldSelection[0].schema_page_field_id}",
+                    "schema_page_code": "${treeSelected.code}"
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "description": "关闭对话框",
+                  "value": {
+                    "configDialogVisible": false
+                  }
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "dataConfigList",
+                  "description": "新增/修改-页面初始化请求"
+                }
+              ],
+              "children": [
+                {
+                  "tag": "form",
+                  "name": "opConfigForm",
+                  "initialValues": {},
+                  "labelCol": {
+                    "span": 4
+                  },
+                  "children": [
+                    {
+                      "tag": "listview",
+                      "keyField": "business_group",
+                      "itemData": "${pageFieldConfigList}",
+                      "itemAttr": {
+                        "tag": "row",
+                        "children": [
+                          {
+                            "tag": "divider",
+                            "orientation": "left",
+                            "children": "${row.business_group}"
+                          },
+                          {
+                            "tag": "row",
+                            "style": {
+                              "width": "100%"
+                            },
+                            "children": [
+                              {
+                                "tag": "listview",
+                                "itemData": "${[...row.children]}",
+                                "keyField": "schema_page_field_id",
+                                "itemAttr": {
+                                  "tag": "col",
+                                  "span": 6,
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "label": "${row.name}",
+                                      "rules": "${row?.attrs?.rules??[]}",
+                                      "name": "${row.key}",
+                                      "extra": "${row.tip}",
+                                      "children": [
+                                        {
+                                          "tag": "${row.tag?row.tag:'input'}",
+                                          "placeholder": "请输入"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "children_bak": [
+                    {
+                      "tag": "form-item",
+                      "name": "name",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入名称!"
+                        }
+                      ],
+                      "label": "名称",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入名称"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "key",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入字段名称!"
+                        }
+                      ],
+                      "label": "key",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入字段名称"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "type",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入描述!"
+                        }
+                      ],
+                      "label": "数据类型",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入描述"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "tag",
+                      "label": "显示类型",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入，不填默认input"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "order_index",
+                      "label": "排序号",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "placeholder": "请输入排序号"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "parent_key",
+                      "label": "所属上级",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入上级"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "business_group",
+                      "label": "业务分组",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入业务分组"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "link",
+                      "label": "生成关联",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入生成关联字段"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "data_from",
+                      "label": "取值来源",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入取值来源"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "description",
+                      "label": "描述",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isTextarea": true,
+                          "placeholder": "请输入描述"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "attr",
+                      "label": "显示属性",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isTextarea": true,
+                          "placeholder": "请输入JSON"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "data_attr",
+                      "label": "数据属性",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isTextarea": true,
+                          "placeholder": "请输入JSON"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "reg",
+                      "label": "正则",
+                      "children": [
+                        {
+                          "tag": "input",
+
+                          "placeholder": "请输入"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

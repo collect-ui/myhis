@@ -1,0 +1,1 @@
+{{ range $index,$item := .msg_list }} {{if $index}},{{end}} {{$item.group}}-{{$item.topic}}{{ end}}

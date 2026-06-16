@@ -1,0 +1,1432 @@
+{
+  "tag": "layout-fit",
+  "className": "agent-chat-page h100",
+  "storeName": "agentRegressionStore",
+  "windowKeyUpEvent": [
+    {
+      "key": "Ctrl+Enter|Meta+Enter",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "sendLoading": true
+          }
+        },
+        {
+          "tag": "update-store",
+          "value": {
+            "pendingInputText": "${getFormValue('agent-regression-form','input_text')||''}"
+          }
+        },
+        {
+          "tag": "update-form",
+          "formName": "agent-regression-form",
+          "value": {
+            "input_text": ""
+          }
+        },
+        {
+          "tag": "submit-form",
+          "formName": "agent-regression-form"
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=agent.session_upsert",
+          "appendFormFields": "agent-regression-form",
+          "appendFields": {
+            "agent_session_id": "${sessionInfo.agent_session_id||activeSessionId||''}"
+          },
+          "data": {
+            "input_text": "${pendingInputText}"
+          },
+          "adapt": {
+            "sessionInfo": "${data}",
+            "activeSessionId": "${data.agent_session_id||''}",
+            "operationResult": "${'会话已准备：'+(data.session_key||'')}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=agent.run_create",
+          "appendFormFields": "agent-regression-form",
+          "appendFields": {
+            "agent_session_id": "${sessionInfo.agent_session_id||activeSessionId||''}"
+          },
+          "data": {
+            "input_text": "${pendingInputText}",
+            "run_sync": true
+          },
+          "adapt": {
+            "runInfo": "${data}",
+            "operationResult": "${'消息已发送，run_id='+(data.agent_run_id||'')}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=agent.session_upsert",
+          "appendFormFields": "agent-regression-form",
+          "appendFields": {
+            "agent_session_id": "${runInfo.agent_session_id||sessionInfo.agent_session_id||activeSessionId||''}"
+          },
+          "data": {
+            "input_text": "${pendingInputText}"
+          },
+          "adapt": {
+            "sessionInfo": "${data}",
+            "activeSessionId": "${data.agent_session_id||activeSessionId||''}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "enable": "${!!sessionInfo.agent_session_id}",
+          "api": "post:/template_data/data?service=agent.message_query",
+          "data": {
+            "agent_session_id": "${sessionInfo.agent_session_id}",
+            "page": 1,
+            "size": 100,
+            "pagination": false
+          },
+          "adapt": {
+            "messageList": "${data}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "enable": "${!!sessionInfo.agent_session_id}",
+          "api": "post:/template_data/data?service=agent.run_query",
+          "data": {
+            "agent_session_id": "${sessionInfo.agent_session_id}",
+            "page": 1,
+            "size": 20,
+            "pagination": false
+          },
+          "adapt": {
+            "runList": "${data}",
+            "runInfo": "${(Array.isArray(data)&&data.length)?data[0]:runInfo}"
+          }
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=agent.session_query",
+          "data": {
+            "scene_code": "agent_regression_page",
+            "page": 1,
+            "size": 50,
+            "pagination": false
+          },
+          "adapt": {
+            "sessionList": "${data}"
+          }
+        },
+        {
+          "tag": "update-store",
+          "value": {
+            "sendLoading": false,
+            "pendingInputText": ""
+          }
+        }
+      ]
+    }
+  ],
+  "initStore": {
+    "pageForm": {
+      "session_key": "agent-regression-demo",
+      "title": "Agent 测试回归页",
+      "scene_code": "agent_regression_page",
+      "model": "gpt-5-mini",
+      "system_prompt": "你是一个简洁的测试助手。回答时优先直接给结果，不要加多余解释。",
+      "input_text": ""
+    },
+    "sessionInfo": {},
+    "runInfo": {},
+    "runList": [],
+    "sessionList": [],
+    "messageList": [],
+    "pendingInputText": "",
+    "createLoading": false,
+    "sendLoading": false,
+    "refreshLoading": false,
+    "advancedOpen": false,
+    "activeSessionId": "",
+    "operationResult": "页面已加载，可以直接开始像聊天网页一样对话。",
+    "guideMarkdown": "## 开始对话\n\n1. 左侧可以切换历史会话。\n2. 右侧像聊天网页一样浏览消息。\n3. 点击 **高级设置** 可以修改 session_key、模型和系统提示词。\n4. 使用 **Ctrl+Enter / Cmd+Enter** 发送消息。"
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "api": "post:/template_data/data?service=agent.session_query",
+      "data": {
+        "scene_code": "agent_regression_page",
+        "page": 1,
+        "size": 50,
+        "pagination": false
+      },
+      "adapt": {
+        "sessionList": "${data}",
+        "operationResult": "${Array.isArray(data)&&data.length?'已加载历史会话':'还没有历史会话，点击【新建对话】开始'}"
+      }
+    },
+    {
+      "tag": "update-form",
+      "formName": "agent-regression-form",
+      "value": "${pageForm}"
+    },
+    {
+      "tag": "ajax",
+      "enable": "${!!sessionInfo.agent_session_id}",
+      "api": "post:/template_data/data?service=agent.message_query",
+      "data": {
+        "agent_session_id": "${sessionInfo.agent_session_id}",
+        "page": 1,
+        "size": 100,
+        "pagination": false
+      },
+      "adapt": {
+        "messageList": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${!!sessionInfo.agent_session_id}",
+      "api": "post:/template_data/data?service=agent.run_query",
+      "data": {
+        "agent_session_id": "${sessionInfo.agent_session_id}",
+        "page": 1,
+        "size": 20,
+        "pagination": false
+      },
+      "adapt": {
+        "runList": "${data}",
+        "runInfo": "${(Array.isArray(data)&&data.length)?data[0]:runInfo}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "css",
+      "css": ".agent-chat-page .agent-chat-message-list{position:relative;}.agent-chat-page .agent-chat-compose-panel{position:relative;}.agent-chat-page .agent-chat-compose-status{position:absolute;left:12px;bottom:calc(100% - 2px);display:flex;align-items:center;justify-content:flex-start;gap:10px;padding:10px 12px;max-width:calc(100% - 24px);border-radius:14px;background:linear-gradient(135deg,rgba(255,247,237,0.98) 0%,rgba(255,237,213,0.98) 100%);border:1px solid rgba(251,146,60,0.22);box-shadow:0 10px 24px rgba(249,115,22,0.10);z-index:3;pointer-events:none;}.agent-chat-page .agent-chat-compose-copy{display:flex;flex-direction:column;gap:2px;min-width:0;}.agent-chat-page .agent-chat-compose-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9a3412;}.agent-chat-page .agent-chat-compose-desc{font-size:13px;line-height:1.45;color:#7c2d12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.agent-chat-page .agent-chat-compose-dots{display:flex;align-items:center;gap:5px;flex:0 0 auto;}.agent-chat-page .agent-chat-compose-dots span{width:8px;height:8px;border-radius:999px;background:linear-gradient(180deg,#fb923c 0%,#ea580c 100%);opacity:.3;animation:agentChatPulse 1.1s infinite ease-in-out;}.agent-chat-page .agent-chat-compose-dots span:nth-child(2){animation-delay:.15s;}.agent-chat-page .agent-chat-compose-dots span:nth-child(3){animation-delay:.3s;}.agent-chat-page .agent-chat-empty h2,.agent-chat-page .agent-chat-empty ol,.agent-chat-page .agent-chat-empty li{text-align:left !important;}.agent-chat-page .agent-chat-empty h2,.agent-chat-page .agent-chat-empty ol{width:100%;max-width:620px;margin-left:auto;margin-right:auto;}.agent-chat-page .agent-chat-empty ol{padding-left:22px;}.agent-chat-page .agent-chat-empty h2{margin:0 0 12px 0;}.agent-chat-page .agent-chat-empty li{margin-bottom:6px;}@keyframes agentChatPulse{0%,80%,100%{transform:translateY(0);opacity:.25;}40%{transform:translateY(-2px);opacity:1;}}"
+    },
+    {
+      "tag": "div",
+      "style": {
+        "height": "100%",
+        "padding": "10px",
+        "fontFamily": "'IBM Plex Sans','PingFang SC','Microsoft YaHei',sans-serif",
+        "boxSizing": "border-box",
+        "overflow": "hidden",
+        "background": "linear-gradient(180deg,#eef4fb 0%,#f5f8fc 42%,#f3f5f8 100%)"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "gap": "10px",
+            "alignItems": "stretch",
+            "flexWrap": "wrap",
+            "height": "100%",
+            "minHeight": 0,
+            "overflow": "hidden"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "className": "agent-chat-sidebar",
+              "style": {
+                "width": "292px",
+                "flex": "0 0 292px",
+                "maxWidth": "100%",
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": "8px",
+                "minHeight": 0,
+                "height": "100%"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "padding": "12px 12px 10px",
+                    "borderRadius": "16px",
+                    "background": "linear-gradient(180deg,rgba(255,255,255,0.98) 0%,rgba(246,249,252,0.98) 100%)",
+                    "border": "1px solid rgba(148,163,184,0.18)",
+                    "boxShadow": "0 10px 28px rgba(15,23,42,0.06)"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "flex",
+                        "justifyContent": "space-between",
+                        "alignItems": "center",
+                        "gap": "10px"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "15px",
+                                "fontWeight": 700,
+                                "letterSpacing": "0.01em",
+                                "color": "#0f172a",
+                                "marginBottom": "2px"
+                              },
+                              "children": "Agent Chat 回归"
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "11px",
+                                "lineHeight": 1.5,
+                                "color": "#64748b",
+                                "textTransform": "uppercase",
+                                "letterSpacing": "0.08em"
+                              },
+                              "children": "${(Array.isArray(sessionList)?sessionList.length:0)+' sessions'}"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "button",
+                          "type": "primary",
+                          "children": "新建",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "activeSessionId": "",
+                                "sessionInfo": {},
+                                "runInfo": {},
+                                "runList": [],
+                                "messageList": [],
+                                "advancedOpen": false,
+                                "operationResult": "已切换到新对话，请输入消息开始。",
+                                "pageForm": {
+                                  "session_key": "${'agent-regression-chat-'+Date.now()}",
+                                  "title": "",
+                                  "scene_code": "${pageForm.scene_code||'agent_regression_page'}",
+                                  "model": "${pageForm.model||'gpt-5-mini'}",
+                                  "system_prompt": "${pageForm.system_prompt||'你是一个简洁的测试助手。回答时优先直接给结果，不要加多余解释。'}",
+                                  "input_text": ""
+                                }
+                              }
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "agent-regression-form",
+                              "value": "${pageForm}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "minHeight": 0,
+                    "padding": "8px",
+                    "borderRadius": "16px",
+                    "background": "linear-gradient(180deg,rgba(255,255,255,0.98) 0%,rgba(246,249,252,0.98) 100%)",
+                    "border": "1px solid rgba(148,163,184,0.18)",
+                    "boxShadow": "0 12px 30px rgba(15,23,42,0.06)",
+                    "overflow": "auto"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "11px",
+                        "fontWeight": 700,
+                        "color": "#475569",
+                        "padding": "4px 6px 8px",
+                        "textTransform": "uppercase",
+                        "letterSpacing": "0.08em"
+                      },
+                      "children": "会话历史"
+                    },
+                    {
+                      "tag": "listview",
+                      "keyField": "agent_session_id",
+                      "itemData": "${sessionList}",
+                      "rowClickAction": [
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "activeSessionId": "${row.agent_session_id||''}",
+                            "sessionInfo": {
+                              "agent_session_id": "${row.agent_session_id||''}",
+                              "session_key": "${row.session_key||''}",
+                              "scene_code": "${row.scene_code||''}",
+                              "title": "${row.title||''}",
+                              "status": "${row.status||''}",
+                              "model": "${row.model||''}",
+                              "system_prompt": "${row.system_prompt||''}",
+                              "last_response_id": "${row.last_response_id||''}",
+                              "context_summary": "${row.context_summary||''}",
+                              "last_active_time": "${row.last_active_time||''}",
+                              "create_time": "${row.create_time||''}"
+                            },
+                            "runInfo": {},
+                            "runList": [],
+                            "messageList": [],
+                            "operationResult": "${'已切换会话：'+(row.title||row.session_key||'未命名对话')}",
+                            "pageForm": {
+                              "session_key": "${row.session_key||''}",
+                              "title": "${row.title||''}",
+                              "scene_code": "${row.scene_code||pageForm.scene_code||'agent_regression_page'}",
+                              "model": "${row.model||pageForm.model||'gpt-5-mini'}",
+                              "system_prompt": "${row.system_prompt||pageForm.system_prompt||''}",
+                              "input_text": ""
+                            }
+                          }
+                        },
+                        {
+                          "tag": "update-form",
+                          "formName": "agent-regression-form",
+                          "value": "${pageForm}"
+                        },
+                        {
+                          "tag": "ajax",
+                          "api": "post:/template_data/data?service=agent.message_query",
+                          "data": {
+                            "agent_session_id": "${row.agent_session_id}",
+                            "page": 1,
+                            "size": 100,
+                            "pagination": false
+                          },
+                          "adapt": {
+                            "messageList": "${data}"
+                          }
+                        },
+                        {
+                          "tag": "ajax",
+                          "api": "post:/template_data/data?service=agent.run_query",
+                          "data": {
+                            "agent_session_id": "${row.agent_session_id}",
+                            "page": 1,
+                            "size": 20,
+                            "pagination": false
+                          },
+                          "adapt": {
+                            "runList": "${data}",
+                            "runInfo": "${(Array.isArray(data)&&data.length)?data[0]:runInfo}"
+                          }
+                        }
+                      ],
+                      "itemAttr": {
+                        "tag": "div",
+                        "className": "${'agent-chat-session-item '+(row.agent_session_id===activeSessionId?'agent-chat-session-item-active':'')}",
+                        "style": {
+                          "padding": "10px 10px 9px",
+                          "marginBottom": "6px",
+                          "borderRadius": "12px",
+                          "cursor": "pointer",
+                          "overflow": "hidden",
+                          "border": "${row.agent_session_id===activeSessionId?'1px solid rgba(15,23,42,0.16)':'1px solid rgba(226,232,240,0.9)'}",
+                          "background": "${row.agent_session_id===activeSessionId?'linear-gradient(135deg,#f4f8fc 0%,#e9f0f8 100%)':'rgba(255,255,255,0.7)'}",
+                          "boxShadow": "${row.agent_session_id===activeSessionId?'0 8px 22px rgba(15,23,42,0.08)':'0 1px 0 rgba(255,255,255,0.9) inset'}"
+                        },
+                        "children": [
+                          {
+                            "tag": "div",
+                            "style": {
+                              "display": "flex",
+                              "alignItems": "center",
+                              "justifyContent": "space-between",
+                              "gap": "10px",
+                              "marginBottom": "8px",
+                              "minWidth": 0
+                            },
+                            "children": [
+                              {
+                                "tag": "div",
+                                "style": {
+                                  "fontSize": "13px",
+                                  "fontWeight": 700,
+                                  "color": "#0f172a",
+                                  "flex": 1,
+                                  "minWidth": 0,
+                                  "overflow": "hidden",
+                                  "textOverflow": "ellipsis",
+                                  "whiteSpace": "nowrap"
+                                },
+                                "children": "${(row.title||row.session_key||'未命名对话').slice(0,28)}"
+                              },
+                              {
+                                "tag": "tag",
+                                "style": {
+                                  "margin": 0,
+                                  "borderRadius": "999px",
+                                  "padding": "1px 8px",
+                                  "fontSize": "10px",
+                                  "background": "${row.status==='active'?'rgba(16,185,129,0.12)':'rgba(148,163,184,0.14)'}",
+                                  "color": "${row.status==='active'?'#047857':'#64748b'}",
+                                  "border": "none"
+                                },
+                                "children": "${row.status||'unknown'}"
+                              },
+                              {
+                                "tag": "button",
+                                "type": "text",
+                                "danger": true,
+                                "children": "删除",
+                                "confirm": {
+                                  "title": "删除会话",
+                                  "description": "${'确认删除会话【'+(row.title||row.session_key||'未命名对话')+'】吗？'}"
+                                },
+                                "action": [
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=agent.session_delete",
+                                    "data": {
+                                      "agent_session_id": "${row.agent_session_id||''}"
+                                    }
+                                  },
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=agent.session_query",
+                                    "data": {
+                                      "scene_code": "agent_regression_page",
+                                      "page": 1,
+                                      "size": 50,
+                                      "pagination": false
+                                    },
+                                    "adapt": {
+                                      "sessionList": "${data}"
+                                    }
+                                  },
+                                  {
+                                    "tag": "update-store",
+                                    "enable": "${row.agent_session_id===activeSessionId}",
+                                    "value": {
+                                      "activeSessionId": "",
+                                      "sessionInfo": {},
+                                      "messageList": [],
+                                      "runList": [],
+                                      "runInfo": {},
+                                      "pageForm": {
+                                        "session_key": "${'agent-regression-chat-'+Date.now()}",
+                                        "title": "",
+                                        "scene_code": "${pageForm.scene_code||'agent_regression_page'}",
+                                        "model": "${pageForm.model||'gpt-5-mini'}",
+                                        "system_prompt": "${pageForm.system_prompt||'你是一个简洁的测试助手。回答时优先直接给结果，不要加多余解释。'}",
+                                        "input_text": ""
+                                      },
+                                      "operationResult": "${'已删除会话：'+(row.title||row.session_key||'未命名对话')}"
+                                    }
+                                  },
+                                  {
+                                    "tag": "update-store",
+                                    "enable": "${row.agent_session_id!==activeSessionId}",
+                                    "value": {
+                                      "operationResult": "${'已删除会话：'+(row.title||row.session_key||'未命名对话')}"
+                                    }
+                                  },
+                                  {
+                                    "tag": "update-form",
+                                    "enable": "${row.agent_session_id===activeSessionId}",
+                                    "formName": "agent-regression-form",
+                                    "value": "${pageForm}"
+                                  },
+                                  {
+                                    "tag": "ajax",
+                                    "enable": "${!!sessionInfo.agent_session_id}",
+                                    "api": "post:/template_data/data?service=agent.message_query",
+                                    "data": {
+                                      "agent_session_id": "${sessionInfo.agent_session_id}",
+                                      "page": 1,
+                                      "size": 100,
+                                      "pagination": false
+                                    },
+                                    "adapt": {
+                                      "messageList": "${data}"
+                                    }
+                                  },
+                                  {
+                                    "tag": "ajax",
+                                    "enable": "${!!sessionInfo.agent_session_id}",
+                                    "api": "post:/template_data/data?service=agent.run_query",
+                                    "data": {
+                                      "agent_session_id": "${sessionInfo.agent_session_id}",
+                                      "page": 1,
+                                      "size": 20,
+                                      "pagination": false
+                                    },
+                                    "adapt": {
+                                      "runList": "${data}",
+                                      "runInfo": "${(Array.isArray(data)&&data.length)?data[0]:{}}"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "style": {
+                              "fontSize": "11px",
+                              "color": "#64748b",
+                              "marginBottom": "6px",
+                              "whiteSpace": "nowrap",
+                              "overflow": "hidden",
+                              "textOverflow": "ellipsis"
+                            },
+                            "children": "${row.session_key||''}"
+                          },
+                          {
+                            "tag": "div",
+                            "style": {
+                              "fontSize": "11px",
+                              "lineHeight": 1.5,
+                              "color": "#475569",
+                              "minHeight": "17px",
+                              "maxHeight": "34px",
+                              "overflow": "hidden",
+                              "wordBreak": "break-all"
+                            },
+                            "children": "${row.context_summary||'暂无摘要'}"
+                          },
+                          {
+                            "tag": "div",
+                            "style": {
+                              "fontSize": "10px",
+                              "color": "#94a3b8",
+                              "marginTop": "8px"
+                            },
+                            "children": "${row.last_active_time||row.create_time||''}"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "tag": "div",
+                      "visible": "${Array.isArray(sessionList)&&sessionList.length===0}",
+                      "className": "agent-chat-session-empty",
+                      "style": {
+                        "padding": "26px 18px",
+                        "borderRadius": "10px",
+                        "background": "linear-gradient(135deg,#f8fafc 0%,#ffffff 100%)",
+                        "border": "1px dashed rgba(148,163,184,0.4)",
+                        "textAlign": "center",
+                        "color": "#64748b",
+                        "lineHeight": 1.8
+                      },
+                      "children": "还没有历史会话，点击上方【新建对话】开始。"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "className": "agent-chat-main",
+              "style": {
+                "flex": "1 1 760px",
+                "minWidth": 0,
+                "display": "flex",
+                "flexDirection": "column",
+                "gap": "8px",
+                "minHeight": 0,
+                "height": "100%"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "padding": "12px 14px",
+                    "borderRadius": "16px",
+                    "background": "linear-gradient(180deg,rgba(255,255,255,0.98) 0%,rgba(245,248,251,0.98) 100%)",
+                    "border": "1px solid rgba(148,163,184,0.18)",
+                    "boxShadow": "0 12px 30px rgba(15,23,42,0.06)"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "flex",
+                        "justifyContent": "space-between",
+                        "alignItems": "center",
+                        "gap": "12px",
+                        "flexWrap": "wrap",
+                        "marginBottom": "10px"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "18px",
+                                "fontWeight": 700,
+                                "letterSpacing": "-0.02em",
+                                "color": "#0f172a",
+                                "marginBottom": "2px"
+                              },
+                              "children": "${sessionInfo.title||pageForm.title||'开始一段新的 Agent 对话'}"
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "11px",
+                                "lineHeight": 1.5,
+                                "color": "#64748b"
+                              },
+                              "children": "${sessionInfo.session_key?('会话 · '+sessionInfo.session_key):'新对话'}"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "display": "flex",
+                            "alignItems": "center",
+                            "gap": "8px",
+                            "flexWrap": "wrap",
+                            "justifyContent": "flex-end"
+                          },
+                          "children": [
+                            {
+                              "tag": "tag",
+                              "style": {
+                                "margin": 0,
+                                "border": "none",
+                                "borderRadius": "999px",
+                                "padding": "2px 10px",
+                                "fontSize": "11px",
+                                "background": "rgba(15,23,42,0.06)",
+                                "color": "#0f172a"
+                              },
+                              "children": "${pageForm.model||'gpt-5-mini'}"
+                            },
+                            {
+                              "tag": "tag",
+                              "style": {
+                                "margin": 0,
+                                "border": "none",
+                                "borderRadius": "999px",
+                                "padding": "2px 10px",
+                                "fontSize": "11px",
+                                "background": "${runInfo.status==='failed'?'rgba(239,68,68,0.12)':(runInfo.status==='completed'?'rgba(16,185,129,0.12)':'rgba(148,163,184,0.14)')}",
+                                "color": "${runInfo.status==='failed'?'#b91c1c':(runInfo.status==='completed'?'#047857':'#64748b')}"
+                              },
+                              "children": "${runInfo.status||sessionInfo.status||'idle'}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "flex",
+                        "gap": "8px",
+                        "flexWrap": "wrap",
+                        "marginBottom": "12px"
+                      },
+                      "children": [
+                        {
+                          "tag": "button",
+                          "loading": "${refreshLoading}",
+                          "children": "刷新当前对话",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "refreshLoading": true
+                              }
+                            },
+                            {
+                              "tag": "submit-form",
+                              "formName": "agent-regression-form"
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=agent.session_upsert",
+                              "appendFormFields": "agent-regression-form",
+                              "appendFields": {
+                                "agent_session_id": "${sessionInfo.agent_session_id||activeSessionId||''}"
+                              },
+                              "adapt": {
+                                "sessionInfo": "${data}",
+                                "activeSessionId": "${data.agent_session_id||activeSessionId||''}",
+                                "operationResult": "${'已刷新会话：'+(data.session_key||'')}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "enable": "${!!sessionInfo.agent_session_id}",
+                              "api": "post:/template_data/data?service=agent.message_query",
+                              "data": {
+                                "agent_session_id": "${sessionInfo.agent_session_id}",
+                                "page": 1,
+                                "size": 100,
+                                "pagination": false
+                              },
+                              "adapt": {
+                                "messageList": "${data}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "enable": "${!!sessionInfo.agent_session_id}",
+                              "api": "post:/template_data/data?service=agent.run_query",
+                              "data": {
+                                "agent_session_id": "${sessionInfo.agent_session_id}",
+                                "page": 1,
+                                "size": 20,
+                                "pagination": false
+                              },
+                              "adapt": {
+                                "runList": "${data}",
+                                "runInfo": "${(Array.isArray(data)&&data.length)?data[0]:runInfo}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=agent.session_query",
+                              "data": {
+                                "scene_code": "agent_regression_page",
+                                "page": 1,
+                                "size": 50,
+                                "pagination": false
+                              },
+                              "adapt": {
+                                "sessionList": "${data}"
+                              }
+                            },
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "refreshLoading": false
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "button",
+                          "children": "${advancedOpen?'收起调试':'调试与高级'}",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "advancedOpen": "${!advancedOpen}"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "alert",
+                      "visible": "${advancedOpen}",
+                      "type": "${runInfo.status==='failed'?'error':'success'}",
+                      "showIcon": true,
+                      "message": "${operationResult}",
+                      "description": "${runInfo.status==='failed'?(runInfo.error_msg||'执行失败'):(sessionInfo.last_response_id?('最近 Response ID：'+sessionInfo.last_response_id):'')}}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "form",
+                  "name": "agent-regression-form",
+                  "initialValues": "${pageForm}",
+                  "labelCol": {
+                    "span": 5
+                  },
+                  "wrapperCol": {
+                    "span": 19
+                  },
+                  "style": {
+                    "display": "flex",
+                    "flexDirection": "column",
+                    "gap": "10px",
+                    "flex": 1,
+                    "minHeight": 0
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "${advancedOpen?'block':'none'}",
+                        "padding": "12px 12px 2px",
+                        "borderRadius": "12px",
+                        "background": "rgba(243,246,250,0.92)",
+                        "border": "1px solid rgba(148,163,184,0.16)"
+                      },
+                      "children": [
+                        {
+                          "tag": "row",
+                          "gutter": 12,
+                          "children": [
+                            {
+                              "tag": "col",
+                              "span": 12,
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "name": "session_key",
+                                  "label": "会话 Key",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "同一个 key 会进入同一个多轮会话"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": 12,
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "name": "title",
+                                  "label": "会话标题",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "给当前对话起个名字"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "row",
+                          "gutter": 12,
+                          "children": [
+                            {
+                              "tag": "col",
+                              "span": 12,
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "name": "scene_code",
+                                  "label": "场景编码",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "agent_regression_page"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": 12,
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "name": "model",
+                                  "label": "模型",
+                                  "children": [
+                                    {
+                                      "tag": "select",
+                                      "options": [
+                                        {
+                                          "label": "gpt-5-mini",
+                                          "value": "gpt-5-mini"
+                                        },
+                                        {
+                                          "label": "gpt-5.4-mini",
+                                          "value": "gpt-5.4-mini"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "system_prompt",
+                          "label": "系统提示词",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "isTextarea": true,
+                              "placeholder": "你是一个简洁的测试助手"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "minHeight": 0,
+                    "padding": "12px",
+                    "borderRadius": "16px",
+                    "background": "rgba(255,255,255,0.98)",
+                    "border": "1px solid rgba(148,163,184,0.18)",
+                    "boxShadow": "0 12px 30px rgba(15,23,42,0.06)",
+                    "display": "flex",
+                    "flexDirection": "column"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "flex",
+                        "justifyContent": "space-between",
+                        "alignItems": "center",
+                        "gap": "10px",
+                        "flexWrap": "wrap",
+                        "marginBottom": "12px"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "15px",
+                                "fontWeight": 700,
+                                "color": "#0f172a",
+                                "marginBottom": "2px"
+                              },
+                              "children": "对话消息"
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "11px",
+                                "color": "#64748b"
+                              },
+                              "children": "${Array.isArray(messageList)&&messageList.length>0?('共 '+messageList.length+' 条消息'):'发送第一条消息后会自动创建会话。'}"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "fontSize": "11px",
+                            "color": "#94a3b8"
+                          },
+                          "children": "${advancedOpen?(runInfo.agent_run_id?('Run ID：'+runInfo.agent_run_id):''):''}"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "className": "agent-chat-message-list",
+                      "style": {
+                        "flex": "0 0 auto",
+                        "overflow": "auto",
+                        "height": "calc(100vh - 470px)",
+                        "maxHeight": "calc(100vh - 470px)",
+                        "minHeight": "260px",
+                        "padding": "0 2px 0 0"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "visible": "${Array.isArray(messageList)&&messageList.length===0}",
+                          "className": "agent-chat-empty",
+                          "style": {
+                            "height": "100%",
+                            "minHeight": "320px",
+                            "display": "flex",
+                            "flexDirection": "column",
+                            "justifyContent": "center",
+                            "alignItems": "center",
+                            "textAlign": "center",
+                            "padding": "24px"
+                          },
+                          "children": [
+                            {
+                              "tag": "div",
+                            "style": {
+                                "fontSize": "34px",
+                                "marginBottom": "10px"
+                              },
+                              "children": "💬"
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "18px",
+                                "fontWeight": 700,
+                                "color": "#0f172a",
+                                "marginBottom": "8px"
+                              },
+                              "children": "像真正聊天一样开始一段对话"
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "maxWidth": "620px",
+                                "fontSize": "13px",
+                                "lineHeight": 1.7,
+                                "color": "#64748b",
+                                "marginBottom": "14px"
+                              },
+                              "children": "选择左侧会话继续，或直接开始新对话。"
+                            },
+                            {
+                              "tag": "markdown",
+                              "className": "agent-chat-empty-guide",
+                              "children": "${guideMarkdown}",
+                              "style": {
+                                "maxWidth": "620px",
+                                "width": "100%",
+                                "textAlign": "left",
+                                "alignSelf": "stretch",
+                                "margin": "0 auto",
+                                "padding": "18px 20px",
+                                "borderRadius": "16px",
+                                "background": "linear-gradient(135deg,#f7fafc 0%,#ffffff 100%)",
+                                "border": "1px solid rgba(148,163,184,0.16)"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "listview",
+                          "visible": "${Array.isArray(messageList)&&messageList.length>0}",
+                          "keyField": "agent_message_id",
+                          "itemData": "${messageList}",
+                          "autoScrollToBottom": true,
+                          "itemAttr": {
+                            "tag": "div",
+                            "className": "${'agent-chat-message agent-chat-message-'+(row.role||'unknown')}",
+                            "style": {
+                              "display": "flex",
+                              "justifyContent": "flex-start",
+                              "marginBottom": "8px"
+                            },
+                            "children": [
+                              {
+                                "tag": "div",
+                                "style": {
+                                  "maxWidth": "74%",
+                                  "minWidth": "120px"
+                                },
+                                "children": [
+                                  {
+                                    "tag": "div",
+                                    "style": {
+                                      "display": "flex",
+                                      "justifyContent": "flex-start",
+                                      "alignItems": "center",
+                                      "gap": "6px",
+                                      "marginBottom": "4px"
+                                    },
+                                    "children": [
+                                      {
+                                        "tag": "tag",
+                                        "style": {
+                                          "margin": 0,
+                                          "border": "none",
+                                          "borderRadius": "999px",
+                                          "padding": "1px 7px",
+                                          "fontSize": "11px",
+                                          "lineHeight": 1.5,
+                                          "background": "${row.role==='user'?'rgba(59,130,246,0.12)':'rgba(15,23,42,0.08)'}",
+                                          "color": "${row.role==='user'?'#1d4ed8':'#334155'}"
+                                        },
+                                        "children": "${row.role==='user'?'我':'Agent'}"
+                                      },
+                                      {
+                                        "tag": "div",
+                                        "style": {
+                                          "fontSize": "10px",
+                                          "color": "#94a3b8"
+                                        },
+                                        "children": "${row.create_time||''}"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "tag": "div",
+                                    "style": {
+                                      "padding": "${row.role==='user'?'9px 11px':'10px 12px 9px'}",
+                                      "borderRadius": "14px 14px 14px 6px",
+                                      "background": "${row.role==='user'?'linear-gradient(135deg,#e7f0fb 0%,#f3f8fd 100%)':'linear-gradient(135deg,#ffffff 0%,#f7f9fb 100%)'}",
+                                      "border": "${row.role==='user'?'1px solid rgba(59,130,246,0.14)':'1px solid rgba(226,232,240,0.9)'}",
+                                      "boxShadow": "${row.role==='user'?'0 6px 16px rgba(59,130,246,0.06)':'0 6px 16px rgba(15,23,42,0.04)'}",
+                                      "color": "#0f172a"
+                                    },
+                                    "children": [
+                                      {
+                                        "tag": "div",
+                                        "visible": "${row.role==='user'}",
+                                        "style": {
+                                          "whiteSpace": "pre-wrap",
+                                          "fontSize": "13px",
+                                          "lineHeight": 1.6,
+                                          "wordBreak": "break-word"
+                                        },
+                                        "children": "${row.content_text||''}"
+                                      },
+                                      {
+                                        "tag": "markdown",
+                                        "visible": "${row.role!=='user'}",
+                                        "children": "${row.content_text||''}",
+                                        "style": {
+                                          "fontSize": "13px",
+                                          "lineHeight": 1.6
+                                        }
+                                      },
+                                      {
+                                        "tag": "div",
+                                        "visible": "${row.status&&row.status!=='completed'}",
+                                        "style": {
+                                          "marginTop": "8px",
+                                          "paddingTop": "8px",
+                                          "borderTop": "1px dashed rgba(148,163,184,0.3)",
+                                          "fontSize": "11px",
+                                          "color": "#b45309"
+                                        },
+                                        "children": "${'消息状态：'+row.status}"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                      "tag": "div",
+                      "className": "agent-chat-compose-panel",
+                      "style": {
+                        "padding": "10px 12px",
+                        "borderRadius": "16px",
+                        "background": "linear-gradient(180deg,rgba(255,255,255,0.98) 0%,rgba(245,248,251,0.98) 100%)",
+                        "border": "1px solid rgba(148,163,184,0.18)",
+                        "boxShadow": "0 12px 26px rgba(15,23,42,0.05)"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "visible": "${sendLoading}",
+                          "className": "agent-chat-compose-status",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "className": "agent-chat-compose-copy",
+                              "children": [
+                                {
+                                  "tag": "div",
+                                  "className": "agent-chat-compose-title",
+                                  "children": "Sending"
+                                },
+                                {
+                                  "tag": "div",
+                                  "className": "agent-chat-compose-desc",
+                                  "children": "${pendingInputText?('正在处理：'+pendingInputText):'正在发送消息...'}"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "div",
+                              "className": "agent-chat-compose-dots",
+                              "children": [
+                                {
+                                  "tag": "span"
+                                },
+                                {
+                                  "tag": "span"
+                                },
+                                {
+                                  "tag": "span"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "input_text",
+                          "style": {
+                            "marginBottom": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "input",
+                              "isTextarea": true,
+                              "className": "agent-chat-input",
+                              "placeholder": "给 Agent 发送一条消息，支持多行输入。"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "display": "flex",
+                            "justifyContent": "space-between",
+                            "alignItems": "center",
+                            "gap": "10px",
+                            "flexWrap": "wrap"
+                          },
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "11px",
+                                "color": "#64748b",
+                                "lineHeight": 1.5
+                              },
+                              "children": "Enter 换行，Ctrl+Enter / Cmd+Enter 发送。"
+                            },
+                            {
+                          "tag": "button",
+                          "type": "primary",
+                          "loading": "${sendLoading}",
+                          "children": "发送",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "sendLoading": true
+                              }
+                            },
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "pendingInputText": "${getFormValue('agent-regression-form','input_text')||''}"
+                              }
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "agent-regression-form",
+                              "value": {
+                                "input_text": ""
+                              }
+                            },
+                            {
+                              "tag": "submit-form",
+                              "formName": "agent-regression-form"
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=agent.session_upsert",
+                              "appendFormFields": "agent-regression-form",
+                              "appendFields": {
+                                "agent_session_id": "${sessionInfo.agent_session_id||activeSessionId||''}"
+                              },
+                              "data": {
+                                "input_text": "${pendingInputText}"
+                              },
+                              "adapt": {
+                                "sessionInfo": "${data}",
+                                "activeSessionId": "${data.agent_session_id||''}",
+                                "operationResult": "${'会话已准备：'+(data.session_key||'')}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=agent.run_create",
+                              "appendFormFields": "agent-regression-form",
+                              "appendFields": {
+                                "agent_session_id": "${sessionInfo.agent_session_id||activeSessionId||''}"
+                              },
+                              "data": {
+                                "input_text": "${pendingInputText}",
+                                "run_sync": true
+                              },
+                              "adapt": {
+                                "runInfo": "${data}",
+                                "operationResult": "${'消息已发送，run_id='+(data.agent_run_id||'')}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=agent.session_upsert",
+                              "appendFormFields": "agent-regression-form",
+                              "appendFields": {
+                                "agent_session_id": "${runInfo.agent_session_id||sessionInfo.agent_session_id||activeSessionId||''}"
+                              },
+                              "data": {
+                                "input_text": "${pendingInputText}"
+                              },
+                              "adapt": {
+                                "sessionInfo": "${data}",
+                                "activeSessionId": "${data.agent_session_id||activeSessionId||''}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "enable": "${!!sessionInfo.agent_session_id}",
+                              "api": "post:/template_data/data?service=agent.message_query",
+                              "data": {
+                                "agent_session_id": "${sessionInfo.agent_session_id}",
+                                "page": 1,
+                                "size": 100,
+                                "pagination": false
+                              },
+                              "adapt": {
+                                "messageList": "${data}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "enable": "${!!sessionInfo.agent_session_id}",
+                              "api": "post:/template_data/data?service=agent.run_query",
+                              "data": {
+                                "agent_session_id": "${sessionInfo.agent_session_id}",
+                                "page": 1,
+                                "size": 20,
+                                "pagination": false
+                              },
+                              "adapt": {
+                                "runList": "${data}",
+                                "runInfo": "${(Array.isArray(data)&&data.length)?data[0]:runInfo}"
+                              }
+                            },
+                            {
+                              "tag": "ajax",
+                              "api": "post:/template_data/data?service=agent.session_query",
+                              "data": {
+                                "scene_code": "agent_regression_page",
+                                "page": 1,
+                                "size": 50,
+                                "pagination": false
+                              },
+                              "adapt": {
+                                "sessionList": "${data}"
+                              }
+                            },
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "sendLoading": false,
+                                "pendingInputText": ""
+                              }
+                            }
+                          ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

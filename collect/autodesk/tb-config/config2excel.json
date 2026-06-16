@@ -1,0 +1,78 @@
+{
+  "name": "将用户列表转excel",
+  "sheets": [
+    {
+      "sheet_index": 0,
+      "title_height": 48,
+      "desc": "16*行数",
+      "title_style": {
+        "font": {
+          "family": "宋体",
+          "size": 12,
+          "color": "#ffffff"
+        },
+        "fill": {
+          "type": "pattern",
+          "color": [
+            "#3366FF"
+          ],
+          "pattern": 1
+        },
+        "alignment": {
+          "vertical": "center",
+          "WrapText": true
+        }
+      },
+      "name_style": {
+        "font": {
+          "family": "Arial",
+          "size": 10,
+          "color": "#ffffff"
+        },
+        "fill": {
+          "type": "pattern",
+          "color": [
+            "#0066CC"
+          ],
+          "pattern": 1
+        },
+        "alignment": {
+          "vertical": "center"
+        }
+      },
+      "content_style": {
+        "NumFmt": 49
+      },
+      "title": "配置列表\r\n导入的项目以页面选中的项目为准",
+      "data": "[config_list]",
+      "fields": [
+        {
+          "field": "[name]",
+          "enable": false,
+          "name": "名称",
+          "width": 30
+        },
+        {
+          "field": "[value]",
+          "name": "值",
+          "width": 90
+        },
+        {
+          "field": "[description]",
+          "name": "描述",
+          "width": 60
+        },
+        {
+          "field": "[order_index]",
+          "name": "排序号",
+          "width": 60
+        },
+        {
+          "field": "[project]",
+          "name": "项目",
+          "width": 40
+        }
+      ]
+    }
+  ]
+}

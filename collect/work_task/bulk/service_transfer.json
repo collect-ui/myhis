@@ -1,0 +1,12 @@
+{
+  "project_list": "work_task.work_task_project_query",
+  "user_list": "hrm.user_list",
+  "fieldConfigList": "system.get_page_schema_field_group",
+  "fieldConfigListMain": "system.get_page_schema_field_group",
+  "module_list": "work_task.work_task_module_query",
+  "issue_type_list": "work_task.work_task_issue_type_query",
+  "version_list": "work_task.work_task_version_query",
+  "priority_list": "work_task.work_task_priority_query",
+  "status_list": "work_task.work_task_status_query",
+  "label_list": "work_task.work_task_label_query"
+}

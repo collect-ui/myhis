@@ -1,0 +1,97 @@
+{
+  "groupCount": 5,
+  "groups": [
+    {
+      "groupName": "如何编写服务",
+      "rowCount": 4,
+      "docs": [
+        "1.什么是服务service | 服务描述",
+        "2.什么是参数 | 服务描述",
+        "3.什么是参数处理 | 服务描述",
+        "4.生命周期 | 服务描述"
+      ]
+    },
+    {
+      "groupName": "模板函数",
+      "rowCount": 12,
+      "docs": [
+        "1.uuid | 生成uuid",
+        "2.is_empty | 判断是空",
+        "3.must | 判断是否存在参数",
+        "4.current_date_time | 生成时间",
+        "5.current_date_format | 时间格式化",
+        "6.replace | 字符串替换",
+        "7.md5 | 字符串md5加密",
+        "8.sub_str | 字符串截取",
+        "9.get_key | 获取配置文件参数",
+        "10.pinyin | 获取中文的拼音",
+        "11.hash_sha | ldap的hash加密",
+        "12.snow_id | 雪花ID"
+      ]
+    },
+    {
+      "groupName": "模块处理",
+      "rowCount": 11,
+      "docs": [
+        "1.sql | sql查询",
+        "2.bulk_service | 批量服务",
+        "3.model_save | 表新增行",
+        "4.model_update | 表修改行数据",
+        "5.model_delete | 表数据删除",
+        "6.bulk_create | 表批量保存",
+        "7.bulk_upsert | 批量修改多行",
+        "8.empty | 空模块",
+        "9.http | http请求",
+        "10.ldap | ldap",
+        "11.service_flow | 服务流程化"
+      ]
+    },
+    {
+      "groupName": "参数处理",
+      "rowCount": 32,
+      "docs": [
+        "1.get_modify_data | 比对数据",
+        "2.service2field | 服务转字段",
+        "3.update_field | 更新普通字段",
+        "4.check_field | 检查普通字段",
+        "5.update_array | 更新数组",
+        "6.arr2obj | 数组结果转对象",
+        "7.param2result | 参数转结果",
+        "8.params2result | 多参数转结果",
+        "9.session_add | 添加session",
+        "10.session_get | 获取session",
+        "11.session_remove | session删除",
+        "12.data2excel | 数据转excel",
+        "13.excel2data | excel转数据",
+        "14.file2result | 返回文件",
+        "15.ignore_data | 忽略数据",
+        "16.result2params | 结果转参数",
+        "17.result2map | 结果转字段",
+        "18.count2map | count 转字段",
+        "19.file2datajson | 配置文件转json",
+        "20.field2array | 字段转数组",
+        "21.arr2arrayObj | 数组转对象数组",
+        "22.filter_arr | 过滤数组",
+        "23.prop_arr | 对象数组转数组",
+        "24.arr2dict | 数组转对象",
+        "25.handler_cache | 处理缓存",
+        "26.group_by | 数据分组",
+        "27.combine_array | 数组结合数组",
+        "28.update_array_from_array | 更新数组",
+        "29.to_tree | 转树形结构",
+        "30.update_order | 修改顺序",
+        "31.to_tree | 列表转树",
+        "32.to_list | 树转列表"
+      ]
+    },
+    {
+      "groupName": "拦截器",
+      "rowCount": 3,
+      "docs": [
+        "1.cache | 缓存处理",
+        "2.schedule | 定时器",
+        "3.prevent_duplication | 防重复请求"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+service:
+  - key: work_task_module_query
+    http: true
+    module: sql
+    params:
+      search:
+        template: "{{ if .search}}%{{.search}}%{{ end }}"
+    data_file: work_task_module_query.sql

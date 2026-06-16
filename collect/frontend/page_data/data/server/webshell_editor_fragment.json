@@ -1,0 +1,89 @@
+{
+  "tag": "drawer",
+  "title": "",
+  "open": "${workspaceVisible}",
+  "forceRender": true,
+  "destroyOnClose": false,
+  "width": "${workspaceDrawerWidth}",
+  "height": "${workspaceDrawerHeight}",
+  "resizable": "${!(workspaceHttpDocDialogVisible||workspaceManageVisible||workspaceProjectDialogVisible||workspaceFileDialogVisible)}",
+  "resizeStoreField": "workspaceDrawerWidth",
+  "resizeLocalStorageKey": "workspace-drawer-width",
+  "resizeMinPercent": 30,
+  "resizeMaxPercent": 95,
+  "resizableHeight": "${!(workspaceHttpDocDialogVisible||workspaceManageVisible||workspaceProjectDialogVisible||workspaceFileDialogVisible)}",
+  "resizeHeightStoreField": "workspaceDrawerHeight",
+  "resizeHeightLocalStorageKey": "workspace-drawer-height",
+  "resizeMinHeightPercent": 30,
+  "resizeMaxHeightPercent": 100,
+  "bodyStyle": {
+    "padding": 0
+  },
+  "onClose": [
+    {
+      "tag": "update-store",
+      "value": {
+        "workspaceVisible": false
+      }
+    },
+    {
+      "tag": "localstore",
+      "method": "write",
+      "key": "workspace-visible",
+      "value": false
+    }
+  ],
+  "children": [
+    {
+      "tag": "css",
+      "css": ".webshell-container{position:relative;}.webshell-container .ant-drawer-header{padding:0 !important;min-height:0 !important;height:0 !important;border-bottom:none !important;overflow:hidden !important;}.webshell-container .ant-drawer-header-title{height:0 !important;min-height:0 !important;overflow:hidden !important;}.webshell-container .ant-drawer-title{display:none !important;}.webshell-container .ant-drawer-close{display:none !important;}.webshell-container .ant-drawer-body{padding-top:0 !important;}.webshell-container .panel-resize,.webshell-container .co-ui-panel-resize,.webshell-container .Resizer{opacity:1;transition:opacity .15s ease;}.webshell-container .webshell-dialog-active .panel-resize,.webshell-container .webshell-dialog-active .co-ui-panel-resize,.webshell-container .webshell-dialog-active .Resizer,#root:has(~ div .ant-modal-wrap) .webshell-container .panel-resize,#root:has(~ div .ant-modal-wrap) .webshell-container .co-ui-panel-resize,#root:has(~ div .ant-modal-wrap) .webshell-container .Resizer{opacity:0 !important;pointer-events:none !important;}"
+    },
+    {
+      "tag": "button",
+      "className": "webshell-drawer-close-btn",
+      "size": "small",
+      "type": "text",
+      "icon": "CloseOutlined",
+      "style": {
+        "position": "absolute",
+        "left": "2px",
+        "top": "-2px",
+        "zIndex": 1802,
+        "width": "22px",
+        "height": "22px",
+        "minWidth": "22px",
+        "padding": "0",
+        "border": "none",
+        "borderRadius": "0",
+        "background": "transparent",
+        "boxShadow": "none",
+        "color": "#475569"
+      },
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "workspaceVisible": false
+          }
+        },
+        {
+          "tag": "localstore",
+          "method": "write",
+          "key": "workspace-visible",
+          "value": false
+        }
+      ]
+    },
+    {
+      "tag": "div",
+      "className": "${workspaceManageVisible||workspaceContentSearchVisible?'webshell-dialog-active':''}",
+      "style": {
+        "height": "100%"
+      },
+      "children": [
+        "{{to_json .webshell_editor_pool_route}}"
+      ]
+    }
+  ],
+  "className": "webshell-container"
+}

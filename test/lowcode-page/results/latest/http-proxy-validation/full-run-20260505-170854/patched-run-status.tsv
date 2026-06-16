@@ -1,0 +1,7 @@
+script	exit_code	log
+webshell_editor_pool_console_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_check.patched.log
+webshell_editor_pool_console_create_doc_closure_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_create_doc_closure_check.patched.log
+webshell_editor_pool_console_request_matrix_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_request_matrix_check.patched.log
+webshell_editor_pool_console_save_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_save_check.patched.log
+webshell_editor_pool_console_store_crud_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_store_crud_check.patched.log
+webshell_editor_pool_content_search_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_content_search_check.patched.log

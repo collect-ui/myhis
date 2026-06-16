@@ -1,0 +1,730 @@
+{
+  "tag": "layout-fit",
+  "initStore": {
+    "searchForm": {
+      "search": ""
+    },
+
+    "addNodeForm": {
+      "type": "1"
+
+    },
+    "updateNodeForm": {},
+    "treeSelected": {
+
+    },
+    "addNodeVisible": false,
+    "nodeOp": "add",
+    "server_env_data": [],
+    "server_env_data_dir": [],
+    "last_type": "",
+    "last_parent_id": "",
+    "col": 6
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "description": "请求目录树",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=autodesk.technical_doc_query",
+      "appendFormFields": "server-search-form",
+      "data": {
+        "to_tree":true
+      },
+      "adapt": {
+        "server_env_data": "${data}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "layout",
+      "children": [
+        {
+          "tag": "sider",
+          "width": "320px",
+          "className": "border-right",
+          "style": {
+            "backgroundColor": "#fafafa"
+          },
+          "collapsible": true,
+          "collapsedWidth": "40",
+          "children": [
+            {
+              "tag": "layout-fit",
+              "searchToolBar": [
+
+                {
+                  "tag": "form",
+                  "name": "server-search-form",
+                  "initialValues": "${searchForm}",
+                  "wrapperCol": {
+                    "span": 24
+                  },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "查询"
+                    }
+                  ],
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "row",
+                      "className": "w100",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "style": {
+                            "marginInlineEnd": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "icon": "FaPlus",
+                              "title": "新增节点",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "addNodeVisible": true,
+                                    "nodeOp": "add"
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "add-node-form"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "add-node-form",
+                                  "value": {
+                                    "parent_id": "${treeSelected?.type=='1'?treeSelected.technical_doc_id:treeSelected?.parent_id}",
+                                    "type": "${treeSelected?.type=='1'?'1':'2'}"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "请求目录树",
+                                  "group": "server-env-tree",
+                                  "api": "post:/template_data/data?service=autodesk.technical_doc_query",
+                                  "data": {
+                                    "to_tree":true,
+                                    "type": "1"
+                                  },
+                                  "adapt": {
+                                    "server_env_data_dir": "${data}"
+                                  }
+                                }
+
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "search",
+                          "className": "flex1",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "名称",
+                              "allowClear": true
+                            }
+                          ]
+                        }
+
+                      ]
+                    }
+
+
+                  ]
+                }
+              ],
+              "children": [
+
+                {
+                  "tag": "tree",
+                  "showLine": true,
+                  "className": "h100",
+                  "treeSelected": "${treeSelected}",
+                  "treeKey": "${item.technical_doc_id}",
+                  "treeTitle": "${item.name}",
+                  "treeData":"${server_env_data}",
+                  "openLevel": 2,
+                  "treeIcon": "${item.type==='1'?'FolderOutlined':'FileWordOutlined'}",
+                  "showIcon": true,
+                  "selectAction": [
+                    {
+                      "tag": "update-store",
+                      "targetStore": "doc",
+                      "value": {
+                        "treeSelected": "${selected?row:{}}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "targetStore": "doc",
+                      "group": "*"
+                    }
+                  ],
+                  "rightMenu": [
+                    {
+                      "type": "item",
+                      "icon": "PlusOutlined",
+                      "code": "add",
+                      "label": "新增数据"
+                    },
+                    {
+                      "type": "item",
+                      "icon": "EditOutlined",
+                      "code": "edit",
+                      "label": "修改数据"
+                    },
+                    {
+                      "type": "separator"
+                    },
+                    {
+                      "type": "submenu",
+                      "label": "其他",
+                      "children": [
+                        {
+                          "type": "item",
+                          "icon": "DeleteOutlined",
+                          "code": "delete",
+                          "label": "删除数据"
+                        }
+                      ]
+                    }
+                  ],
+                  "rightMenuAction": [
+                    {
+                      "tag": "reset-form",
+                      "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='add'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "add",
+                        "updateNodeForm": {}
+                      }
+                    },
+                    {
+                      "enable": "${item.code==='add'}",
+                      "tag": "update-form",
+                      "formName": "add-node-form",
+                      "value": {
+                        "parent_id": "${node.type=='1'?node.technical_doc_id:node.parent_id}"
+                      }
+                    },
+
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='edit'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "edit",
+                        "updateNodeForm": "${node}"
+                      }
+                    },
+
+                    {
+                      "tag": "ajax",
+                      "description": "请求目录树",
+                      "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                      "api": "post:/template_data/data?service=autodesk.technical_doc_query",
+                      "appendFormFields": "server-search-form",
+                      "data": {
+                        "to_tree":true,
+                        "type": "1"
+                      },
+                      "adapt": {
+                        "server_env_data_dir": "${data}"
+                      }
+                    },
+
+                    {
+                      "tag": "update-form",
+                      "name": " 更新表单",
+                      "enable": "${item.code==='edit'}",
+                      "formName": "add-node-form",
+                      "useStore": true,
+                      "value": "${updateNodeForm}"
+                    },
+                    {
+                      "tag": "check",
+                      "enable": "${item.code=='delete' && node?.children }",
+                      "title": "${'【'+node.name+'】下存在'+node?.children.length+'个节点，请先删除节点'}",
+                      "check": "${!node.children || (node.children && node.children.length<=0)}"
+                    },
+                    {
+                      "tag": "confirm",
+                      "title": "确认提示",
+                      "content": "${'确认删除所选【'+node.name+'】节点吗'}",
+                      "enable": "${item.code==='delete'}"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "删除环境",
+                      "enable": "${item.code=='delete'}",
+                      "group": "server-env-tree",
+                      "api": "post:/template_data/data?service=autodesk.technical_doc_delete",
+                      "data": {
+                        "technical_doc_id_list": "${[node.technical_doc_id]}"
+                      }
+                    },
+
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "enable": "${item.code=='delete'}",
+                      "description": "页面初始化请求"
+                    }
+                  ]
+                },
+                {
+                  "tag": "dialog",
+                  "title": "${nodeOp==='add'?'新增节点':'修改节点'}",
+                  "open": "${addNodeVisible}",
+                  "width": "70%",
+                  "confirmAndContinue": "${nodeOp==='add'?true:false}",
+                  "action": [
+                    {
+                      "tag": "submit-form",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "添加环境节点",
+                      "enable": "${nodeOp==='add'}",
+                      "api": "post:/template_data/data?service=autodesk.technical_doc_save",
+                      "appendFormFields": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "修改环境节点",
+                      "enable": "${nodeOp==='edit'}",
+                      "api": "post:/template_data/data?service=autodesk.technical_doc_update",
+                      "appendFormFields": "add-node-form",
+                      "appendFields": "${updateNodeForm}"
+                    },
+                    {
+                      "tag": "update-store",
+                      "description": "重置前先保存节点类型",
+                      "enable": "${confirmAndContinue==true}",
+                      "value": {
+                        "last_type": "${getFormValue('add-node-form','type')}",
+                        "last_parent_id": "${getFormValue('add-node-form','parent_id')}"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "enable": "${confirmAndContinue==true}",
+                      "formName": "add-node-form"
+                    },
+
+                    {
+                      "tag": "update-form",
+                      "description": "还原节点类型和父节点",
+                      "enable": "${confirmAndContinue==true}",
+                      "formName": "add-node-form",
+                      "value": {
+                        "parent_id": "${last_parent_id}",
+                        "type": "${last_type}"
+                      }
+                    },
+                    {
+                      "tag": "update-store",
+                      "enable": "${confirmAndContinue==false}",
+                      "value": {
+                        "addNodeVisible": false
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "form",
+                      "name": "add-node-form",
+                      "initialValues": {
+                        "is_index": "0"
+                      },
+                      "labelCol": {
+                        "span": 6
+                      },
+                      "wrapperCol": {
+                        "span": 18
+                      },
+                      "children": [
+                        {
+                          "tag": "divider",
+                          "orientation": "left",
+                          "children": "基础信息"
+                        },
+                        {
+                          "tag": "row",
+                          "children": [
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "类型",
+                                  "name": "type",
+                                  "children": [
+                                    {
+                                      "tag": "select",
+                                      "options": [
+                                        {
+                                          "label": "文件夹",
+                                          "value": "1"
+                                        },
+                                        {
+                                          "label": "路由",
+                                          "value": "2"
+                                        },
+                                        {
+                                          "label": "框架",
+                                          "value": "framework"
+                                        },
+                                        {
+                                          "label": "无框架",
+                                          "value": "no_framework"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "name": "parent_id",
+                                  "label": "上级",
+                                  "children": [
+                                    {
+                                      "tag": "tree-select",
+                                      "placeholder": "请输入名称",
+                                      "allowClear": true,
+                                      "openLevel": 2,
+                                      "valueKey": "${item.technical_doc_id}",
+                                      "treeTitle": "${item.name}",
+                                      "treeIcon": "FolderOutlined",
+                                      "treeData": "${server_env_data_dir}",
+                                      "treeLine": true,
+                                      "showIcon": true,
+                                      "showSearch": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "名称",
+                                  "name": "menu_name",
+                                  "rules": [
+                                    {
+                                      "required": true,
+                                      "message": "请输入名称"
+                                    }
+                                  ],
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入名称"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "编码",
+                                  "name": "menu_code",
+                                  "rules": [
+                                    {
+                                      "required": true,
+                                      "message": "请输入编码"
+                                    }
+                                  ],
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入编码"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "图标",
+                                  "name": "icon",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入图标"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "排序号",
+                                  "name": "order_index",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "isNumber": true,
+                                      "placeholder": "请输入排序号"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "公共",
+                                  "name": "is_common",
+                                  "children": [
+                                    {
+                                      "tag": "switch",
+                                      "activeValue": "1",
+                                      "inactiveValue": "0"
+                                    }
+                                  ]
+                                }
+
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "菜单显示",
+                                  "name": "in_menu",
+                                  "children": [
+                                    {
+                                      "tag": "switch",
+                                      "activeValue": "1",
+                                      "inactiveValue": "0"
+                                    }
+                                  ]
+                                }
+
+                              ]
+                            }
+                          ]
+                        },
+
+                        {
+                          "tag": "divider",
+                          "orientation": "left",
+                          "children": "路由信息"
+                        },
+                        {
+                          "tag": "row",
+                          "children": [
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "路由",
+                                  "name": "url",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入路由url"
+                                    }
+                                  ]
+                                }
+
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "api",
+                                  "name": "api",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入路由服务地址"
+                                    }
+                                  ]
+                                }
+
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "首页",
+                                  "name": "is_index",
+                                  "children": [
+                                    {
+                                      "tag": "switch",
+                                      "activeValue": "1",
+                                      "inactiveValue": "0"
+
+                                    }
+                                  ]
+                                }
+
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "继承框架",
+                                  "name": "router_group",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入继承框架路由"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+
+
+                            {
+                              "tag": "form-item",
+                              "noStyle": true,
+                              "itemVisible": "${is_index==='1'}",
+                              "children": [
+                                {
+                                  "tag": "col",
+                                  "span": "${col}",
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "label": "框架服务",
+                                      "name": "group_api",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "请输入框架服务"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "tag": "col",
+                                  "span": "${col}",
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "label": "框架路由",
+                                      "name": "group_path",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "请输入框架路由"
+                                        }
+                                      ]
+                                    }
+
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "描述",
+                                  "name": "description",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入描述",
+                                      "isTextarea": true
+                                    }
+                                  ]
+                                }
+
+                              ]
+                            }
+
+                          ]
+                        }
+
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "content",
+          "style": {
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+
+
+          ]
+        }
+      ]
+    }
+  ]
+}

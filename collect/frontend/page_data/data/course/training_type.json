@@ -1,0 +1,1035 @@
+{
+  "tag": "layout-fit",
+  "className": "padding10 h100 overflow-auto",
+  "initStore": {
+    "dialogVisible": false,
+    "op": "add",
+    "lastImg": "",
+    "lastMp3": "",
+    "lastMp4": "",
+    "user_id_list": [],
+    "role_list": [],
+    "selection": [],
+    "searchForm": {
+      "page": 1,
+      "size": 20,
+      "search": ""
+    },
+    "opTrainingForm": {
+      "name": "",
+      "training_type": "power",
+      "body_part": "upper",
+      "difficulty_level": "easy",
+      "description": "",
+      "action_standard": "",
+      "precautions": "",
+      "movie_address": "",
+      "img1": "",
+      "order_index": 1,
+      "background_model": "camera"
+    },
+    "count": 0,
+    "dataList": []
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "dataList",
+      "description": "页面初始化请求-加载数据",
+      "api": "post:/template_data/data?service=sport.training_project_query",
+      "appendFormFields": "training-search-form",
+      "appendFields": "${searchForm}",
+      "adapt": {
+        "dataList": "${data}",
+        "count": "${count}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "description": "加载角色",
+      "api": "post:/template_data/data?service=hrm.role_query",
+      "adapt": {
+        "role_list": "${data}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "table",
+      "selection": "${selection}",
+      "rowSelection": "multiple",
+      "columnDefs": [
+        {
+          "headerName": "#",
+          "width": 60,
+          "valueGetter": "node.rowIndex + 1",
+          "sortable": false,
+          "pinned": "left"
+        },
+        {
+          "pinned": "left",
+          "checkboxSelection": true,
+          "headerCheckboxSelection": true,
+          "headerName": "名称",
+          "width": "160",
+          "suppressSizeToFit": true,
+          "field": "name"
+        },
+        {
+          "headerName": "编码",
+          "field": "training_project_code",
+          "width": 60
+        },
+        {
+          "headerName": "小图",
+          "field": "icon",
+          "width": 100,
+          "cellRender": {
+            "tag": "image",
+            "height": 30,
+
+            "visible": "${row.icon}",
+            "src": "${row.icon}"
+          }
+        },
+        {
+          "headerName": "主图",
+          "field": "img1",
+          "width": 100,
+          "cellRender": {
+            "tag": "image",
+            "visible": "${row.img1}",
+            "height": 30,
+            "src": "${row.img1}"
+          }
+        },
+        {
+          "headerName": "类型",
+          "width": 100,
+          "field": "training_type_name"
+        },
+        {
+          "headerName": "部位",
+          "width": 100,
+          "field": "body_part_name"
+        },
+        {
+          "headerName": "难度",
+          "width": 100,
+          "field": "difficulty_level_name"
+        },
+        {
+          "headerName": "描述",
+          "field": "description",
+          "tooltipField": "description"
+        },
+        {
+          "headerName": "注意事宜",
+          "field": "precautions",
+          "tooltipField": "precautions"
+        },
+        {
+          "headerName": "动作标准",
+          "field": "action_standard",
+          "tooltipField": "action_standard"
+        },
+        {
+          "headerName": "排序号",
+          "width": 100,
+          "field": "order_index"
+        },
+        {
+          "headerName": "创建时间",
+          "field": "create_time",
+          "tooltipField": "create_time"
+        },
+        {
+          "headerName": "操作",
+          "field": "op",
+          "width": 180,
+          "suppressSizeToFit": true,
+          "pinned": "right",
+          "cellRender": [
+            {
+              "tag": "button",
+              "action": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "dialogVisible": true,
+                    "op": "edit",
+                    "lastImg": "${row.img1}",
+                    "lastIcon": "${row.icon}",
+                    "lastMp3": "${row.mp3}",
+                    "lastMp4": "${row.mp4}",
+                    "lastManImage": "${row.background_man_image}"
+                  }
+                },
+                {
+                  "tag": "reset-form",
+                  "formName": "opTrainingForm"
+                },
+                {
+                  "tag": "update-form",
+                  "formName": "opTrainingForm",
+                  "value": "${row}"
+                }
+              ],
+              "type": "primary",
+              "size": "small",
+              "children": "编辑"
+            },
+            {
+              "tag": "button",
+              "danger": true,
+              "size": "small",
+              "children": "删除",
+              "confirm": {
+                "title": "确认删除吗？",
+                "description": "${'确认删除【'+row.name+'】记录吗？'}"
+              },
+              "action": [
+                {
+                  "tag": "ajax",
+                  "description": "删除数据",
+                  "api": "post:/template_data/data?service=sport.training_project_delete",
+                  "data": {
+                    "training_project_id_list": "${[row.training_project_id]}"
+                  }
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "dataList",
+                  "description": "删除用户-页面初始化请求"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rowData": "${dataList}"
+    },
+    {
+      "tag": "dialog",
+      "title": "${op=='add'?'新增训练项目':'修改训练项目'}",
+      "width": "80%",
+      "open": "${dialogVisible}",
+      "action": [
+        {
+          "tag": "submit-form",
+          "description": "提交表单",
+          "formName": "opTrainingForm"
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op=='add'}",
+          "description": "新增发送请求到后端",
+          "api": "post:/template_data/data?service=sport.training_project_save",
+          "appendFormFields": "opTrainingForm"
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op=='edit'}",
+          "description": "修改发送请求到后端",
+          "api": "post:/template_data/data?service=sport.training_project_update",
+          "appendFormFields": "opTrainingForm",
+          "data": {
+            "training_project_id": "${selection[0].training_project_id}"
+          }
+        },
+        {
+          "tag": "update-store",
+          "description": "关闭对话框",
+          "value": {
+            "dialogVisible": false
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "新增/修改-页面初始化请求"
+        }
+      ],
+      "children": [
+        {
+          "tag": "form",
+          "name": "opTrainingForm",
+          "initialValues": "${opTrainingForm}",
+          "style": {
+            "maxHeight": "800px",
+            "overflow": "auto"
+          },
+          "valueRule": {},
+          "labelCol": {
+            "span": 5
+          },
+          "children": [
+            {
+              "tag": "divider",
+              "orientation": "left",
+              "children": "基础信息"
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "name",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入名称!"
+                        }
+                      ],
+                      "label": "名称",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入名称"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "training_type",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择类型!"
+                        }
+                      ],
+                      "label": "类型",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "placeholder": "请选择类型",
+                          "options": [
+                            {
+                              "value": "power",
+                              "label": "力量"
+                            },
+                            {
+                              "value": "speed",
+                              "label": "速度"
+                            },
+                            {
+                              "value": "endurance",
+                              "label": "耐力"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "body_part",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入部位!"
+                        }
+                      ],
+                      "label": "部位",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "placeholder": "请选择类型",
+                          "options": [
+                            {
+                              "value": "upper",
+                              "label": "上肢"
+                            },
+                            {
+                              "value": "lower",
+                              "label": "下肢"
+                            },
+                            {
+                              "value": "all",
+                              "label": "全身"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "difficulty_level",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择难度!"
+                        }
+                      ],
+                      "label": "难度",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "placeholder": "请选择难度",
+                          "options": [
+                            {
+                              "value": "easy",
+                              "label": "简单"
+                            },
+                            {
+                              "value": "normal",
+                              "label": "中等"
+                            },
+                            {
+                              "value": "high",
+                              "label": "高级"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "training_project_code",
+                      "label": "编码",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入编码!"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder":"保持全局唯一即可"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+
+                    {
+                      "tag": "form-item",
+                      "name": "order_index",
+                      "label": "排序号",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "description",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入描述!"
+                        }
+                      ],
+                      "label": "描述",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "rows": 4,
+                          "placeholder": "请输入描述",
+                          "isTextarea": true
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "action_standard",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入动作标准!"
+                        }
+                      ],
+                      "label": "动作标准",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "rows": 4,
+                          "placeholder": "请输入动作标准",
+                          "isTextarea": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "precautions",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入注意事宜!"
+                        }
+                      ],
+                      "label": "注意事宜",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "rows": 4,
+                          "placeholder": "请输入注意事宜",
+                          "isTextarea": true
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "divider",
+              "orientation": "left",
+              "children": "图片"
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "img1",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入主图!"
+                        }
+                      ],
+                      "label": "主图",
+                      "children": [
+                        {
+                          "tag": "pull-down",
+                          "filetype": "image"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "mp3",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入模型地址!"
+                        }
+                      ],
+                      "label": "声音mp3",
+                      "children": [
+                        {
+                          "tag": "pull-down",
+                          "filetype": "audio"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "icon",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入icon!"
+                        }
+                      ],
+                      "label": "Icon",
+                      "children": [
+                        {
+                          "tag": "pull-down",
+                          "placeholder": "请输入Icon",
+                          "filetype": "image"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "mp4",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请输入视频地址!"
+                        }
+                      ],
+                      "label": "视频mp4",
+                      "children": [
+                        {
+                          "tag": "pull-down",
+                          "filetype": "video",
+                          "placeholder": "请输入视频"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "special_effects",
+                      "label": "特效样式",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "allowClear": true,
+                          "options": [
+                            {
+                              "label": "球体上下",
+                              "value": "bouncing-loader"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "speed",
+                      "label": "球速度",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "allowClear": true,
+                          "options": [
+                            {
+                              "label": "0.4秒",
+                              "value": "ball-0-4s"
+                            },
+                            {
+                              "label": "0.5秒",
+                              "value": "ball-0-5s"
+                            },
+                            {
+                              "label": "0.6秒",
+                              "value": "ball-0-6s"
+                            },
+                            {
+                              "label": "0.7秒",
+                              "value": "ball-0-7s"
+                            },
+                            {
+                              "label": "0.8秒",
+                              "value": "ball-0-8s"
+                            },
+                            {
+                              "label": "0.9秒",
+                              "value": "ball-0-9s"
+                            },
+                            {
+                              "label": "1秒",
+                              "value": "ball-1-0s"
+                            },
+                            {
+                              "label": "1.1秒",
+                              "value": "ball-1-1s"
+                            },
+                            {
+                              "label": "1.2秒",
+                              "value": "ball-1-2s"
+                            },
+                            {
+                              "label": "1.3秒",
+                              "value": "ball-1-3s"
+                            },
+                            {
+                              "label": "1.4秒",
+                              "value": "ball-1-4s"
+                            },
+                            {
+                              "label": "1.5秒",
+                              "value": "ball-1-5s"
+                            },
+                            {
+                              "label": "1.6秒",
+                              "value": "ball-1-6s"
+                            },
+                            {
+                              "label": "1.7秒",
+                              "value": "ball-1-7s"
+                            },
+                            {
+                              "label": "1.8秒",
+                              "value": "ball-1-8s"
+                            },
+                            {
+                              "label": "1.9秒",
+                              "value": "ball-1-9s"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "label": "底层模式",
+                      "name": "background_model",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "options": [
+                            {
+                              "label": "相机",
+                              "value": "camera"
+                            },
+                            {
+                              "label": "地图",
+                              "value": "map"
+                            },
+                            {
+                              "label": "视频+相机",
+                              "value": "mp4_camera"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "background_man_image",
+                      "label": "人物背景",
+                      "children": [
+                        {
+                          "tag": "pull-down",
+                          "filetype": "image"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "label": "计时",
+                      "name": "time_model",
+                      "children": [
+                        {
+                          "tag": "select",
+                          "options": [
+                            {
+                              "label": "计时模式",
+                              "value": "timekeeping"
+                            },
+                            {
+                              "label": "不计时（限30分钟）",
+                              "value": "untimed"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "训练项目管理",
+  "topRight": [
+    {
+      "tag": "button",
+      "type": "primary",
+      "children": "新增",
+      "icon": "FaPlus",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dialogVisible": true,
+            "op": "add",
+            "lastImg": "",
+            "lastMp3": "",
+            "lastIcon": "",
+            "lastMp4": "",
+            "lastManImage": ""
+          }
+        },
+        {
+          "tag": "reset-form",
+          "formName": "opTrainingForm"
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dialogVisible": true,
+            "op": "edit",
+            "lastImg": "${selection[0].img1}",
+            "lastIcon": "${selection[0].icon}",
+            "lastMp3": "${selection[0].mp3}",
+            "lastManImage": "${selection[0].last_man_image}"
+          }
+        },
+        {
+          "tag": "reset-form",
+          "formName": "opTrainingForm"
+        },
+        {
+          "tag": "update-form",
+          "formName": "opTrainingForm",
+          "value": "${selection[0]}"
+        }
+      ],
+      "disabled": "${selection.length !=1 }",
+      "children": "编辑",
+      "icon": "FaPencilAlt"
+    },
+    {
+      "tag": "button",
+      "disabled": "${selection.length <=0 }",
+      "type": "primary",
+      "confirm": {
+        "title": "确认删除吗？",
+        "description": "${'确认删除【'+selection.map(item=>item.name).join(',')+'】'+selection.length+'记录吗？'}"
+      },
+      "danger": true,
+      "action": [
+        {
+          "tag": "ajax",
+          "description": "删除用户",
+          "api": "post:/template_data/data?service=sport.training_project_delete",
+          "data": {
+            "training_project_id_list": "${selection.map(item=>item.training_project_id)}"
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "行删除-页面初始化请求"
+        }
+      ],
+      "children": "删除",
+      "icon": "FaTrashAlt"
+    }
+  ],
+  "searchToolBar": [
+    {
+      "tag": "form",
+      "name": "training-search-form",
+      "initialValues": "${searchForm}",
+      "labelCol": {
+        "span": 5
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "action": [
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "表单提交-页面初始化请求"
+        }
+      ],
+      "submitOnChange": true,
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "search",
+                  "label": "搜索",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "名称",
+                      "allowClear": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "点击搜索-页面初始化请求"
+                    }
+                  ],
+                  "type": "primary",
+                  "children": "搜索",
+                  "icon": "FaSearch"
+                },
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "reset-form",
+                      "formName": "user-form"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "重置-页面初始化请求"
+                    }
+                  ],
+                  "icon": "FaUndo",
+                  "children": "重置"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "bottomToolBar": [
+    {
+      "tag": "pagination",
+      "showSizeChanger": true,
+      "pageSize": "${searchForm.size}",
+      "current": "${searchForm.page}",
+      "total": "${count}",
+      "action": [
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "页面初始化请求"
+        }
+      ],
+      "showTotal": true
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "pass": true,
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-07T08:46:27.103Z",
+  "tabs": [
+    "Editor工作台",
+    "doc/index.yml",
+    "sync/index.yml"
+  ],
+  "error": "",
+  "steps": [
+    {
+      "keyword": "doc/index",
+      "folderName": "doc",
+      "target": 8,
+      "preview": [
+        "technical_doc",
+        "index.yml",
+        "config",
+        "doc",
+        "index.yml",
+        "windows",
+        "moon-windows-amd64",
+        "collect",
+        "autodesk"
+      ]
+    },
+    {
+      "keyword": "sync/index",
+      "folderName": "sync",
+      "target": 3,
+      "preview": [
+        "collect",
+        "config",
+        "sync",
+        "index.yml",
+        "windows",
+        "moon-windows-amd64",
+        "collect",
+        "config"
+      ]
+    }
+  ],
+  "hasDoc": true,
+  "hasSync": true,
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-tab-disambiguation-check.png",
+  "endedAt": "2026-05-07T08:46:36.146Z"
+}

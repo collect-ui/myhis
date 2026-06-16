@@ -1,0 +1,12 @@
+{
+  "patient_id": "{{if .patient_id}}{{.patient_id}}{{else}}{{uuid}}{{end}}",
+  "patient_no": "{{if .patient_no}}{{.patient_no}}{{else}}MZ-MOCK{{end}}",
+  "patient_name": "{{if .patient_name}}{{.patient_name}}{{else}}未命名患者{{end}}",
+  "gender": "{{if .gender}}{{.gender}}{{else}}男{{end}}",
+  "age": "{{if .age}}{{.age}}{{else}}0{{end}}",
+  "department": "{{if .department}}{{.department}}{{else}}未分配{{end}}",
+  "diagnosis": "{{if .diagnosis}}{{.diagnosis}}{{else}}待完善{{end}}",
+  "visit_time": "{{if .visit_time}}{{.visit_time}}{{else}}{{current_date_time}}{{end}}",
+  "status": "{{if .status}}{{.status}}{{else}}待诊{{end}}",
+  "mock_operation": "update"
+}

@@ -1,0 +1,274 @@
+service:
+  - key: menu
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/menu/menu.json
+  - key: framework
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/framework.json
+  - key: home
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/home.json
+  - key: doc_manage
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/technical/doc_manage.json
+  - key: model
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/technical/model.json
+  - key: attachment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/attachment.json
+  - key: role
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/role.json
+  - key: sys_code
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/sys_code.json
+  - key: user
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/user.json
+  - key: menu_manage
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/menu_manage.json
+  - key: qing_price
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/price/qing_price.json
+  - key: tb_config
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: frontend_autodesk.tb_config_detail
+        save_field: config
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/technical/tb_config.json
+
+  - key: doc_project_config
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/technical/doc_project_config.json
+
+  - key: login
+    http: true
+    must_login: false
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/login.json
+  - key: register
+    http: true
+    must_login: false
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: register
+        save_field: register
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/register.json
+  - key: feedback
+    http: true
+    must_login: false
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: feedback
+        save_field: feedback
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/feedback.json
+  - key: register_list
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: register_list
+        save_field: register_list
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/register_list.json
+  - key: feedback_list
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: feedback_backend
+        save_field: feedback_list
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/feedback_list.json
+  - key: location_tracker
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: location_tracker
+        save_field: location_tracker
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/location_tracker.json
+
+  - key: user_manage
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: user_manage
+        save_field: user_manage
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/user.json
+  - key: zj
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: fenbu_project
+        save_field: zj
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/price/zj.json
+
+
+  - key: get_tb_config_detail_service
+    http: true
+    module: empty
+    data_file: data/technical/tb_config_detail.json
+    handler_params:
+      - key: file2datajson
+        save_field: service_list
+      - key: param2result
+        field: service_list
+
+
+  - key: tb_config_detail
+    http: true
+    module: bulk_service
+    data_file: data/technical/service_transfer.json
+    handler_params:
+      - key: service2field
+        service:
+          service: frontend_autodesk.get_tb_config_detail_service
+        save_field: service_list
+    batch:
+      foreach: "[service_list]"
+      service:
+        service: "[service]"
+      append_item_param: true
+      save_field: 'result'
+    result_handler:
+      - key: result2params
+        fields:
+          - to: "[result_list]"
+      - key: arr2dict
+        foreach: "[result_list]"
+        field: "[target_field]"
+        value: "[result.data]"
+        save_field: result_data
+      - key: param2result
+        field: result_data

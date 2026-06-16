@@ -1,0 +1,13 @@
+{
+  "pass": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "metrics": {
+    "hasWebSQLAfterCollapse": false,
+    "hasExpandButton": true,
+    "hasMysqlIpText": false
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-websql-panel-check.png"
+}

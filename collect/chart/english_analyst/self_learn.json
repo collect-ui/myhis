@@ -1,0 +1,135 @@
+{
+  "animation": false,
+  "xAxis": {
+    "show": false,
+    "splitLine": {
+      "show": false
+    }
+  },
+  "legend": {
+    "data": [
+      "完成指定任务点的资源学习",
+      "完成非任务点及拓展资源的学习"
+    ],
+    "right": "8%",
+    "top": "4%",
+    "textStyle": {
+      "fontSize": 16,
+      "color": "#00c2ff"
+    },
+    "itemWidth": 10,
+    "itemHeight": 10
+  },
+  "grid": {
+    "top": "50%",
+    "left": "14%",
+    "bottom": "25%",
+    "right": "10%",
+    "containLabel": true
+  },
+  "yAxis": {
+    "show": false,
+    "data": [],
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false
+    }
+  },
+  "tooltip": {
+    "show": true,
+    "borderRadius": 5,
+    "backgroundColor": "#f6f6f6",
+    "textStyle": {
+      "color": "#000",
+      "fontSize": 20
+    }
+  },
+  "series": [
+    {
+      "type": "pictorialBar",
+      "barCategoryGap": 2,
+      "name": "完成指定任务点的资源学习",
+      "itemStyle": {
+        "normal": {
+          "color": {
+            "type": "linear",
+            "x": 0,
+            "y": 0,
+            "x2": 0,
+            "y2": 1,
+            "colorStops": [
+              {
+                "offset": 0,
+                "color": "#2586FF"
+              },
+              {
+                "offset": 1,
+                "color": "#2586FF"
+              }
+            ],
+            "globalCoord": false
+          }
+        }
+      },
+      "symbol": "Rect",
+      "symbolRepeat": "fixed",
+      "symbolClip": true,
+      "symbolSize": [
+        3,
+        27
+      ],
+      "data": [
+        22
+      ],
+      "z": 10,
+      "symbolMargin": [
+        3,
+        0
+      ]
+    },
+    {
+      "type": "pictorialBar",
+      "barCategoryGap": 2,
+      "name": "完成非任务点及拓展资源的学习",
+      "itemStyle": {
+        "normal": {
+          "color": {
+            "type": "linear",
+            "x": 0,
+            "y": 0,
+            "x2": 0,
+            "y2": 1,
+            "colorStops": [
+              {
+                "offset": 0,
+                "color": "#FFCC00"
+              },
+              {
+                "offset": 1,
+                "color": "#FFCC00"
+              }
+            ],
+            "globalCoord": false
+          }
+        }
+      },
+      "symbolRepeat": "fixed",
+      "symbol": "Rect",
+      "symbolSize": [
+        3,
+        27
+      ],
+      "symbolClip": true,
+      "data": [
+        26
+      ],
+      "z": 5,
+      "symbolMargin": [
+        3,
+        0
+      ]
+    }
+  ]
+}

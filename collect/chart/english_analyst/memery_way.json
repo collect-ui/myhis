@@ -1,0 +1,95 @@
+{
+  "grid": {
+    "left": "1%",
+    "right": "1%",
+    "top": "10%",
+    "bottom": "3%",
+    "containLabel": true
+  },
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "none"
+    }
+  },
+  "xAxis": {
+    "data": ["机械记忆", "理解背诵", "通过做题", "联想背诵", "思维导图", "其他"],
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false
+    },
+    "axisLabel": {
+      "interval": 0,
+      "fontSize": 14,
+      "color": "#fff",
+      "fontFamily": "siyuan",
+      "margin": 15,
+      "fontWeight": "bold"
+    }
+  },
+  "yAxis": {
+    "splitLine": {
+      "show": false
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false
+    },
+    "axisLabel": {
+      "show": false
+    }
+  },
+  "color": ["#e54035"],
+  "series": [{
+    "name": "hill",
+    "type": "pictorialBar",
+    "barCategoryGap": "-130%",
+    "animationDuration": 3500,
+    "animationEasing": "cubicInOut",
+    "symbolClip": true,
+    "symbol": "path://M0,10 L10,10 C5.5,10 5.5,5 5,0 C4.5,5 4.5,10 0,10 z",
+    "itemStyle": {
+      "normal": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 0,
+          "x2": 0,
+          "y2": 1,
+          "colorStops": [{
+            "offset": 0,
+            "color": "#0BC19D"
+          }, {
+            "offset": 1,
+            "color": "rgba(13,8,16,0)"
+          }],
+          "global": false
+        }
+      },
+      "emphasis": {
+        "opacity": 1
+      }
+    },
+    "label": {
+      "show": true,
+      "position": "top",
+      "offset": [0, 0],
+      "color": "#fff",
+      "formatter": "{c}%",
+      "fontSize": 16,
+      "fontFamily": "siyuan",
+      "fontWeight": "bold"
+    },
+    "emphasis": {
+      "itemStyle": {
+        "opacity": 1
+      }
+    },
+    "data": [12, 13, 32, 6, 5, 1, null],
+    "z": 10
+  }]
+}

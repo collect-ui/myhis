@@ -1,0 +1,1230 @@
+{
+  "tag": "layout-fit",
+  "initStore": {
+    "has_changed": false,
+    "count": 0,
+    "searchForm": {
+      "page": 1,
+      "size": 10
+    },
+    "server_env_data": [],
+    "server_env_data_copy": [],
+    "treeSelected": {},
+    "dataList": [
+    ],
+    "addNodeVisible": false,
+    "nodeOp": "add",
+    "form_dir_list": [],
+    "img_dir_group": [],
+    "img_group": [],
+    "activeRow": {},
+    "content_tmp": "",
+    "remote_content_tmp": "",
+    "img_tmp": "",
+    "img_loading": false,
+    "img_flow_type": "img",
+    "flow_data_group": [],
+    "lastNodeData": null,
+    "time": 0,
+    "showSaveDialog": false,
+    "get_remote_time": 20,
+    "update_time": 5,
+    "max_time": 60,
+    "img_op": "add"
+
+  },
+  "actionGroupDefine": {
+    "saveImg": [
+      {
+        "tag": "submit-form",
+        "formName": "img-form"
+      },
+      {
+        "tag": "draw-data",
+        "method": "getData",
+        "to_field": "content_tmp"
+      },
+      {
+        "tag": "draw-data",
+        "method": "getImg",
+        "to_field": "img_tmp"
+      },
+      {
+        "tag":"update-store",
+        "value": {
+          "img_op": "${activeRow?.img_id?'update':'add'}"
+        }
+      },
+      {
+        "tag": "ajax",
+        "async": true,
+        "description": "修改图片",
+        "enable": "${img_op==='update'}",
+        "api": "post:/template_data/data?service=doc.img_update",
+        "appendFormFields": "img-form",
+        "data": {
+          "img_id": "${activeRow.img_id}",
+          "content": "${content_tmp}",
+          "img": "${img_tmp}"
+        }
+      },
+      {
+        "tag": "ajax",
+        "enable": "${img_op==='add'}",
+        "description": "保存图片",
+        "api": "post:/template_data/data?service=doc.img_save",
+        "appendFormFields": "img-form",
+        "data": {
+          "content": "${content_tmp}",
+          "img": "${img_tmp}"
+        },
+        "adapt": {
+          "activeRow": "${data}"
+        }
+      },
+      {
+        "enable": "${img_op==='add'}",
+        "tag": "reload-init-action",
+        "group": "dataList"
+      },
+
+      {
+        "tag": "draw-data",
+        "method": "clearChangeStatus"
+      }
+    ],
+    "update-from-remote": [
+      {
+        "tag": "ajax",
+        "enable": "${activeRow?.img_id?true:false}",
+        "async": true,
+        "api": "post:/template_data/data?service=doc.img_detail",
+        "data": {
+          "img_id":"${activeRow?.img_id}"
+        },
+        "adapt": {
+          "remote_content_tmp": "${data.content}"
+        }
+      },
+      {
+        "tag": "draw-data",
+        "method": "updateFromRemote",
+        "from_field": "remote_content_tmp"
+      }
+
+    ]
+  },
+  "timer": {
+    "name": "剩余时间的定时器",
+    "enable": true,
+    "interval": 1000,
+    "action": [
+      {
+        "tag": "draw-data",
+        "method": "hasChanged",
+        "to_field": "has_changed"
+      },
+      {
+        "tag": "draw-data",
+        "method": "getData",
+        "to_field": "content_tmp"
+      },
+
+      {
+        "tag":"update-store",
+        "value": {
+          "img_op": "${activeRow?.img_id?'update':'add'}"
+        }
+      },
+      {
+        "tag": "update-store",
+        "description": "新增情況下，更新计数器",
+        "enable": "${img_op==='add' && !showSaveDialog &&  has_changed}",
+        "value": {
+          "time": "${time<max_time?time+1:time}",
+          "showSaveDialog": "${time>=update_time?true:false}"
+        }
+      },
+      {
+        "tag": "update-store",
+        "description": "新增清理计数器",
+        "enable": "${img_op==='add' && showSaveDialog}",
+        "value": {
+          "time": 0
+        }
+      },
+      {
+        "tag": "update-store",
+        "description": "修改的情況下，更新计数器",
+        "enable": "${img_op==='update'}",
+        "value": {
+          "time": "${time<max_time?time+1:time}"
+        }
+      },
+      {
+        "tag": "reload-init-action",
+        "enable": "${img_op==='update' && (max_time%update_time)==0 && has_changed}",
+        "group": "saveImg"
+      },
+      {
+        "tag": "reload-init-action",
+        "enable": "${img_op==='update' && time%get_remote_time===0}",
+        "group": "update-from-remote"
+      },
+      {
+        "tag": "update-store",
+        "enable": "${img_op==='update' && time>=max_time}",
+        "value": {
+          "time": 0
+        }
+      }
+    ]
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "async": true,
+      "description": "请求目录树",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=doc.img_dir_query",
+      "appendFormFields": "server-search-form",
+      "data": {
+        "to_tree": true
+      },
+      "adapt": {
+        "server_env_data": "${data}",
+        "count": "count"
+      }
+    },
+    {
+      "tag": "ajax",
+      "async": true,
+      "group": "reload-dir",
+      "api": "post:/template_data/data?service=doc.img_dir_query",
+      "data": {
+        "to_tree": true
+      },
+      "description": "拷贝数据",
+      "adapt": {
+        "server_env_data_copy": "${data}"
+
+      }
+    },
+    {
+      "tag": "update-store",
+      "description": "将分页设置为1",
+      "group": "update_page_1",
+
+      "value": {
+        "searchForm":{
+          "page": 1,
+          "size": 10
+        }
+      }
+    },
+    {
+      "tag": "ajax",
+      "async": true,
+      "description": "请求图片",
+      "group": "dataList",
+      "api": "post:/template_data/data?service=doc.img_query",
+      "appendFormFields": "search-form",
+      "appendFields": "${searchForm}",
+      "data": {
+        "img_dir_id": "${treeSelected?.img_dir_id}"
+      },
+      "adapt": {
+        "dataList": "${data}",
+        "count": "${count}"
+      }
+    },
+
+    {
+      "tag": "ajax",
+      "async": true,
+      "description": "获取表单字段分组模式",
+      "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+      "data": {
+        "schema_page_code": "img_dir_form"
+      },
+      "adapt": {
+        "img_dir_group": "${data}"
+      }
+    },
+
+    {
+      "tag": "ajax",
+      "async": true,
+      "description": "获取表单字段分组模式",
+      "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+      "data": {
+        "schema_page_code": "flow_data"
+      },
+      "adapt": {
+        "flow_data_group": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "async": true,
+      "description": "获取表单字段分组模式",
+      "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+      "data": {
+        "schema_page_code": "img_form"
+      },
+      "adapt": {
+        "img_group": "${data}"
+      }
+    }
+  ],
+  "children": [
+
+    {
+      "tag": "css",
+      "src": "/data/logicflow/index.min.css"
+    },
+    {
+      "tag": "css",
+      "src": "/data/logicflow/extension_index.min.css"
+    },
+    {
+      "tag": "panel-group",
+      "direction": "horizontal",
+      "children": [
+        {
+          "tag": "panel",
+          "id": "left_draw",
+          "minSize": 15,
+          "defaultSize": 26,
+          "order": 1,
+          "children": [
+            {
+              "tag": "layout-fit",
+              "children": [
+                {
+                  "tag": "layout",
+                  "children": [
+                    {
+                      "tag": "sider",
+                      "width": "214px",
+                      "className": "border-right",
+                      "style": {
+                        "backgroundColor": "#fafafa"
+                      },
+                      "collapsible": true,
+                      "collapsedWidth": "40",
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "title": "图片目录",
+                          "searchToolBar": [
+
+                            {
+                              "tag": "form",
+                              "name": "server-search-form",
+                              "wrapperCol": {
+                                "span": 24
+                              },
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "server-env-tree",
+                                  "description": "查询"
+                                }
+                              ],
+                              "submitOnChange": true,
+                              "children": [
+                                {
+                                  "tag": "row",
+                                  "className": "w100",
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "style": {
+                                        "marginInlineEnd": "8px"
+                                      },
+                                      "children": [
+                                        {
+                                          "tag": "button",
+                                          "type": "primary",
+                                          "icon": "FaPlus",
+                                          "title": "新增节点",
+                                          "action": [
+                                            {
+                                              "tag": "ajax",
+                                              "description": "请求目录树",
+                                              "api": "post:/template_data/data?service=doc.img_dir_query",
+                                              "data": {
+                                                "to_tree": true
+                                              },
+                                              "adapt": {
+                                                "form_dir_list": "${data}"
+                                              }
+                                            },
+                                            {
+                                              "tag": "update-store",
+                                              "value": {
+                                                "addNodeVisible": true,
+                                                "nodeOp": "add"
+                                              }
+                                            },
+                                            {
+                                              "tag": "reset-form",
+                                              "formName": "add-node-form"
+                                            },
+                                            {
+                                              "tag": "update-form",
+                                              "formName": "add-node-form",
+                                              "value": {
+                                                "parent_id": "${treeSelected?.img_dir_id?treeSelected.img_dir_id:''}"
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "search",
+                                      "className": "flex1",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "名称",
+                                          "allowClear": true
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "tree",
+                              "showLine": true,
+                              "className": "h100",
+                              "treeSelected": "${treeSelected}",
+                              "treeKey": "${item.img_dir_id}",
+                              "treeTitle": "${item.name+'('+item.code+')'}",
+                              "treeData": "${[...server_env_data]}",
+                              "openLevel": 2,
+                              "draggable": true,
+                              "allowDrop": true,
+                              "treeIcon": "FolderOutlined",
+                              "dragAction": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=doc.handler_dir_order",
+                                  "data": {
+                                    "rows": "${rows}",
+                                    "change_parent": "${change_parent}",
+                                    "parent": "${parent}",
+                                    "dir": "${item}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "server-env-tree|reload-dir",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "showIcon": true,
+                              "selectAction": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "dataList"
+                                }
+                              ],
+                              "rightMenu": [
+                                {
+                                  "type": "item",
+                                  "icon": "PlusOutlined",
+                                  "code": "add",
+                                  "label": "新增数据"
+                                },
+                                {
+                                  "type": "item",
+                                  "icon": "EditOutlined",
+                                  "code": "edit",
+                                  "label": "修改数据"
+                                },
+                                {
+                                  "type": "separator"
+                                },
+                                {
+                                  "type": "submenu",
+                                  "label": "其他",
+                                  "children": [
+                                    {
+                                      "type": "item",
+                                      "icon": "DeleteOutlined",
+                                      "code": "delete",
+                                      "label": "删除数据"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "rightMenuAction": [
+                                {
+                                  "tag": "reset-form",
+                                  "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                                  "formName": "add-node-form"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                                  "description": "请求目录树",
+                                  "api": "post:/template_data/data?service=doc.img_dir_query",
+                                  "data": {
+                                    "to_tree": true
+                                  },
+                                  "adapt": {
+                                    "form_dir_list": "${data}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "enable": "${item.code==='add'}",
+                                  "value": {
+                                    "addNodeVisible": true,
+                                    "nodeOp": "add",
+                                    "updateNodeForm": {}
+                                  }
+                                },
+                                {
+                                  "enable": "${item.code==='add'}",
+                                  "tag": "update-form",
+                                  "formName": "add-node-form",
+                                  "value": {
+                                    "parent_id": "${node.img_dir_id}"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "enable": "${item.code==='edit'}",
+                                  "api": "post:/template_data/data?service=doc.img_dir_detail",
+                                  "data": {
+                                    "img_dir_id": "${node.img_dir_id}"
+                                  },
+                                  "start": {
+                                    "img_loading": true
+
+                                  },
+                                  "end": {
+                                    "img_loading": false
+                                  },
+                                  "adapt": {
+                                    "updateNodeForm": "${data}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "enable": "${item.code==='edit'}",
+                                  "value": {
+                                    "addNodeVisible": true,
+                                    "nodeOp": "edit"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "请求目录树",
+                                  "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                                  "api": "post:/template_data/data?service=system.menu_query",
+                                  "appendFormFields": "server-search-form",
+                                  "data": {
+                                    "to_tree": true,
+                                    "menu_type": "1"
+                                  },
+                                  "adapt": {
+                                    "server_env_data_dir": "${data}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "name": " 更新表单",
+                                  "enable": "${item.code==='edit'}",
+                                  "formName": "add-node-form",
+                                  "useStore": true,
+                                  "value": "${updateNodeForm}"
+                                },
+                                {
+                                  "tag": "check",
+                                  "enable": "${item.code=='delete' && node?.children }",
+                                  "title": "${'【'+node.menu_name+'】下存在'+node?.children.length+'个节点，请先删除节点'}",
+                                  "check": "${!node.children || (node.children && node.children.length<=0)}"
+                                },
+                                {
+                                  "tag": "confirm",
+                                  "title": "确认提示",
+                                  "content": "${'确认删除所选【'+node.name+'】节点吗'}",
+                                  "enable": "${item.code==='delete'}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "name": "删除环境",
+                                  "enable": "${item.code=='delete'}",
+                                  "group": "server-env-tree",
+                                  "api": "post:/template_data/data?service=doc.img_dir_delete",
+                                  "data": {
+                                    "img_dir_id_list": "${[node.img_dir_id]}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "server-env-tree|reload-dir",
+                                  "enable": "${item.code=='delete'}",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "dialog",
+                              "title": "${nodeOp==='add'?'新增节点':'修改节点'}",
+                              "open": "${addNodeVisible}",
+                              "action": [
+                                {
+                                  "tag": "submit-form",
+                                  "formName": "add-node-form"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "name": "添加环境节点",
+                                  "enable": "${nodeOp==='add'}",
+                                  "api": "post:/template_data/data?service=doc.img_dir_save",
+                                  "appendFormFields": "add-node-form"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "name": "修改环境节点",
+                                  "enable": "${nodeOp==='edit'}",
+                                  "api": "post:/template_data/data?service=doc.img_dir_update",
+                                  "appendFormFields": "add-node-form",
+                                  "appendFields": "${updateNodeForm}"
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "enable": "${confirmAndContinue==true}",
+                                  "formName": "add-node-form"
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "addNodeVisible": false
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "server-env-tree|reload-dir",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "tag": "form",
+                                  "name": "add-node-form",
+                                  "labelCol": {
+                                    "span": 6
+                                  },
+                                  "wrapperCol": {
+                                    "span": 18
+                                  },
+                                  "children": [
+                                    {
+                                      "tag": "listview",
+                                      "keyField": "business_group",
+                                      "itemData": "${[...img_dir_group]}",
+                                      "itemAttr": {
+                                        "tag": "row",
+                                        "children": [
+                                          {
+                                            "tag": "divider",
+                                            "orientation": "left",
+                                            "children": "${row.business_group}"
+                                          },
+                                          {
+                                            "tag": "row",
+                                            "style": {
+                                              "width": "100%"
+                                            },
+                                            "children": [
+                                              {
+                                                "tag": "listview",
+                                                "itemData": "${[...row.children]}",
+                                                "keyField": "schema_page_field_id",
+                                                "itemAttr": {
+                                                  "tag": "col",
+                                                  "span": 24,
+                                                  "children": [
+                                                    {
+                                                      "tag": "form-item",
+                                                      "label": "${row.name}",
+                                                      "rules": "${row?.attrs?.rules??[]}",
+                                                      "name": "${row.key}",
+                                                      "children": [
+                                                        {
+                                                          "tag": "${row.tag?row.tag:'input'}",
+                                                          "placeholder": "请输入"
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "content",
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "style": {
+                            "background": "#fafafa"
+                          },
+                          "title": "图片管理",
+                          "topRight": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "danger": true,
+                              "disabled": "${!activeRow?.img_id}",
+                              "children": "删除",
+                              "confirm": {
+                                "title": "确定删除所选数据吗？",
+                                "description": "${'确认删除【'+activeRow?.name+'】吗？'}"
+                              },
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=doc.img_delete",
+                                  "data": {
+                                    "img_id_list": "${[activeRow.img_id]}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "dataList"
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "activeRow": {}
+                                  }
+                                }
+                              ]
+                            }
+                          ],
+                          "searchToolBar": [
+                            {
+                              "tag": "form",
+                              "name": "search-form",
+                              "initialValues": "${searchForm}",
+                              "labelCol": {
+                                "span": 5
+                              },
+                              "wrapperCol": {
+                                "span": 19
+                              },
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "update_page_1|dataList",
+                                  "description": "todo 这里搜索需要将page 设置为1"
+                                }
+                              ],
+                              "submitOnChange": true,
+                              "children": [
+                                {
+                                  "tag": "row",
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "name": "search",
+                                      "label": "搜索",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "名称",
+                                          "allowClear": true
+                                        }
+                                      ]
+                                    }
+
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "row",
+                              "className": "padding10",
+                              "children": [
+                                {
+                                  "tag": "listview",
+                                  "keyField": "img_id",
+                                  "itemData": "${dataList}",
+                                  "rowClickAction": [
+                                    {
+                                      "tag": "update-store",
+                                      "value": {
+                                        "activeRow": "${row.img_id==activeRow.img_id?{}:row}",
+                                        "content_tmp": "",
+                                        "img_tmp": "",
+                                        "time": 0,
+                                        "img_flow_type": "${row.img_id==activeRow.img_id?'':row.type}"
+                                      }
+                                    },
+                                    {
+                                      "tag": "update-form",
+                                      "formName": "img-form",
+                                      "enable": "${activeRow?.img_id?true:false}",
+                                      "value": "${activeRow}"
+                                    },
+                                    {
+                                      "tag": "reset-form",
+                                      "formName": "img-form",
+                                      "enable": "${activeRow?.img_id?false:true}"
+                                    },
+                                    {
+                                      "tag": "ajax",
+                                      "enable": "${activeRow?.img_id?true:false}",
+                                      "api": "post:/template_data/data?service=doc.img_detail",
+                                      "data": {
+                                        "img_id":"${activeRow?.img_id}"
+                                      },
+                                      "adapt": {
+                                        "content_tmp": "${data.content}"
+                                      }
+                                    },
+                                    {
+                                      "tag": "draw-data",
+                                      "method": "setData",
+                                      "from_field": "content_tmp"
+                                    }
+                                  ],
+                                  "itemAttr": {
+                                    "tag": "col",
+                                    "style": {
+                                      "padding": "0 8px 8px 0px",
+                                      "width": 124
+                                    },
+                                    "children": [
+                                      {
+                                        "tag": "card",
+                                        "title": "${row.name}",
+                                        "hoverable": "true",
+                                        "className": "${activeRow.img_id==row.img_id?'img-active':''}",
+                                        "size": "small",
+                                        "children": [
+                                          {
+                                            "tag": "div",
+                                            "stopPropagation": true,
+                                            "children": [
+                                              {
+                                                "tag": "attachment-show",
+                                                "path": "${row.path}",
+                                                "height": 68,
+                                                "width": "auto",
+                                                "style": {
+                                                  "objectFit": "cover"
+                                                }
+                                              }
+                                            ]
+                                          }
+
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          ],
+                          "bottomAlign": "right",
+                          "bottomToolBar": [
+                            {
+                              "tag": "pagination",
+                              "align": "center",
+                              "simple": true,
+                              "showSizeChanger": false,
+                              "pageSize": "${searchForm.size}",
+                              "current": "${searchForm.page}",
+                              "total": "${count}",
+                              "showTotal": true,
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "dataList",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "className": "border-right"
+        },
+        {
+          "tag": "panel-resize"
+        },
+        {
+          "tag": "panel",
+          "children": [
+
+            {
+              "tag": "layout-fit",
+              "title": "${activeRow.img_id?'【'+activeRow.name+'】编辑':'图片新增'}",
+              "topRight": [
+                {
+                  "tag": "span",
+                  "visible": "${!!activeRow.img_id}",
+                  "style": {
+                    "fontSize": 12,
+                    "color": "#999",
+                    "paddingRight": 10
+
+                  },
+                  "children": "${(max_time-time)+' 秒后将自动保存，请注意修改'}"
+                },
+                {
+                  "tag": "button",
+                  "disabled": "${!activeRow?.img_id}",
+                  "children": "复制路径",
+                  "action": [
+                    {
+                      "tag": "copy-text",
+                      "value": "${window.location.origin+activeRow.path}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "disabled": "${!activeRow?.img_id}",
+                  "children": "打开图片",
+                  "action": [
+                    {
+                      "tag": "method",
+                      "method": "${window.open(window.location.origin+activeRow.path)}"
+                    }
+                  ]
+                },
+
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "children": "${!activeRow?.img_id?'新增':'保存'}",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "saveImg"
+                    }
+
+                  ]
+                }
+              ],
+              "searchToolBar": [
+                {
+                  "tag": "form",
+                  "initialValues": {
+                    "type": "img"
+                  },
+                  "name": "img-form",
+                  "children": [
+                    {
+                      "tag": "listview",
+                      "keyField": "business_group",
+                      "itemData": "${img_group}",
+                      "itemAttr": {
+                        "tag": "row",
+                        "children": [
+                          {
+                            "tag": "row",
+                            "style": {
+                              "width": "100%"
+                            },
+                            "children": [
+                              {
+                                "tag": "listview",
+                                "itemData": "${[...row.children]}",
+                                "keyField": "schema_page_field_id",
+                                "itemAttr": {
+                                  "tag": "col",
+                                  "span": 6,
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "label": "${row.name}",
+                                      "rules": "${row?.attrs?.rules??[]}",
+                                      "name": "${row.key}",
+                                      "children": [
+                                        {
+                                          "tag": "${row.tag?row.tag:'input'}",
+                                          "placeholder": "请输入"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "children": [
+                {
+                  "refName": "draw",
+                  "visible": "${img_flow_type==='img'}",
+                  "tag": "draw"
+                },
+                {
+                  "tag": "layout",
+                  "visible": "${img_flow_type==='flow'}",
+                  "children": [
+                    {
+                      "tag": "content",
+                      "children": [
+                        {
+                          "tag": "flow",
+                          "flowConfig": {
+                            "grid": true,
+                            "edgeType": "bezier",
+                            "style": {
+                              "rect": {
+                                "rx": 5,
+                                "ry": 5,
+                                "strokeWidth": 2
+                              },
+                              "circle": {
+                                "fill": "#f5f5f5",
+                                "stroke": "#666"
+                              },
+                              "ellipse": {
+                                "fill": "#dae8fc",
+                                "stroke": "#6c8ebf"
+                              },
+                              "polygon": {
+                                "fill": "#d5e8d4",
+                                "stroke": "#82b366"
+                              },
+                              "diamond": {
+                                "fill": "#ffe6cc",
+                                "stroke": "#d79b00"
+                              },
+                              "text": {
+                                "color": "#b85450",
+                                "fontSize": 12
+                              }
+                            },
+                            "snapline": {
+                              "stroke": "#1E90FF",
+                              "strokeWidth": 1
+                            },
+                            "keyboard": {
+                              "enabled": true
+                            }
+                          },
+                          "patternItems": [
+                            {
+                              "type": "circle",
+                              "text": "开始",
+                              "label": "开始节点",
+                              "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAAnBJREFUOBGdVL1rU1EcPfdGBddmaZLiEhdx1MHZQXApraCzQ7GKLgoRBxMfcRELuihWKcXFRcEWF8HBf0DdDCKYRZpnl7p0svLe9Zzbd29eQhTbC8nv+9zf130AT63jvooOGS8Vf9Nt5zxba7sXQwODfkWpkbjTQfCGUd9gIp3uuPP8bZ946g56dYQvnBg+b1HB8VIQmMFrazKcKSvFW2dQTxJnJdQ77urmXWOMBCmXM2Rke4S7UAW+/8ywwFoewmBps2tu7mbTdp8VMOkIRAkKfrVawalJTtIliclFbaOBqa0M2xImHeVIfd/nKAfVq/LGnPss5Kh00VEdSzfwnBXPUpmykNss4lUI9C1ga+8PNrBD5YeqRY2Zz8PhjooIbfJXjowvQJBqkmEkVnktWhwu2SM7SMx7Cj0N9IC0oQXRo8xwAGzQms+xrB/nNSUWVveI48ayrFGyC2+E2C+aWrZHXvOuz+CiV6iycWe1Rd1Q6+QUG07nb5SbPrL4426d+9E1axKjY3AoRrlEeSQo2Eu0T6BWAAr6COhTcWjRaYfKG5csnvytvUr/WY4rrPMB53Uo7jZRjXaG6/CFfNMaXEu75nG47X+oepU7PKJvvzGDY1YLSKHJrK7vFUwXKkaxwhCW3u+sDFMVrIju54RYYbFKpALZAo7sB6wcKyyrd+aBMryMT2gPyD6GsQoRFkGHr14TthZni9ck0z+Pnmee460mHXbRAypKNy3nuMdrWgVKj8YVV8E7PSzp1BZ9SJnJAsXdryw/h5ctboUVi4AFiCd+lQaYMw5z3LGTBKjLQOeUF35k89f58Vv/tGh+l+PE/wG0rgfIUbZK5AAAAABJRU5ErkJggg=="
+                            },
+                            {
+                              "type": "rect",
+                              "label": "任务",
+                              "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAHBJREFUOE9jZKAQMFKonwFsgFjZ/wY8Bv2HysEsA/HB7FddjA0QA8r//2f4z9CIwxCYBphBEGWMDA2vOhkZ4QaAOKR4B2TpqAHDLwzwJCTsyYORoR6RDvAnZZAB8OQLZYPTIjwpk5IC0dWSlHyxWQQA85RaEdxFEioAAAAASUVORK5CYII=",
+                              "className": "import_icon"
+                            },
+                            {
+                              "type": "custom-rect",
+                              "label": "自定义任务",
+                              "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAHBJREFUOE9jZKAQMFKonwFsgFjZ/wY8Bv2HysEsA/HB7FddjA0QA8r//2f4z9CIwxCYBphBEGWMDA2vOhkZ4QaAOKR4B2TpqAHDLwzwJCTsyYORoR6RDvAnZZAB8OQLZYPTIjwpk5IC0dWSlHyxWQQA85RaEdxFEioAAAAASUVORK5CYII=",
+                              "className": "import_icon"
+                            },
+                            {
+                              "type": "polygon",
+                              "label": "条件判断",
+                              "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAAHeEJUAAAAABGdBTUEAALGPC/xhBQAAAvVJREFUOBGNVEFrE0EU/mY3bQoiFlOkaUJrQUQoWMGePLX24EH0IIoHKQiCV0G8iE1covgLiqA/QTzVm1JPogc9tIJYFaQtlhQxqYjSpunu+L7JvmUTU3AgmTfvffPNN++9WSA1DO182f6xwILzD5btfAoQmwL5KJEwiQyVbSVZ0IgRyV6PTpIJ81E5ZvqfHQR0HUOBHW4L5Et2kQ6Zf7iAOhTFAA8s0pEP7AXO1uAA52SbqGk6h/6J45LaLhO64ByfcUzM39V7ZiAdS2yCePPEIQYvTUHqM/n7dgQNfBKWPjpF4ISk8q3J4nB11qw6X8l+FsF3EhlkEMfrjIer3wJTLwS2aCNcj4DbGxXTw00JmAuO+Ni6bBxVUCvS5d9aa04+so4pHW5jLTywuXAL7jJ+D06sl82Sgl2JuVBQn498zkc2bGKxULHjCnSMadBKYDYYHAtsby1EQ5lNGrQd4Y3v4Zo0XdGEmDno46yCM9Tk+RiJmUYHS/aXHPNTcjxcbTFna000PFJHIVZ5lFRqRpJWk9/+QtlOUYJj9HG5pVFEU7zqIYDVsw2s+AJaD8wTd2umgSCCyUxgGsS1Y6TBwXQQTFuZaHcd8gAGioE90hlsY+wMcs30RduYtxanjMGal8H5dMW67dmT1JFtYUEe8LiQLRsPZ6IIc7A4J5tqco3T0pnv/4u0kyzrYUq7gASuEyI8VXKvB9Odytv6jS/PNaZBln0nioJG/AVQRZvApOdhjj3Jt8QC8Im09SafwdBdvIpztpxWxpeKCC+EsFdS8DCyuCn2munFpL7ctHKp+Xc5cMybeIyMAN33SPL3ZR9QV1XVwLyzHm6Iv0/yeUuUb7PPlZC4D4HZkeu6dpF4v9j9MreGtMbxMMRLIcjJic9yHi7WQ3yVKzZVWUr5UrViJvn1FfUlwe/KYVfYyWRLSGNu16hR01U9IacajXPei0wx/5BqgInvJN+MMNtNme7ReU9SBbgntovn0kKHpFg7UogZvaZiOue/q1SBo9ktHzQAAAAASUVORK5CYII="
+                            },
+                            {
+                              "type": "circle",
+                              "text": "结束",
+                              "label": "结束节点",
+                              "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAA1BJREFUOBFtVE1IVUEYPXOf+tq40Y3vPcmFIdSjIorWoRG0ERWUgnb5FwVhYQSl72oUoZAboxKNFtWiwKRN0M+jpfSzqJAQclHo001tKkjl3emc8V69igP3znzfnO/M9zcDcKT67azmjYWTwl9Vn7Vumeqzj1DVb6cleQY4oAVnIOPb+mKAGxQmKI5CWNJ2aLPatxWa3aB9K7/fB+/Z0jUF6TmMlFLQqrkECWQzOZxYGjTlOl8eeKaIY5yHnFn486xBustDjWT6dG7pmjHOJd+33t0iitTPkK6tEvjxq4h2MozQ6WFSX/LkDUGfFwfhEZj1Auz/U4pyAi5Sznd7uKzznXeVHlI/Aywmk6j7fsUsEuCGADrWARXXwjxWQsUbIupDHJI7kF5dRktg0eN81IbiZXiTESic50iwS+t1oJgL83jAiBupLDCQqwziaWSoAFSeIR3P5Xv5az00wyIn35QRYTwdSYbz8pH8fxUUAtxnFvYmEmgI0wYXUXcCCSpeEVpXlsRhBnCEATxWylL9+EKCAYhe1NGstUa6356kS9NVvt3DU2fd+Wtbm/+lSbylJqsqkSm9CRhvoJVlvKPvF1RKY/FcPn5j4UfIMLn8D4UYb54BNsilTDXKnF4CfTobA0FpoW/LSp306wkXM+XaOJhZaFkcNM82ASNAWMrhrUbRfmyeI1FvRBTpN06WKxa9BK0o2E4Pd3zfBBEwPsv9sQBnmLVbLEIZ/Xe9LYwJu/Er17W6HYVBc7vmuk0xUQ+pqxdom5Fnp55SiytXLPYoMXNM4u4SNSCFWnrVIzKG3EGyMXo6n/BQOe+bX3FClY4PwydVhthOZ9NnS+ntiLh0fxtlUJHAuGaFoVmttpVMeum0p3WEXbcll94l1wM/gZ0Ccczop77VvN2I7TlsZCsuXf1WHvWEhjO8DPtyOVg2/mvK9QqboEth+7pD6NUQC1HN/TwvydGBARi9MZSzLE4b8Ru3XhX2PBxf8E1er2A6516o0w4sIA+lwURhAON82Kwe2iDAC1Watq4XHaGQ7skLcFOtI5lDxuM2gZe6WFIotPAhbaeYlU4to5cuarF1QrcZ/lwrLaCJl66JBocYZnrNlvm2+MBCTmUymPrYZVbjdlr/BxlMjmNmNI3SAAAAAElFTkSuQmCC"
+                            }
+                          ],
+                          "nodeClickAction": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "lastNodeData": "${id}"
+                              }
+                            },
+                            {
+                              "tag": "update-form",
+                              "formName": "flow-data-form",
+                              "value": {
+                                "node_key": "${id}",
+                                "node_type": "${['rect'].indexOf(type)>=0?'node':(text.value=='开始'?'node_start':'node_end')}",
+                                "name": "${text.value}"
+                              }
+
+                            }
+                          ],
+                          "refName": "flow"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "sider",
+                      "width": "300px",
+                      "theme": "light",
+                      "className": "border-right",
+                      "style": {
+                        "backgroundColor": "#fafafa"
+                      },
+                      "collapsible": true,
+                      "collapsedWidth": "40",
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "title": "${!lastNodeData?'请点击节点':'流程属性'}",
+                          "topRight": [
+                            {
+                              "tag": "button",
+                              "disabled": "${!lastNodeData}",
+                              "children": "保存属性",
+                              "action": [
+                                {
+                                  "tag": "draw-data",
+                                  "method": "updateNode"
+                                }
+                              ]
+                            }
+
+                          ],
+                          "children": [
+                            {
+                              "tag": "form",
+                              "disabled": "${!lastNodeData}",
+                              "labelCol": {
+                                "span": 6
+                              },
+                              "name": "flow-data-form",
+                              "children": [
+                                {
+                                  "tag": "listview",
+                                  "keyField": "business_group",
+                                  "itemData": "${[...flow_data_group]}",
+                                  "itemAttr": {
+                                    "tag": "row",
+                                    "children": [
+                                      {
+                                        "tag": "divider",
+                                        "orientation": "left",
+                                        "children": "${row.business_group}"
+                                      },
+                                      {
+                                        "tag": "row",
+                                        "style": {
+                                          "width": "100%"
+                                        },
+                                        "children": [
+                                          {
+                                            "tag": "listview",
+                                            "itemData": "${[...row.children]}",
+                                            "keyField": "schema_page_field_id",
+                                            "itemAttr": {
+                                              "tag": "col",
+                                              "span": 24,
+                                              "children": [
+                                                {
+                                                  "tag": "form-item",
+                                                  "label": "${row.name}",
+                                                  "rules": "${row?.attrs?.rules??[]}",
+                                                  "name": "${row.key}",
+                                                  "children": [
+                                                    {
+                                                      "tag": "${row.tag?row.tag:'input'}",
+                                                      "placeholder": "请输入"
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                }
+
+
+                              ]
+                            }
+
+                          ]
+                        }
+
+                      ]
+                    }
+                  ]
+                }
+
+
+
+              ]
+            }
+          ],
+          "id": "right_draw",
+          "order": 2,
+          "minSize": 15
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "open": "${showSaveDialog}",
+      "title": "${'超过'+max_time+'秒没有保存，是否保存?'}",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "showSaveDialog": false
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "saveImg"
+        }
+      ],
+      "children": [
+        "您长时间没有保存，是否保存该记录"
+      ]
+    }
+  ]
+}

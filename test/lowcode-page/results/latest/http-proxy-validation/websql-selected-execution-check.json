@@ -1,0 +1,50 @@
+{
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "tableName": "websql_selected_exec_1779093825732",
+  "buttonExecution": {
+    "selectedText": "SELECT name, selected_flag FROM websql_selected_exec_1779093825732 WHERE selected_flag = 'button' ORDER BY id;",
+    "requestSql": "SELECT name, selected_flag FROM websql_selected_exec_1779093825732 WHERE selected_flag = 'button' ORDER BY id;",
+    "responseCode": "0",
+    "rowCount": 1,
+    "statementType": "select"
+  },
+  "shortcutExecution": {
+    "selectedText": "SELECT name, selected_flag FROM websql_selected_exec_1779093825732 WHERE selected_flag = 'shortcut' ORDER BY id;",
+    "requestSql": "SELECT name, selected_flag FROM websql_selected_exec_1779093825732 WHERE selected_flag = 'shortcut' ORDER BY id;",
+    "responseCode": "0",
+    "rowCount": 1,
+    "statementType": "select"
+  },
+  "suggestions": {
+    "keyword": [
+      "SELECT",
+      "SHOW TABLES"
+    ],
+    "table": [
+      "websql_selected_exec_1779093825732Table · 3 fields"
+    ],
+    "column": [
+      "idwebsql_selected_exec_1779093825732 · INTEGER · PK",
+      "namewebsql_selected_exec_1779093825732 · TEXT",
+      "selected_flagwebsql_selected_exec_1779093825732 · TEXT",
+      "SELECT",
+      "FROM",
+      "WHERE",
+      "JOIN",
+      "LEFT JOIN",
+      "RIGHT JOIN",
+      "INNER JOIN",
+      "ON",
+      "GROUP BY"
+    ]
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-selected-execution-check.png",
+  "report": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-selected-execution-check.json",
+  "visibleValues": [
+    "beta",
+    "shortcut"
+  ]
+}

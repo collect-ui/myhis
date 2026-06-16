@@ -1,0 +1,52 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "fileName": "idea_mode_1778504243248.py",
+  "filePath": "/data/project/test/test/idea_mode_1778504243248.py",
+  "checks": {
+    "typeManualRemoved": true,
+    "noSuffixAsDir": true,
+    "suffixAsFile": true,
+    "autoPathForFile": true,
+    "childDirAddedUnderRoot": true,
+    "childDirVisibleAfterAdd": true,
+    "folderStillExpanded": true,
+    "fileNodeVisibleAfterAdd": true,
+    "fileAutoOpened": true,
+    "fileCreatedOnServer": true
+  },
+  "trace": {
+    "contentRequestPaths": [
+      "/data/project/test/test/idea_mode_1778504243248.py"
+    ],
+    "addRequestPayloads": [
+      {
+        "name": "idea_dir_1778504243248",
+        "path": "/data/project/test/idea_dir_1778504243248",
+        "is_dir": "1",
+        "parent_id": ""
+      },
+      {
+        "name": "idea_child_1778504243248",
+        "path": "/data/project/test/test/idea_child_1778504243248",
+        "is_dir": "1",
+        "parent_id": "4ff6c4ca-dd67-56b3-9e4f-2025c44e948c"
+      },
+      {
+        "name": "idea_mode_1778504243248.py",
+        "path": "/data/project/test/test/idea_mode_1778504243248.py",
+        "is_dir": "0",
+        "parent_id": "4ff6c4ca-dd67-56b3-9e4f-2025c44e948c"
+      }
+    ],
+    "tabTitles": [
+      "Editor工作台",
+      "idea_mode_1778504243248.py"
+    ]
+  },
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-add-autodetect-and-open-check.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true
+}

@@ -1,0 +1,26 @@
+{
+  "desc": "替换前和替换后，概念调整下，方便对比，从左往右，传过来的数据，是前段的数据，left。已有的后台数据是right",
+  "left_save_field": "after",
+  "right_save_field": "before",
+  "op_field_transfer": {
+    "name": "op_name"
+  },
+  "fields": [
+    {
+      "rule": "array_obj_value",
+      "left_field": "[price_doc_tree_id]",
+      "right_field": "[price_doc_tree_id]",
+      "field": "[tree_list]",
+      "name": "排序",
+      "with_add_remove": true,
+      "left": "[tree_list]",
+      "right": "[local_tree_list]",
+      "left_value_field": "[order_index]",
+      "right_value_field": "[order_index]",
+      "operation": "modify",
+      "append_left_fields": [
+        "[*]"
+      ]
+    }
+  ]
+}

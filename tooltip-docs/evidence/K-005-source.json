@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "active_tab_text": "生命周期",
+  "title": "生命周期(服务描述)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "这些模块只有module 是必须的"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "params->handler_params->module->result_handler",
+    "服务可以操作的部分目前是四个，\n第一步参数定义\n第二步参数处理\n第三步模块执行\n第四步结果处理\n\n四步中途如果有一个错误则直接返回\n\n请求拦截和定期任务没有定义生命周期。它属于更上一层的包装，而且基本不怎么操作。"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "params",
+          "json",
+          "",
+          "参数定义，http请求参数+内部定义"
+        ],
+        [
+          "handler_params",
+          "array",
+          "",
+          "参数处理。处理参数、增加修改参数"
+        ],
+        [
+          "module",
+          "string",
+          "是",
+          "运行的模块"
+        ],
+        [
+          "result_handler",
+          "array",
+          "",
+          "和参数处理是一样，所以result_handler的文档是参数处理是一致的"
+        ]
+      ]
+    }
+  ],
+  "body_text": "生命周期(服务描述)  \n示例\n这些模块只有module 是必须的\n参数\n参数\t类型\t必须\t说明\nparams\n\t\njson\n\t\n\t\n参数定义，http请求参数+内部定义\n\n\nhandler_params\n\t\narray\n\t\n\t\n参数处理。处理参数、增加修改参数\n\n\nmodule\n\t\nstring\n\t\n是\n\t\n运行的模块\n\n\nresult_handler\n\t\narray\n\t\n\t\n和参数处理是一样，所以result_handler的文档是参数处理是一致的\n菜单导航\n示例\n参数\n示例",
+  "task_id": "K-005",
+  "source_group": "如何编写服务",
+  "source_title": "生命周期",
+  "source_doc_text": "4.生命周期\n服务描述",
+  "read_at": "2026-05-07T08:22:11.765Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/K-005-source.png"
+}

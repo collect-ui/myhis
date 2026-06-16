@@ -1,0 +1,130 @@
+{
+  "tag": "layout-fit",
+  "className": "auto-login-page",
+  "children": [
+    {
+      "tag": "css",
+      "src": "/data/login.css"
+    },
+    {
+      "tag": "div",
+      "className": "login-main-area",
+      "children": [
+        {
+          "tag": "div",
+          "className": "login-main"
+        },
+        {
+          "tag": "div",
+          "className": "login-form",
+          "children": [
+            {
+              "tag": "div",
+              "className": "login-title",
+              "children": "智投登录"
+            },
+
+            {
+              "tag": "form",
+              "className": "login-form-data",
+              "name": "userLoginForm",
+              "layout":"vertical",
+              "action": [
+                {
+                  "tag": "ajax",
+                  "api": "post:/template_data/data?service=system.login",
+                  "appendFormFields": "userLoginForm"
+                },
+                {
+                  "tag": "redirect",
+                  "url": "/"
+                }
+              ],
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "username",
+                  "label": "用户名",
+                  "style": {
+                    "marginBottom": 24
+                  },
+
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入您的用户名"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "prefixIcon": "UserOutlined",
+                      "placeholder": "用户名"
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "label": "密码",
+                  "name": "password",
+                  "style": {
+                    "marginBottom": 44
+                  },
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入您的密码"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "prefixIcon": "FaCompass",
+                      "type": "password",
+                      "placeholder": "密码"
+                    }
+                  ]
+                },
+                {
+                  "tag":"form-item",
+                  "children": [
+                    {
+                      "tag": "button",
+                      "className": "login-btn",
+                      "htmlType":"submit",
+                      "children": "登 陆"
+                    }
+                  ]
+                }
+
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "text-align": "center",
+                "color": "#fff"
+
+              },
+              "children": [
+                "没有账号？",
+                {
+                  "tag": "a",
+                  "style": {
+                    "color": "white",
+                    "text-decoration": "none",
+                    "font-weight": "500",
+                    "border-bottom": "1px dashed rgba(255, 255, 255, 0.5)",
+                    "padding-bottom": "2px"
+                  },
+                  "href": "/collect-ui/#/register",
+                  "children": "立即注册"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

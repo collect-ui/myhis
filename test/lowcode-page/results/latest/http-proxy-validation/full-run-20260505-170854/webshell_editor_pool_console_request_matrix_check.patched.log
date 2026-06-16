@@ -1,0 +1,13 @@
+node:internal/process/promises:391
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.waitForSelector: Timeout 20000ms exceeded.
+Call log:
+[2m  - waiting for locator('.workspace-http-console-root') to be visible[22m
+
+    at /data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/patched-scripts/webshell_editor_pool_console_request_matrix_check.js:122:14 {
+  name: 'TimeoutError'
+}
+
+Node.js v20.20.0

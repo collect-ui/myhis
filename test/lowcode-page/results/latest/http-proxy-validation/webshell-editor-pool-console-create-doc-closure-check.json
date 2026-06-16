@@ -1,0 +1,16 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "caseName": "auto_console_create_1777785597504",
+  "expectedGroupId": "22d4a5db-aa91-4a9b-a49b-053649358969",
+  "createdDocId": "f77bef92-1dd4-45b5-9281-88338a575031",
+  "createdTitle": "auto_console_create_1777785597504",
+  "createdParentDir": "22d4a5db-aa91-4a9b-a49b-053649358969",
+  "saveNotice": "",
+  "saveToast": "",
+  "cleanupDeleted": true,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true,
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-console-create-doc-closure-check.png"
+}

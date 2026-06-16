@@ -1,0 +1,54 @@
+# 项目点路由
+service:
+  - name: "登录"
+    path: "login/index.yml"
+  - name: "码表"
+    path: "sys_code/index.yml"
+  - name: "菜单"
+    path: "menu/index.yml"
+  - name: "附件"
+    path: "attachment/index.yml"
+  - name: "邮箱登记"
+    path: "mail_account/index.yml"
+  - name: "角色菜单"
+    path: "role_menu/index.yml"
+  - name: "前端文件夹"
+    path: "frontend_doc_group/index.yml"
+
+  - name: "数据对象"
+    path: "schema_page_data/index.yml"
+
+  - name: "字段配置"
+    path: "schema_page_field/index.yml"
+
+  - name: "字段配置"
+    path: "schema_page/index.yml"
+
+  - name: "数据库"
+    path: "database/index.yml"
+
+  - name: "注册信息"
+    path: "registration/index.yml"
+  - name: "消息通知"
+    path: "msg/index.yml"
+
+  - name: "系统按钮"
+    path: "sys_btn/index.yml"
+
+  - name: "路由跟踪"
+    path: "location_tracker/index.yml"
+
+  - name: "问题反馈"
+    path: "feedback/index.yml"
+
+  - name: "下拉"
+    path: "pull_down/index.yml"
+
+  - name: "BCS码表"
+    path: "bcs_code/index.yml"
+
+  - name: "翻译注册表"
+    path: "translate_registry/index.yml"
+
+  - name: "翻译预热"
+    path: "translate_preload/index.yml"

@@ -1,0 +1,91 @@
+{
+  "ok": true,
+  "active_tab_text": "什么是参数",
+  "title": "什么是参数(服务描述)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "定义服务的params参数，与参数的简单校验",
+    "参数优先级template >你传的>default 。最后运行check",
+    "每个默认有参数session_user_id，当前登陆用户ID"
+  ],
+  "textarea_count": 6,
+  "textarea_values": [
+    "- key: bulk_create_user\n    module: bulk_create\n    log: true\n    http: true\n    params:\n      user_list:\n        check:\n          template: \"{{must .user_list}}\"\n          err_msg: 用户列表不能为空",
+    "参数就是前台过来的参数，参数只能是json对象，里面有个service+一些其他业务参数。\n    示例中params 是一个参数池，参数是可以http 请求传来，也可以自己定义，主要存储一些key，value 字典对象，handler_params 和result_handler 可以对参数进行处理。\n请求过来的参数，也是直接设置到params,params贯穿了整个服务。handler_params 也是对参数进行处理，result_handler 是运行完成时候对参数处理。\n    参数是存储在改服务里 ，一个变量区域。就好比是一个大箱子，每个步骤都可以往箱子里面放东西，只要自己保证名称唯一，取的时候就不会混乱。参数定义，handler_params ，result_handler 都是往这个大箱子放与拿东西。\n    params 可以做一下简单字段校验，生成默认值；比如字段不能为空；删除is_delete默认值为0，创建时间create_time默认当前时间。创建人当前用户。",
+    "log: true\n    http: true\n    params:\n      doc_group_list:\n        check:\n          template: \"{{must .doc_group_list}}\"\n          err_msg: 分组不能为空",
+    "log: true\n    http: true\n    params:\n      is_delete:\n        default: 1",
+    "log: true\n    http: true\n    params:\n      create_time:\n        template: \"{{current_date_time}}\"",
+    "log: true\n    http: true\n    params:\n      create_user:\n        template: \"{{.session_user_id}}\""
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "params",
+          "json",
+          "是",
+          "param 是map ,下面一级表示你的变量，比如示例用user_list ，表示请求服务有个user_list 变量"
+        ],
+        [
+          "params[你字段]",
+          "json",
+          "",
+          "字段定义规则"
+        ],
+        [
+          "params[你字段].template",
+          "template",
+          "",
+          "模板生成数据。系统里面template类型 是采用golang 模板https://pkg.go.dev/text/template。通过计算返回值，同时也增加额外模板自定义函数，详情见模块【模板函数】"
+        ],
+        [
+          "params[你字段].type",
+          "string",
+          "",
+          "支持转数据类型，比如bool,int"
+        ],
+        [
+          "params[你字段].check",
+          "json",
+          "",
+          "字段校验"
+        ],
+        [
+          "params[你字段].check.template",
+          "template",
+          "是",
+          "运算结果true 表示正常，false 表示检查不通过"
+        ],
+        [
+          "params[你字段].check.err_msg",
+          "template",
+          "是",
+          "当检查不通过的提示信息"
+        ],
+        [
+          "params[你字段].default",
+          "",
+          "",
+          "默认值，类型不限制"
+        ]
+      ]
+    }
+  ],
+  "body_text": "什么是参数(服务描述)  \n示例\n定义服务的params参数，与参数的简单校验\n参数优先级template >你传的>default 。最后运行check\n每个默认有参数session_user_id，当前登陆用户ID\n参数\n参数\t类型\t必须\t说明\nparams\n\t\njson\n\t\n是\n\t\nparam 是map ,下面一级表示你的变量，比如示例用user_list ，表示请求服务有个user_list 变量\n\n\nparams[你字段]\n\t\njson\n\t\n\t\n字段定义规则\n\n\nparams[你字段].template\n\t\ntemplate\n\t\n\t\n模板生成数据。系统里面template类型 是采用golang 模板https://pkg.go.dev/text/template。通过计算返回值，同时也增加额外模板自定义函数，详情见模块【模板函数】\n\n\nparams[你字段].type\n\t\nstring\n\t\n\t\n支持转数据类型，比如bool,int\n\n\nparams[你字段].check\n\t\njson\n\t\n\t\n字段校验\n\n\nparams[你字段].check.template\n\t\ntemplate\n\t\n是\n\t\n运算结果true 表示正常，false 表示检查不通过\n\n\nparams[你字段].check.err_msg\n\t\ntemplate\n\t\n是\n\t\n当检查不通过的提示信息\n\n\nparams[你字段].default\n\t\n\t\n\t\n默认值，类型不限制\n示例\n1. 不能为空校验\n2. 默认值\n3. 创建时间默认当前时间\n4. 默认当前登陆用户\n菜单导航\n示例\n参数\n示例\n1.不能为空校验\n2.默认值\n3.创建时间默认当前时间\n4.默认当前登陆用户",
+  "task_id": "K-002",
+  "source_group": "如何编写服务",
+  "source_title": "什么是参数",
+  "source_doc_text": "2.什么是参数\n服务描述",
+  "read_at": "2026-05-07T08:21:59.782Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/K-002-source.png"
+}

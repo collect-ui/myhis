@@ -1,0 +1,20 @@
+{
+  "pass": true,
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "filePath": "/data/project/test/test.html",
+  "checks": {
+    "createFile": true,
+    "openFileInEditor": true,
+    "defaultSplitPreviewVisible": true,
+    "previewButtonVisible": true,
+    "previewRenderOk": true,
+    "splitPreviewRenderOk": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-html-preview-check.png",
+  "report": "",
+  "error": ""
+}

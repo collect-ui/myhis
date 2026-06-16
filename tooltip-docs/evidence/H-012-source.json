@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "active_tab_text": "result2params",
+  "title": "result2params(结果转参数)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "结果转参数"
+  ],
+  "textarea_count": 3,
+  "textarea_values": [
+    "result_handler:\n      - key: result2params\n        fields:\n          - to: \"[config_params]\"",
+    "将运行的结果转参数。执行完成结果后，结果还需要进行处理，比如去重，结合拼接一些字段。\n前面是param2result 参数转结构，同样也支持结果转参数",
+    "result_handler:\n      - key: result2params\n        fields:\n          - from: \"[access_token]\"\n            to: \"[access_token]\""
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "result2params"
+        ],
+        [
+          "fields",
+          "array",
+          "是",
+          "需要转参数的字段内容"
+        ],
+        [
+          "fields[to]",
+          "string",
+          "是",
+          "转到参数的哪个字段,[你的变量]"
+        ],
+        [
+          "fields[from]",
+          "string",
+          "",
+          "如果没有配置值from,将整个结果转字段，如果配置from，这将结果里面字段转参数。[你的结果变量]"
+        ]
+      ]
+    }
+  ],
+  "body_text": "result2params(结果转参数)  \n示例\n结果转参数\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nresult2params\n\n\nfields\n\t\narray\n\t\n是\n\t\n需要转参数的字段内容\n\n\nfields[to]\n\t\nstring\n\t\n是\n\t\n转到参数的哪个字段,[你的变量]\n\n\nfields[from]\n\t\nstring\n\t\n\t\n如果没有配置值from,将整个结果转字段，如果配置from，这将结果里面字段转参数。[你的结果变量]\n示例\n1. 取对象的某个字段转参数\n菜单导航\n示例\n参数\n示例\n1.取对象的某个字段转参数",
+  "task_id": "H-012",
+  "source_group": "参数处理",
+  "source_title": "result2params",
+  "source_doc_text": "16.result2params\n结果转参数",
+  "read_at": "2026-05-07T08:21:35.513Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-012-source.png"
+}

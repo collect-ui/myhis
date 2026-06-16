@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "sentContinue": true,
+    "sawModelRequestTool": true,
+    "uiHasRequestPreview": true,
+    "uiHasModel": true,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  "textPreview": "调试链路 运行中 第 1 步 · 模型请求 工具名: model_request_debug 耗时: 0ms 发送给模型 61 KB，input 40 KB，items 35，工具输出 0 B 已记录 调试模式：按 Codex CLI input list 风格展示本轮发送给大模型的 input、function_call_output 和请求体摘要。 { \"debug_seq\": 1, \"input_kind\": \"items\", \"mode\": \"chatgpt_access_token\", \"model\": \"gpt-5.5\", \"request_bytes\": 61961 } 模型请求 input / output 摘要 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 模型请求摘要 model: gpt-5.5 mode: chatgpt_access_token request_bytes: 61 KB instructions_bytes: 11 KB tools: 8 input_kind: items input_items: 35 input_bytes: 40 KB messages: 35 function_call_output: 0 个 / 0 B request_truncated: false input_truncated: true token: 已隐藏 完整 request body 预览: { \"client_metadata\": { \"x-codex-installation-id\": \"agent-runtime\" }, \"include\": [], \"input\": [ { \"content\": [ { \"text\": \"http://192.168.232.130:3200/home/product/product-issue-total 问题上报统计和测试环境对比一下\", \"type\": \"input_text\" } ], \"role\": \"user\", \"type\": \"message\" }, { \"content\": [ { \"text\": \"继续\", \"type\": \"input_text\" } ],",
+  "screenshotPath": "test/lowcode-page/results/latest/agent-regression-validation/agent-http-192-send-continue-debug-check.png"
+}

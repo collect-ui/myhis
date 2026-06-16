@@ -1,0 +1,971 @@
+{
+  "tag": "layout-fit",
+  "className": "h100",
+  "initStore": {
+    "dialogVisible": false,
+    "op": "add",
+    "user_id_list": [],
+    "role_list": [],
+    "selection": [],
+    "searchForm": {
+
+    },
+    "opForm": {
+
+    },
+    "count": 0,
+    "dataList": [],
+    "projectList": [],
+    "projectOP": "add",
+    "projectDialogVisible": false,
+    "projectSelection": [],
+    "currentProject": {},
+    "taskList": []
+  },
+  "timer": {
+    "name": "查询是否生文档成任务",
+    "enable": "${!!currentProject.code}",
+    "interval": 5000,
+    "action": [
+      {
+        "tag": "ajax",
+        "enable": "${currentProject.doc_project_id ? true:false}",
+        "api": "post:/template_data/data?service=autodesk.doc_project_task_query",
+        "header": {
+          "Polling": true
+        },
+        "data": {
+          "doc_project_id": "${currentProject.doc_project_id}",
+          "status": "start"
+        },
+        "adapt": {
+          "taskList": "${data}"
+        }
+      }
+    ]
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "enable": "${currentProject.doc_project_id ? true:false}",
+      "group": "dataList",
+      "description": "页面初始化请求-加载用户",
+      "api": "post:/template_data/data?service=autodesk.doc_project_detail_query",
+      "appendFormFields": "user-form",
+      "appendFields": "${searchForm}",
+      "data": {
+        "doc_project_id": "${currentProject.doc_project_id}"
+      },
+      "adapt": {
+        "dataList": "${data}",
+        "count": "${count}"
+      }
+    },
+
+    {
+      "tag": "ajax",
+      "group": "projectList",
+      "description": "页面初始化请求-加载用户",
+      "api": "post:/template_data/data?service=autodesk.doc_project_query",
+      "appendFormFields": "project-search-form",
+      "adapt": {
+        "projectList": "${data}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "row",
+      "className": "h100",
+      "children": [
+        {
+          "tag": "col",
+          "className": "h100 border-right",
+          "span": 9,
+
+          "children": [{
+            "tag": "layout-fit",
+            "className": "padding10 h100 overflow-auto",
+            "children": [
+              {
+                "tag": "table",
+                "selection": "${projectSelection}",
+
+                "rowClick": "${currentProject}",
+                "rowClickAction": [
+                  {
+                    "tag": "reload-init-action",
+                    "group": "dataList",
+                    "description": "删除用户-页面初始化请求"
+                  }
+                ],
+                "columnDefs": [
+                  {
+                    "headerName": "#",
+                    "width": 60,
+                    "valueGetter": "node.rowIndex + 1",
+                    "sortable": false,
+                    "suppressSizeToFit": true,
+                    "pinned": "left"
+                  },
+                  {
+
+                    "checkboxSelection": true,
+                    "headerCheckboxSelection": true,
+                    "suppressSizeToFit": true,
+                    "width": 160,
+                    "headerName": "项目名称",
+                    "tooltipField": "name",
+                    "field": "name",
+                    "editable": true
+                  },
+                  {
+
+                    "headerName": "编码",
+                    "tooltipField": "code",
+                    "field": "code",
+                    "width": 160,
+                    "suppressSizeToFit": true,
+                    "editable": true
+                  },
+                  {
+
+                    "headerName": "公司",
+                    "tooltipField": "company",
+                    "field": "company",
+                    "width": 160,
+                    "suppressSizeToFit": true,
+                    "editable": true
+                  },
+                  {
+
+                    "headerName": "地址",
+                    "tooltipField": "address",
+                    "field": "address",
+                    "width": 160,
+                    "suppressSizeToFit": true,
+                    "editable": true
+                  }
+                ],
+                "rowData": "${projectList}",
+                "cellChangedAction": [
+                  {
+                    "tag": "ajax",
+                    "description": "修改发送请求到后端",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_update",
+                    "data": "${row}"
+                  }
+                ]
+              },
+              {
+                "tag": "dialog",
+                "title": "${projectOP=='add'?'新增项目':'修改项目'}",
+                "width": "50%",
+                "open": "${projectDialogVisible}",
+                "action": [
+                  {
+                    "tag": "submit-form",
+                    "description": "提交表单",
+                    "formName": "projectOpForm"
+                  },
+                  {
+                    "tag": "ajax",
+                    "enable": "${projectOP=='add'}",
+                    "description": "新增发送请求到后端",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_save",
+                    "appendFormFields": "projectOpForm"
+                  },
+                  {
+                    "tag": "ajax",
+                    "enable": "${projectOP=='edit'}",
+                    "description": "修改发送请求到后端",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_update",
+                    "appendFormFields": "projectOpForm",
+                    "data": {
+                      "doc_project_id": "${projectSelection[0].doc_project_id}"
+                    }
+                  },
+                  {
+                    "tag": "update-store",
+                    "description": "关闭对话框",
+                    "value": {
+                      "projectDialogVisible": false
+                    }
+                  },
+                  {
+                    "tag": "reload-init-action",
+                    "group": "projectList",
+                    "description": "新增/修改-页面初始化请求"
+                  }
+                ],
+                "children": [
+                  {
+                    "tag": "form",
+                    "name": "projectOpForm",
+                    "initialValues": {},
+                    "labelCol": {
+                      "span": 4
+                    },
+                    "children": [
+                      {
+                        "tag": "divider",
+                        "orientation": "left",
+                        "children": "基础信息"
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "name",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入名称!"
+                          }
+                        ],
+                        "label": "项目名称",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "placeholder": "请输入名称"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "code",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入编码!"
+                          }
+                        ],
+                        "label": "项目编码",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "placeholder": "请输入编码"
+                          }
+                        ]
+                      },
+
+                      {
+                        "tag": "form-item",
+                        "name": "company",
+                        "label": "公司",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "placeholder": "请输入公司名称"
+                          }
+                        ]
+                      },
+
+                      {
+                        "tag": "form-item",
+                        "name": "address",
+                        "label": "地址",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "placeholder": "请输入地址"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "title": "招标项目",
+            "topRight": [
+              {
+                "tag": "upload",
+                "uploadConfig": {
+                  "showUploadList": false,
+                  "api": "post:/template_data/data?service=autodesk.save_tender"
+                },
+                "finish_action":[
+                  {
+                    "tag": "reload-init-action",
+                    "group": "projectList"
+                  }
+                ],
+                "children": [
+
+                  {
+                    "tag": "button",
+                    "icon": "FaFileImport",
+                    "style": {
+                      "margin": "0 10px"
+                    },
+                    "type": "primary",
+                    "danger": true,
+                    "children": "导入投标文件"
+                  }
+                ]
+              },
+              {
+                "tag": "button",
+                "type": "primary",
+                "children": "新增",
+                "icon": "FaPlus",
+                "action": [
+                  {
+                    "tag": "update-store",
+                    "value": {
+                      "projectDialogVisible": true,
+                      "projectOP": "add"
+                    }
+                  },
+                  {
+                    "tag": "reset-form",
+                    "formName": "projectOpForm"
+                  }
+                ]
+              },
+              {
+                "tag": "button",
+                "action": [
+                  {
+                    "tag": "update-store",
+                    "value": {
+                      "projectDialogVisible": true,
+                      "projectOP": "edit"
+                    }
+                  },
+                  {
+                    "tag": "reset-form",
+                    "formName": "projectOpForm"
+                  },
+                  {
+                    "tag": "update-form",
+                    "formName": "projectOpForm",
+                    "value": "${projectSelection[0]}"
+                  }
+                ],
+                "disabled": "${projectSelection.length !=1 }",
+                "children": "编辑",
+                "icon": "FaPencilAlt"
+              },
+              {
+                "tag": "button",
+                "disabled": "${projectSelection.length <=0 }",
+                "type": "primary",
+                "confirm": {
+                  "title": "确认删除吗？",
+                  "description": "${'确认删除【'+projectSelection.map(item=>item.name).join(',')+'】'+projectSelection.length+'记录吗？'}"
+                },
+                "danger": true,
+                "action": [
+                  {
+                    "tag": "ajax",
+                    "description": "删除用户",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_delete",
+                    "data": {
+                      "doc_project_id_list": "${projectSelection.map(item=>item.doc_project_id)}"
+                    }
+                  },
+                  {
+                    "tag": "reload-init-action",
+                    "group": "projectList",
+                    "description": "行删除-页面初始化请求"
+                  }
+                ],
+                "children": "删除",
+                "icon": "FaTrashAlt"
+              }
+            ],
+            "searchToolBar": [
+              {
+                "tag": "form",
+                "name": "project-search-form",
+                "initialValues": {},
+                "labelCol": {
+                  "span": 5
+                },
+                "wrapperCol": {
+                  "span": 19
+                },
+                "action": [
+                  {
+                    "tag": "reload-init-action",
+                    "group": "projectList",
+                    "description": "表单提交-页面初始化请求"
+                  }
+                ],
+                "submitOnChange": true,
+                "children": [
+                  {
+                    "tag": "row",
+                    "children": [
+                      {
+                        "tag": "col",
+                        "span": 8,
+
+                        "children": [
+                          {
+                            "tag": "form-item",
+                            "name": "search",
+                            "label": "搜索",
+                            "children": [
+                              {
+                                "tag": "input",
+                                "placeholder": "名称",
+                                "allowClear": true
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "col",
+
+                        "children": [
+                          {
+                            "tag": "button",
+                            "action": [
+                              {
+                                "tag": "reload-init-action",
+                                "group": "projectList",
+                                "description": "点击搜索-页面初始化请求"
+                              }
+                            ],
+                            "type": "primary",
+                            "children": "搜索",
+                            "icon": "FaSearch"
+                          },
+                          {
+                            "tag": "button",
+                            "action": [
+                              {
+                                "tag": "reset-form",
+                                "formName": "project-search-form"
+                              },
+                              {
+                                "tag": "reload-init-action",
+                                "group": "projectList",
+                                "description": "重置-页面初始化请求"
+                              }
+                            ],
+                            "icon": "FaUndo",
+                            "children": "重置"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+
+          }]
+        },
+        {
+          "tag": "col",
+          "className": "h100",
+          "span": 15,
+          "children": [{
+            "tag": "layout-fit",
+            "className": "padding10 h100 overflow-auto",
+            "children": [
+              {
+                "tag": "table",
+                "selection": "${selection}",
+                "rowSelection": "multiple",
+                "keyField": "doc_project_detail_id",
+                "columnDefs": [
+                  {
+                    "headerName": "#",
+                    "width": 80,
+                    "valueGetter": "node.rowIndex + 1",
+                    "sortable": false,
+                    "suppressSizeToFit": true,
+                    "checkboxSelection": true,
+                    "headerCheckboxSelection": true,
+                    "pinned": "left"
+                  },
+                  {
+                    "pinned": "left",
+                    "headerName": "名称",
+                    "width": 220,
+                    "suppressSizeToFit": true,
+                    "field": "name",
+                    "tooltipField": "name",
+                    "editable": true
+                  },
+                  {
+                    "headerName": "编号",
+                    "field": "code",
+                    "tooltipField": "code",
+                    "editable": true
+                  },
+                  {
+                    "headerName": "特征值",
+                    "field": "detail",
+                    "tooltipField": "detail",
+                    "editable": true
+                  },
+                  {
+                    "headerName": "文档",
+                    "field": "doc_content",
+                    "tooltipField": "doc_content",
+                    "editable": true,
+                    "cellEditor": "agLargeTextCellEditor",
+                    "cellEditorParams": {
+                      "maxLength": 200000,
+                      "rows": 10,
+                      "cols": 40
+                    }
+                  },
+                  {
+                    "headerName": "单位",
+                    "field": "unit",
+                    "editable": true
+                  },
+                  {
+                    "headerName": "工程量",
+                    "field": "spend",
+                    "editable": true
+                  },
+                  {
+                    "headerName": "分组",
+                    "field": "group",
+                    "editable": true,
+                    "cellEditor": "agNumberCellEditor",
+                    "cellEditorParams": {
+                      "precision": 0
+                    },
+                    "width": 80,
+                    "suppressSizeToFit": true,
+                    "pinned": "right"
+                  }
+                ],
+                "rowData": "${dataList}",
+                "dragAction": [
+                  {
+                    "tag": "ajax",
+                    "description": "修改发送请求到后端",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_detail_update_order_index",
+                    "data": {
+                      "rows": "${rows}"
+                    }
+                  },
+                  {
+                    "tag": "reload-init-action",
+                    "group": "dataList",
+                    "description": "新增/修改-页面初始化请求"
+                  }
+                ],
+                "cellChangedAction": [
+                  {
+                    "tag": "ajax",
+                    "description": "修改发送请求到后端",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_detail_update",
+                    "data": "${row}"
+                  }
+                ]
+              },
+              {
+                "tag": "dialog",
+                "title": "${op=='add'?'新增投标项目项':'修改投标项目项'}",
+                "width": "50%",
+                "open": "${dialogVisible}",
+                "action": [
+                  {
+                    "tag": "submit-form",
+                    "description": "提交表单",
+                    "formName": "opForm"
+                  },
+                  {
+                    "tag": "ajax",
+                    "enable": "${op=='add'}",
+                    "description": "新增发送请求到后端",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_detail_save",
+                    "appendFormFields": "opForm",
+                    "data": {
+                      "doc_project_id": "${currentProject.doc_project_id}"
+                    }
+                  },
+                  {
+                    "tag": "ajax",
+                    "enable": "${op=='edit'}",
+                    "description": "修改发送请求到后端",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_detail_update",
+                    "appendFormFields": "opForm",
+                    "data": {
+                      "doc_project_detail_id": "${selection[0].doc_project_detail_id}",
+                      "project": "${currentProject.code}"
+                    }
+                  },
+                  {
+                    "tag": "update-store",
+                    "description": "关闭对话框",
+                    "value": {
+                      "dialogVisible": false
+                    }
+                  },
+                  {
+                    "tag": "reload-init-action",
+                    "group": "dataList",
+                    "description": "新增/修改-页面初始化请求"
+                  }
+                ],
+                "children": [
+                  {
+                    "tag": "form",
+                    "name": "opForm",
+                    "initialValues": {},
+                    "labelCol": {
+                      "span": 4
+                    },
+                    "children": [
+                      {
+                        "tag": "divider",
+                        "orientation": "left",
+                        "children": "基础信息"
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "name",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入名称!"
+                          }
+                        ],
+                        "label": "名称",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "placeholder": "请输入名称"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "code",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入编码!"
+                          }
+                        ],
+                        "label": "编码",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "placeholder": "请输入编码"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "detail",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入特征值!"
+                          }
+                        ],
+                        "label": "特征值",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "isTextarea": true,
+                            "placeholder": "请输入特征值"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "unit",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入单位!"
+                          }
+                        ],
+                        "label": "单位",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "isTextarea": true,
+                            "placeholder": "请输入工程量"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "spend",
+                        "rules": [
+                          {
+                            "required": true,
+                            "message": "请输入工程量!"
+                          }
+                        ],
+                        "label": "工程量",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "placeholder": "请输入工程量"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "order_index",
+                        "label": "排序号",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "isNumber": true,
+                            "placeholder": "请输入排序号"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "doc_content",
+                        "label": "文档内容",
+                        "children": [
+                          {
+                            "tag": "input",
+                             "isTextarea": true,
+                            "autoSize": { "minRows": 4, "maxRows": 8 },
+                            "placeholder": "请输入文档内容"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "form-item",
+                        "name": "group",
+                        "label": "分组",
+                        "children": [
+                          {
+                            "tag": "input",
+                            "isNumber": true,
+                            "placeholder": "请输入分组"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "title": "${currentProject.code?currentProject.name:'招标项目项'}",
+            "topRight": [
+              {
+                "tag": "button",
+                "type": "primary",
+                "children": "下载技术文档",
+                "icon": "FaFileExport",
+                "disabled": "${!currentProject.code}",
+                "action": [
+                  {
+                    "tag": "ajax",
+                    "api": "post:/template_data/data?service=autodesk.gen_doc",
+                    "download": true,
+                    "data": {
+                      "doc_project_id": "${currentProject.doc_project_id}"
+                    }
+                  }
+                ]
+              },
+              {
+                "tag": "button",
+                "confirm": {
+                  "title": "确认操作",
+                  "description": "配置了分组将生成文档，确认重新生成该项目的技术文档吗? "
+                },
+                "action": [
+                  {
+                    "tag": "ajax",
+                    "description": "发起任务",
+                    "api": "post:/template_data/data?service=autodesk.chart_doc",
+                    "data": {
+                      "doc_project_id": "${currentProject.doc_project_id}"
+                    }
+                  },
+                  {
+                    "tag": "ajax",
+                    "enable": "${currentProject.doc_project_id ? true:false}",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_task_query",
+                    "data": {
+                      "doc_project_id": "${currentProject.doc_project_id}",
+                      "status": "start"
+                    },
+                    "adapt": {
+                      "taskList": "${data}"
+                    }
+                  }
+
+                ],
+                "disabled": "${!currentProject.code}",
+                "children": "生成文档",
+                "loading": "${taskList.length>0?true:false}",
+                "icon": "FaPencilAlt"
+              },
+
+              {
+                "tag": "button",
+                "type": "primary",
+                "children": "导出",
+                "icon": "FaFileExport",
+                "disabled": "${!currentProject.code}",
+                "action": [
+                  {
+                    "tag": "ajax",
+                    "api": "post:/template_data/data?service=autodesk.doc_project_detail_download",
+                    "download": true,
+                    "data": {
+                      "doc_project_id": "${currentProject.doc_project_id}"
+                    }
+                  }
+                ]
+              },
+
+              {
+                "tag": "upload",
+                "uploadConfig": {
+                  "showUploadList": false,
+                  "api": "post:/template_data/data?service=autodesk.upload_doc_project_detail",
+                  "data": {
+                    "doc_project_id": "${currentProject.doc_project_id}"
+                  }
+                },
+                "finish_action":[
+                  {
+                    "tag": "reload-init-action",
+                    "group": "dataList"
+                  }
+                ],
+                "children": [
+
+                  {
+                    "disabled": "${!currentProject.code}",
+                    "tag": "button",
+                    "icon": "FaFileImport",
+                    "style": {
+                      "margin": "0 10px"
+                    },
+                    "type": "primary",
+                    "danger": true,
+                    "children": "导入"
+                  }
+                ]
+              },
+              {
+                "tag": "button",
+                "action": [
+                  {
+                    "tag": "update-store",
+                    "value": {
+                      "dialogVisible": true,
+                      "op": "edit"
+                    }
+                  },
+                  {
+                    "tag": "reset-form",
+                    "formName": "opForm"
+                  },
+                  {
+                    "tag": "update-form",
+                    "formName": "opForm",
+                    "value": "${selection[0]}"
+                  }
+                ],
+                "disabled": "${selection.length !=1 }",
+                "children": "编辑",
+                "icon": "FaPencilAlt"
+              }
+
+            ],
+            "searchToolBar": [
+              {
+                "tag": "form",
+                "name": "user-form",
+                "initialValues": "${searchForm}",
+                "labelCol": {
+                  "span": 5
+                },
+                "wrapperCol": {
+                  "span": 19
+                },
+                "action": [
+                  {
+                    "tag": "reload-init-action",
+                    "group": "dataList",
+                    "description": "表单提交-页面初始化请求"
+                  }
+                ],
+                "submitOnChange": true,
+                "children": [
+                  {
+                    "tag": "row",
+                    "children": [
+                      {
+                        "tag": "col",
+                        "span": 5,
+                        "children": [
+                          {
+                            "tag": "form-item",
+                            "name": "search",
+                            "label": "搜索",
+                            "children": [
+                              {
+                                "tag": "input",
+                                "placeholder": "名称/值/描述",
+                                "allowClear": true
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "col",
+                        "span": 4,
+                        "children": [
+                          {
+                            "tag": "button",
+                            "action": [
+                              {
+                                "tag": "reload-init-action",
+                                "group": "dataList",
+                                "description": "点击搜索-页面初始化请求"
+                              }
+                            ],
+                            "type": "primary",
+                            "children": "搜索",
+                            "icon": "FaSearch"
+                          },
+                          {
+                            "tag": "button",
+                            "action": [
+                              {
+                                "tag": "reset-form",
+                                "formName": "user-form"
+                              },
+                              {
+                                "tag": "reload-init-action",
+                                "group": "dataList",
+                                "description": "重置-页面初始化请求"
+                              }
+                            ],
+                            "icon": "FaUndo",
+                            "children": "重置"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+
+          }]
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,68 @@
+{
+  "states": [
+    {
+      "i": 0,
+      "before": {
+        "className": "co-ui-div agent-tool-float ",
+        "height": 496,
+        "text": "-"
+      },
+      "after": {
+        "className": "co-ui-div agent-tool-float agent-tool-float-collapsed",
+        "height": 42,
+        "bodyDisplay": "none",
+        "text": "+"
+      }
+    },
+    {
+      "i": 1,
+      "before": {
+        "className": "co-ui-div agent-tool-float agent-tool-float-collapsed",
+        "height": 42,
+        "text": "+"
+      },
+      "after": {
+        "className": "co-ui-div agent-tool-float ",
+        "height": 496,
+        "bodyDisplay": "block",
+        "text": "-"
+      }
+    },
+    {
+      "i": 2,
+      "before": {
+        "className": "co-ui-div agent-tool-float ",
+        "height": 496,
+        "text": "-"
+      },
+      "after": {
+        "className": "co-ui-div agent-tool-float agent-tool-float-collapsed",
+        "height": 42,
+        "bodyDisplay": "none",
+        "text": "+"
+      }
+    },
+    {
+      "i": 3,
+      "before": {
+        "className": "co-ui-div agent-tool-float agent-tool-float-collapsed",
+        "height": 42,
+        "text": "+"
+      },
+      "after": {
+        "className": "co-ui-div agent-tool-float ",
+        "height": 496,
+        "bodyDisplay": "block",
+        "text": "-"
+      }
+    }
+  ],
+  "collapsed1": true,
+  "expanded1": true,
+  "collapsed2": true,
+  "expanded2": true,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-collapse-toggle-v2.png"
+}

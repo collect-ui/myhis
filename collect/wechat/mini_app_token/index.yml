@@ -1,0 +1,81 @@
+service:
+  - key: get_token_mini_app
+    name: "app 应用"
+    module: http
+    http: true
+    http_json: mini_app_token.json
+    cache:
+      key: "handler_cache"
+      enable: "{{eq (get_key \"can_cache\") \"true\"}}"
+      room: wechat
+      second: 600
+      fields:
+        - field: "[service]"
+    success: "{{ if .access_token }}true{{ else }}false{{ end }}"
+    result_handler:
+      - key: result2params
+        fields:
+          - from: "[access_token]"
+            to: "[access_token]"
+      - key: param2result
+        field: "[access_token]"
+
+  - key: memberauth
+    module: http
+    http: true
+    http_json: memberauth.json
+    success: "{{ if eq .errmsg `ok` }}true{{ else }}false{{ end }}"
+    handler_params:
+      - key: service2field
+        service:
+          service: wechat.get_token_mini_app
+        save_field: access_token
+  - key: add_bind_tester_all
+    module: empty
+    http: true
+#    schedule:
+#      enable: "{{eq (get_key \"schedule_add_wechat_test_user\") \"true\"}}"
+#      schedule_spec: "@every 3600s"
+    handler_params:
+      - key: service2field
+        service:
+          service: hrm.user_list
+          has_wechat_id: true
+        save_field: user_list
+      - key: service2field
+        service:
+          service: wechat.bind_tester_bulk
+          user_list: "[user_list]"
+        save_field: result
+      - key: param2result
+        field: result
+  - key: bind_tester_bulk
+    module: bulk_service
+    params:
+      user_list:
+        check:
+          template: "{{must  .user_list}}"
+          err_msg: 用户列表不能为空
+    batch:
+      foreach: "[user_list]"
+      item: item
+      service:
+        service: "wechat.bind_tester"
+        wechat_id: "[wechat_id]"
+      save_field: 'result'
+  - key: bind_tester
+    module: http
+    http: true
+    params:
+      wechat_id:
+        check:
+          template: "{{must .wechat_id}}"
+          err_msg: 微信ID不能为空
+        template: "{{.wechat_id}}"
+    http_json: bind_tester.json
+    success: "{{ if eq .errmsg `ok` }}true{{ else }}false{{ end }}"
+    handler_params:
+      - key: service2field
+        service:
+          service: wechat.get_token_mini_app
+        save_field: access_token

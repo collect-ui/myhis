@@ -1,0 +1,13 @@
+{
+  "selected": "Codex-like 工具链验证\nactive\n16:30",
+  "status": "25 次调用",
+  "toolCount": 25,
+  "firstText": "第 1 步 · 找文件\n工具名: codexcli_glob\n耗时: 16ms\n完成\n它做了什么: 按文件名和相近关键词定位候选文件。\n入参\npattern: collect/frontend/page_data/data/server/webshell*.json\nmax_results: 40\n结果: 找到 14 个候选文件，后续会 grep 或读取其中最相关的文件。\n候选文件:\n1. collect/frontend/page_data/data/server/webshell.json (18 KB)\n2. collect/frontend/page_data/data/server/webshell_editor_fragment.json (3 KB)\n3. collect/frontend/page_data/data/server/webshell_editor_pool_file_dialog_fragment.json (21 KB)\n4. collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_dialog_fragment.json (40 KB)\n5. collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_style_fragment.json (2 KB)\n6. collect/frontend/page_data/data/server/webshell_editor_pool_http_fragment.json (47 KB)\n还有 8 条，滚动或让模型继续读取下一批",
+  "hasInput": true,
+  "hasMultipleVisibleSteps": true,
+  "visibleItems": 2,
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-codexlike-inputs.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

@@ -1,0 +1,6 @@
+{
+  "patient_id": "{{if .patient_id}}{{.patient_id}}{{end}}",
+  "patient_name": "{{if .patient_name}}{{.patient_name}}{{end}}",
+  "deleted": true,
+  "mock_operation": "delete"
+}

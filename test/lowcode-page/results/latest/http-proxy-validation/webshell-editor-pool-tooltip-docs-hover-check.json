@@ -1,0 +1,69 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "startedAt": "2026-05-07T07:38:26.853Z",
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-tooltip-docs-hover-check.png",
+  "python": {
+    "filePath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+    "moduleKey": {
+      "token": "module",
+      "lineRegexText": "^\\s*module:\\s*mysql\\s*$",
+      "lineNumber": 3,
+      "column": 6,
+      "lineText": "    module: mysql",
+      "hoverWaitMs": 2689,
+      "hoverText": "module\n\n服务主体模块，决定当前服务由哪类执行器处理。\n\n文档内容预览：\n\n# module\n\n服务主体模块，决定当前服务由哪类执行器处理。\n\n## 作用\n- 这是服务级核心关键字。\n- 不同 `module` 会触发不同实现逻辑。\n\n## 常见取值\n- `mysql`：SQL 查询模块\n- `http`：HTTP 转发模块\n- `empty`：空模块（通常配合 handler_params/result_handler）\n- `bulk_create`：批量新增模块\n\n## 示例\n```yml\nmodule: mysql\nsql_file: issue_commit_detail.sql\n\n标签：`key:module` `token:module` `project:python`\n\n文档路径：`/data/project/moongod-backend/tooltip-docs/key/module.md`"
+    },
+    "moduleValue": {
+      "token": "mysql",
+      "lineRegexText": "^\\s*module:\\s*mysql\\s*$",
+      "lineNumber": 3,
+      "column": 14,
+      "lineText": "    module: mysql",
+      "hoverWaitMs": 2826,
+      "hoverText": "module=mysql\n\nmodule: mysql 表示当前服务走 SQL 查询执行流程。\n\n文档内容预览：\n\n# module=mysql\n\n`module: mysql` 表示当前服务走 SQL 查询执行流程。\n\n## 常见搭配\n- `sql_file`\n- `count_sql`\n- `params` / `count_params`\n\n## 示例\n```yml\nmodule: mysql\nsql_file: issue_commit_detail.sql\ncount_sql: count.sql\n\n标签：`key:module` `value:mysql` `token:mysql` `project:python`\n\n文档路径：`/data/project/moongod-backend/tooltip-docs/kv/module/mysql.md`"
+    },
+    "template": {
+      "token": "template",
+      "lineRegexText": "^\\s*template:\\s*\"\\{% if search",
+      "lineNumber": 10,
+      "column": 10,
+      "lineText": "        template: \"{% if search %} %{{search}}% {% endif %}\"",
+      "hoverWaitMs": 2533,
+      "hoverText": "template\n\n模板表达式字段。运行时会根据上下文变量渲染。\n\n文档内容预览：\n\n# template\n\n模板表达式字段。运行时会根据上下文变量渲染。\n\n## 常见用途\n- 模糊查询拼接\n- 时间范围拼接\n- 条件启用表达式\n\n## 示例\n```yml\ntemplate: \"{% if search %}%{{search}}%{% endif %}\"\n\n标签：`key:template` `token:template` `project:python`\n\n文档路径：`/data/project/moongod-backend/tooltip-docs/key/template.md`"
+    }
+  },
+  "go": {
+    "filePath": "/data/project/sport/collect/config/sync/index.yml",
+    "moduleKey": {
+      "token": "module",
+      "lineRegexText": "^\\s*module:\\s*empty\\s*$",
+      "lineNumber": 39,
+      "column": 6,
+      "lineText": "    module: empty",
+      "hoverWaitMs": 2687,
+      "hoverText": "module\n\n服务主体模块，决定当前服务由哪类执行器处理。\n\n文档内容预览：\n\n# module\n\n服务主体模块，决定当前服务由哪类执行器处理。\n\n## 作用\n- 这是服务级核心关键字。\n- 不同 `module` 会触发不同实现逻辑。\n\n## 常见取值\n- `mysql`：SQL 查询模块\n- `http`：HTTP 转发模块\n- `empty`：空模块（通常配合 handler_params/result_handler）\n- `bulk_create`：批量新增模块\n\n## 示例\n```yml\nmodule: mysql\nsql_file: issue_commit_detail.sql\n\n标签：`key:module` `token:module` `project:go`\n\n文档路径：`/data/project/sport/tooltip-docs/key/module.md`"
+    },
+    "moduleValue": {
+      "token": "empty",
+      "lineRegexText": "^\\s*module:\\s*empty\\s*$",
+      "lineNumber": 39,
+      "column": 14,
+      "lineText": "    module: empty",
+      "hoverWaitMs": 2835,
+      "hoverText": "module=empty\n\nmodule: empty 表示不直接执行数据库/外部调用，常用 handler_params / result_handler 组织流程。\n\n文档内容预览：\n\n# module=empty\n\n`module: empty` 表示不直接执行数据库/外部调用，常用 `handler_params` / `result_handler` 组织流程。\n\n标签：key:module value:empty token:empty project:go\n\n文档路径：/data/project/sport/tooltip-docs/kv/module/empty.md"
+    },
+    "table": {
+      "token": "table",
+      "lineRegexText": "^\\s*table:\\s*collect_doc_important\\s*$",
+      "lineNumber": 13,
+      "column": 6,
+      "lineText": "    table: collect_doc_important",
+      "hoverWaitMs": 4052,
+      "hoverText": "table\n\n关键字 'table' 的低代码配置说明文档。\n\n文档内容预览：\n\n# table\n\n关键字 'table' 的低代码配置说明文档。\n\n## 配置位置\n- 请根据业务场景补充（service / params / handler_params / result_handler 等）。\n\n## 作用\n- 请补充该关键字在你们项目中的真实语义。\n\n## 示例\n```yml\ntable: <value>\n注意事项\n请补充边界条件、默认行为、常见错误与排查方法。\n\n标签：`key:table` `token:table` `project:go`\n\n文档路径：`/data/project/sport/tooltip-docs/key/table.md`"
+    }
+  },
+  "endedAt": "2026-05-07T07:38:57.842Z"
+}

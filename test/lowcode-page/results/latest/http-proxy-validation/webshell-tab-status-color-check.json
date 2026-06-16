@@ -1,0 +1,26 @@
+{
+  "pass": true,
+  "checks": {
+    "pageOpened": true,
+    "loginConfirmed": true,
+    "activeDotVisible": true,
+    "activeColorIsOrange": true,
+    "noConsoleErrors": true,
+    "noPageErrors": true,
+    "noRequestFailed": true
+  },
+  "details": {
+    "dot": {
+      "className": "webshell-tab-status-dot is-active",
+      "borderTopColor": "rgb(249, 115, 22)",
+      "borderRightColor": "rgb(249, 115, 22)",
+      "boxShadow": "rgba(249, 115, 22, 0.14) 0px 0px 0px 2px"
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-orange-active.png",
+  "reportPath": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-color-check.json",
+  "error": ""
+}

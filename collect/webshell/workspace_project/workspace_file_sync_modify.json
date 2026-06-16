@@ -1,0 +1,26 @@
+{
+  "desc": "工作空间文件按路径增量同步",
+  "left_save_field": "after",
+  "right_save_field": "before",
+  "fields": [
+    {
+      "rule": "array_obj_value",
+      "left_field": "[path]",
+      "right_field": "[path]",
+      "field": "[workspace_file]",
+      "name": "工作空间文件",
+      "left": "[file_list]",
+      "right": "[local_file_list]",
+      "with_add_remove": true,
+      "left_value_field": "[path]",
+      "right_value_field": "[path]",
+      "operation": "modify",
+      "append_right_fields": [
+        "[*]"
+      ],
+      "append_left_fields": [
+        "[*]"
+      ]
+    }
+  ]
+}

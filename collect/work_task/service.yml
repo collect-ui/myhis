@@ -1,0 +1,28 @@
+# 项目点路由
+service:
+  - name: "issue"
+    path: "issue/index.yml"
+
+  - name: "work_task_project"
+    path: "work_task_project/index.yml"
+
+  - name: "bulk"
+    path: "bulk/index.yml"
+
+  - name: "module"
+    path: "module/index.yml"
+
+  - name: "issue_type"
+    path: "issue_type/index.yml"
+
+  - name: "version"
+    path: "version/index.yml"
+
+  - name: "priority"
+    path: "priority/index.yml"
+
+  - name: "status"
+    path: "status/index.yml"
+
+  - name: "label"
+    path: "label/index.yml"

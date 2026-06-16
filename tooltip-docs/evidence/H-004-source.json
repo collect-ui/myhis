@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "active_tab_text": "check_field",
+  "title": "check_field(检查普通字段)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "检查服务字段是否合法"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "handler_params:\n      - key: check_field\n        fields:\n          - field: doc_collect_id\n            template: \"{{must .doc.collect_doc_id}}\"\n            err_msg: \"文档ID不能为空\"\n          - field: type\n            template: \"{{must .doc.type}}\"\n            err_msg: \"文档类型不能为空\"\n          - field: parent_dir\n            template: \"{{must .doc.parent_dir}}\"\n            err_msg: \"文档上级目录不能为空\"",
+    "检查字段是否合法，params 中的check只能在一开始检查已有的字段，这个可以支持handler_params中运行其他服务再检查。\n    我们经常遇到xx字段不能为空"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "check_field 检查params中的字段"
+        ],
+        [
+          "fields",
+          "array",
+          "是",
+          "校验字段内容"
+        ],
+        [
+          "fields[field]",
+          "string",
+          "是",
+          "字段名称"
+        ],
+        [
+          "fields[template]",
+          "template",
+          "是",
+          "校验模板，true表示正常"
+        ],
+        [
+          "fields[err_msg]",
+          "template",
+          "是",
+          "失败之后的错误提示"
+        ]
+      ]
+    }
+  ],
+  "body_text": "check_field(检查普通字段)  \n示例\n检查服务字段是否合法\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\ncheck_field 检查params中的字段\n\n\nfields\n\t\narray\n\t\n是\n\t\n校验字段内容\n\n\nfields[field]\n\t\nstring\n\t\n是\n\t\n字段名称\n\n\nfields[template]\n\t\ntemplate\n\t\n是\n\t\n校验模板，true表示正常\n\n\nfields[err_msg]\n\t\ntemplate\n\t\n是\n\t\n失败之后的错误提示\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-004",
+  "source_group": "参数处理",
+  "source_title": "check_field",
+  "source_doc_text": "4.check_field\n检查普通字段",
+  "read_at": "2026-05-07T08:21:01.697Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-004-source.png"
+}

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Sport Windows Sync"
+  short_description: "Deploy sport app to the Windows host"
+  default_prompt: "Use $sport-window-sync to deploy the sport app to the Windows environment."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+service:
+  - key: msg_count
+    http: true
+    module: sql
+    data_file: msg_count.sql
+    result_handler:
+      - key: arr2obj

@@ -1,0 +1,29 @@
+{
+  "pass": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "metrics": {
+    "resultTabCount": 10,
+    "summaryHasTen": true,
+    "activeResultTabHeight": 28,
+    "sqlTabHeight": 28,
+    "activeResultRadius": "4px",
+    "sqlTabRadius": "4px",
+    "activeResultBackground": "rgb(255, 255, 255)",
+    "editorHeight": 424,
+    "resultHeight": 333,
+    "handleHeight": 5,
+    "stacked": true,
+    "hasRows": true,
+    "toastCount": 1
+  },
+  "horizontalMetrics": {
+    "editorWidth": 671,
+    "resultWidth": 528,
+    "handleWidth": 5,
+    "sameTop": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-result-tabs-split-check.png"
+}

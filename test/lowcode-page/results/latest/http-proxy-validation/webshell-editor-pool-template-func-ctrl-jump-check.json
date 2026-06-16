@@ -1,0 +1,12 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-07T12:56:54.595Z",
+  "pass": false,
+  "error": "ctrl click did not jump to function implementation",
+  "screenshot": "",
+  "openedPathBefore": "/data/project/sport/collect/wechat/analysis/index.yml",
+  "openedPathAfter": "/data/project/sport/collect/wechat/analysis/index.yml",
+  "sourcePath": "/data/project/sport/collect/wechat/analysis/index.yml",
+  "targetImplSuffix": "/collect/src/collect/filters/unix_time2datetime.go",
+  "endedAt": "2026-05-07T12:57:13.253Z"
+}

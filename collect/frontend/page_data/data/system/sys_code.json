@@ -1,0 +1,541 @@
+{
+  "tag": "layout-fit",
+  "className": "padding10 h100 overflow-auto",
+  "initStore": {
+    "dialogVisible": false,
+    "op": "add",
+    "lastImg": "",
+    "user_id_list": [],
+    "role_list": [],
+    "selection": [],
+    "searchForm": {
+      "page": 1,
+      "size": 20,
+      "search": ""
+    },
+    "opTrainingForm": {
+      "name": "",
+      "training_type": "power",
+      "body_part": "upper",
+      "difficulty_level": "easy",
+      "description": "",
+      "action_standard": "",
+      "precautions": "",
+      "movie_address": "",
+      "order_index": 1
+
+    },
+    "count": 0,
+    "dataList": []
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "dataList",
+      "description": "页面初始化请求-加载数据",
+      "api": "post:/template_data/data?service=system.sys_code_list",
+      "appendFormFields": "sys-code-search-form",
+      "appendFields": "${searchForm}",
+      "adapt": {
+        "dataList": "${data}",
+        "count": "${count}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "table",
+      "selection": "${selection}",
+      "rowSelection": "multiple",
+      "columnDefs": [
+        {
+          "headerName": "#",
+          "width": 60,
+          "valueGetter": "node.rowIndex + 1",
+          "sortable": false,
+          "pinned": "left"
+        },
+
+        {
+
+          "checkboxSelection": true,
+          "headerCheckboxSelection": true,
+          "headerName": "编码",
+          "width": "160",
+          "suppressSizeToFit": true,
+          "field": "sys_code"
+        },
+        {
+          "headerName": "名称",
+          "width": "160",
+          "suppressSizeToFit": true,
+          "field": "sys_code_text"
+        },
+        {
+          "headerName": "码表类型",
+          "field": "sys_code_type"
+        },
+        {
+          "headerName": "码表分类名称",
+          "field": "sys_code_type_name"
+        },
+        {
+          "headerName": "图标",
+          "field": "icon",
+          "width": 100,
+          "cellRender": {
+            "tag": "image",
+            "height": 30,
+            "visible": "${row.icon}",
+            "src": "${row.icon}"
+          }
+        },
+
+        {
+          "headerName": "排序号",
+          "width": 100,
+          "field": "order_index"
+        },
+
+
+        {
+          "headerName": "创建时间",
+          "field": "create_time",
+          "tooltipField": "create_time"
+        },
+        {
+          "headerName": "操作",
+          "field": "op",
+          "width": 180,
+          "suppressSizeToFit": true,
+          "pinned": "right",
+          "cellRender": [
+            {
+              "tag": "button",
+              "action": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "dialogVisible": true,
+                    "op": "edit",
+                    "lastImg": "${row.icon}"
+                  }
+                },
+                {
+                  "tag": "reset-form",
+                  "formName": "opSysCodeForm"
+                },
+                {
+                  "tag": "update-form",
+                  "formName": "opSysCodeForm",
+                  "value": "${row}"
+                }
+              ],
+              "type": "primary",
+              "size": "small",
+              "children": "编辑"
+            },
+            {
+              "tag": "button",
+              "danger": true,
+              "size": "small",
+              "children":"删除",
+              "confirm": {
+                "title": "确认删除吗？",
+                "description": "${'确认删除【'+row.sys_code+'】记录吗？'}"
+              },
+              "action": [
+                {
+                  "tag": "ajax",
+                  "description": "删除数据",
+                  "api": "post:/template_data/data?service=system.sys_code_delete",
+                  "data": {
+                    "sys_code_id_list": "${[row.sys_code_id]}"
+                  }
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "dataList",
+                  "description": "删除用户-页面初始化请求"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "rowData": "${dataList}"
+    },
+    {
+      "tag": "dialog",
+      "title": "${op=='add'?'新增码表':'修改码表'}",
+
+      "open": "${dialogVisible}",
+      "action": [
+        {
+          "tag": "submit-form",
+          "description": "提交表单",
+          "formName": "opSysCodeForm"
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op=='add'}",
+          "description": "新增发送请求到后端",
+          "api": "post:/template_data/data?service=system.sys_code_save",
+          "appendFormFields": "opSysCodeForm"
+        },
+        {
+          "tag": "ajax",
+          "enable": "${op=='edit'}",
+          "description": "修改发送请求到后端",
+          "api": "post:/template_data/data?service=system.sys_code_update",
+          "appendFormFields": "opSysCodeForm",
+          "data": {
+            "sys_code_id": "${selection[0].sys_code_id}"
+          }
+        },
+        {
+          "tag": "update-store",
+          "description": "关闭对话框",
+          "value": {
+            "dialogVisible": false
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "新增/修改-页面初始化请求"
+        }
+      ],
+      "children": [
+        {
+          "tag": "form",
+          "name": "opSysCodeForm",
+          "initialValues": "{}",
+          "labelCol": {
+            "span": 5
+          },
+          "children": [
+            {
+              "tag": "form-item",
+              "name": "sys_code_type",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入码表分类!"
+                }
+              ],
+              "label": "码表分类",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入名称"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "sys_code_type_name",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入分类名称!"
+                }
+              ],
+              "label": "分类名称",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入分类名称"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "sys_code",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入码表编码!"
+                }
+              ],
+              "label": "码表编码",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入分类名称"
+                }
+              ]
+            },
+
+            {
+              "tag": "form-item",
+              "name": "sys_code_text",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入码表编码!"
+                }
+              ],
+              "label": "码表名称",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入码表名称"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "order_index",
+              "label": "排序号",
+              "children": [
+                {
+                  "tag": "input",
+                  "isNumber": true
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 24,
+
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "icon",
+                      "label": "图标",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入Icon"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 24,
+                  "children": [
+                    {
+                      "tag": "upload",
+                      "style": {
+                        "marginLeft": "100px"
+                      },
+                      "uploadConfig": {
+                        "showUploadList": false,
+                        "api": "post:/template_data/data?service=sport.upload_course_attachment",
+                        "data": {
+                          "type": "sys_code"
+                        }
+                      },
+                      "finish_action":[
+                        {
+                          "tag": "update-form",
+                          "formName": "opSysCodeForm",
+                          "value": {
+                            "icon": "${row.data}"
+                          }
+                        },
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "lastImg": "${row.data}"
+                          }
+                        }
+                      ],
+                      "children": [
+                        {
+
+                          "style": {
+                           "marginLeft": 100
+                          },
+                          "tag": "button",
+                          "children": "上传"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "image",
+                      "style": {
+                        "paddingLeft":"100px",
+                        "paddingRight":"50px"
+                      },
+                      "src": "${lastImg}",
+                      "width": 250
+                    }
+                  ]
+                }
+              ]
+            }
+
+
+
+          ]
+        }
+      ]
+    }
+  ],
+  "title": "码表管理",
+  "topRight": [
+    {
+      "tag": "button",
+      "type": "primary",
+      "children": "新增",
+      "icon": "FaPlus",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dialogVisible": true,
+            "op": "add",
+            "lastImg": "",
+            "lastIcon": ""
+          }
+        },
+        {
+          "tag": "reset-form",
+          "formName": "opSysCodeForm"
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dialogVisible": true,
+            "op": "edit",
+            "lastImg": "${selection[0].img1}",
+            "lastIcon": "${selection[0].icon}"
+          }
+        },
+        {
+          "tag": "reset-form",
+          "formName": "opTrainingForm"
+        },
+        {
+          "tag": "update-form",
+          "formName": "opTrainingForm",
+          "value": "${selection[0]}"
+        }
+      ],
+      "disabled": "${selection.length !=1 }",
+      "children": "编辑",
+      "icon": "FaPencilAlt"
+    },
+    {
+      "tag": "button",
+      "disabled": "${selection.length <=0 }",
+      "type": "primary",
+      "confirm": {
+        "title": "确认删除吗？",
+        "description": "${'确认删除【'+selection.map(item=>item.sys_code).join(',')+'】'+selection.length+'记录吗？'}"
+      },
+      "danger": true,
+      "action": [
+        {
+          "tag": "ajax",
+          "description": "删除用户",
+          "api": "post:/template_data/data?service=system.sys_code_delete",
+          "data": {
+            "sys_code_id_list": "${selection.map(item=>item.sys_code_id)}"
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "行删除-页面初始化请求"
+        }
+      ],
+      "children": "删除",
+      "icon": "FaTrashAlt"
+    }
+  ],
+  "searchToolBar": [
+    {
+      "tag": "form",
+      "name": "sys-code-search-form",
+      "initialValues": "${searchForm}",
+      "labelCol": {
+        "span": 5
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "action": [
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "表单提交-页面初始化请求"
+        }
+      ],
+      "submitOnChange": true,
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "search",
+                  "label": "搜索",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "名称",
+                      "allowClear": true
+                    }
+                  ]
+                }
+              ]
+            },
+
+            {
+              "tag": "col",
+              "span": 6,
+              "children": [
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "点击搜索-页面初始化请求"
+                    }
+                  ],
+                  "type": "primary",
+                  "children": "搜索",
+                  "icon": "FaSearch"
+                },
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "reset-form",
+                      "formName": "user-form"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "重置-页面初始化请求"
+                    }
+                  ],
+                  "icon": "FaUndo",
+                  "children": "重置"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

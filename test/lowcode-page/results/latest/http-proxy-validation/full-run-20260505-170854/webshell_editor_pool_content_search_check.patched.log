@@ -1,0 +1,38 @@
+{
+  "pass": false,
+  "outFile": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/content-search-1777972731340.json",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/content-search-1777972731340.png",
+  "roundA": {
+    "keyword": "import",
+    "include_glob": "",
+    "lineCount": 6,
+    "hasSummary": true,
+    "hasKeywordError": false,
+    "bodyHasResult": true
+  },
+  "roundB": {
+    "keyword": "import",
+    "include_glob": "*.py",
+    "lineCount": 6,
+    "hasSummary": true,
+    "hasKeywordError": false,
+    "bodyHasResult": true
+  },
+  "roundInvalid": {
+    "keyword": "a",
+    "include_glob": "",
+    "lineCount": 6,
+    "hasSummary": true,
+    "hasKeywordError": true,
+    "bodyHasResult": true
+  },
+  "clickOpen": {
+    "expectedPath": "/data/project/moongod-backend/assets_operations/area_organization_info_tree/gm_dao.py",
+    "monacoHasExpectedPath": false,
+    "openRequestHit": true,
+    "openRequestContainsPath": false
+  },
+  "consoleErrors": 0,
+  "pageErrors": 0,
+  "failedRequests": 0
+}

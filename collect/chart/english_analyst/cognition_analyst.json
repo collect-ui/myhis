@@ -1,0 +1,105 @@
+{
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "lineStyle": {
+        "type": "dashed",
+        "width": 2,
+        "color": "#4B941A"
+      },
+      "animation": true
+    }
+  },
+  "legend": {
+    "show": false,
+    "left": "right"
+  },
+  "grid": {
+    "top": "15%",
+    "right": "3%",
+    "left": "3%",
+    "bottom": "5%",
+    "containLabel": true
+  },
+  "yAxis": {
+    "splitLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "rgba(163, 163, 163, 0.5)",
+        "type": "dashed"
+      }
+    },
+    "axisLabel": {
+      "color": "#FFFFFF"
+    },
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "rgba(65, 97, 128, 0.5)"
+      }
+    }
+  },
+  "xAxis": {
+    "data": [
+      "逻辑思维能力",
+      "阅读理解能力",
+      "口头表达能力",
+      "文字表达能力"
+    ],
+    "axisLabel": {
+      "color": "#FFFFFF"
+    },
+    "axisLine": {
+      "show": true,
+      "lineStyle": {
+        "color": "rgba(65, 97, 128, 0.5)"
+      }
+    },
+    "axisTick": {
+      "alignWithLabel": true
+    }
+  },
+  "series": [
+    {
+      "name": "认知能力测试结果分析",
+      "type": "scatter",
+      "symbol": "circle",
+      "label": {
+        "show": true,
+        "color": "#ffffff",
+        "fontSize": 14,
+        "fontWeight": 700
+      },
+      "symbolSize": "${(value)=>value>20?value:20}",
+      "itemStyle": {
+        "normal": {
+          "borderColor": "rgba(0, 255, 254, 0.8)",
+          "borderWidth": 1,
+          "color": {
+            "colorStops": [
+              {
+                "offset": 0.03,
+                "color": "rgba(30, 136, 207, 0.4)"
+              },
+              {
+                "offset": 0.96,
+                "color": "rgba(11, 243, 178, 0.5)"
+              }
+            ],
+            "x": 0.5,
+            "y": 0,
+            "r": 1,
+            "type": "radial",
+            "global": false
+          }
+        }
+      },
+      "data": [
+        7,
+        68,
+        46,
+        56
+      ]
+    }
+  ]
+}

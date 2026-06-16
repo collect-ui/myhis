@@ -1,0 +1,371 @@
+{
+  "tag": "dialog",
+  "title": "${workspaceProjectOp==='add'?'新增项目':'编辑项目'}",
+  "width": "780px",
+  "open": "${workspaceProjectDialogVisible}",
+  "action": [
+    {
+      "tag": "submit-form",
+      "formName": "workspace-project-form"
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceProjectOp==='add'}",
+      "api": "post:/template_data/data?service=webshell.workspace_project_add",
+      "appendFormFields": "workspace-project-form"
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceProjectOp==='edit'}",
+      "api": "post:/template_data/data?service=webshell.workspace_project_update",
+      "appendFormFields": "workspace-project-form",
+      "data": {
+        "webshell_workspace_project_id": "${workspaceProjectForm.webshell_workspace_project_id}",
+        "project_code": "${workspaceProjectForm.project_code}"
+      }
+    },
+    {
+      "tag": "reload-init-action",
+      "group": "reload-workspace-project-manage"
+    },
+    {
+      "tag": "update-store",
+      "value": {
+        "workspaceProjectDialogVisible": false
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "form",
+      "name": "workspace-project-form",
+      "initialValues": "${workspaceProjectForm}",
+      "labelCol": {
+        "span": 5
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 12,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "project_name",
+                  "label": "项目名称",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入项目名称"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "请输入项目名称"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 12,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "project_code",
+                  "label": "项目编码",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入项目编码"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "disabled": "${workspaceProjectOp==='edit'}",
+                      "placeholder": "例如: infra-web"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 12,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "order_id",
+                  "label": "排序号",
+                  "rules": [
+                    {
+                      "required": true,
+                      "type": "number",
+                      "message": "请输入排序号"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "isNumber": true,
+                      "placeholder": "请输入排序号"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 12,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "show_home",
+                  "label": "首页展示",
+                  "children": [
+                    {
+                      "tag": "switch",
+                      "activeValue": "1",
+                      "inactiveValue": "0",
+                      "checkedChildren": "是",
+                      "unCheckedChildren": "否"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "divider",
+          "orientation": "left",
+          "children": "远程服务器信息"
+        },
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 12,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "server_id",
+                  "label": "服务器",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请选择服务器"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "tree-select",
+                      "allowClear": true,
+                      "placeholder": "请选择服务器（来自左侧 SSH 服务器树）",
+                      "openLevel": 2,
+                      "treeData": "${server_env_data}",
+                      "valueKey": "${item.server_id}",
+                      "treeTitle": "${item.server_id?item.server_env_name+'-'+item.server_ip+'（'+item.server_busi_name+'）':item.server_env_name+'（'+item.server_env_code+'）'}",
+                      "treeIcon": "${item.server_id?'DesktopOutlined':'FolderOutlined'}",
+                      "treeLine": true,
+                      "showIcon": true,
+                      "showSearch": true,
+                      "action": [
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "workspaceUserList": []
+                          }
+                        },
+                        {
+                          "tag": "update-form",
+                          "formName": "workspace-project-form",
+                          "value": {
+                            "server_os_users_id": null
+                          }
+                        },
+                        {
+                          "tag": "ajax",
+                          "enable": "${getFormValue('workspace-project-form','server_id')}",
+                          "api": "post:/template_data/data?service=project.server_os_users_query",
+                          "data": {
+                            "server_id": "${getFormValue('workspace-project-form','server_id')}"
+                          },
+                          "adapt": {
+                            "workspaceUserList": "${data}"
+                          }
+                        },
+                        {
+                          "tag": "update-form",
+                          "enable": "${workspaceUserList.length>0}",
+                          "formName": "workspace-project-form",
+                          "value": {
+                            "server_os_users_id": "${workspaceUserList[0].server_os_users_id}"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 12,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "server_os_users_id",
+                  "label": "登录用户",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请选择用户"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "select",
+                      "allowClear": true,
+                      "fieldNames": {
+                        "label": "user_name",
+                        "value": "server_os_users_id"
+                      },
+                      "placeholder": "请选择用户（选服务器后自动加载）",
+                      "options": "${workspaceUserList}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "divider",
+          "orientation": "left",
+          "children": "仓库信息"
+        },
+        {
+          "tag": "form-item",
+          "name": "project_dir",
+          "label": "项目目录",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入项目目录"
+            }
+          ],
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "例如: /data/workspace/my-project"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "git_repo_url",
+          "label": "Git 地址",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入 Git 地址"
+            }
+          ],
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "例如: git@github.com:org/repo.git"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "project_type",
+          "label": "项目类型",
+          "extra": "Go 项目请维护 collect 源码路径；Python 项目请维护 Python 安装包路径；其他类型按需维护",
+          "children": [
+            {
+              "tag": "select",
+              "options": [
+                {
+                  "label": "Go 项目",
+                  "value": "go"
+                },
+                {
+                  "label": "Python 项目",
+                  "value": "python"
+                },
+                {
+                  "label": "前端项目",
+                  "value": "frontend"
+                },
+                {
+                  "label": "Node 项目",
+                  "value": "node"
+                },
+                {
+                  "label": "Java 项目",
+                  "value": "java"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "collect_source_root",
+          "label": "Go collect源码路径",
+          "itemVisible": "${project_type==='go'}",
+          "item-visible": "${project_type==='go'}",
+          "extra": "例如: /data/project/collect 或 /data/project/collect-go",
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "例如: /data/project/collect"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "python_pkg_path",
+          "label": "Python 安装包路径",
+          "itemVisible": "${project_type==='python'}",
+          "item-visible": "${project_type==='python'}",
+          "extra": "例如: /data/soft/python27 或 /data/soft/python27/lib/python2.7/site-packages",
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "例如: /data/soft/python27"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "exclude_dirs",
+          "label": "排除目录",
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "例如: node_modules,.git,dist,.next"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+{
+  "tag": "layout-fit",
+  "className": "webshell-container",
+  "style": {
+    "height": "100%",
+    "background": "#f8fafc"
+  },
+  "initStore": {
+    "server_env_data": [],
+    "workspaceCurrent": "frontend",
+    "workspaceOptions": [],
+    "workspaceTreeMap": {},
+    "workspaceTreeLoadedMap": {},
+    "workspaceLoadedMap": {
+      "frontend": true
+    },
+    "workspaceManageVisible": false,
+    "workspaceProjectDialogVisible": false,
+    "workspaceProjectOp": "add",
+    "workspaceProjectEditCode": "",
+    "workspaceProjectSearchForm": {
+      "page": 1,
+      "size": 20,
+      "project_name": "",
+      "project_code": "",
+      "server_id": null,
+      "git_keyword": ""
+    },
+    "workspaceLastServerId": null,
+    "workspaceProjectList": [],
+    "workspaceProjectTotal": 0,
+    "workspaceServerList": [],
+    "workspaceUserList": [],
+    "workspaceProjectForm": {
+      "project_name": "",
+      "project_code": "",
+      "order_id": 1,
+      "show_home": "1",
+      "server_id": null,
+      "server_os_users_id": null,
+      "project_dir": "",
+      "git_repo_url": "",
+      "exclude_dirs": "node_modules,.git,dist,.next"
+    },
+    "workspaceFileManageVisible": false,
+    "workspaceFileDialogVisible": false,
+    "workspaceFileOp": "add",
+    "workspaceFileList": [],
+    "workspaceFileTotal": 0,
+    "workspaceFileSearchForm": {
+      "page": 1,
+      "size": 20,
+      "project_code": "",
+      "name": ""
+    },
+    "workspaceFileCurrentProject": {},
+    "workspaceFileCurrentRow": {},
+    "activeStore": null,
+    "workspaceFileTreeKeyword": "",
+    "workspaceFileParentTree": [],
+    "workspaceContentSearchVisible": false,
+    "workspaceContentSearchLoading": false,
+    "workspaceContentSearchError": "",
+    "workspaceContentSearchSummary": {},
+    "workspaceContentSearchResults": [],
+    "workspaceContentSearchForm": {
+      "keyword": "",
+      "include_glob": "",
+      "match_case": false,
+      "max_results": 100
+    },
+    "workspaceFileForm": {
+      "file_id": "",
+      "project_code": "",
+      "name": "",
+      "path": "",
+      "parent_id": "",
+      "is_dir": "1"
+    },
+    "workspaceHttpGroupDialogVisible": false,
+    "workspaceHttpGroupOp": "add",
+    "workspaceHttpGroupForm": {
+      "doc_group_id": "",
+      "name": "",
+      "desc": "",
+      "order_index": 1,
+      "type": "service"
+    },
+    "workspaceHttpDocDialogVisible": false,
+    "workspaceHttpDocOp": "add",
+    "workspaceHttpDocFormType": "service",
+    "workspaceHttpDocRefreshVersion": "",
+    "workspaceLayoutVersion": "http-right-workbench-v2",
+    "workspaceHttpGroupTree": [],
+    "workspaceHttpDocForm": {
+      "collect_doc_id": "",
+      "doc_group_id": "",
+      "type": "service",
+      "title": "",
+      "sub_title": "",
+      "parent_dir": "",
+      "order_index": 1,
+      "request_mode": "frontend",
+      "request_method": "post",
+      "request_url": "/template_data/data",
+      "request_headers": "{}",
+      "code": "{}",
+      "code_desc": "",
+      "code_result": "",
+      "important_list": [],
+      "params": [],
+      "result": [],
+      "demo": []
+    }
+  },
+  "actionGroupDefine": {
+    "reload-workspace-project-manage": [
+      {
+        "tag": "ajax",
+        "group": "reload-workspace-project-manage",
+        "appendFormFields": "workspace-project-search-form",
+        "api": "post:/template_data/data?service=webshell.workspace_project_query",
+        "adapt": {
+          "workspaceProjectList": "${data}",
+          "workspaceProjectTotal": "${count}"
+        }
+      }
+    ],
+    "reload-workspace-project": [
+      {
+        "tag": "ajax",
+        "description": "不带条件查询",
+        "group": "reload-workspace-project",
+        "api": "post:/template_data/data?service=webshell.workspace_project_query",
+        "adapt": {
+          "workspaceOptions": "${data.sort((a,b)=>(a.order_id||0)-(b.order_id||0))}",
+          "workspaceCurrent": "${(()=>{const list=(data||[]).sort((a,b)=>(a.order_id||0)-(b.order_id||0));const home=list.filter(item=>String(item&&item.show_home||'')==='1');const hasCurrent=list.some(item=>item.project_code===workspaceCurrent);const hasCurrentHome=home.some(item=>item.project_code===workspaceCurrent);if(hasCurrentHome){return workspaceCurrent;}if(home.length>0){return home[0]?.project_code||'';}if(hasCurrent){return workspaceCurrent;}return list[0]?.project_code||'';})()}",
+          "workspaceLoadedMap": "${(()=>{const list=data||[];const map={};list.forEach(item=>{map[item.project_code]=true;});return map;})()}"
+        }
+      }
+    ],
+    "reload-workspace-file-manage": [
+      {
+        "tag": "ajax",
+        "group": "reload-workspace-file-manage",
+        "api": "post:/template_data/data?service=webshell.workspace_file_query",
+        "data": {
+          "project_code": "${workspaceFileCurrentProject.project_code || workspaceCurrent}",
+          "name": "${workspaceFileSearchForm.name || ''}",
+          "page": "${workspaceFileSearchForm.page || 1}",
+          "size": "${workspaceFileSearchForm.size || 20}"
+        },
+        "adapt": {
+          "workspaceFileList": "${data}",
+          "workspaceFileTotal": "${count}"
+        }
+      }
+    ]
+  },
+  "initAction": [
+    {
+      "tag": "reload-init-action",
+      "group": "reload-workspace-project"
+    },
+    {
+      "tag": "ajax",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=project.my_env_tree",
+      "appendFormFields": "server-search-form",
+      "adapt": {
+        "server_env_data": "${data}"
+      }
+    }
+  ],
+  "searchToolBar": [
+    {
+      "tag": "div",
+      "style": {
+        "padding": "12px 16px",
+        "borderBottom": "1px solid #e5e7eb",
+        "background": "#ffffff",
+        "flexShrink": 0
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "gap": "10px",
+            "paddingRight": "24px",
+            "flexWrap": "wrap"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "8px"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "fontWeight": 600,
+                    "whiteSpace": "nowrap",
+                    "fontSize": "14px",
+                    "color": "#1f2937",
+                    "letterSpacing": "0.2px"
+                  },
+                  "children": "工作空间"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "8px",
+                    "padding": "4px 8px",
+                    "border": "1px solid #e5e7eb",
+                    "borderRadius": "8px",
+                    "background": "#f8fafc"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "fontSize": "12px",
+                        "color": "#6b7280",
+                        "whiteSpace": "nowrap"
+                      },
+                      "children": "项目"
+                    },
+                    {
+                      "tag": "listview",
+                      "itemData": "${workspaceOptions.filter(item=>item.show_home==='1'||item.project_code===workspaceCurrent)}",
+                      "keyField": "project_code",
+                      "rowClickAction": [
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "workspaceLoadedMap": "${Object.assign({}, workspaceLoadedMap, { [row.project_code]: true })}",
+                            "workspaceCurrent": "${row.project_code}"
+                          }
+                        },
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "workspaceTree": "${workspaceTreeMap[row.project_code] || []}",
+                            "workspaceTreeSelected": {},
+                            "workspacePanelList": []
+                          }
+                        }
+                      ],
+                      "itemAttr": {
+                        "tag": "button",
+                        "size": "small",
+                        "type": "${workspaceCurrent===row.project_code?'primary':'default'}",
+                        "style": {
+                          "height": 24,
+                          "borderRadius": "6px",
+                          "marginRight": "8px"
+                        },
+                        "children": "${row.project_name}"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "8px"
+              },
+              "children": [
+                {
+                  "tag": "button",
+                  "size": "small",
+                  "icon": "AppstoreOutlined",
+                  "style": {
+                    "height": 24,
+                    "borderRadius": "6px"
+                  },
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "workspaceManageVisible": true
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "description": "刷新项目列表",
+                      "group": "reload-workspace-project-manage"
+                    }
+                  ],
+                  "children": "项目管理"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "children": [
+    {
+      "tag": "css",
+      "src": "/data/webshell.css"
+    },
+    "{{to_json .webshell_editor_pool_workspace_fragment}}",
+    "{{to_json .webshell_editor_pool_http_doc_style_fragment}}",
+    "{{to_json .webshell_editor_pool_http_group_dialog_fragment}}",
+    "{{to_json .webshell_editor_pool_http_doc_dialog_fragment}}",
+    "{{to_json .webshell_editor_pool_project_manage_dialog_fragment}}",
+    "{{to_json .webshell_editor_pool_project_dialog_fragment}}",
+    "{{to_json .webshell_editor_pool_file_dialog_fragment}}"
+  ]
+}

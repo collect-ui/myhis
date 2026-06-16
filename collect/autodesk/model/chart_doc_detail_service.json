@@ -1,0 +1,14 @@
+{
+  "projectNo":"{{.project_code}}",
+  "groups": [
+    {{ range $index,$item := .chart_list }} {{if $index}},{{end}}
+    {{ if $item.children}}
+    {
+    "topic": {{to_json $item.topic}},
+    "groupNo": "{{$item.doc_project_content_id}}",
+    "items": [{{ range $sub_index,$sub_item := $item.children }} {{if $sub_index}},{{end}}{"name": {{to_json $sub_item.topic}},"itemNo": "{{$sub_item.doc_project_content_id}}"}{{ end}}]
+    }
+    {{end}}
+    {{ end}}
+  ]
+}

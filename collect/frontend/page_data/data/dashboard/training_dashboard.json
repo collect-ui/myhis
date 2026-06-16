@@ -1,0 +1,625 @@
+{
+  "tag": "layout-fit",
+  "className": "overflow-auto",
+  "storeName": "dashboard",
+  "initStoreType": {
+    "grade_list": "GradeList"
+  },
+  "windowKeyUpEvent": [
+    {
+      "key": "ArrowDown",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "stage_index": "${stage_index>=0 && stage_index < stage_list.length-1?stage_index+1:stage_index}"
+          }
+        }
+      ]
+    },
+    {
+      "key": "ArrowUp",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "stage_index": "${stage_index>0 && stage_index <= stage_list.length-1?stage_index-1:stage_index}"
+          }
+        }
+      ]
+    },
+    {
+      "key":"ArrowDown|ArrowUp",
+      "action": [
+        {
+          "tag": "reload-init-action",
+          "group": "time-left-timer"
+        }
+      ]
+    }
+
+  ],
+  "timer": {
+      "name": "剩余时间的定时器",
+      "enable": "${timer_left_start && time_left>0}",
+      "interval": 1000,
+      "action": [
+        {
+          "tag": "update-score"
+        }
+      ]
+  },
+
+  "initStore": {
+    "course_id": "",
+    "dashboard_type": "",
+    "timer_left_start": false,
+    "time_left":60,
+    "stage_index": 0,
+    "stage_list": [
+      "not_start",
+      "before_start",
+      "before_finish",
+      "in_start",
+      "in_finish",
+      "after_start",
+      "after_finish"
+    ],
+    "course": {},
+    "training_project_list": [],
+    "grade_list": [],
+    "current_training_project": {
+      "mp4": "",
+      "body_part_name": "",
+      "name": ""
+    },
+    "sportLevelMap": {
+      "excellent": "轨迹精度高",
+      "good": "轨迹精度中",
+      "passed": "轨迹精度低",
+      "not_passed": "轨迹精度低"
+    }
+  },
+  "initAction": [
+    {
+      "tag": "url-param",
+      "description": "从url取参数",
+      "adapt": {
+        "course_id": "${course_id}",
+        "dashboard_type": "${dashboard_type}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "api": "post:/template_data/data?service=sport.course_query",
+      "data": {
+        "course_id": "${course_id}",
+        "dashboard_type": "${dashboard_type}",
+        "to_obj": true,
+        "has_grade": true
+      },
+      "adapt": {
+        "course": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "api": "post:/template_data/data?service=sport.training_project_query",
+      "data": {
+        "training_type": "${course.training_type}",
+        "body_part": "${course.body_part}",
+        "page": 1,
+        "size": 100
+      },
+      "adapt": {
+        "training_project_list": "${data}"
+      }
+    },
+    {
+      "tag": "update-store",
+      "value": {
+        "current_training_project": "${training_project_list[0]}"
+      }
+    },
+    {
+      "tag": "update-store",
+      "group": "time-left-timer",
+      "description": "课前，课中，课后开始，开始训练计时",
+      "enable": "${['before_start','in_start','after_start'].indexOf(stage_list[stage_index])>=0}",
+      "value": {
+        "time_left": "${parseInt(current_training_project.dashboard_time)}",
+        "timer_left_start": true
+      }
+    },
+    {
+      "tag": "update-store",
+      "group": "time-left-timer",
+      "description": "课前，课中，课后开始，开始训练计时",
+      "enable": "${['before_start','in_start','after_start'].indexOf(stage_list[stage_index])<0}",
+      "value": {
+        "time_left": "${parseInt(current_training_project.dashboard_time)}",
+        "timer_left_start": false
+      }
+    },
+    {
+      "tag": "ajax",
+      "api": "post:/template_data/data?service=sport.course_grade_query",
+      "group": "get-data-list",
+      "data": {
+        "course_id": "${course.course_id}",
+        "dashboard_type": "training",
+        "training_project_code": "${current_training_project.training_project_code}"
+      },
+      "adapt": {
+        "grade_list": "${data}"
+      }
+    },
+    {
+      "tag": "update-score",
+      "group": "time-left-timer"
+    }
+  ],
+  "style": {
+    "background": "#051c45",
+    "color": "#fff",
+    "fontFamily": "'Microsoft YaHei' !important",
+    "margin": "0px 0px",
+    "padding": "0px 0px",
+    "overflowX": "hidden",
+    "backgroundRepeat": "no-repeat",
+    "backgroundSize": "100% 100%",
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "children": [
+    {
+      "tag": "div",
+      "style": {
+        "width": "100%",
+        "lineHeight": "80px",
+        "background": "url(/data/img/top-title.png) center/100% 100% no-repeat",
+        "fontSize": "36px",
+        "textAlign": "center"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "transform": "translateY(-12px)"
+          },
+          "children": "训练课程情况"
+        }
+      ]
+    },
+    {
+      "tag": "div",
+      "style": {
+        "flex": 1,
+        "display": "flex",
+        "overflow": "hidden"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "width": 320,
+            "marginLeft": 15,
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "style": {
+                "width": "320px",
+                "height": "38px",
+                "fontSize": "22px",
+                "paddingLeft": "30px",
+                "boxSizing": "border-box",
+                "background": "url(/data/img/courses-title.png) left/cover no-repeat"
+              },
+              "children": "当前课程"
+            },
+            {
+              "tag": "div",
+              "style": {
+                "flex": 1,
+                "margin": "6px 0",
+                "background": "url(/data/img/courses-bg.png) center/100% 100% no-repeat"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "padding": "10px",
+                    "borderRadius": "6px",
+                    "overflow": "hidden"
+                  },
+                  "children": [
+                    {
+                      "tag": "attachment-show",
+                      "path": "${current_training_project.mp4}",
+                      "height": 170,
+                      "playing": true,
+                      "muted": true,
+                      "loop": true,
+                      "width": "100%",
+                      "style": {
+                        "objectFit": "cover"
+                      }
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "flex",
+                        "justifyContent": "space-between"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "style": {
+                            "marginTop": 10,
+                            "paddingLeft": 16
+                          },
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "16px",
+                                "fontWeight": "bold"
+                              },
+                              "children": "${current_training_project.body_part_name+'-'+current_training_project.name}"
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "fontSize": "14px",
+                                "marginTop": 2
+                              },
+                              "children": "${course.teacher_name+'-老师正在进行训练'}"
+                            }
+                          ]
+                        },
+
+                        {
+                          "tag": "div",
+                          "style": {
+                            "fontSize": 24,
+                            "lineHeight": "60px",
+                            "paddingRight": 20,
+                            "fontFamily": "Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif"
+                          },
+                          "children": [
+                            "${parseInt(time_left/60)>=10?parseInt(time_left/60):'0'+parseInt(time_left/60)}",
+                            {
+                              "tag": "span",
+                              "style": {
+                                "margin": "0 4px",
+                                "display": "inline-block",
+                                "transform": "translateY(-2px)"
+                              },
+                              "children": ":"
+                            },
+                            "${parseInt(time_left%60)>=10?parseInt(time_left%60):'0'+parseInt(time_left%60)}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "width": "95%",
+                        "height": "30px",
+                        "lineHeight": "30px",
+                        "borderBottom": "1px solid rgba(1, 171, 236, 0.4)",
+                        "margin": "0 auto",
+                        "display": "flex",
+                        "marginTop": "20px",
+                        "justifyContent": "space-between"
+                      },
+                      "children": [
+                        {
+                          "tag": "span",
+                          "children": "全部课程"
+                        },
+                        {
+                          "tag": "select",
+                          "theme": "dark",
+                          "placeholder": "请选择状态",
+                          "allowClear": true,
+                          "defaultValue": "not_start",
+                          "action": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "stage_index": "${stage_list.indexOf(value)}"
+                              }
+                            },
+                            {
+                              "tag": "reload-init-action",
+                              "group": "time-left-timer"
+                            }
+
+                          ],
+                          "value": "${stage_list[stage_index]}",
+                          "style": {
+                            "width": 150
+                          },
+                          "listHeight": 400,
+                          "options": [
+                            {
+                              "value": "not_start",
+                              "label": "未开始"
+                            },
+                            {
+                              "label": "课前状态",
+                              "options": [
+                                {
+                                  "value": "before_start",
+                                  "label": "课前-开始"
+                                },
+                                {
+                                  "value": "before_finish",
+                                  "label": "课前-结束"
+                                }
+                              ]
+                            },
+                            {
+                              "label": "课中状态",
+                              "options": [
+                                {
+                                  "value": "in_start",
+                                  "label": "课中-开始"
+                                },
+                                {
+                                  "value": "in_finish",
+                                  "label": "课中-结束"
+                                }
+                              ]
+                            },
+                            {
+                              "label": "课后状态",
+                              "options": [
+                                {
+                                  "value": "after_start",
+                                  "label": "课后-开始"
+                                },
+                                {
+                                  "value": "after_finish",
+                                  "label": "课后-结束"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "children": [
+                        {
+                          "tag": "listview",
+                          "keyField": "training_project_id",
+                          "itemData": "${training_project_list}",
+                          "rowClickAction": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "current_training_project": "${row}"
+                              }
+                            },
+                            {
+                              "tag": "reload-init-action",
+                              "group": "get-data-list"
+                            },
+                            {
+                              "tag": "reload-init-action",
+                              "group": "time-left-timer"
+                            }
+                          ],
+                          "itemAttr": {
+                            "tag": "div",
+                            "className": "${current_training_project.name==row.name?'courses-active courses-item':'courses-item'}",
+                            "children": [
+                              {
+                                "tag": "div",
+                                "style": {
+                                  "fontSize": 16
+                                },
+                                "children": [
+                                  "${row.body_part_name}",
+                                  "-",
+                                  "${row.name}"
+                                ]
+                              },
+                              {
+                                "tag": "div",
+                                "style": {
+                                  "display": "flex",
+                                  "justifyContent": "space-between",
+                                  "color": "#e9e9e9"
+                                },
+                                "children": [
+                                  {
+                                    "tag": "span",
+                                    "children": "${course.teacher_name}"
+                                  },
+                                  {
+                                    "tag": "span",
+                                    "children": "${row.difficulty_level_name}"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "layout-fit",
+          "theme": "dark",
+          "style": {
+            "flex": 1,
+            "marginLeft": 15,
+            "overflow": "auto"
+          },
+          "timer": {
+            "name": "剩余时间的定时器",
+            "enable": "${timer_left_start && time_left>0}",
+            "interval": 1000,
+            "action": [
+              {
+                "tag": "update-store",
+                "value": {
+                  "time_left": "${time_left-1}"
+                }
+              }
+            ]
+          },
+          "children": [
+            {
+              "tag": "div",
+              "style": {
+                "height": "38px",
+                "fontSize": "22px",
+                "paddingLeft": "30px",
+                "boxSizing": "border-box",
+                "background": "url(/data/img/student-title.png) left/cover no-repeat"
+              },
+              "children": [
+                "学生成绩训练"
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "grid",
+                "gridTemplateColumns": "repeat(6, 1fr)",
+                "gap": "10px",
+                "padding": "10px 0px"
+              },
+              "children": [
+
+                {
+                  "tag": "listview",
+                  "keyField": "course_grade_id",
+                  "itemData": "${grade_list}",
+                  "itemAttr": {
+                    "tag": "div",
+                    "className": "${row.level+' stu-item'}",
+                    "children": [
+                      {
+                        "tag": "div",
+                        "style": {
+                          "margin": "12px 0 0 12px"
+                        },
+                        "children": [
+                          {
+                            "tag": "div",
+                            "children": [
+                              {
+                                "tag": "image",
+                                "preview": false,
+                                "src": "/data/img/avatar.svg"
+                              },
+                              {
+                                "tag": "div",
+                                "style": {
+                                  "fontSize": "16px",
+                                  "marginBottom": "8px",
+                                  "display": "inline-block",
+                                  "marginLeft": "10px",
+                                  "fontWeight": 600
+                                },
+                                "children": "${row.username+' '+row.student_name}"
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "style": {
+                              "marginTop": "10px"
+                            },
+                            "children": [
+                              "${sportLevelMap[row.sport_level]}",
+                              {
+                                "tag": "span",
+                                "style": {
+                                  "margin": "0 4px"
+                                },
+                                "children": "|"
+                              },
+                              "运动",
+                              {
+                                "tag": "span",
+                                "style": {
+                                  "margin": "0 4px"
+                                },
+                                "children": "${row.times}"
+                              },
+                              "次"
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "children": [
+                              {
+                                "tag": "span",
+                                "children": "消耗热量："
+                              },
+                              {
+                                "tag": "span",
+                                "children": "${row.calories}"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "div",
+                        "style": {
+                          "textAlign": "center",
+                          "marginRight": 22,
+                          "marginTop": 28
+                        },
+                        "children": [
+                          {
+                            "tag": "div",
+                            "style": {
+                              "fontSize": 32,
+                              "fontWeight": "bold"
+                            },
+                            "children": [
+                              {
+                                "tag":"heartbeat-value",
+                                "value": "${row.score}"
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "style": {
+                              "fontSize": 12,
+                              "color": "#e9e9e9"
+                            },
+                            "children": "得分"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

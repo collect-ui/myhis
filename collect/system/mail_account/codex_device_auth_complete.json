@@ -1,0 +1,13 @@
+{
+  "url": "{{.codex_device_auth_complete_url}}",
+  "method": "post",
+  "header": {
+    "Content-Type": "application/json"
+  },
+  "result_json": true,
+  "data": {
+    "device_auth_id": "[device_auth_id]",
+    "user_code": "[user_code]",
+    "client_id": "[codex_client_id]"
+  }
+}

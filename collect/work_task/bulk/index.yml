@@ -1,0 +1,31 @@
+service:
+  - key: get_service_list
+    module: empty
+    data_file: service_list.json
+    handler_params:
+      - key: file2datajson
+        save_field: service_list
+      - key: update_array
+        foreach: "[service_list]"
+        item: item
+        fields:
+          - field: field
+            template: "[item.service]"
+      - key: param2result
+        field: service_list
+
+  - key: get_task_page_service
+    module: bulk_service
+    http: true
+    data_file: service_transfer.json
+    batch:
+      foreach: "[service_list]"
+      service:
+        service: "[service]"
+      append_item_param: true
+      save_field: 'result'
+    handler_params:
+      - key: service2field
+        service:
+          service: work_task.get_service_list
+        save_field: service_list

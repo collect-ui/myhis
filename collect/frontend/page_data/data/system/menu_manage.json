@@ -1,0 +1,1076 @@
+{
+  "tag": "layout-fit",
+  "initStore": {
+    "searchForm": {
+      "search": ""
+    },
+    "addNodeForm": {
+      "type": "1"
+    },
+    "updateNodeForm": {},
+    "treeSelected": {
+    },
+    "addNodeVisible": false,
+    "nodeOp": "add",
+    "server_env_data": [],
+    "server_env_data_dir": [],
+    "last_type": "",
+    "last_parent_id": "",
+    "col": 6,
+    "role_list": [],
+    "framework_list": []
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "description": "请求目录树",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=system.menu_query",
+      "appendFormFields": "server-search-form",
+      "data": {
+        "to_tree": true
+      },
+      "adapt": {
+        "server_env_data": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "description": "请求框架类型",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=system.menu_query",
+      "data": {
+        "menu_type": "framework"
+      },
+      "adapt": {
+        "framework_list": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "description": "加载角色",
+      "api": "post:/template_data/data?service=hrm.role_query",
+      "adapt": {
+        "role_list": "${data}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "layout",
+      "children": [
+        {
+          "tag": "sider",
+          "width": "320px",
+          "className": "border-right",
+          "style": {
+            "backgroundColor": "#fafafa"
+          },
+          "collapsible": true,
+          "collapsedWidth": "40",
+          "children": [
+            {
+              "tag": "layout-fit",
+              "searchToolBar": [
+                {
+                  "tag": "form",
+                  "name": "server-search-form",
+                  "initialValues": "${searchForm}",
+                  "wrapperCol": {
+                    "span": 24
+                  },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "查询"
+                    }
+                  ],
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "row",
+                      "className": "w100",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "style": {
+                            "marginInlineEnd": "8px"
+                          },
+                          "children": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "icon": "FaPlus",
+                              "title": "新增节点",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "addNodeVisible": true,
+                                    "nodeOp": "add"
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "add-node-form"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "add-node-form",
+                                  "value": {
+                                    "parent_id": "${treeSelected?.menu_type=='1'?treeSelected.sys_menu_id:treeSelected?.parent_id}",
+                                    "menu_type": "${treeSelected?.menu_type=='1'?'1':'2'}"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "请求目录树",
+                                  "group": "server-env-tree",
+                                  "api": "post:/template_data/data?service=system.menu_query",
+                                  "data": {
+                                    "to_tree": true,
+                                    "menu_type": "1"
+                                  },
+                                  "adapt": {
+                                    "server_env_data_dir": "${data}"
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "search",
+                          "className": "flex1",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "名称",
+                              "allowClear": true
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "children": [
+                {
+                  "tag": "tree",
+                  "showLine": true,
+                  "className": "h100",
+                  "treeSelected": "${treeSelected}",
+                  "treeKey": "${item.sys_menu_id}",
+                  "treeTitle": "${item.menu_type=='1'?item.menu_name:item.menu_name+'('+item.url+')'}",
+                  "treeData": "${server_env_data}",
+                  "openLevel": 2,
+                  "draggable": true,
+                  "allowDrop": "${(dropPosition===0 && item.menu_type!=='1')?false:true}",
+                  "treeIcon": "${item.menu_type==='1'?'FolderOutlined':'FaRoute'}",
+                  "dragAction": [
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=system.handler_menu_order",
+                      "data": {
+                        "rows": "${rows}",
+                        "change_parent": "${change_parent}",
+                        "parent": "${parent}",
+                        "menu": "${item}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "showIcon": true,
+                  "selectAction": [
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=system.menu_detail",
+                      "data": {
+                        "sys_menu_id": "${row.sys_menu_id}"
+                      },
+                      "adapt": {
+                        "treeSelected": "${data}"
+                      }
+                    }
+                  ],
+                  "rightMenu": [
+                    {
+                      "type": "item",
+                      "icon": "PlusOutlined",
+                      "code": "add",
+                      "label": "新增数据"
+                    },
+                    {
+                      "type": "item",
+                      "icon": "EditOutlined",
+                      "code": "edit",
+                      "label": "修改数据"
+                    },
+                    {
+                      "type": "separator"
+                    },
+                    {
+                      "type": "submenu",
+                      "label": "其他",
+                      "children": [
+                        {
+                          "type": "item",
+                          "icon": "DeleteOutlined",
+                          "code": "delete",
+                          "label": "删除数据"
+                        }
+                      ]
+                    }
+                  ],
+                  "rightMenuAction": [
+                    {
+                      "tag": "reset-form",
+                      "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='add'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "add",
+                        "updateNodeForm": {}
+                      }
+                    },
+                    {
+                      "enable": "${item.code==='add'}",
+                      "tag": "update-form",
+                      "formName": "add-node-form",
+                      "value": {
+                        "parent_id": "${node.menu_type=='1'?node.sys_menu_id:node.parent_id}"
+                      }
+                    },
+                    {
+                      "tag": "ajax",
+                      "enable": "${item.code==='edit'}",
+                      "api": "post:/template_data/data?service=system.menu_detail",
+                      "data": {
+                        "sys_menu_id": "${node.sys_menu_id}"
+                      },
+                      "adapt": {
+                        "updateNodeForm": "${data}"
+                      }
+                    },
+                    {
+                      "tag": "update-store",
+                      "enable": "${item.code==='edit'}",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "edit"
+                      }
+                    },
+                    {
+                      "tag": "ajax",
+                      "description": "请求目录树",
+                      "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                      "api": "post:/template_data/data?service=system.menu_query",
+                      "appendFormFields": "server-search-form",
+                      "data": {
+                        "to_tree": true,
+                        "menu_type": "1"
+                      },
+                      "adapt": {
+                        "server_env_data_dir": "${data}"
+                      }
+                    },
+                    {
+                      "tag": "update-form",
+                      "name": " 更新表单",
+                      "enable": "${item.code==='edit'}",
+                      "formName": "add-node-form",
+                      "useStore": true,
+                      "value": "${updateNodeForm}"
+                    },
+                    {
+                      "tag": "check",
+                      "enable": "${item.code=='delete' && node?.children }",
+                      "title": "${'【'+node.menu_name+'】下存在'+node?.children.length+'个节点，请先删除节点'}",
+                      "check": "${!node.children || (node.children && node.children.length<=0)}"
+                    },
+                    {
+                      "tag": "confirm",
+                      "title": "确认提示",
+                      "content": "${'确认删除所选【'+node.menu_name+'】节点吗'}",
+                      "enable": "${item.code==='delete'}"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "删除环境",
+                      "enable": "${item.code=='delete'}",
+                      "group": "server-env-tree",
+                      "api": "post:/template_data/data?service=system.menu_delete",
+                      "data": {
+                        "sys_menu_id_list": "${[node.sys_menu_id]}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "enable": "${item.code=='delete'}",
+                      "description": "页面初始化请求"
+                    }
+                  ]
+                },
+                {
+                  "tag": "dialog",
+                  "title": "${nodeOp==='add'?'新增节点':'修改节点'}",
+                  "open": "${addNodeVisible}",
+                  "width": "70%",
+                  "confirmAndContinue": "${nodeOp==='add'?true:false}",
+                  "action": [
+                    {
+                      "tag": "submit-form",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "添加环境节点",
+                      "enable": "${nodeOp==='add'}",
+                      "api": "post:/template_data/data?service=system.menu_save",
+                      "appendFormFields": "add-node-form"
+                    },
+                    {
+                      "tag": "ajax",
+                      "name": "修改环境节点",
+                      "enable": "${nodeOp==='edit'}",
+                      "api": "post:/template_data/data?service=system.menu_update",
+                      "appendFormFields": "add-node-form",
+                      "appendFields": "${updateNodeForm}"
+                    },
+                    {
+                      "tag": "update-store",
+                      "description": "重置前先保存节点类型",
+                      "enable": "${confirmAndContinue==true}",
+                      "value": {
+                        "last_type": "${getFormValue('add-node-form','menu_type')}",
+                        "last_parent_id": "${getFormValue('add-node-form','parent_id')}"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "enable": "${confirmAndContinue==true}",
+                      "formName": "add-node-form"
+                    },
+                    {
+                      "tag": "update-form",
+                      "description": "还原节点类型和父节点",
+                      "enable": "${confirmAndContinue==true}",
+                      "formName": "add-node-form",
+                      "value": {
+                        "parent_id": "${last_parent_id}",
+                        "menu_type": "${last_type}"
+                      }
+                    },
+                    {
+                      "tag": "update-store",
+                      "enable": "${confirmAndContinue==false}",
+                      "value": {
+                        "addNodeVisible": false
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "server-env-tree",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "form",
+                      "name": "add-node-form",
+                      "initialValues": {
+                        "is_index": "0",
+                        "menu_type": "1",
+                        "in_menu": "1",
+                        "is_common": "0"
+                      },
+                      "labelCol": {
+                        "span": 6
+                      },
+                      "wrapperCol": {
+                        "span": 18
+                      },
+                      "children": [
+                        {
+                          "tag": "divider",
+                          "orientation": "left",
+                          "children": "基础信息"
+                        },
+                        {
+                          "tag": "row",
+                          "children": [
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "类型",
+                                  "name": "menu_type",
+                                  "children": [
+                                    {
+                                      "tag": "select",
+                                      "options": [
+                                        {
+                                          "label": "文件夹",
+                                          "value": "1"
+                                        },
+                                        {
+                                          "label": "路由",
+                                          "value": "2"
+                                        },
+                                        {
+                                          "label": "框架",
+                                          "value": "framework"
+                                        },
+                                        {
+                                          "label": "无框架",
+                                          "value": "no_framework"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "name": "parent_id",
+                                  "label": "上级",
+                                  "children": [
+                                    {
+                                      "tag": "tree-select",
+                                      "placeholder": "请输入名称",
+                                      "allowClear": true,
+                                      "openLevel": 2,
+                                      "valueKey": "${item.sys_menu_id}",
+                                      "treeTitle": "${item.menu_name}",
+                                      "treeIcon": "FolderOutlined",
+                                      "treeData": "${server_env_data_dir}",
+                                      "treeLine": true,
+                                      "showIcon": true,
+                                      "showSearch": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "名称",
+                                  "name": "menu_name",
+                                  "rules": [
+                                    {
+                                      "required": true,
+                                      "message": "请输入名称"
+                                    }
+                                  ],
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入名称"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "编码",
+                                  "name": "menu_code",
+                                  "rules": [
+                                    {
+                                      "required": true,
+                                      "message": "请输入编码"
+                                    }
+                                  ],
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入编码"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "图标",
+                                  "name": "icon",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入图标"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "排序号",
+                                  "name": "order_index",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "isNumber": true,
+                                      "placeholder": "请输入排序号"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "公共",
+                                  "name": "is_common",
+                                  "children": [
+                                    {
+                                      "tag": "switch",
+                                      "activeValue": "1",
+                                      "inactiveValue": "0"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "菜单显示",
+                                  "name": "in_menu",
+                                  "children": [
+                                    {
+                                      "tag": "switch",
+                                      "activeValue": "1",
+                                      "inactiveValue": "0"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "divider",
+                          "orientation": "left",
+                          "children": "路由信息"
+                        },
+                        {
+                          "tag": "row",
+                          "children": [
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "路由",
+                                  "name": "url",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入路由url"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "api",
+                                  "name": "api",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入路由服务地址"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "分组展示",
+                                  "name": "type",
+                                  "help": "主要用于的菜单是平铺（group），还是二级菜单形式（空）",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入group ，或者空"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "首页",
+                                  "name": "is_index",
+                                  "extra": "网站进入的默认页面",
+                                  "children": [
+                                    {
+                                      "tag": "switch",
+                                      "activeValue": "1",
+                                      "inactiveValue": "0"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+
+
+
+                                {
+                                  "tag": "form-item",
+                                  "label": "继承框架",
+                                  "name": "router_group",
+                                  "extra": "是否包括框架的公共部分",
+                                  "children": [
+                                    {
+                                      "tag": "select",
+                                      "placeholder": "请选择框架",
+                                      "fieldNames": {
+                                        "label": "menu_name",
+                                        "value": "menu_code"
+                                      },
+                                      "labelRender": "${label+'['+value+']'}",
+                                      "optionRender": "${menu_name+'['+menu_code+']'}",
+                                      "options": "${framework_list}"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "form-item",
+                              "noStyle": true,
+                              "itemVisible": "${is_index==='1'}",
+                              "children": [
+                                {
+                                  "tag": "col",
+                                  "span": "${col}",
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "label": "框架服务",
+                                      "name": "group_api",
+                                      "extra": "有且仅仅是首页的时候要写，非首页只要继承框架即可",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "请输入框架服务"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "tag": "col",
+                                  "span": "${col}",
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "label": "框架路由",
+                                      "name": "group_path",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "请输入框架路由"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "col",
+                              "span": "${col}",
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "label": "描述",
+                                  "name": "description",
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "placeholder": "请输入描述",
+                                      "isTextarea": true
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "divider",
+                          "orientation": "left",
+                          "children": "非公共关联角色"
+                        },
+                        {
+                          "tag": "form-item",
+                          "description": "设置itemEnable 要么设置is_common 的默认值，要么is_common的取反逻辑(is_common!=='1',最好是取反，有可能数据库里面存了一个空)，因为打开对话框，第一次值是空。导致is_common==='0' 为false",
+                          "itemDisabled": "${is_common==='1'}",
+                          "name": "role_id_list",
+                          "labelCol": {
+                            "span": 2,
+                            "offset": 0
+                          },
+                          "label": "角色",
+                          "children": [
+                            {
+                              "tag": "select",
+                              "placeholder": "请选择角色",
+                              "mode": "multiple",
+                              "fieldNames": {
+                                "label": "role_name",
+                                "value": "role_code"
+                              },
+                              "labelRender": "${label+'['+value+']'}",
+                              "optionRender": "${role_name+'['+role_code+']'}",
+                              "options": "${role_list}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "content",
+          "style": {
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+
+            {
+              "tag": "form",
+              "className": "form-info-show",
+              "labelCol": {
+                "span": 6
+              },
+              "wrapperCol": {
+                "span": 18
+              },
+              "children": [
+                {
+                  "tag": "divider",
+                  "orientation": "left",
+                  "children": "基础信息"
+                },
+                {
+                  "tag": "row",
+                  "children": [
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "类型",
+                          "children": [
+                            "${treeSelected.menu_type_name}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "parent_id",
+                          "label": "上级",
+                          "children": [
+                            "${treeSelected.parent_menu_name}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "名称",
+                          "name": "menu_name",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入名称"
+                            }
+                          ],
+                          "children": [
+                            "${treeSelected.menu_name}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "编码",
+                          "name": "menu_code",
+                          "children": [
+                            "${treeSelected.menu_code}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "图标",
+                          "name": "icon",
+                          "children": [
+                            {
+                              "tag": "icon",
+                              "icon": "${treeSelected.icon}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "排序号",
+                          "name": "order_index",
+                          "children": [
+                            "${treeSelected.order_index}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "公共",
+                          "name": "is_common",
+                          "children": [
+                            "${treeSelected.is_common=='1'?'是':'否'}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "菜单显示",
+                          "name": "in_menu",
+                          "children": [
+                            "${treeSelected.in_menu=='1'?'是':'否'}"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "divider",
+                  "orientation": "left",
+                  "children": "路由信息"
+                },
+                {
+                  "tag": "row",
+                  "children": [
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "路由",
+                          "name": "url",
+                          "children": [
+                            "${treeSelected.url}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "api",
+                          "name": "api",
+                          "children": [
+                            "${treeSelected.api}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "分组展示",
+                          "name": "type",
+                          "children": [
+                            "${treeSelected.type}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "首页",
+                          "name": "is_index",
+                          "children": [
+                            "${treeSelected.is_index=='1'?'是':'否'}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "继承框架",
+                          "name": "router_group",
+                          "extra": "是否包括框架的公共部分",
+                          "children": [
+                            "${treeSelected.router_group}"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": "${col}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "描述",
+                          "name": "description",
+                          "children": [
+                            "${treeSelected.description}"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "divider",
+                  "orientation": "left",
+                  "children": "关联角色"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "padding": "0px 80px"
+                  },
+                  "children": [
+                    {
+                      "tag": "listview",
+                      "keyField": "role_id",
+                      "itemData": "${treeSelected.role_list}",
+                      "itemAttr": {
+                        "tag": "tag",
+                        "color": "#55acee",
+                        "children": [
+                          "${row.role_name}"
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

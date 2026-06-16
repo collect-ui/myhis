@@ -1,0 +1,87 @@
+{
+  "title": {
+    "text": ""
+  },
+  "legend": {
+    "show": false
+  },
+  "grid": {
+    "top": "0",
+    "left": "3%",
+    "right": "3%",
+    "bottom": "0",
+    "containLabel": true
+  },
+  "radar": {
+    "shape": "circle",
+    "radius": "70%",
+    "splitNumber": 5,
+    "startAngle": 45,
+    "indicator": [
+      {
+        "name": "正确率",
+        "max": 25
+      },
+      {
+        "name": "节奏",
+        "max": 25
+      },
+      {
+        "name": "流利度",
+        "max": 25
+      },
+      {
+        "name": "发音",
+        "max": 25
+      }
+    ],
+    "splitLine": {
+      "lineStyle": {
+        "color": "#45BCE4",
+        "type": "dashed"
+      }
+    },
+    "splitArea": {
+      "show": false
+    },
+    "axisLine": {
+      "lineStyle": {
+        "color": "#45BCE4"
+      }
+    },
+    "name": {
+      "textStyle": {
+        "color": "#fff",
+        "fontSize": "16",
+        "borderRadius": 3,
+        "padding": [
+          3,
+          5
+        ]
+      }
+    }
+  },
+  "series": [
+    {
+      "name": "系统评价",
+      "type": "radar",
+      "data": [
+        {
+          "value": [
+            23,
+            23.7,
+            22.8,
+            22.5
+          ],
+          "name": "系统评价",
+          "itemStyle": {
+            "color": "#47EB99"
+          },
+          "areaStyle": {
+            "opacity": 0.5
+          }
+        }
+      ]
+    }
+  ]
+}

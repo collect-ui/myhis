@@ -1,0 +1,2555 @@
+{
+  "tag": "layout-fit",
+  "title": "邮箱登记",
+  "className": "padding10 h100",
+  "searchBarRight": [
+    {
+      "tag": "div",
+      "visible": "${simpleMode}",
+      "style": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "8px",
+        "fontSize": "12px"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "6px",
+            "padding": "4px 10px",
+            "borderRadius": "8px",
+            "background": "linear-gradient(135deg, #fff7ed 0%, #fffbeb 100%)",
+            "border": "1px solid rgba(245,158,11,0.2)"
+          },
+          "children": [
+            {
+              "tag": "button",
+              "size": "middle",
+              "type": "text",
+              "icon": "ReloadOutlined",
+              "loading": "${refreshLoading}",
+              "style": {
+                "color": "#ea580c",
+                "fontWeight": "600"
+              },
+              "action": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "refreshLoading": true
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "api": "post:/template_data/data?service=system.mail_account_codex_query_usage_and_save",
+                  "data": {
+                    "service": "system.mail_account_codex_query_usage_and_save",
+                    "mail_account_id": "${(()=>{const running=dataList.find(item=>item.is_current_running==='1');return running?running.mail_account_id:'';})()}"
+                  },
+                  "onSuccess": [
+                    {
+                      "tag": "notification",
+                      "type": "success",
+                      "message": "用量刷新成功"
+                    }
+                  ],
+                  "onError": [
+                    {
+                      "tag": "notification",
+                      "type": "error",
+                      "message": "刷新失败",
+                      "description": "${msg}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "refreshLoading": false
+                  }
+                  },
+      {
+        "tag": "reload-init-action",
+                  "group": "dataList",
+                  "description": "刷新用量后刷新列表"
+                }
+              ]
+            },
+            {
+              "tag": "divider",
+              "type": "vertical"
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "4px"
+              },
+              "children": [
+                {
+                  "tag": "icon",
+                  "icon": "ThunderboltOutlined",
+                  "style": {
+                    "color": "#ea580c"
+                  }
+                },
+                {
+                  "tag": "span",
+                  "style": {
+                    "fontWeight": "700",
+                    "color": "#ea580c",
+                    "fontSize": "11px",
+                    "padding": "1px 5px",
+                    "background": "rgba(234,88,12,0.1)",
+                    "borderRadius": "4px"
+                  },
+                  "children": "${(()=>{const running=dataList.find(item=>item.is_current_running==='1');return running?('#'+(running.order_index||'')):'';})()}"
+                },
+                {
+                  "tag": "span",
+                  "style": {
+                    "fontWeight": "600",
+                    "color": "#9a3412"
+                  },
+                  "children": "${(()=>{const running=dataList.find(item=>item.is_current_running==='1');return running?(running.email_name.split('@')[0]):'无';})()}"
+                }
+              ]
+            },
+            {
+              "tag": "span",
+              "style": {
+                "color": "#92400e",
+                "fontFamily": "Menlo, Monaco, Consolas, monospace",
+                "fontSize": "12px",
+                "fontWeight": "600"
+              },
+              "children": "${(()=>{const running=dataList.find(item=>item.is_current_running==='1');if(!running)return'-';const plan=running.codex_usage_plan_type||'-';const used=running.codex_usage_used_percent||'-';return plan+' '+used+'%';})()}"
+            }
+          ]
+        },
+        {
+          "tag": "divider",
+          "type": "vertical"
+        },
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "4px",
+            "color": "#64748b"
+          },
+          "children": [
+            {
+              "tag": "icon",
+              "icon": "ArrowRightOutlined",
+              "style": {
+                "fontSize": "10px"
+              }
+            },
+            {
+              "tag": "span",
+              "children": "下一个："
+            },
+            {
+              "tag": "span",
+              "style": {
+                "fontWeight": "600",
+                "color": "#0f172a"
+              },
+              "children": "${(()=>{const available=dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98);if(available.length===0)return'无';const running=dataList.find(item=>item.is_current_running==='1');if(!running)return available[0]?available[0].email_name.split('@')[0]:'无';const currentOrderIndex=Number(running.order_index||0);const candidatesAfter=available.filter(a=>Number(a.order_index||0)>currentOrderIndex);const next=candidatesAfter.length>0?candidatesAfter[0]:available.reduce((min,a)=>Number(a.order_index||0)<Number(min.order_index||0)?a:min,available[0]);return next?next.email_name.split('@')[0]:'无';})()}"
+            },
+            {
+              "tag": "span",
+              "style": {
+                "color": "#92400e",
+                "fontFamily": "Menlo, Monaco, Consolas, monospace",
+                "fontSize": "11px"
+              },
+              "children": "${(()=>{const available=dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98);if(available.length===0)return'';const running=dataList.find(item=>item.is_current_running==='1');if(!running)return'';const currentOrderIndex=Number(running.order_index||0);const candidatesAfter=available.filter(a=>Number(a.order_index||0)>currentOrderIndex);const next=candidatesAfter.length>0?candidatesAfter[0]:available.reduce((min,a)=>Number(a.order_index||0)<Number(min.order_index||0)?a:min,available[0]);if(!next)return'';const plan=next.codex_usage_plan_type||'-';const used=next.codex_usage_used_percent||'-';return plan+' '+used+'%';})()}"
+            }
+      ]
+    },
+    {
+      "tag": "button",
+          "size": "small",
+          "type": "primary",
+          "icon": "SwapOutlined",
+          "children": "切换",
+          "action": [
+            {
+              "tag": "method",
+              "method": "${(()=>{window.__switchToNext=true;})()}"
+            },
+            {
+              "tag": "ajax",
+              "api": "post:/template_data/data?service=system.mail_account_save_settings",
+              "data": {
+                "service": "system.mail_account_save_settings",
+                "mail_account_id": "${(()=>{const available=dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98);if(available.length===0)return'';const running=dataList.find(item=>item.is_current_running==='1');if(!running)return available[0]?available[0].mail_account_id:'';const currentOrderIndex=Number(running.order_index||0);const candidatesAfter=available.filter(a=>Number(a.order_index||0)>currentOrderIndex);const next=candidatesAfter.length>0?candidatesAfter[0]:available.reduce((min,a)=>Number(a.order_index||0)<Number(min.order_index||0)?a:min,available[0]);return next?next.mail_account_id:'';})()}",
+                "is_current_running": "1",
+                "proton_registered": "${(()=>{const available=dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98);if(available.length===0)return'0';const running=dataList.find(item=>item.is_current_running==='1');if(!running)return'0';const currentOrderIndex=Number(running.order_index||0);const candidatesAfter=available.filter(a=>Number(a.order_index||0)>currentOrderIndex);const next=candidatesAfter.length>0?candidatesAfter[0]:available.reduce((min,a)=>Number(a.order_index||0)<Number(min.order_index||0)?a:min,available[0]);return next?next.proton_registered||'0':'0';})()}",
+                "proton_email": "${(()=>{const available=dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98);if(available.length===0)return'';const running=dataList.find(item=>item.is_current_running==='1');if(!running)return'';const currentOrderIndex=Number(running.order_index||0);const candidatesAfter=available.filter(a=>Number(a.order_index||0)>currentOrderIndex);const next=candidatesAfter.length>0?candidatesAfter[0]:available.reduce((min,a)=>Number(a.order_index||0)<Number(min.order_index||0)?a:min,available[0]);if(!next)return'';return next.proton_email||(String(next.email_name||'').split('@')[0]?String(next.email_name||'').split('@')[0]+'@proton.me':'');})()}",
+                "proton_password": "${(()=>{const available=dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98);if(available.length===0)return'Zhangzhi@888';const running=dataList.find(item=>item.is_current_running==='1');if(!running)return'Zhangzhi@888';const currentOrderIndex=Number(running.order_index||0);const candidatesAfter=available.filter(a=>Number(a.order_index||0)>currentOrderIndex);const next=candidatesAfter.length>0?candidatesAfter[0]:available.reduce((min,a)=>Number(a.order_index||0)<Number(min.order_index||0)?a:min,available[0]);return next?next.proton_password||'Zhangzhi@888':'Zhangzhi@888';})()}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "api": "post:/template_data/data?service=system.mail_account_codex_apply_local_auth",
+              "data": {
+                "service": "system.mail_account_codex_apply_local_auth",
+                "mail_account_id": "${(()=>{const available=dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98);if(available.length===0)return'';const running=dataList.find(item=>item.is_current_running==='1');if(!running)return available[0]?available[0].mail_account_id:'';const currentOrderIndex=Number(running.order_index||0);const candidatesAfter=available.filter(a=>Number(a.order_index||0)>currentOrderIndex);const next=candidatesAfter.length>0?candidatesAfter[0]:available.reduce((min,a)=>Number(a.order_index||0)<Number(min.order_index||0)?a:min,available[0]);return next?next.mail_account_id:'';})()}"
+              },
+              "onSuccess": [
+                {
+                  "tag": "notification",
+                  "type": "success",
+                  "message": "已切换到下一个"
+                }
+              ],
+              "onError": [
+                {
+                  "tag": "notification",
+                  "type": "error",
+                  "message": "切换失败",
+                  "description": "${msg}"
+                }
+              ]
+            },
+            {
+              "tag": "reload-init-action",
+              "group": "dataList",
+              "description": "切换后刷新列表"
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "10px",
+            "fontSize": "11px"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "title": "${'可用邮箱: '+dataList.filter(item=>item.is_disabled!=='1'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98).map(item=>item.email_name.split('@')[0]).join(', ')}",
+              "style": {
+                "display": "flex",
+                "alignItems": "center",
+                "gap": "3px",
+                "padding": "2px 6px",
+                "borderRadius": "4px",
+                "background": "#f0fdf4",
+                "border": "1px solid #86efac",
+                "color": "#166534",
+                "cursor": "pointer"
+              },
+              "children": [
+                {
+                  "tag": "icon",
+                  "icon": "CheckCircleOutlined",
+                  "style": {"fontSize": "11px"}
+                },
+                {
+                  "tag": "span",
+                  "children": "${'可用 '+dataList.filter(item=>item.is_disabled!=='1'&&item.codex_auth_status!=='need_relogin'&&item.codex_access_token&&item.codex_refresh_token&&item.codex_id_token&&item.codex_account_id&&Number(item.codex_usage_used_percent||0)<98).length}"
+                }
+              ]
+            },
+            {
+              "tag": "tooltip",
+              "title": "${'即将恢复(1天内):\\n'+dataList.filter(item=>{if(item.is_disabled==='1')return false;if(item.codex_auth_status==='need_relogin')return false;if(!item.codex_usage_reset_at)return false;const ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;const resetDate=new Date(ts*1000);const now=new Date();const diffDays=(resetDate-now)/(1000*60*60*24);return diffDays>=0&&diffDays<=1;}).map(item=>{const d=new Date(+item.codex_usage_reset_at*1000);const mm=String(d.getMonth()+1).padStart(2,'0');const dd=String(d.getDate()).padStart(2,'0');const hh=String(d.getHours()).padStart(2,'0');const mi=String(d.getMinutes()).padStart(2,'0');return '#'+(item.order_index||'')+' '+item.email_name.split('@')[0]+' ('+mm+'-'+dd+' '+hh+':'+mi+')';}).join('\\n')}",
+              "overlayStyle": {"maxWidth": "none", "whiteSpace": "pre-line"},
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "3px",
+                    "padding": "2px 6px",
+                    "borderRadius": "4px",
+                    "background": "#fef9c3",
+                    "border": "1px solid #fde047",
+                    "color": "#854d0e",
+                    "cursor": "pointer"
+                  },
+                  "children": [
+                    {
+                      "tag": "icon",
+                      "icon": "ClockCircleOutlined",
+                      "style": {"fontSize": "11px"}
+                    },
+                    {
+                      "tag": "span",
+                      "children": "${'即将恢复 '+dataList.filter(item=>{if(item.is_disabled==='1')return false;if(item.codex_auth_status==='need_relogin')return false;if(!item.codex_usage_reset_at)return false;const ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;const resetDate=new Date(ts*1000);const now=new Date();const diffDays=(resetDate-now)/(1000*60*60*24);return diffDays>=0&&diffDays<=1;}).length}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "tooltip",
+              "title": "${(()=>{const future=dataList.filter(item=>{if(item.is_disabled==='1')return false;if(item.codex_auth_status==='need_relogin')return false;if(!item.codex_usage_reset_at)return false;const ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;return new Date(ts*1000)>new Date();});if(future.length===0)return'无';const groups={};future.forEach(item=>{const d=new Date(+item.codex_usage_reset_at*1000);const key=(d.getMonth()+1)+'.'+String(d.getDate()).padStart(2,'0');if(!groups[key])groups[key]=0;groups[key]++;});return Object.keys(groups).sort((a,b)=>{const [am,ad]=a.split('.').map(Number);const [bm,bd]=b.split('.').map(Number);return am*100+ad-(bm*100+bd);}).map(day=>day+' 恢复 '+groups[day]+' 个').join('\\n');})()}",
+              "overlayStyle": {"maxWidth": "none", "whiteSpace": "pre-line"},
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "3px",
+                    "padding": "2px 6px",
+                    "borderRadius": "4px",
+                    "background": "#fef9c3",
+                    "border": "1px solid #fde047",
+                    "color": "#854d0e",
+                    "cursor": "pointer"
+                  },
+                  "children": [
+                    {
+                      "tag": "icon",
+                      "icon": "CalendarOutlined",
+                      "style": {"fontSize": "11px"}
+                    },
+                    {
+                      "tag": "span",
+                      "children": "${(()=>{const future=dataList.filter(item=>{if(item.is_disabled==='1')return false;if(item.codex_auth_status==='need_relogin')return false;if(!item.codex_usage_reset_at)return false;const ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;return new Date(ts*1000)>new Date();});const groups={};future.forEach(item=>{const d=new Date(+item.codex_usage_reset_at*1000);const key=(d.getMonth()+1)+'.'+String(d.getDate()).padStart(2,'0');if(!groups[key])groups[key]=0;groups[key]++;});const days=Object.keys(groups).sort((a,b)=>{const [am,ad]=a.split('.').map(Number);const [bm,bd]=b.split('.').map(Number);return am*100+ad-(bm*100+bd);});return days.length>0?(days[0]+'~'+days[days.length-1]+' '+future.length+'个'):('恢复 '+future.length);})()}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "tooltip",
+              "title": "${'已过期重置日:\\n'+dataList.filter(item=>{if(item.is_disabled==='1')return false;if(item.codex_auth_status==='need_relogin')return false;if(!item.codex_usage_reset_at)return false;const ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;return new Date(ts*1000)<new Date();}).map(item=>{const d=new Date(+item.codex_usage_reset_at*1000);const mm=String(d.getMonth()+1).padStart(2,'0');const dd=String(d.getDate()).padStart(2,'0');const hh=String(d.getHours()).padStart(2,'0');const mi=String(d.getMinutes()).padStart(2,'0');return '#'+(item.order_index||'')+' '+item.email_name.split('@')[0]+' ('+mm+'-'+dd+' '+hh+':'+mi+')';}).join('\\n')}",
+              "overlayStyle": {"maxWidth": "none", "whiteSpace": "pre-line"},
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "3px",
+                    "padding": "2px 6px",
+                    "borderRadius": "4px",
+                    "background": "#fee2e2",
+                    "border": "1px solid #fca5a5",
+                    "color": "#991b1b",
+                    "cursor": "pointer"
+                  },
+                  "children": [
+                    {
+                      "tag": "icon",
+                      "icon": "ExclamationCircleOutlined",
+                      "style": {"fontSize": "11px"}
+                    },
+                    {
+                      "tag": "span",
+                      "children": "${'已过期 '+dataList.filter(item=>{if(item.is_disabled==='1')return false;if(item.codex_auth_status==='need_relogin')return false;if(!item.codex_usage_reset_at)return false;const ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;return new Date(ts*1000)<new Date();}).length}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "tooltip",
+              "visible": "${!!(batchRefreshResult&&batchRefreshResult.total_count)}",
+              "title": "${(()=>{var r=batchRefreshResult||{};var lines=['总数:'+r.total_count,'成功:'+r.success_count,'失败:'+r.fail_count];var fails=r.fail_list||[];if(fails.length>0){fails.forEach(function(item){var m=item.result?item.result.msg||'':'';try{var p=JSON.parse(m);m=p.error?p.error.message||m:m;}catch(e){}lines.push(item.email_name+': '+m);});}return lines.join('\\n');})()}",
+              "overlayStyle": {"maxWidth": "none", "whiteSpace": "pre-line"},
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex",
+                    "alignItems": "center",
+                    "gap": "3px",
+                    "padding": "2px 6px",
+                    "borderRadius": "4px",
+                    "background": "#f1f5f9",
+                    "border": "1px solid #cbd5e1",
+                    "color": "#475569",
+                    "cursor": "pointer"
+                  },
+                  "children": [
+                    {
+                      "tag": "icon",
+                      "icon": "ReloadOutlined",
+                      "style": {"fontSize": "11px"}
+                    },
+                    {
+                      "tag": "span",
+                      "children": "${'刷新 '+batchRefreshResult.success_count+'/'+batchRefreshResult.total_count}"
+                    },
+                    {
+                      "tag": "icon",
+                      "icon": "CloseOutlined",
+                      "style": {"fontSize": "10px", "cursor": "pointer", "marginLeft": "2px"},
+                      "action": [
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "batchRefreshResult": {
+                              "total_count": 0,
+                              "success_count": 0,
+                              "fail_count": 0,
+                              "fail_list": [],
+                              "result_list": []
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "title": "${'需重新登录:\\n'+dataList.filter(function(item){return item.codex_auth_status==='need_relogin';}).map(function(item){return '#'+(item.order_index||'')+' '+item.email_name.split('@')[0];}).join('\\n')}",
+              "style": {
+                "display": "inline-flex",
+                "alignItems": "center",
+                "gap": "3px",
+                "padding": "2px 6px",
+                "borderRadius": "4px",
+                "background": "#fff7ed",
+                "border": "1px solid #fdba74",
+                "color": "#9a3412",
+                "cursor": "pointer"
+              },
+              "children": [
+                {
+                  "tag": "icon",
+                  "icon": "WarningOutlined",
+                  "style": {"fontSize": "11px"}
+                },
+                {
+                  "tag": "span",
+                  "children": "${'需重登 '+dataList.filter(function(item){return item.codex_auth_status==='need_relogin';}).length}"
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "inline-flex",
+                "alignItems": "center",
+                "gap": "3px",
+                "padding": "2px 6px",
+                "borderRadius": "4px",
+                "background": "#fef2f2",
+                "border": "1px solid #fca5a5",
+                "color": "#991b1b"
+              },
+              "children": [
+                {
+                  "tag": "icon",
+                  "icon": "StopOutlined",
+                  "style": {"fontSize": "11px"}
+                },
+                {
+                  "tag": "span",
+                  "children": "${'已禁用 '+dataList.filter(item=>item.is_disabled==='1').length}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "initStore": {
+    "simpleMode": true,
+    "refreshLoading": false,
+    "selection": [],
+    "importDialogVisible": false,
+    "summaryDialogVisible": false,
+    "settingsDialogVisible": false,
+    "currentSettingRow": {},
+    "searchForm": {
+      "page": 1,
+      "size": 400,
+      "search": ""
+    },
+    "count": 0,
+    "dataList": [],
+    "parseResult": {
+      "total_line_count": 0,
+      "valid_count": 0,
+      "error_count": 0,
+      "duplicate_count": 0,
+      "valid_list": [],
+      "error_list": [],
+      "duplicate_in_batch_list": [],
+      "email_name_list_sql": ""
+    },
+    "importSummary": {
+      "create_list": [],
+      "skip_list": [],
+      "exist_list": [],
+      "create_count": 0,
+      "skip_count": 0,
+      "total_count": 0
+    },
+    "lastImportResponse": {},
+    "batchRefreshResult": {
+      "total_count": 0,
+      "success_count": 0,
+      "fail_count": 0,
+      "fail_list": [],
+      "result_list": []
+    },
+    "batchRefreshLoading": false,
+    "batchEmailList": []
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "dataList",
+      "description": "页面初始化请求-加载邮箱数据",
+      "api": "post:/template_data/data?service=system.mail_account_query",
+      "appendFormFields": "mail-account-search-form",
+      "appendFields": "${searchForm}",
+      "adapt": {
+        "dataList": "${data}",
+        "count": "${count}"
+      }
+    }
+  ],
+  "timer": {
+    "enable": true,
+    "interval": 60000,
+    "action": [
+      {
+        "tag": "ajax",
+        "description": "静默刷新当前激活邮箱用量",
+        "silent": true,
+        "api": "post:/template_data/data?service=system.mail_account_codex_query_usage_and_save",
+        "data": {
+          "service": "system.mail_account_codex_query_usage_and_save",
+          "mail_account_id": "${(()=>{const running=dataList.find(item=>item.is_current_running==='1');return running?running.mail_account_id:'';})()}"
+        }
+      },
+      {
+        "tag": "ajax",
+        "description": "定时批量刷新可用邮箱用量（随机5个）",
+        "silent": true,
+        "api": "post:/template_data/data?service=system.mail_account_codex_query_usage_all_and_save",
+        "data": {
+          "service": "system.mail_account_codex_query_usage_all_and_save",
+          "email_name_list": "${dataList.filter(item=>item.is_disabled!=='1'&&item.codex_auth_status!=='need_relogin'&&item.codex_access_token&&item.codex_account_id).map(item=>item.email_name).sort(()=>Math.random()-0.5).slice(0,5)}"
+        }
+      },
+      {
+        "tag": "reload-init-action",
+        "group": "dataList",
+        "description": "刷新列表"
+      },
+      {
+        "tag": "method",
+        "description": "计算已过期邮箱ID",
+        "method": "${(()=>{const expired=dataList.filter(item=>{if(item.is_disabled==='1')return false;if(item.codex_auth_status==='need_relogin')return false;if(!item.codex_usage_reset_at)return false;const ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;return new Date(ts*1000)<new Date();});window.__expiredMailAccountId=expired.length>0?expired[0].mail_account_id:'';})()}"
+      },
+      {
+        "tag": "ajax",
+        "description": "刷新已过期邮箱用量",
+        "silent": true,
+        "enable": "${!!window.__expiredMailAccountId}",
+        "api": "post:/template_data/data?service=system.mail_account_codex_query_usage_and_save",
+        "data": {
+          "service": "system.mail_account_codex_query_usage_and_save",
+          "mail_account_id": "${window.__expiredMailAccountId}"
+        }
+      }
+    ]
+  },
+  "searchToolBar": [
+    {
+      "tag": "form",
+      "name": "mail-account-search-form",
+      "initialValues": "${searchForm}",
+      "labelCol": {
+        "span": 5
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 8,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "search",
+                  "label": "邮箱搜索",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "请输入邮箱关键字",
+                      "allowClear": true
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 8,
+              "children": [
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "icon": "FaSearch",
+                  "children": "搜索",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "searchForm": {
+                          "page": 1,
+                          "size": "${searchForm.size}",
+                          "search": "${getFormValue('mail-account-search-form','search')||''}"
+                        }
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "点击搜索-页面初始化请求"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "icon": "FaUndo",
+                  "children": "重置",
+                  "action": [
+                    {
+                      "tag": "reset-form",
+                      "formName": "mail-account-search-form"
+                    },
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "searchForm": {
+                          "page": 1,
+                          "size": 400,
+                          "search": ""
+                        }
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "dataList",
+                      "description": "重置搜索-页面初始化请求"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "topRight": [
+    {
+      "tag": "switch",
+      "checked": "${simpleMode}",
+      "checkedChildren": "精简",
+      "unCheckedChildren": "完整",
+      "style": {
+        "marginRight": "8px"
+      },
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "simpleMode": "${value}"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "type": "primary",
+      "icon": "FaUpload",
+      "children": "批量导入",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "importDialogVisible": true
+          }
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "icon": "ArrowUpOutlined",
+      "children": "用量↑",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dataList": "${(()=>{const src=Array.isArray(dataList)?dataList:[];const withUsage=[];const withoutUsage=[];src.forEach((item,index)=>{const raw=item&&item.codex_usage_used_percent;const text=raw===null||raw===undefined?'':String(raw).trim();if(!text){withoutUsage.push(item);return;}const num=(String(text).replace('%','')-0);if(num!==num){withoutUsage.push(item);return;}withUsage.push({item,index,num});});withUsage.sort((a,b)=>a.num-b.num||a.index-b.index);return withUsage.map(v=>v.item).concat(withoutUsage);})()}"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "icon": "ArrowDownOutlined",
+      "children": "用量↓",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "dataList": "${(()=>{const src=Array.isArray(dataList)?dataList:[];const withUsage=[];const withoutUsage=[];src.forEach((item,index)=>{const raw=item&&item.codex_usage_used_percent;const text=raw===null||raw===undefined?'':String(raw).trim();if(!text){withoutUsage.push(item);return;}const num=(String(text).replace('%','')-0);if(num!==num){withoutUsage.push(item);return;}withUsage.push({item,index,num});});withUsage.sort((a,b)=>b.num-a.num||a.index-b.index);return withUsage.map(v=>v.item).concat(withoutUsage);})()}"
+          }
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "icon": "BarChartOutlined",
+      "children": "批量刷新用量",
+      "loading": "${batchRefreshLoading}",
+      "confirm": {
+        "title": "批量刷新用量",
+        "description": "${'将随机刷新 '+Math.min(10,dataList.filter(function(item){if(item.is_disabled==='1')return false;if(!item.codex_access_token||!item.codex_account_id)return false;if(!item.codex_usage_reset_at)return false;var ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;var diff=(new Date(ts*1000)-new Date())/(1000*60*60*24);return diff<=4;}).length)+' 个未来4天到期邮箱的用量，确认吗？'}"
+      },
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "batchRefreshLoading": true,
+            "batchRefreshResult": {
+              "total_count": 0,
+              "success_count": 0,
+              "fail_count": 0,
+              "fail_list": [],
+              "result_list": []
+            }
+          }
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=system.mail_account_codex_query_usage_all_and_save",
+          "data": {
+            "service": "system.mail_account_codex_query_usage_all_and_save",
+            "email_name_list": "${(()=>{var list=dataList.filter(function(item){if(item.is_disabled==='1')return false;if(!item.codex_access_token||!item.codex_account_id)return false;if(!item.codex_usage_reset_at)return false;var ts=+item.codex_usage_reset_at;if(ts!==ts||ts<=0)return false;var diff=(new Date(ts*1000)-new Date())/(1000*60*60*24);return diff<=4;}).map(function(item){return item.email_name;});for(var i=list.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=list[i];list[i]=list[j];list[j]=tmp;}return list.slice(0,10);})()}"
+          },
+          "adapt": {
+            "batchRefreshResult": "${data}"
+          },
+          "onSuccess": [
+            {
+              "tag": "update-store",
+              "value": {
+                "batchRefreshLoading": false
+              }
+            }
+          ],
+          "onError": [
+            {
+              "tag": "update-store",
+              "value": {
+                "batchRefreshLoading": false
+              }
+            },
+            {
+              "tag": "notification",
+              "type": "error",
+              "message": "批量刷新失败",
+              "description": "${msg}"
+            }
+          ]
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "批量刷新用量后刷新列表"
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "disabled": "${selection.length<=0}",
+      "danger": true,
+      "icon": "FaTrashAlt",
+      "children": "批量删除",
+      "confirm": {
+        "title": "确认删除吗？",
+        "description": "${'确认删除选中的 '+selection.length+' 条邮箱记录吗？'}"
+      },
+      "action": [
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=system.mail_account_delete",
+          "data": {
+            "mail_account_id_list": "${selection.map(item=>item.mail_account_id)}"
+          }
+        },
+        {
+          "tag": "update-store",
+          "value": {
+            "selection": []
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "批量删除后刷新列表"
+        }
+      ]
+    }
+  ],
+  "children": [
+    {
+      "tag": "css",
+      "css": ".mail-account-grid-card{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;backdrop-filter:blur(10px);}.mail-account-grid-card:hover{transform:translateY(-2px);}.mail-account-grid-card-running:hover{box-shadow:0 22px 40px rgba(245,158,11,.2)!important;}.mail-account-value{font-family:Menlo,Monaco,Consolas,'Liberation Mono',monospace;letter-spacing:.01em;}.mail-account-ellipsis{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}"
+    },
+    {
+      "tag": "dialog",
+      "title": "批量导入",
+      "width": "88%",
+      "open": "${importDialogVisible}",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "importDialogVisible": false
+          }
+        }
+      ],
+      "children": [
+        {
+          "tag": "form",
+          "name": "mail-account-import-form",
+          "initialValues": {
+            "raw_input": ""
+          },
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "parseResult": "${(()=>{const raw=String(getFormValue('mail-account-import-form','raw_input')||'').replace(/\\r/g,'');const lines=raw.split('\\n').map(item=>String(item||'').trim()).filter(Boolean);const valid_list=[];const error_list=[];const duplicate_in_batch_list=[];const seen=new Set();const quoteSql=(value)=>\"'\"+String(value).replace(/'/g,\"''\")+\"'\";lines.forEach((line,index)=>{const parts=line.split('----');if(parts.length<4){error_list.push({order_index:index+1,email_name:'',raw_text:line,error_msg:'格式错误，至少需要4段'});return;}const email_name=String(parts[0]||'').trim();const password=String(parts[1]||'').trim();const guid_code=String(parts[2]||'').trim();const recovery_code=parts.slice(3).join('----').trim();if(!email_name||!password||!guid_code||!recovery_code){error_list.push({order_index:index+1,email_name,raw_text:line,error_msg:'字段不能为空'});return;}if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email_name)){error_list.push({order_index:index+1,email_name,raw_text:line,error_msg:'邮箱格式不正确'});return;}const dedupeKey=email_name.toLowerCase();const emailPrefix=email_name.includes('@')?email_name.split('@')[0]:email_name;const row={order_index:index+1,email_name,password,guid_code,recovery_code,proton_registered:'0',proton_email:emailPrefix?emailPrefix+'@proton.me':'',proton_password:'Zhangzhi@888',raw_text:line};if(seen.has(dedupeKey)){duplicate_in_batch_list.push(Object.assign({error_msg:'同批邮箱重复'},row));return;}seen.add(dedupeKey);valid_list.push(row);});return {total_line_count:lines.length,valid_count:valid_list.length,error_count:error_list.length,duplicate_count:duplicate_in_batch_list.length,valid_list,error_list,duplicate_in_batch_list,email_name_list_sql:valid_list.map(item=>quoteSql(item.email_name)).join(',')};})()}",
+                "importSummary": {
+                  "create_list": [],
+                  "skip_list": [],
+                  "exist_list": [],
+                  "create_count": 0,
+                  "skip_count": 0,
+                  "total_count": 0
+                }
+              }
+            }
+          ],
+          "submitOnChange": true,
+          "labelCol": {
+            "span": 3
+          },
+          "wrapperCol": {
+            "span": 21
+          },
+          "children": [
+            {
+              "tag": "form-item",
+              "name": "raw_input",
+              "label": "原始文本",
+              "children": [
+                {
+                  "tag": "input",
+                  "isTextarea": true,
+                  "rows": 5,
+                  "placeholder": "每行格式：邮箱----密码----GUID----恢复码"
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 21,
+                  "offset": 3,
+                  "children": [
+                    {
+                      "tag": "button",
+                      "type": "primary",
+                      "icon": "FaUpload",
+                      "children": "开始导入",
+                      "disabled": "${parseResult.valid_count<=0}",
+                      "action": [
+                        {
+                          "tag": "ajax",
+                          "saveField": "lastImportResponse",
+                          "api": "post:/template_data/data?service=system.mail_account_import_batch",
+                          "data": {
+                            "service": "system.mail_account_import_batch",
+                            "mail_account_list": "${parseResult.valid_list}",
+                            "email_name_list_sql": "${parseResult.email_name_list_sql}"
+                          },
+                          "adapt": {
+                            "importSummary": "${data}"
+                          },
+                          "onSuccess": [
+                            {
+                              "tag": "notification",
+                              "type": "success",
+                              "message": "导入完成",
+                              "description": "${'本次有效 '+parseResult.valid_count+' 条，成功新增 '+importSummary.create_count+' 条，已存在跳过 '+importSummary.skip_count+' 条。'}"
+                            },
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "selection": [],
+                                "importDialogVisible": false,
+                                "summaryDialogVisible": true
+                              }
+                            },
+                            {
+                              "tag": "reload-init-action",
+                              "group": "dataList",
+                              "description": "导入完成后刷新列表"
+                            }
+                          ],
+                          "onError": [
+                            {
+                              "tag": "notification",
+                              "type": "error",
+                              "message": "导入失败",
+                              "description": "${msg}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "title": "解析与导入摘要",
+      "width": "88%",
+      "open": "${summaryDialogVisible}",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "summaryDialogVisible": false
+          }
+        }
+      ],
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 8,
+              "children": [
+                {
+                  "tag": "alert",
+                  "type": "info",
+                  "showIcon": true,
+                  "message": "${'解析结果：总行数 '+parseResult.total_line_count}",
+                  "description": "${'有效 '+parseResult.valid_count+'，格式错误 '+parseResult.error_count+'，批内重复 '+parseResult.duplicate_count}"
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 8,
+              "children": [
+                {
+                  "tag": "alert",
+                  "type": "success",
+                  "showIcon": true,
+                  "message": "${'导入摘要：本次有效 '+importSummary.total_count+' 条'}",
+                  "description": "${'新增 '+importSummary.create_count+'，跳过 '+importSummary.skip_count}"
+                }
+              ]
+            },
+            {
+              "tag": "col",
+              "span": 8,
+              "children": [
+                {
+                  "tag": "alert",
+                  "type": "warning",
+                  "showIcon": true,
+                  "message": "导入说明",
+                  "description": "格式错误和批内重复不会进入导入；数据库已存在邮箱会自动跳过。"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "card",
+          "title": "有效待导入",
+          "size": "small",
+          "visible": "${parseResult.valid_count>0}",
+          "style": {
+            "marginTop": "12px"
+          },
+          "children": [
+            {
+              "tag": "alert",
+              "type": "info",
+              "showIcon": true,
+              "message": "${'共 '+parseResult.valid_count+' 条待导入记录'}"
+            },
+            {
+              "tag": "table",
+              "rowData": "${parseResult.valid_list}",
+              "columnDefs": [
+                {
+                  "headerName": "#",
+                  "width": 60,
+                  "valueGetter": "node.rowIndex + 1",
+                  "sortable": false
+                },
+                {
+                  "headerName": "邮箱",
+                  "field": "email_name",
+                  "width": 340,
+                  "suppressSizeToFit": true,
+                  "cellRender": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "marginRight": "6px"
+                      },
+                      "children": "${row.email_name||''}"
+                    },
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "type": "text",
+                      "icon": "CopyOutlined",
+                      "action": [
+                        {
+                          "tag": "copy-text",
+                          "value": "${row.email_name||''}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "headerName": "密码",
+                  "field": "password",
+                  "width": 260,
+                  "suppressSizeToFit": true,
+                  "cellRender": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "marginRight": "6px"
+                      },
+                      "children": "${row.password||''}"
+                    },
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "type": "text",
+                      "icon": "CopyOutlined",
+                      "action": [
+                        {
+                          "tag": "copy-text",
+                          "value": "${row.password||''}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "headerName": "GUID",
+                  "field": "guid_code",
+                  "width": 260
+                },
+                {
+                  "headerName": "恢复码",
+                  "field": "recovery_code"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "card",
+          "title": "格式错误",
+          "size": "small",
+          "visible": "${parseResult.error_count>0}",
+          "style": {
+            "marginTop": "12px"
+          },
+          "children": [
+            {
+              "tag": "alert",
+              "type": "error",
+              "showIcon": true,
+              "message": "${'共 '+parseResult.error_count+' 条格式错误记录'}"
+            },
+            {
+              "tag": "table",
+              "rowData": "${parseResult.error_list}",
+              "columnDefs": [
+                {
+                  "headerName": "#",
+                  "width": 60,
+                  "valueGetter": "node.rowIndex + 1",
+                  "sortable": false
+                },
+                {
+                  "headerName": "错误信息",
+                  "field": "error_msg",
+                  "width": 180
+                },
+                {
+                  "headerName": "邮箱",
+                  "field": "email_name",
+                  "width": 240
+                },
+                {
+                  "headerName": "原始行",
+                  "field": "raw_text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "card",
+          "title": "批内重复",
+          "size": "small",
+          "visible": "${parseResult.duplicate_count>0}",
+          "style": {
+            "marginTop": "12px"
+          },
+          "children": [
+            {
+              "tag": "alert",
+              "type": "warning",
+              "showIcon": true,
+              "message": "${'共 '+parseResult.duplicate_count+' 条批内重复记录'}"
+            },
+            {
+              "tag": "table",
+              "rowData": "${parseResult.duplicate_in_batch_list}",
+              "columnDefs": [
+                {
+                  "headerName": "#",
+                  "width": 60,
+                  "valueGetter": "node.rowIndex + 1",
+                  "sortable": false
+                },
+                {
+                  "headerName": "邮箱",
+                  "field": "email_name",
+                  "width": 240
+                },
+                {
+                  "headerName": "错误信息",
+                  "field": "error_msg",
+                  "width": 180
+                },
+                {
+                  "headerName": "原始行",
+                  "field": "raw_text"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "card",
+          "title": "已存在跳过",
+          "size": "small",
+          "visible": "${importSummary.skip_count>0}",
+          "style": {
+            "marginTop": "12px"
+          },
+          "children": [
+            {
+              "tag": "alert",
+              "type": "warning",
+              "showIcon": true,
+              "message": "${'共 '+importSummary.skip_count+' 条库内已存在记录被跳过'}"
+            },
+            {
+              "tag": "table",
+              "rowData": "${importSummary.skip_list}",
+              "columnDefs": [
+                {
+                  "headerName": "#",
+                  "width": 60,
+                  "valueGetter": "node.rowIndex + 1",
+                  "sortable": false
+                },
+                {
+                  "headerName": "邮箱",
+                  "field": "email_name",
+                  "width": 340,
+                  "suppressSizeToFit": true,
+                  "cellRender": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "marginRight": "6px"
+                      },
+                      "children": "${row.email_name||''}"
+                    },
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "type": "text",
+                      "icon": "CopyOutlined",
+                      "action": [
+                        {
+                          "tag": "copy-text",
+                          "value": "${row.email_name||''}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "headerName": "密码",
+                  "field": "password",
+                  "width": 260,
+                  "suppressSizeToFit": true,
+                  "cellRender": [
+                    {
+                      "tag": "span",
+                      "style": {
+                        "marginRight": "6px"
+                      },
+                      "children": "${row.password||''}"
+                    },
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "type": "text",
+                      "icon": "CopyOutlined",
+                      "action": [
+                        {
+                          "tag": "copy-text",
+                          "value": "${row.password||''}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "headerName": "GUID",
+                  "field": "guid_code",
+                  "width": 260
+                },
+                {
+                  "headerName": "恢复码",
+                  "field": "recovery_code"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "title": "邮箱设置",
+      "width": "720px",
+      "open": "${settingsDialogVisible}",
+      "action": [
+        {
+          "tag": "submit-form",
+          "formName": "mail-account-setting-form"
+        },
+        {
+          "tag": "ajax",
+          "api": "post:/template_data/data?service=system.mail_account_save_settings",
+          "appendFormFields": "mail-account-setting-form",
+          "data": {
+            "service": "system.mail_account_save_settings",
+            "mail_account_id": "${currentSettingRow.mail_account_id}"
+          }
+        },
+        {
+          "tag": "update-store",
+          "value": {
+            "settingsDialogVisible": false,
+            "currentSettingRow": {}
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "保存邮箱设置后刷新列表"
+        }
+      ],
+      "children": [
+        {
+          "tag": "alert",
+          "type": "info",
+          "showIcon": true,
+          "message": "默认规则",
+          "description": "Proton 邮箱默认取当前邮箱前缀并拼接 @proton.me，默认密码为 Zhangzhi@888。"
+        },
+        {
+          "tag": "form",
+          "name": "mail-account-setting-form",
+          "initialValues": {},
+          "labelCol": {
+            "span": 6
+          },
+          "wrapperCol": {
+            "span": 18
+          },
+          "children": [
+            {
+              "tag": "form-item",
+              "name": "email_name_display",
+              "label": "当前邮箱",
+              "children": [
+                {
+                  "tag": "input",
+                  "disabled": true
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "is_current_running",
+              "label": "当前运行",
+              "children": [
+                {
+                  "tag": "select",
+                  "options": [
+                    {
+                      "label": "否",
+                      "value": "0"
+                    },
+                    {
+                      "label": "是",
+                      "value": "1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "is_disabled",
+              "label": "禁用",
+              "children": [
+                {
+                  "tag": "select",
+                  "options": [
+                    {
+                      "label": "否",
+                      "value": "0"
+                    },
+                    {
+                      "label": "是",
+                      "value": "1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "proton_registered",
+              "label": "已注册 Proton",
+              "children": [
+                {
+                  "tag": "select",
+                  "options": [
+                    {
+                      "label": "否",
+                      "value": "0"
+                    },
+                    {
+                      "label": "是",
+                      "value": "1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "proton_email",
+              "label": "Proton 邮箱",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "默认按当前邮箱前缀自动生成"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "proton_password",
+              "label": "Proton 密码",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "默认密码 Zhangzhi@888"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "div",
+      "visible": "${!simpleMode}",
+      "className": "margin-bottom10",
+      "style": {
+        "display": "flex",
+        "alignItems": "center",
+        "gap": "10px",
+        "flexWrap": "wrap",
+        "padding": "8px 10px",
+        "borderRadius": "10px",
+        "background": "#f8fafc",
+        "border": "1px solid #e2e8f0",
+        "fontSize": "12px",
+        "color": "#475569"
+      },
+      "children": [
+        {
+          "tag": "span",
+          "style": {
+            "fontWeight": "700",
+            "color": "#334155"
+          },
+          "children": "按钮说明："
+        },
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "4px"
+          },
+          "children": [
+            {
+              "tag": "icon",
+              "icon": "ApiOutlined"
+            },
+            {
+              "tag": "span",
+              "children": "API 切换 Proton 状态"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "children": "${'｜'}"
+        },
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "4px"
+          },
+          "children": [
+            {
+              "tag": "icon",
+              "icon": "QrcodeOutlined"
+            },
+            {
+              "tag": "span",
+              "children": "二维码 生成 Device Code"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "children": "${'｜'}"
+        },
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "4px"
+          },
+          "children": [
+            {
+              "tag": "icon",
+              "icon": "KeyOutlined"
+            },
+            {
+              "tag": "span",
+              "children": "钥匙 回填 Token"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "children": "${'｜'}"
+        },
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "4px"
+          },
+          "children": [
+            {
+              "tag": "icon",
+              "icon": "SettingOutlined"
+            },
+            {
+              "tag": "span",
+              "children": "齿轮 编辑设置"
+            }
+          ]
+        },
+        {
+          "tag": "span",
+          "children": "${'｜'}"
+        },
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "gap": "4px"
+          },
+          "children": [
+            {
+              "tag": "icon",
+              "icon": "DeleteOutlined"
+            },
+            {
+              "tag": "span",
+              "children": "删除账号"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "row",
+      "className": "margin-bottom10",
+      "style": {
+        "height": "100%",
+        "minHeight": 0,
+        "width": "100%"
+      },
+      "children": [
+        {
+          "tag": "listview",
+          "keyField": "mail_account_id",
+          "itemData": "${dataList}",
+          "virtual": {
+            "enabled": true,
+            "height": "100%",
+            "defaultItemHeight": 130,
+            "overscan": 500,
+            "columns": 5,
+            "minItemWidth": 280
+          },
+           "itemAttr": {
+            "tag": "col",
+            "flex": "${simpleMode?'1 1 200px':'1 1 320px'}",
+            "style": {
+              "maxWidth": "100%",
+              "minWidth": "${simpleMode?'180px':'300px'}",
+              "padding": "${simpleMode?'0 3px 4px':'0 3px 6px'}"
+            },
+            "children": [
+              {
+                "tag": "layout-fit",
+                "className": "${'mail-account-grid-card '+(row.is_current_running==='1'&&row.is_disabled!=='1'?'mail-account-grid-card-running':'')}",
+                "style": {
+                  "padding": "${simpleMode?'6px 8px 5px':'9px 9px 7px'}",
+                  "border": "${row.is_current_running==='1'&&row.is_disabled!=='1'?'1px solid rgba(245,158,11,0.45)':'1px solid rgba(148,163,184,0.16)'}",
+                  "borderRadius": "${simpleMode?'10px':'16px'}",
+                  "background": "${row.is_current_running==='1'&&row.is_disabled!=='1'?'linear-gradient(145deg,#fff7ed 0%,#ffffff 50%,#fffbeb 100%)':'linear-gradient(145deg,#ffffff 0%,#f8fafc 100%)'}",
+                  "boxShadow": "${row.is_current_running==='1'&&row.is_disabled!=='1'?(simpleMode?'0 4px 12px rgba(245,158,11,0.12)':'0 18px 36px rgba(245,158,11,0.16)'):(simpleMode?'0 2px 8px rgba(15,23,42,0.06)':'0 12px 30px rgba(15,23,42,0.08)')}"
+                },
+                "children": [
+                  {
+                    "tag": "div",
+                    "visible": "${!simpleMode}",
+                    "style": {
+                      "height": "4px",
+                      "borderRadius": "999px",
+                      "marginBottom": "8px",
+                      "background": "${row.is_current_running==='1'&&row.is_disabled!=='1'?'linear-gradient(90deg,#f59e0b,#f97316)':'linear-gradient(90deg,#cbd5e1,#e2e8f0)'}"
+                    }
+                  },
+                  {
+                    "tag": "row",
+                    "style": {
+                      "marginBottom": "${simpleMode?'4px':'8px'}",
+                      "display": "flex",
+                      "alignItems": "center",
+                      "gap": "6px"
+                    },
+                    "children": [
+                      {
+                        "tag": "col",
+                        "style": {
+                          "flex": 1,
+                          "minWidth": "0"
+                        },
+                        "children": [
+                          {
+                            "tag": "div",
+                            "style": {
+                              "display": "flex",
+                              "alignItems": "center",
+                              "gap": "6px",
+                              "flexWrap": "wrap"
+                            },
+                            "children": [
+                              {
+                                "tag": "tag",
+                                "style": {
+                                  "marginInlineEnd": "0",
+                                  "marginBottom": "0",
+                                  "border": "none",
+                                  "borderRadius": "999px",
+                                  "paddingInline": "8px",
+                                  "fontSize": "10px",
+                                  "fontWeight": "700",
+                                  "background": "#e2e8f0",
+                                  "color": "#475569"
+                                },
+                                "children": "${'#'+(row.order_index||'')}"
+                              },
+                              {
+                                "tag": "tag",
+                                "visible": "${row.is_disabled==='1'}",
+                                "style": {
+                                  "marginInlineEnd": "0",
+                                  "marginBottom": "0",
+                                  "border": "none",
+                                  "borderRadius": "999px",
+                                  "paddingInline": "8px",
+                                  "fontSize": "10px",
+                                  "fontWeight": "700",
+                                  "background": "#fee2e2",
+                                  "color": "#991b1b"
+                                },
+                                "children": "已禁用"
+                              },
+                              {
+                                "tag": "tag",
+                                "visible": "${row.codex_auth_status==='need_relogin'}",
+                                "style": {
+                                  "marginInlineEnd": "0",
+                                  "marginBottom": "0",
+                                  "border": "none",
+                                  "borderRadius": "999px",
+                                  "paddingInline": "8px",
+                                  "fontSize": "10px",
+                                  "fontWeight": "700",
+                                  "background": "#fff7ed",
+                                  "color": "#9a3412"
+                                },
+                                "children": "需重登"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "col",
+                        "style": {
+                          "flex": 1,
+                          "minWidth": "0",
+                          "display": "flex",
+                          "justifyContent": "flex-end"
+                        },
+                        "children": [
+                          {
+                            "tag": "div",
+                            "style": {
+                              "display": "flex",
+                              "alignItems": "center",
+                              "flexWrap": "nowrap",
+                              "columnGap": "${simpleMode?'2px':'4px'}",
+                              "justifyContent": "flex-end",
+                              "flex": 1,
+                              "padding": "${simpleMode?'2px 4px':'4px 6px'}",
+                              "borderRadius": "${simpleMode?'6px':'10px'}",
+                              "border": "1px solid rgba(148,163,184,0.18)",
+                              "background": "rgba(255,255,255,0.82)",
+                            "boxShadow": "inset 0 1px 0 rgba(255,255,255,0.65)"
+                          },
+                          "children": [
+                              {
+                                "tag": "button",
+                                "size": "${simpleMode?'small':'middle'}",
+                                "type": "text",
+                                "icon": "SafetyCertificateOutlined",
+                                "title": "一键设为 Running 并写 auth.json",
+                                "tooltip": "一键设为 Running 并写 auth.json",
+                                "disabled": "${!(row.codex_access_token&&row.codex_refresh_token&&row.codex_id_token&&row.codex_account_id)}",
+                                "style": {
+                                  "paddingInline": "${simpleMode?'4px':'6px'}",
+                                  "paddingBlock": "${simpleMode?'2px':'4px'}",
+                                  "minWidth": "${simpleMode?'24px':'32px'}",
+                                  "minHeight": "${simpleMode?'24px':'32px'}",
+                                  "color": "${(row.codex_access_token&&row.codex_refresh_token&&row.codex_id_token&&row.codex_account_id)?'#2563eb':'#94a3b8'}",
+                                  "fontSize": "${simpleMode?'11px':'13px'}"
+                                },
+                                "confirm": {
+                                  "title": "设为 Running 并覆盖本机 auth.json",
+                                  "description": "${'确认为邮箱【'+row.email_name+'】执行设为 Running 并覆盖本机 ~/.codex/auth.json？'}"
+                                },
+                                "action": [
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=system.mail_account_save_settings",
+                                    "data": {
+                                      "service": "system.mail_account_save_settings",
+                                      "mail_account_id": "${row.mail_account_id}",
+                                      "is_current_running": "1",
+                                      "proton_registered": "${row.proton_registered||'0'}",
+                                      "proton_email": "${row.proton_email||(String(row.email_name||'').split('@')[0]?String(row.email_name||'').split('@')[0]+'@proton.me':'')}",
+                                      "proton_password": "${row.proton_password||'Zhangzhi@888'}"
+                                    }
+                                  },
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=system.mail_account_codex_apply_local_auth",
+                                    "data": {
+                                      "service": "system.mail_account_codex_apply_local_auth",
+                                      "mail_account_id": "${row.mail_account_id}"
+                                    },
+                                    "onSuccess": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "success",
+                                        "message": "已设为 Running 且 auth.json 已更新",
+                                        "description": "${(data.target_path||'~/.codex/auth.json')+(data.backup_path?('，备份：'+data.backup_path):'')}"
+                                      }
+                                    ],
+                                    "onError": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "error",
+                                        "message": "auth.json 更新失败",
+                                        "description": "${msg}"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "tag": "reload-init-action",
+                                    "group": "dataList",
+                                    "description": "一键设置后刷新列表"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "upload",
+                                "visible": "${!simpleMode}",
+                                "uploadConfig": {
+                                  "showUploadList": false,
+                                  "accept": ".json,application/json",
+                                  "api": "post:/template_data/data?service=system.mail_account_upload_auth_json",
+                                  "data": {
+                                    "service": "system.mail_account_upload_auth_json",
+                                    "mail_account_id": "${row.mail_account_id}"
+                                  }
+                                },
+                                "finish_action": [
+                                  {
+                                    "tag": "notification",
+                                    "type": "success",
+                                    "message": "JSON 导入成功",
+                                    "description": "${'邮箱【'+(row.email_name||'')+'】对应的 auth token 已保存入库，并自动刷新了一次用量信息'}"
+                                  },
+                                  {
+                                    "tag": "reload-init-action",
+                                    "group": "dataList",
+                                    "description": "上传 auth json 后刷新列表"
+                                  }
+                                ],
+                                "children": [
+                                  {
+                                    "tag": "button",
+                                    "size": "middle",
+                                    "type": "text",
+                                    "icon": "UploadOutlined",
+                                    "title": "上传 auth.json",
+                                    "tooltip": "上传 auth.json",
+                                    "style": {
+                                      "paddingInline": "6px",
+                                      "paddingBlock": "4px",
+                                      "minWidth": "32px",
+                                      "minHeight": "32px",
+                                      "color": "#2563eb",
+                                      "fontSize": "13px"
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "button",
+                                "visible": "${!simpleMode}",
+                                "size": "middle",
+                                "type": "text",
+                                "icon": "QrcodeOutlined",
+                                "title": "生成 Device Code",
+                                "tooltip": "生成 Device Code",
+                                "style": {
+                                  "paddingInline": "6px",
+                                  "paddingBlock": "4px",
+                                  "minWidth": "32px",
+                                  "minHeight": "32px",
+                                  "color": "#2563eb",
+                                  "fontSize": "13px"
+                                },
+                                "confirm": {
+                                  "title": "生成 Device Code",
+                                  "description": "${'为邮箱【'+row.email_name+'】生成 Codex Device Code？'}"
+                                },
+                                "action": [
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=system.mail_account_codex_generate_and_save",
+                                    "data": {
+                                      "service": "system.mail_account_codex_generate_and_save",
+                                      "mail_account_id": "${row.mail_account_id}"
+                                    },
+                                    "onSuccess": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "success",
+                                        "message": "Code生成成功",
+                                        "description": "${'User Code: '+(data.codex_user_code||'-')}"
+                                      }
+                                    ],
+                                    "onError": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "error",
+                                        "message": "Code生成失败",
+                                        "description": "${msg}"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "tag": "reload-init-action",
+                                    "group": "dataList",
+                                    "description": "生成Code后刷新列表"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "button",
+                                "visible": "${!simpleMode}",
+                                "size": "middle",
+                                "type": "text",
+                                "icon": "KeyOutlined",
+                                "title": "回填 Token",
+                                "tooltip": "回填 Token",
+                                "disabled": "${!row.codex_device_code}",
+                                "style": {
+                                  "paddingInline": "6px",
+                                  "paddingBlock": "4px",
+                                  "minWidth": "32px",
+                                  "minHeight": "32px",
+                                  "color": "${row.codex_device_code?'#0f766e':'#94a3b8'}",
+                                  "fontSize": "13px"
+                                },
+                                "confirm": {
+                                  "title": "回填 Token",
+                                  "description": "${'确认为邮箱【'+row.email_name+'】请求并回填 Token？'}"
+                                },
+                                "action": [
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=system.mail_account_codex_backfill_token",
+                                    "data": {
+                                      "service": "system.mail_account_codex_backfill_token",
+                                      "mail_account_id": "${row.mail_account_id}"
+                                    },
+                                    "onSuccess": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "success",
+                                        "message": "Token回填成功",
+                                        "description": "${data.codex_auth_status||'token_ready'}"
+                                      }
+                                    ],
+                                    "onError": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "error",
+                                        "message": "Token回填失败",
+                                        "description": "${msg}"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=system.mail_account_codex_query_usage_and_save",
+                                    "data": {
+                                      "service": "system.mail_account_codex_query_usage_and_save",
+                                      "mail_account_id": "${row.mail_account_id}"
+                                    },
+                                    "onSuccess": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "success",
+                                        "message": "用量查询成功",
+                                        "description": "${'Plan:'+(data.codex_usage_plan_type||'-')+' | Used:'+(data.codex_usage_used_percent||'-')+'% | Allowed:'+(data.codex_usage_allowed||'-')}"
+                                      }
+                                    ],
+                                    "onError": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "error",
+                                        "message": "用量查询失败",
+                                        "description": "${msg}"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "tag": "reload-init-action",
+                                    "group": "dataList",
+                                    "description": "回填Token并刷新用量后刷新列表"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "button",
+                                "size": "middle",
+                                "type": "text",
+                                "icon": "BarChartOutlined",
+                                "title": "查询用量",
+                                "tooltip": "查询用量",
+                                "style": {
+                                  "paddingInline": "6px",
+                                  "paddingBlock": "4px",
+                                  "minWidth": "32px",
+                                  "minHeight": "32px",
+                                  "color": "${row.codex_access_token?'#0f766e':'#94a3b8'}",
+                                  "fontSize": "13px"
+                                },
+                                "action": [
+                                  {
+                                    "tag": "ajax",
+                                    "api": "post:/template_data/data?service=system.mail_account_codex_query_usage_and_save",
+                                    "data": {
+                                      "service": "system.mail_account_codex_query_usage_and_save",
+                                      "mail_account_id": "${row.mail_account_id}"
+                                    },
+                                    "onSuccess": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "success",
+                                        "message": "用量查询成功",
+                                        "description": "${'Plan:'+(data.codex_usage_plan_type||'-')+' | Used:'+(data.codex_usage_used_percent||'-')+'% | Allowed:'+(data.codex_usage_allowed||'-')}"
+                                      }
+                                    ],
+                                    "onError": [
+                                      {
+                                        "tag": "notification",
+                                        "type": "error",
+                                        "message": "用量查询失败",
+                                        "description": "${msg}"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "tag": "reload-init-action",
+                                    "group": "dataList",
+                                    "description": "查询用量后刷新列表"
+                                  }
+                                ]
+                              },
+                              {
+                                "tag": "dropdown",
+                                "trigger": [
+                                  "click"
+                                ],
+                                "placement": "bottomRight",
+                                "menu": {
+                                  "items": [
+                                    {
+                                      "key": "edit",
+                                      "code": "edit",
+                                      "label": "编辑设置"
+                                    },
+                                    {
+                                      "key": "delete",
+                                      "code": "delete",
+                                      "label": "删除账号",
+                                      "danger": true
+                                    }
+                                  ]
+                                },
+                                "action": [
+                                  {
+                                    "tag": "update-store",
+                                    "enable": "${code==='edit'}",
+                                    "value": {
+                                      "settingsDialogVisible": true,
+                                      "currentSettingRow": {
+                                        "mail_account_id": "${row.mail_account_id}"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "tag": "reset-form",
+                                    "enable": "${code==='edit'}",
+                                    "formName": "mail-account-setting-form"
+                                  },
+                                  {
+                                    "tag": "update-form",
+                                    "enable": "${code==='edit'}",
+                                    "formName": "mail-account-setting-form",
+                                    "value": {
+                                      "email_name_display": "${row.email_name||''}",
+                                      "is_current_running": "${row.is_current_running||'0'}",
+                                      "is_disabled": "${row.is_disabled||'0'}",
+                                      "proton_registered": "${row.proton_registered||'0'}",
+                                      "proton_email": "${row.proton_email||(String(row.email_name||'').split('@')[0]?String(row.email_name||'').split('@')[0]+'@proton.me':'')}",
+                                      "proton_password": "${row.proton_password||'Zhangzhi@888'}"
+                                    }
+                                  },
+                                  {
+                                    "tag": "confirm",
+                                    "enable": "${code==='delete'}",
+                                    "title": "确认删除吗？",
+                                    "content": "${'确认删除邮箱【'+row.email_name+'】吗？'}",
+                                    "okText": "确定",
+                                    "cancelText": "取消",
+                                    "onOk": [
+                                      {
+                                        "tag": "ajax",
+                                        "api": "post:/template_data/data?service=system.mail_account_delete",
+                                        "data": {
+                                          "mail_account_id_list": "${[row.mail_account_id]}"
+                                        }
+                                      },
+                                      {
+                                        "tag": "update-store",
+                                        "value": {
+                                          "selection": "${(selection||[]).filter(item=>item.mail_account_id!==row.mail_account_id)}"
+                                        }
+                                      },
+                                      {
+                                        "tag": "reload-init-action",
+                                        "group": "dataList",
+                                        "description": "单条删除后刷新列表"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "children": [
+                                  {
+                                    "tag": "button",
+                                    "size": "middle",
+                                    "type": "text",
+                                    "icon": "MoreOutlined",
+                                    "title": "更多操作",
+                                    "tooltip": "更多操作",
+                                    "style": {
+                                      "paddingInline": "6px",
+                                      "paddingBlock": "4px",
+                                      "minWidth": "32px",
+                                      "minHeight": "32px",
+                                      "color": "#64748b"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "style": {
+                      "display": "flex",
+                      "alignItems": "center",
+                      "gap": "${simpleMode?'4px':'6px'}",
+                      "padding": "${simpleMode?'4px 6px':'7px 9px'}",
+                      "marginBottom": "${simpleMode?'3px':'5px'}",
+                      "borderRadius": "${simpleMode?'8px':'12px'}",
+                      "border": "${row.is_current_running==='1'&&row.is_disabled!=='1'?'1px solid rgba(245,158,11,0.18)':'1px solid rgba(226,232,240,0.9)'}",
+                      "background": "${row.is_current_running==='1'&&row.is_disabled!=='1'?'linear-gradient(135deg,rgba(255,247,237,0.95),rgba(255,255,255,0.98))':'linear-gradient(135deg,rgba(248,250,252,0.96),rgba(255,255,255,0.98))'}"
+                    },
+                    "children": [
+                      {
+                        "tag": "icon",
+                        "icon": "MailOutlined",
+                        "style": {
+                          "fontSize": "${simpleMode?'11px':'12px'}",
+                          "color": "${row.is_current_running==='1'&&row.is_disabled!=='1'?'#ea580c':'#64748b'}"
+                        }
+                      },
+                      {
+                        "tag": "div",
+                        "className": "mail-account-value mail-account-ellipsis",
+                        "style": {
+                          "flex": 1,
+                          "minWidth": "0",
+                          "fontSize": "${simpleMode?'12px':'13px'}",
+                          "fontWeight": "700",
+                          "lineHeight": "1.2",
+                          "color": "#0f172a"
+                        },
+                        "children": "${row.email_name||''}"
+                      },
+                      {
+                        "tag": "button",
+                        "visible": "${!simpleMode}",
+                        "size": "small",
+                        "type": "text",
+                        "icon": "GlobalOutlined",
+                        "title": "打开 Outlook 邮箱",
+                        "tooltip": "打开 Outlook 邮箱",
+                        "style": {
+                          "paddingInline": "2px",
+                          "minWidth": "20px",
+                          "color": "#2563eb"
+                        },
+                        "action": [
+                          {
+                            "tag": "method",
+                            "method": "${(()=>{const name='mail_account_outlook_popup';const features='width=1280,height=860,left=120,top=60,menubar=no,toolbar=no,location=yes,status=no,resizable=yes,scrollbars=yes';const w=window.open('https://outlook.live.com/mail/0/',name,features);if(w){w.focus();}})()}"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "button",
+                        "size": "small",
+                        "type": "text",
+                        "icon": "CopyOutlined",
+                        "style": {
+                          "paddingInline": "2px",
+                          "minWidth": "20px",
+                          "color": "#64748b"
+                        },
+                        "action": [
+                          {
+                            "tag": "copy-text",
+                            "value": "${row.email_name||''}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "visible": "${(row.codex_user_code||row.codex_auth_status)&&!simpleMode}",
+                    "style": {
+                      "display": "flex",
+                      "alignItems": "center",
+                      "gap": "6px",
+                      "padding": "5px 8px",
+                      "marginBottom": "5px",
+                      "borderRadius": "10px",
+                      "background": "linear-gradient(135deg,#ecfeff,#f0fdfa)",
+                      "border": "1px solid #99f6e4"
+                    },
+                    "children": [
+                      {
+                        "tag": "icon",
+                        "icon": "SafetyCertificateOutlined",
+                        "style": {
+                          "fontSize": "11px",
+                          "color": "#0f766e"
+                        }
+                      },
+                      {
+                        "tag": "span",
+                        "className": "mail-account-value mail-account-ellipsis",
+                        "style": {
+                          "fontSize": "10px",
+                          "lineHeight": "1.2",
+                          "color": "#115e59",
+                          "flex": 1,
+                          "minWidth": "0"
+                        },
+                        "children": "${'Code:'+(row.codex_user_code||'-')+' | 状态:'+(row.codex_auth_status||'-')}"
+                      },
+                      {
+                        "tag": "button",
+                        "size": "small",
+                        "type": "text",
+                        "icon": "LinkOutlined",
+                        "title": "打开授权页面",
+                        "tooltip": "打开授权页面",
+                        "style": {
+                          "paddingInline": "1px",
+                          "minWidth": "18px",
+                          "color": "#0f766e"
+                        },
+                        "action": [
+                          {
+                            "tag": "method",
+                            "method": "${(()=>{const url=row.codex_verification_uri_complete||row.codex_verification_uri||'https://auth.openai.com/codex/device';window.open(url,'_blank');})()}"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "button",
+                        "size": "small",
+                        "type": "text",
+                        "icon": "CopyOutlined",
+                        "title": "复制 User Code",
+                        "tooltip": "复制 User Code",
+                        "disabled": "${!row.codex_user_code}",
+                        "style": {
+                          "paddingInline": "1px",
+                          "minWidth": "18px"
+                        },
+                        "action": [
+                          {
+                            "tag": "copy-text",
+                            "value": "${row.codex_user_code||''}"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "visible": "${row.codex_usage_plan_type||row.codex_usage_used_percent||row.codex_usage_allowed||row.codex_usage_last_query_time}",
+                    "style": {
+                      "display": "flex",
+                      "alignItems": "center",
+                      "gap": "6px",
+                      "padding": "5px 8px",
+                      "marginBottom": "5px",
+                      "borderRadius": "10px",
+                      "background": "${(row.is_disabled==='1'||(String(row.codex_usage_plan_type||'').toLowerCase().includes('free') && Number(row.codex_usage_used_percent||0)>=98))?'linear-gradient(135deg,#f1f5f9,#f8fafc)':'linear-gradient(135deg,#fef9c3,#fffbeb)'}",
+                      "border": "${(row.is_disabled==='1'||(String(row.codex_usage_plan_type||'').toLowerCase().includes('free') && Number(row.codex_usage_used_percent||0)>=98))?'1px solid #cbd5e1':'1px solid #fde68a'}"
+                    },
+                    "children": [
+                      {
+                        "tag": "icon",
+                        "icon": "BarChartOutlined",
+                        "style": {
+                          "fontSize": "11px",
+                          "color": "${(row.is_disabled==='1'||(String(row.codex_usage_plan_type||'').toLowerCase().includes('free') && Number(row.codex_usage_used_percent||0)>=98))?'#64748b':'#92400e'}"
+                        }
+                      },
+                      {
+                        "tag": "div",
+                        "className": "mail-account-value",
+                        "style": {
+                          "fontSize": "10px",
+                          "lineHeight": "1.2",
+                          "color": "${(row.is_disabled==='1'||(String(row.codex_usage_plan_type||'').toLowerCase().includes('free') && Number(row.codex_usage_used_percent||0)>=98))?'#475569':'#78350f'}",
+                          "flex": 1,
+                          "minWidth": "0",
+                          "display": "flex",
+                          "alignItems": "center",
+                          "gap": "8px"
+                        },
+                        "children": [
+                          {
+                            "tag": "span",
+                            "style": {
+                              "display": "inline-flex",
+                              "alignItems": "center",
+                              "gap": "3px",
+                              "minWidth": "0"
+                            },
+                            "children": [
+                              {
+                                "tag": "icon",
+                                "icon": "ApiOutlined",
+                                "style": {
+                                  "fontSize": "10px",
+                                  "color": "${(row.is_disabled==='1'||(String(row.codex_usage_plan_type||'').toLowerCase().includes('free') && Number(row.codex_usage_used_percent||0)>=98))?'#64748b':'#78350f'}"
+                                }
+                              },
+                              {
+                                "tag": "span",
+                                "className": "mail-account-ellipsis",
+                                "children": "${row.codex_usage_plan_type||'-'}"
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "span",
+                            "style": {
+                              "display": "inline-flex",
+                              "alignItems": "center",
+                              "gap": "3px",
+                              "minWidth": "0"
+                            },
+                            "children": [
+                              {
+                                "tag": "icon",
+                                "icon": "FireOutlined",
+                                "style": {
+                                  "fontSize": "10px",
+                                  "color": "${(row.is_disabled==='1'||(String(row.codex_usage_plan_type||'').toLowerCase().includes('free') && Number(row.codex_usage_used_percent||0)>=98))?'#64748b':'#78350f'}"
+                                }
+                              },
+                              {
+                                "tag": "span",
+                                "children": "${(row.codex_usage_used_percent||'-')+'%'}"
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "span",
+                            "style": {
+                              "display": "inline-flex",
+                              "alignItems": "center",
+                              "gap": "3px",
+                              "minWidth": "0"
+                            },
+                            "children": [
+                              {
+                                "tag": "icon",
+                                "icon": "FieldTimeOutlined",
+                                "style": {
+                                  "fontSize": "10px",
+                                  "color": "${(row.is_disabled==='1'||(String(row.codex_usage_plan_type||'').toLowerCase().includes('free') && Number(row.codex_usage_used_percent||0)>=98))?'#64748b':'#78350f'}"
+                                }
+                              },
+                              {
+                                "tag": "span",
+                                "children": "${(()=>{var v=row.codex_usage_reset_at;if(v==null||v==='')return'-';var ts=+v;if(ts!==ts||ts<=0)return'-';var d=new Date(ts*1000);return String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');})()}"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "visible": "${!simpleMode}",
+                    "style": {
+                      "display": "flex",
+                      "gap": "4px",
+                      "paddingTop": "4px",
+                      "borderTop": "1px solid rgba(226,232,240,0.8)"
+                    },
+                    "children": [
+                      {
+                        "tag": "div",
+                        "style": {
+                          "flex": 1,
+                          "minWidth": "0",
+                          "display": "flex",
+                          "alignItems": "center",
+                          "gap": "4px",
+                          "padding": "5px 6px",
+                          "borderRadius": "10px",
+                          "background": "#f8fafc"
+                        },
+                        "children": [
+                          {
+                            "tag": "icon",
+                            "icon": "LockOutlined",
+                            "style": {
+                              "fontSize": "11px",
+                              "color": "#64748b"
+                            }
+                          },
+                          {
+                            "tag": "span",
+                            "className": "mail-account-value mail-account-ellipsis",
+                            "style": {
+                              "fontSize": "10px",
+                              "color": "#334155",
+                              "lineHeight": "1.2",
+                              "flex": 1,
+                              "minWidth": "0"
+                            },
+                            "children": "${row.password||''}"
+                          },
+                          {
+                            "tag": "button",
+                            "size": "small",
+                            "type": "text",
+                            "icon": "CopyOutlined",
+                            "style": {
+                              "paddingInline": "1px",
+                              "minWidth": "18px"
+                            },
+                            "action": [
+                              {
+                                "tag": "copy-text",
+                                "value": "${row.password||''}"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "div",
+                        "style": {
+                          "flex": 1,
+                          "minWidth": "0",
+                          "display": "flex",
+                          "alignItems": "center",
+                          "gap": "4px",
+                          "padding": "5px 6px",
+                          "borderRadius": "10px",
+                          "background": "#eff6ff"
+                        },
+                        "children": [
+                          {
+                            "tag": "icon",
+                            "icon": "MailOutlined",
+                            "style": {
+                              "fontSize": "11px",
+                              "color": "#2563eb"
+                            }
+                          },
+                          {
+                            "tag": "span",
+                            "className": "mail-account-value mail-account-ellipsis",
+                            "style": {
+                              "fontSize": "10px",
+                              "color": "#334155",
+                              "lineHeight": "1.2",
+                              "flex": 1,
+                              "minWidth": "0"
+                            },
+                            "children": "${row.proton_email||''}"
+                          },
+                          {
+                            "tag": "button",
+                            "size": "small",
+                            "type": "text",
+                            "icon": "CopyOutlined",
+                            "style": {
+                              "paddingInline": "1px",
+                              "minWidth": "18px"
+                            },
+                            "action": [
+                              {
+                                "tag": "copy-text",
+                                "value": "${row.proton_email||''}"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "div",
+                        "style": {
+                          "flex": 1,
+                          "minWidth": "0",
+                          "display": "flex",
+                          "alignItems": "center",
+                          "gap": "4px",
+                          "padding": "5px 6px",
+                          "borderRadius": "10px",
+                          "background": "#f5f3ff"
+                        },
+                        "children": [
+                          {
+                            "tag": "icon",
+                            "icon": "KeyOutlined",
+                            "style": {
+                              "fontSize": "11px",
+                              "color": "#7c3aed"
+                            }
+                          },
+                          {
+                            "tag": "span",
+                            "className": "mail-account-value mail-account-ellipsis",
+                            "style": {
+                              "fontSize": "10px",
+                              "color": "#334155",
+                              "lineHeight": "1.2",
+                              "flex": 1,
+                              "minWidth": "0"
+                            },
+                            "children": "${row.proton_password||''}"
+                          },
+                          {
+                            "tag": "button",
+                            "size": "small",
+                            "type": "text",
+                            "icon": "CopyOutlined",
+                            "style": {
+                              "paddingInline": "1px",
+                              "minWidth": "18px"
+                            },
+                            "action": [
+                              {
+                                "tag": "copy-text",
+                                "value": "${row.proton_password||''}"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bottomToolBar": [
+    {
+      "tag": "pagination",
+      "showSizeChanger": true,
+      "showQuickJumper": true,
+      "showTotal": true,
+      "align": "end",
+      "pageSizeOptions": ["10", "20", "50", "100"],
+      "pageSize": "${searchForm.size}",
+      "current": "${searchForm.page}",
+      "total": "${count}",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "searchForm.page": "${pageSize===searchForm.size?current:1}",
+            "searchForm.size": "${pageSize}"
+          }
+        },
+        {
+          "tag": "reload-init-action",
+          "group": "dataList",
+          "description": "切换分页-页面初始化请求"
+        }
+      ]
+    }
+  ]
+}

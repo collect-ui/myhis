@@ -1,0 +1,108 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "startedAt": "2026-05-07T07:14:16.428Z",
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-value-completion-check.png",
+  "python": {
+    "filePath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+    "checks": {
+      "sql_file": {
+        "lineNumber": 37,
+        "lineText": "    sql_file: ",
+        "labels": [
+          "base.sql",
+          "count.sql",
+          "issue_commit_count.sql",
+          "issue_commit_detail.sql",
+          "issue_count_base.sql",
+          "issue_cross_count.sql",
+          "local_issue_comments.sql",
+          "recently_issue.sql"
+        ]
+      },
+      "data_json": {
+        "lineNumber": 188,
+        "lineText": "        data_json: ",
+        "labels": [
+          "get_issue_comment.json",
+          "issue_modify.json"
+        ]
+      },
+      "data_file": {
+        "lineNumber": 188,
+        "lineText": "        data_file: ",
+        "labels": [
+          "base.sql",
+          "count.sql",
+          "get_issue_comment.json",
+          "index.yml",
+          "issue_commit_count.sql",
+          "issue_commit_detail.sql",
+          "issue_count_base.sql",
+          "issue_cross_count.sql",
+          "issue_modify.json",
+          "local_issue_comments.sql",
+          "recently_issue.sql"
+        ]
+      },
+      "model": {
+        "lineNumber": 154,
+        "lineText": "    model: Issue",
+        "labels": [
+          "IssueCommit",
+          "IssueFlow",
+          "IssueImg",
+          "IssuePriorityTransferRequirement",
+          "IssueRecordImg",
+          "IssueStateLinkIssueType",
+          "IssueStatusComputed",
+          "IssueTransferRequirement"
+        ]
+      },
+      "table": {
+        "lineNumber": 154,
+        "lineText": "    table: alert_",
+        "labels": [
+          "alert_ignore"
+        ]
+      }
+    }
+  },
+  "go": {
+    "filePath": "/data/project/sport/collect/config/sync/index.yml",
+    "checks": {
+      "modify_config": {
+        "lineNumber": 43,
+        "lineText": "    modify_config: ",
+        "labels": [
+          "doc_modify.json"
+        ]
+      },
+      "data_file": {
+        "lineNumber": 43,
+        "lineText": "    data_file: ",
+        "labels": [
+          "doc_modify.json",
+          "index.yml"
+        ]
+      },
+      "table": {
+        "lineNumber": 14,
+        "lineText": "    table: collect_doc_i",
+        "labels": [
+          "collect_doc_important"
+        ]
+      },
+      "model": {
+        "lineNumber": 14,
+        "lineText": "    model: CollectDocI",
+        "labels": [
+          "CollectDocImportant"
+        ]
+      }
+    }
+  },
+  "endedAt": "2026-05-07T07:14:41.176Z"
+}

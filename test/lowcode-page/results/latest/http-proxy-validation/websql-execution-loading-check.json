@@ -1,0 +1,72 @@
+{
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "delayedExecuteRequests": 1,
+  "during": {
+    "buttonLoading": true,
+    "buttonDisabled": true,
+    "maskVisible": true,
+    "maskText": "SQL 执行中...",
+    "statusText": "执行中"
+  },
+  "after": {
+    "buttonLoading": false,
+    "buttonDisabled": false,
+    "maskVisible": false,
+    "maskText": "",
+    "statusText": "查询完成 · 1 行 · 1ms"
+  },
+  "response": {
+    "count": 0,
+    "success": true,
+    "code": "0",
+    "msg": "执行成功",
+    "data": {
+      "columns": [
+        {
+          "field": "project_code",
+          "filter": true,
+          "header": "project_code",
+          "nullable": true,
+          "resizable": true,
+          "sortable": true,
+          "type": "VARCHAR(100)"
+        },
+        {
+          "field": "project_name",
+          "filter": true,
+          "header": "project_name",
+          "nullable": true,
+          "resizable": true,
+          "sortable": true,
+          "type": "VARCHAR(1000)"
+        }
+      ],
+      "cursor_offset": 0,
+      "driver": "sqlite",
+      "duration_ms": 1,
+      "executed_at": "2026-05-18T16:44:10.179573927+08:00",
+      "has_next": false,
+      "has_prev": false,
+      "max_rows": 500,
+      "next_cursor": -1,
+      "page_size": 50,
+      "prev_cursor": 0,
+      "row_count": 1,
+      "rows": [
+        {
+          "project_code": "my",
+          "project_name": "我的项目"
+        }
+      ],
+      "skipped_rows": 0,
+      "statement_type": "select",
+      "truncated": false
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "loadingScreenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-execution-loading-check-during.png",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-execution-loading-check.png",
+  "report": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-execution-loading-check.json"
+}

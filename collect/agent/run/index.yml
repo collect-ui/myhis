@@ -1,0 +1,368 @@
+service:
+  - key: run_create
+    http: true
+    must_login: false
+    module: agent_run
+    params:
+      agent_session_id:
+        default: ""
+      session_key:
+        default: ""
+      scene_code:
+        default: "default"
+      title:
+        default: ""
+      system_prompt:
+        default: ""
+      model:
+        default: "gpt-5-mini"
+      tool_policy_json:
+        default: ""
+      mcp_policy_json:
+        default: ""
+      input_text:
+        check:
+          template: "{{must .input_text}}"
+          err_msg: input_text 不能为空
+      run_sync:
+        default: false
+      stream_response:
+        default: false
+      trigger_type:
+        default: "user"
+      mock_response:
+        default: ""
+      simulate_delay_second:
+        type: int
+        default: 0
+      create_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      message_create_time:
+        template: "{{current_date_time}}"
+  - key: run_query
+    http: true
+    must_login: false
+    module: sql
+    params:
+      agent_run_id:
+        default: ""
+      agent_session_id:
+        default: ""
+      request_id:
+        default: ""
+      status:
+        default: ""
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 20
+      start:
+        template: "({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+      to_obj:
+        default: false
+    data_file: query.sql
+    count_file: count.sql
+    result_handler:
+      - key: arr2obj
+        enable: "[to_obj]"
+  - key: run_queued_query
+    must_login: false
+    module: sql
+    data_file: queued.sql
+  - key: run_expired_query
+    must_login: false
+    module: sql
+    params:
+      lease_expire_before:
+        template: "{{current_date_time}}"
+    data_file: expired.sql
+  - key: run_save
+    must_login: false
+    module: model_save
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      agent_session_id:
+        check:
+          template: "{{must .agent_session_id}}"
+          err_msg: agent_session_id 不能为空
+      request_id:
+        default: ""
+      trigger_type:
+        default: "user"
+      status:
+        default: "queued"
+      current_step:
+        default: "queued"
+      worker_id:
+        default: ""
+      lease_expire_time:
+        default: ""
+      heartbeat_time:
+        default: ""
+      retry_count:
+        type: int
+        default: 0
+      max_retry:
+        type: int
+        default: 1
+      error_msg:
+        default: ""
+      request_json:
+        default: ""
+      result_json:
+        default: ""
+      started_at:
+        default: ""
+      finished_at:
+        default: ""
+      create_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      create_user:
+        default: ""
+      modify_user:
+        default: ""
+      is_delete:
+        default: "0"
+  - key: run_claim_update
+    must_login: false
+    module: model_update
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      status:
+        default: "running"
+      current_step:
+        default: "model_call"
+      worker_id:
+        default: "local-agent-worker"
+      heartbeat_time:
+        template: "{{current_date_time}}"
+      lease_expire_time:
+        check:
+          template: "{{must .lease_expire_time}}"
+          err_msg: lease_expire_time 不能为空
+      started_at:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - status
+      - current_step
+      - worker_id
+      - heartbeat_time
+      - lease_expire_time
+      - started_at
+      - modify_time
+    filter:
+      agent_run_id: "[agent_run_id]"
+      status: "[queued_status]"
+  - key: run_heartbeat_update
+    must_login: false
+    module: model_update
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      running_status:
+        default: "running"
+      heartbeat_time:
+        template: "{{current_date_time}}"
+      lease_expire_time:
+        check:
+          template: "{{must .lease_expire_time}}"
+          err_msg: lease_expire_time 不能为空
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - heartbeat_time
+      - lease_expire_time
+      - modify_time
+    filter:
+      agent_run_id: "[agent_run_id]"
+      status: "[running_status]"
+  - key: run_fail_update
+    must_login: false
+    module: model_update
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      status:
+        default: "failed"
+      current_step:
+        default: "failed"
+      error_msg:
+        default: ""
+      finished_at:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - status
+      - current_step
+      - error_msg
+      - finished_at
+      - modify_time
+    filter:
+      agent_run_id: "[agent_run_id]"
+  - key: run_fail_result_update
+    must_login: false
+    module: model_update
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      status:
+        default: "failed"
+      current_step:
+        default: "failed"
+      error_msg:
+        default: ""
+      result_json:
+        default: ""
+      finished_at:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - status
+      - current_step
+      - error_msg
+      - result_json
+      - finished_at
+      - modify_time
+    filter:
+      agent_run_id: "[agent_run_id]"
+  - key: run_complete_update
+    must_login: false
+    module: model_update
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      status:
+        default: "completed"
+      current_step:
+        default: "completed"
+      error_msg:
+        default: ""
+      result_json:
+        default: ""
+      finished_at:
+        template: "{{current_date_time}}"
+      heartbeat_time:
+        template: "{{current_date_time}}"
+      lease_expire_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - status
+      - current_step
+      - error_msg
+      - result_json
+      - finished_at
+      - heartbeat_time
+      - lease_expire_time
+      - modify_time
+    filter:
+      agent_run_id: "[agent_run_id]"
+  - key: run_expired_fail_update
+    must_login: false
+    module: model_update
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      running_status:
+        default: "running"
+      status:
+        default: "failed"
+      current_step:
+        default: "failed"
+      error_msg:
+        default: "运行中断：服务重启或模型请求超过租约未更新，请重新发送。"
+      finished_at:
+        template: "{{current_date_time}}"
+      heartbeat_time:
+        template: "{{current_date_time}}"
+      lease_expire_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - status
+      - current_step
+      - error_msg
+      - finished_at
+      - heartbeat_time
+      - lease_expire_time
+      - modify_time
+    filter:
+      agent_run_id: "[agent_run_id]"
+      status: "[running_status]"
+  - key: run_cancel_update
+    must_login: false
+    module: model_update
+    table: agent_run
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      cancel_status_list:
+        default:
+          - queued
+          - running
+      status:
+        default: "cancelled"
+      current_step:
+        default: "cancelled"
+      error_msg:
+        default: "用户已终止本次请求"
+      finished_at:
+        template: "{{current_date_time}}"
+      heartbeat_time:
+        template: "{{current_date_time}}"
+      lease_expire_time:
+        template: "{{current_date_time}}"
+      modify_time:
+        template: "{{current_date_time}}"
+    update_fields:
+      - status
+      - current_step
+      - error_msg
+      - finished_at
+      - heartbeat_time
+      - lease_expire_time
+      - modify_time
+    filter:
+      agent_run_id: "[agent_run_id]"
+      status__in: "[cancel_status_list]"

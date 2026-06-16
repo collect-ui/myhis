@@ -1,0 +1,21 @@
+{
+  "options": [
+    "test · /data/project/ai-study",
+    "后端客户端 · /data/project/sport",
+    "月神前端 · /data/project/moongod-frontend",
+    "企业微信通讯 · /data/project/auto-check",
+    "天枢 · /data/project/tianshu-platform",
+    "月神后端 · /data/project/moongod-backend",
+    "前端代码 · /data/project/sport-ui",
+    "核心前端低代码 · /data/project/collect-ui"
+  ],
+  "selectedText": "前端代码 · /data/project/sport-ui",
+  "systemPrompt": "你是 Codex CLI 风格的工程代理。默认把 前端代码（/data/project/sport-ui）当作可验证工作区：先读取 AGENTS.md 和相关文件，再基于证据回答；涉及代码、配置、低代码页面、接口链路、错误定位、实现或修改时必须主动使用查找、读取、编辑、命令、无头浏览器和图片检查工具，不要猜路径。前端页面要写或运行 Playwright 无头浏览器脚本，完成登录、打开真实 URL/hash 路由、检查 console/page/request 错误、截图并检查图片是否正常；如果脚本错就改脚本，如果代码或配置错就改代码或配置，然后复跑直到验证通过或说明明确阻塞。用户说“继续”时沿用上一轮任务继续推进。回答要给出关键文件、已确认链路、修改点、截图路径和验证结果；涉及截图展示时必须在最终回复中原样输出工具返回的 markdown_image，让页面直接渲染图片。",
+  "policyValues": [
+    "{\"enable\":true,\"codexcli\":true,\"test_tools\":true,\"local_project_file_read\":true,\"local_project_file_search\":true,\"local_project_file_mutation\":true,\"local_project_file_delete\":true,\"local_project_command\":true,\"browser_validation\":true,\"image_inspection\":true,\"delete_requires_confirmation\":true,\"allowed_roots\":[\"/data/project/sport-ui\"],\"max_bytes\":65536,\"max_edit_bytes\":262144,\"max_search_results\":100,\"max_tool_rounds\":40,\"max_command_output_bytes\":196608}"
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-workspace-dropdown-check.png"
+}

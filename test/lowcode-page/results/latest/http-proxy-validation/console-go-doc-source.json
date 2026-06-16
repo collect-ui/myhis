@@ -1,0 +1,399 @@
+{
+  "ok": true,
+  "groups": [
+    {
+      "name": "如何编写服务",
+      "id": "dd336894-53b6-405b-98c7-f327407d7cfa",
+      "items": [
+        {
+          "title": "什么是服务service",
+          "sub_title": "服务描述",
+          "code": "module：empty",
+          "code_desc": "    服务就是对外提供一个http接口，或者对内提供基础方法，满足别人需求。\n    我们常常编写一个接口，一般是要求服务器做一件事情，比如查询一个用户列表，更新一个用户信息，删除一条记录。我们管服务器每做一个事情叫做服务。\n    所以服务，就表示你要服务器做一件什么事情。比如服务器执行sql，是一个服务，删除数据记录也是一个服务。让服务器发个http请求到其他服务器也是一个服务。服务划分这个主要看个人的主观意愿。\n    以前我写python、java查询接口，就是执行一段sql，就必须包一个http接口。现在不需要，然后只需要后台配置一个sql文件，服务配置后，对外就可以暴露一个http接口。\n    我做的一件事情，将接口更抽象一次。一般人写的接口是面向业务提供一个接口。而我是面向业务接口，提供一个工具。这个工具可以制造业务接口，制造出来的接口是服务，同时也能完成业务接口做的事情。是一个后端的低代码。\n    报表也是如此，报表根据不同sql，可以渲染不同的数据，以达到不用写接口。但是报表的数据能力不行。比如修改数据模型、批量修改数据模型，需要处理uuid，创建时间，或者过滤一部分数据，报表不行。它根本mvc的model层。不具备代码能力\n    服务配置的目录结构\n    |conf\n    └－－application.properties\n    |collect\n    └－－service.yml\n    └－－hrm\n        └－－service.yml\n        └－－user\n            └－－index.yml\n    1.conf/application.properties配置文件入口，一般配置可以缓存开关，数据库地址。\n    2.collect 是总服务配置文件夹，collect/service.yml 是总入口\n    3.hrm 是业务模块，下面service.yml该页面模块的入口，一般连接业务的文件夹。一般叶子目录下的index.yml 录入服务，service 节点下key 表示具体服务，index.yml 一般按照功能分类，表名分类，再上一级表示项目分类.",
+          "collect_doc_id": "91d4abd1-14c9-4705-9de7-1518da998427",
+          "order_index": "0"
+        },
+        {
+          "title": "什么是参数",
+          "sub_title": "服务描述",
+          "code": "  - key: bulk_create_user\n    module: bulk_create\n    log: true\n    http: true\n    params:\n      user_list:\n        check:\n          template: \"{{must .user_list}}\"\n          err_msg: 用户列表不能为空",
+          "code_desc": "    参数就是前台过来的参数，参数只能是json对象，里面有个service+一些其他业务参数。\n    示例中params 是一个参数池，参数是可以http 请求传来，也可以自己定义，主要存储一些key，value 字典对象，handler_params 和result_handler 可以对参数进行处理。\n请求过来的参数，也是直接设置到params,params贯穿了整个服务。handler_params 也是对参数进行处理，result_handler 是运行完成时候对参数处理。\n    参数是存储在改服务里 ，一个变量区域。就好比是一个大箱子，每个步骤都可以往箱子里面放东西，只要自己保证名称唯一，取的时候就不会混乱。参数定义，handler_params ，result_handler 都是往这个大箱子放与拿东西。\n    params 可以做一下简单字段校验，生成默认值；比如字段不能为空；删除is_delete默认值为0，创建时间create_time默认当前时间。创建人当前用户。\n",
+          "collect_doc_id": "cd89c817-3ba4-48c5-baba-74c50c73dbbc",
+          "order_index": "20"
+        },
+        {
+          "title": "什么是参数处理",
+          "sub_title": "服务描述",
+          "code": "handler_params\n  - key：xxx\nresult_handler:\n  - key:xxx\n",
+          "code_desc": "    参数处理是对请求参数进行二次处理，增加、修改、校验一些字段。\n    我们一般执行模块前，一般前台传过来数据对象，不完全符合我们的预期。比如前台的编码唯一，一般是后台保证，查一下数据库，然后校验一波。前台提交过来的对象，几乎都不是单表保存，数据可能需要保存到好几张表，我们需要根据参数中部分字段存到特定的表里。我之前遇到一个编辑传的全量数据的接口，需要保存20-30张表，根据字段标志存到不同的表\n参数处理，是对前台传过来的参数进行特殊处理。\n  1.比如前台传了一个ID数组列表，我们需要转换成一个数组对象，批量存入数据表\n  2.比如我们要查询一个接口，来校验编码是否唯一\n参数处理包括2个部分，请求参数处理，就是模块执行前进行参数处理。结果处理，就是执行完成，针对结果进行处理。\nkey:xxx 表示用xxx处理器进行处理\n是一个数组，表示可以接入多个处理器",
+          "collect_doc_id": "3c768fa7-2c9c-48f4-a109-e740ab17ab6c",
+          "order_index": "30"
+        },
+        {
+          "title": "生命周期",
+          "sub_title": "服务描述",
+          "code": "params->handler_params->module->result_handler",
+          "code_desc": "服务可以操作的部分目前是四个，\n第一步参数定义\n第二步参数处理\n第三步模块执行\n第四步结果处理\n\n四步中途如果有一个错误则直接返回\n\n请求拦截和定期任务没有定义生命周期。它属于更上一层的包装，而且基本不怎么操作。\n",
+          "collect_doc_id": "234fe81b-c7e3-46a1-a274-2bbc904e6ab7",
+          "order_index": "50"
+        }
+      ]
+    },
+    {
+      "name": "模块处理",
+      "id": "ae78bab6-b68e-4522-86e0-08d35fe201d0",
+      "items": [
+        {
+          "title": "sql",
+          "sub_title": "sql查询",
+          "code": "module: sql",
+          "code_desc": "   用于数据库表查询,将sql查询出来的数据作为结果。虽然sql能运行任何增删改查，但是新增、修改、删除，尽量用模型修改model_update,模型删除model_delete，模型新增用model_save。\n   用渲染html的引擎，来渲染生成sql。基本上99%的场景都能渲染出来，剩下1%场景，是我没有遇到的，遇到了我会解决它。\n\n",
+          "collect_doc_id": "ccc4f5b6-2e98-4692-9e6b-333c1ab404e0",
+          "order_index": "1"
+        },
+        {
+          "title": "bulk_service",
+          "sub_title": "批量服务",
+          "code": "    module: bulk_service\n    params:\n      collect_doc_id:\n        check:\n          template: \"{{must .collect_doc_id}}\"\n          err_msg: 文档不能为空\n    data_file: service_transfer.json\n    handler_params:\n      - key: service2field\n        service:\n          service: config.get_detail_service\n          collect_doc_id: \"[collect_doc_id]\"\n        save_field: service_list\n    batch:\n      foreach: \"[service_list]\"\n      service:\n        service: \"[service]\"\n      append_item_param: true\n      save_field: 'result'",
+          "code_desc": "    批量运行服务，多线程运行服务。\n    我之前写一个发布计划接口，一个查询然后编辑的接口，结合所有表一起查询与保存。保存还好，毕竟修改数据花个3-5秒还能接受。但是一进来查询得花个3-5秒查询，基本受不了。每个模块都是查询一次，但是是顺序进行的。一个模块花0.2秒，但是架不住模块多啊，乘以20，加上模块自身需要点时间，所以时间越来越大，3-5秒很正常。\n   可以利用此服务批量进行查询。将服务一次性查询出来\n   比如批量去发http请求\n",
+          "collect_doc_id": "eb55515c-df08-4ac5-a4e8-3d811b834e54",
+          "order_index": "20"
+        },
+        {
+          "title": "model_save",
+          "sub_title": "表新增行",
+          "code": "  - key: collect_doc_save\n    module: model_save\n    table: collect_doc\n    params:\n      create_time:\n        template: \"{{current_date_time}}\"\n      create_user:\n        template: \"{{.session_user_id}}\"\n      is_delete:\n        default: \"0\"",
+          "code_desc": "对数据库表的新增一行记录",
+          "collect_doc_id": "9b4fbf55-b221-4b05-86f1-2e78132ee552",
+          "order_index": "30"
+        },
+        {
+          "title": "model_update",
+          "sub_title": "表修改行数据",
+          "code": "  - key: doc_delete\n    http: true\n    module: model_update\n    params:\n      collect_doc_id_list:\n        check:\n          template: \"{{must .collect_doc_id_list}}\"\n          err_msg: 文档不能为空\n      is_delete:\n        default: \"1\"\n    table: collect_doc\n    filter:\n      collect_doc_id__in: \"[collect_doc_id_list]\"",
+          "code_desc": "示例中是个假删除，将一批记录is_delete 改为1。\n主要解决针对数据表的修改，可以单个修改和批量统一修改，主要看你条件怎么写。\n注意* 不能，批量不同记录不同值修改，如果需要可以用model_upsert 批量记录不同值修改",
+          "collect_doc_id": "0722aa5a-78e6-4a29-818c-ba33843bdf81",
+          "order_index": "40"
+        },
+        {
+          "title": "model_delete",
+          "sub_title": "表数据删除",
+          "code": "  - key: role_ldap_group_delete\n    module: model_delete\n    params:\n      role_id_list:\n        check:\n          template: \"{{must .role_id_list}}\"\n          err_msg: 角色不能为空\n    table: \"role_ldap_group\"\n    filter:\n      role_id__in: \"[role_id_list]\"",
+          "code_desc": "针对表数据库删除",
+          "collect_doc_id": "8ec4053f-1a54-4f78-9de6-31db6995692e",
+          "order_index": "50"
+        },
+        {
+          "title": "bulk_create",
+          "sub_title": "表批量保存",
+          "code": "  - key: config_detail_bulk_create\n    name: 配置批量新增\n    module: bulk_create\n    log: true\n    table: \"config_detail\"\n    model_field: \"[detail_list]\"\n    http: true\n    params:\n      detail_list:\n        check:\n          template: \"{{must .detail_list}}\"\n          err_msg: 数据列表不能为空\n    handler_params:\n      - key: update_array\n        foreach: \"[detail_list]\"\n        item: item\n        fields:\n          - field: config_detail_id\n            template: \"{{uuid}}\"",
+          "code_desc": "    数据库表批量保存，bulk_service 针对服务类型批量操作，如果确定是同一张表，bulk_create创建数据，数据库连接只有一次，能减少数据库的连接次数。\n    bulk_service 是针对如何服务多线程跑。\n    示例中的handler_params是参数处理模块\n  ",
+          "collect_doc_id": "894496fd-4201-4b40-95d6-24ecd978b719",
+          "order_index": "70"
+        },
+        {
+          "title": "bulk_upsert",
+          "sub_title": "批量修改多行",
+          "code": "  - key: collect_doc_params_update\n    module: bulk_upsert\n    table: \"collect_doc_params\"\n    params:\n      params:\n        check:\n          template: \"{{must .params}}\"\n          err_msg: 参数不能为空\n    model_field: \"[params]\"",
+          "code_desc": "批量修改多行记录",
+          "collect_doc_id": "803b90d9-c58c-4113-b4c0-58782e03142c",
+          "order_index": "80"
+        },
+        {
+          "title": "empty",
+          "sub_title": "空模块",
+          "code": "  - key: project_router\n    http: true\n    handler_params:\n      - key: file2datajson\n        save_field: data\n      - key: param2result\n        field: data\n    data_file: project_router.json\n    module: empty\n",
+          "code_desc": "空模块是个非常常用的模块，其主要目的是为了处理参数。\n空模块就是主体没有做任何事情，主要在handler_params 运行你服务。比如要运行数据保存的服务，先调主体空服务，空服务在转service2field 调用你的数据保存服务，本质没有任何区别。可能就一些传参区别",
+          "collect_doc_id": "d25ddb2a-2c4e-4d3f-83c3-50ddc4215de8",
+          "order_index": "90"
+        },
+        {
+          "title": "http",
+          "sub_title": "http请求",
+          "code": "  - key: gettoken\n    module: http\n    http_json: gettoken.json\n    success: \"{{ if .access_token }}true{{ else }}false{{ end }}\"\n    result_handler:\n      - key: result2params\n        fields:\n          - from: \"[access_token]\"\n            to: \"[access_token]\"\n      - key: param2result\n        field: \"[access_token]\"",
+          "code_desc": "   我们后台经常需要发http请求到其他服务器，比如获取企业微信用户信息，调用集成第三方服务的接口。前台肯定是不能直接调用，需要后台调用，处理完成之后，前台再处理。其主要参考思路是ajax 配置化发送http请求，一般语言像java、python、甚至go对http配置发请求能力还是比较弱，一般封装一个工具类。\n   注意module: http 表示是本服务是给其他服务器发请求，而配置http：true 表示改服务对外暴露http接口，允许外部调用，否则只能内部调用",
+          "collect_doc_id": "c00a6f14-98c1-4308-8017-cf35ae300de4",
+          "order_index": "95"
+        },
+        {
+          "title": "ldap",
+          "sub_title": "ldap",
+          "code": "  - key: ldap_search\n    http: true\n    module: ldap\n    params:\n      search_username:\n        check:\n          template: \"{{must .search_username}}\"\n          err_msg: 用户名不能为空\n    handler_params:\n      - key: service2field\n        service:\n          service: config.conf单独ig_detail_query\n          group_name: ldap_config\n        save_field: ldap_config\n        template: \"{{must .ldap_config}}\"\n        err_msg: ldap配置不存在\n    data_file: search.json",
+          "code_desc": "    支持ldap模块的增删改查对对对，示例中config_detail_query 是查询ldap 的配置，我将ldap配置到数据库了。\n    本模块不太属于公共模块，只是我工作中需要对接，属于业务模块没有过多介绍，至于参数配置请到https://github.com/go-ldap/ldap",
+          "collect_doc_id": "9215873e-d44d-4a8f-b243-f2c45b1833e5",
+          "order_index": "100"
+        },
+        {
+          "title": "service_flow",
+          "sub_title": "服务流程化",
+          "code": "  - key: system_login\n    module: service_flow\n    params:\n      username:\n        check:\n          template: \"{{must .username}}\"\n          err_msg: 用户名不能为空\n      password_md5:\n        check:\n          template: \"{{must .password}}\"\n          err_msg: 密码不能为空\n        template: \"{{md5 .password}}\"\n      has_user:\n        default: true\n    data_json: system_login.json\n    result_handler:\n      - key: param2result\n        field: \"[session_user]\"",
+          "code_desc": "    像工作流一样的运行多个服务，运行一个节点服务，通过计算，运行下一个服务节点。\n    服务流程化思想来源于工作流。接触到loonflow工作流，我一直试想着，我写的代码能不能像一个工作流一样流转，我们只写一小部分节点，通过工作流流转，运行到下个服务。比如我写个新建用户，然后流转到新建角色，如果中途失败，流转到删除用户、删除角色然后返回。",
+          "collect_doc_id": "f4a4f3ed-8051-4754-92e2-2a5883fd9f98",
+          "order_index": "120"
+        }
+      ]
+    },
+    {
+      "name": "参数处理",
+      "id": "2d07dfdc-1026-40fb-8124-ddc74b566265",
+      "items": [
+        {
+          "title": "get_modify_data",
+          "sub_title": "比对数据",
+          "code": "    modify_config: doc_modify.json\n    handler_params:\n      - key: get_modify_data\n        save_field: change_list\n",
+          "code_desc": "    我经常遇到业务级别，需要记录某个字段是谁改的，改之前是什么，改之后是什么。\n   但是利用用数据库的binlog日志展示不做不到，比如要记录版本号是谁改的，改之前是什么，改之后是什么，然后还原此条。\n    一个两个情况到没有什么，主要很多地方有这样的需求，比如保存一个全量列表，之前的搞法就是直接全部删除，然后全部添加，后面发现效率不行，毕竟数量多了，删除和添加总会要占用一定时间，甚至可能触发数据库锁。本身只改了一点点数据，却触发整个表的删除与新增\n    有了这个对比工具，我们可以对比列表的差异部分，然后数据进行，哪些删除，哪些新增，哪些修改，理应如此",
+          "collect_doc_id": "b7a26057-abd7-45a0-9101-63e01af6ed4c",
+          "order_index": "0"
+        },
+        {
+          "title": "service2field",
+          "sub_title": "服务转字段",
+          "code": "    handler_params:\n      - key: service2field\n        service:\n          service: hrm.ldap_add\n        append_param: true",
+          "code_desc": "    将另外一个服务执行结果作为本服务的一个参数。具体服务运行的什么没有任何限制，可以是增删除改查。\n    比如校验这个编码是否唯一，我们需要查询数据库表来判断，对比行记录，需要将之前的记录查询出来\n    处理有参数处理的公共字段，还有额外字段，service，append_param,append_item_param\n",
+          "collect_doc_id": "45d1d393-6758-4c37-8ba9-108493f67b8e",
+          "order_index": "20"
+        },
+        {
+          "title": "update_field",
+          "sub_title": "更新普通字段",
+          "code": "    handler_params:\n      - key: update_field\n        name: 更新字段\n        fields:\n          - field: user_info\n            template: \"[modify_data.user_info]\"\n          - field: change_list\n            template: \"[modify_data.change_list]\"",
+          "code_desc": "更新params中的字段",
+          "collect_doc_id": "ede82dd3-1b4f-4097-9260-c2d9c7acdf21",
+          "order_index": "30"
+        },
+        {
+          "title": "check_field",
+          "sub_title": "检查普通字段",
+          "code": "    handler_params:\n      - key: check_field\n        fields:\n          - field: doc_collect_id\n            template: \"{{must .doc.collect_doc_id}}\"\n            err_msg: \"文档ID不能为空\"\n          - field: type\n            template: \"{{must .doc.type}}\"\n            err_msg: \"文档类型不能为空\"\n          - field: parent_dir\n            template: \"{{must .doc.parent_dir}}\"\n            err_msg: \"文档上级目录不能为空\"",
+          "code_desc": "    检查字段是否合法，params 中的check只能在一开始检查已有的字段，这个可以支持handler_params中运行其他服务再检查。\n    我们经常遇到xx字段不能为空",
+          "collect_doc_id": "f7350f20-20fb-47f4-8b19-511c8b5b38a9",
+          "order_index": "40"
+        },
+        {
+          "title": "update_array",
+          "sub_title": "更新数组",
+          "code": "    handler_params:\n      - key: update_array\n        foreach: \"[ldap_group_list]\"\n        item: item\n        fields:\n          - field: ldap_group_id\n            template: \"{{ uuid }}\"\n          - field: name\n            template: \"{{.item.after}}\"\n          - field: has_group\n            template: \"1\"\n          - field: last_sync_time\n            template: \"{{current_date_time}}\"",
+          "code_desc": "更新参数中数组里面对象字段。一般用于批量保存，批量修改，批量服务流程化中。 \n比如批量新增生成唯一的uuid，生成创建人，创建时间",
+          "collect_doc_id": "849062cb-1f83-454e-b81d-3d7754f9ac4a",
+          "order_index": "50"
+        },
+        {
+          "title": "arr2obj",
+          "sub_title": "数组结果转对象",
+          "code": "    result_handler:\n      - key: arr2obj\n        enable: \"[to_obj]\"",
+          "code_desc": "仅仅用于服务的结果是一个数组，将数组转对象，方便其他服务模板取值，不用从数组取，直接.xx.xx 属性",
+          "collect_doc_id": "ce02406f-f729-47da-a119-35ed01c6c1c3",
+          "order_index": "60"
+        },
+        {
+          "title": "param2result",
+          "sub_title": "参数转结果",
+          "code": "    result_handler:\n      - key: param2result\n        field: \"[access_token]\"",
+          "code_desc": "参数中字段转结果，一般用于只需要返回一个字段",
+          "collect_doc_id": "1ba89c00-fd10-4756-9414-070bf51505d7",
+          "order_index": "70"
+        },
+        {
+          "title": "params2result",
+          "sub_title": "多参数转结果",
+          "code": "   handler_params:\n      - key: params2result\n        fields:\n          - from: \"{{.userid}}\"\n            to: userid\n          - from: \"{{.user_id}}\"\n            to: user_id\n          - from: \"{{.nick}}\"\n            to: nick\n          - from: \"{{.username}}\"\n            to: username",
+          "code_desc": "将参数中的多个字段返回",
+          "collect_doc_id": "e32693d9-a954-48ac-a1bb-097a0684c8b3",
+          "order_index": "80"
+        },
+        {
+          "title": "session_add",
+          "sub_title": "添加session",
+          "code": "      - key: session_add\n        fields:\n          - key: username\n            template: \"{{.username}}\"\n          - key: nick\n            template: \"{{.user_info.nick}}\"\n          - key: userid\n            template: \"{{.user_info.user_id}}\"\n          - key: user_id\n            template: \"{{.user_info.user_id}}\"",
+          "code_desc": "操作session 添加key ，value",
+          "collect_doc_id": "01044aa5-6f65-4b59-a4a9-ae7a0191be4c",
+          "order_index": "90"
+        },
+        {
+          "title": "session_get",
+          "sub_title": "获取session",
+          "code": "    handler_params:\n      - key: session_get\n        fields:\n          - key: username\n            field: username\n          - key: nick\n            field: nick\n          - key: userid\n            field: userid\n          - key: user_id\n            field: user_id",
+          "code_desc": "获取session",
+          "collect_doc_id": "5b86a474-2af6-4e82-8d25-3635645bc315",
+          "order_index": "100"
+        },
+        {
+          "title": "session_remove",
+          "sub_title": "session删除",
+          "code": "    handler_params:\n      - key: session_remove\n        fields:\n          - key: username\n          - key: nick\n          - key: userid\n          - key: user_id\n",
+          "code_desc": "删除ssession",
+          "collect_doc_id": "293dffa7-1a0b-4e72-8bd7-0f2a44758495",
+          "order_index": "110"
+        },
+        {
+          "title": "data2excel",
+          "sub_title": "数据转excel",
+          "code": "  - key: user_list_download\n    module: empty\n    http: true\n    excel_config: \"./user_list2excel.json\"\n    params:\n      excel_path:\n        template: './template/{{current_date_format \"20220202\"}}/user_{{  replace (sub_str current_date_time -8 0) \":\" \"\"}}_{{sub_str uuid -8 0}}.xlsx'\n      response_name:\n        default: \"用户列表.xlsx\"\n    handler_params:\n      - key: service2field\n        service:\n          service: hrm.user_list\n        append_param: true\n        save_field: user_list\n      - key: data2excel\n        path: \"[excel_path]\"\n      - key: file2result\n        path: \"[excel_path]\"\n        result_name: \"[response_name]\"",
+          "code_desc": "数据服务转excel,示例中只看处理器key:data2excel。实际就是导出",
+          "collect_doc_id": "d4ee2257-8a51-40bf-8d48-4b5469858e21",
+          "order_index": "120"
+        },
+        {
+          "title": "excel2data",
+          "sub_title": "excel转数据",
+          "code": "    excel_config: \"./user_list2excel.json\"\n    handler_params:\n      - key: excel2data\n        save_field: user_list",
+          "code_desc": "excel2data和data2excel 配置文件是一致的。导入导出尽量用同一个配置文件，避免出现字段对不上。\n实际就是导入\n\n",
+          "collect_doc_id": "28a1f850-9e5f-4368-9230-220abf98af15",
+          "order_index": "125"
+        },
+        {
+          "title": "file2result",
+          "sub_title": "返回文件",
+          "code": "  - key: user_list_download\n    module: empty\n    http: true\n    excel_config: \"./user_list2excel.json\"\n    params:\n      excel_path:\n        template: './template/{{current_date_format \"20220202\"}}/user_{{  replace (sub_str current_date_time -8 0) \":\" \"\"}}_{{sub_str uuid -8 0}}.xlsx'\n      response_name:\n        default: \"用户列表.xlsx\"\n    handler_params:\n      - key: service2field\n        service:\n          service: hrm.user_list\n        append_param: true\n        save_field: user_list\n      - key: data2excel\n        path: \"[excel_path]\"\n      - key: file2result\n        path: \"[excel_path]\"\n        result_name: \"[response_name]\"",
+          "code_desc": "示例中只看file2result",
+          "collect_doc_id": "36248998-48ee-41db-a0f4-2010b056b2a3",
+          "order_index": "130"
+        },
+        {
+          "title": "ignore_data",
+          "sub_title": "忽略数据",
+          "code": "    handler_params:\n      - key: ignore_data\n        foreach: \"[user_list]\"\n        params: \"params\"\n        fields:\n          - name: \"user_id 为空的数据\"\n            template: \"{{ if .user_id }}false{{else}}true{{end}}\"",
+          "code_desc": "过滤数组，忽略数组中数据",
+          "collect_doc_id": "0b3ebb5e-8ce6-4ebc-ae92-da6b0dfe13a2",
+          "order_index": "140"
+        },
+        {
+          "title": "result2params",
+          "sub_title": "结果转参数",
+          "code": "    result_handler:\n      - key: result2params\n        fields:\n          - to: \"[config_params]\"",
+          "code_desc": "将运行的结果转参数。执行完成结果后，结果还需要进行处理，比如去重，结合拼接一些字段。\n前面是param2result 参数转结构，同样也支持结果转参数",
+          "collect_doc_id": "5881b6e1-8217-475f-9b05-4bc20ffdae8e",
+          "order_index": "150"
+        },
+        {
+          "title": "result2map",
+          "sub_title": "结果转字段",
+          "code": "无",
+          "code_desc": "就是将结果，外层在包一层对象。\n这个用比较少，一般可能利用params2result。\n",
+          "collect_doc_id": "b9eab01d-7236-4d15-9053-0f193a3d2ffb",
+          "order_index": "170"
+        },
+        {
+          "title": "count2map",
+          "sub_title": "count 转字段",
+          "code": "",
+          "code_desc": "一般是sql查询的count转字段。\n这个用比较少，基本用不着count",
+          "collect_doc_id": "25d3fdcb-162a-4ef2-a4af-3b7edcc6e42a",
+          "order_index": "180"
+        },
+        {
+          "title": "file2datajson",
+          "sub_title": "配置文件转json",
+          "code": "  - key: project_router\n    http: true\n    handler_params:\n      - key: file2datajson\n        save_field: data\n      - key: param2result\n        field: data\n    data_file: project_router.json\n    module: empty",
+          "code_desc": "后台配置文件转json对象。路由配置，构造批量服务的对象，用了这个",
+          "collect_doc_id": "bd6431c8-caf3-4ae9-96af-03cce615204b",
+          "order_index": "180"
+        },
+        {
+          "title": "field2array",
+          "sub_title": "字段转数组",
+          "code": "    handler_params:\n      - key: field2array\n        field: \"[ids]\"\n        enable: \"{{must .ids}}\"\n        save_field: ldap_group_id_list",
+          "code_desc": "以逗号隔开的字符串转数字。比如前台批量删除，传一堆的ID,以逗号隔开，需要处理成数组",
+          "collect_doc_id": "eee7f650-4583-4bf6-b770-ce853eba8c54",
+          "order_index": "200"
+        },
+        {
+          "title": "arr2arrayObj",
+          "sub_title": "数组转对象数组",
+          "code": "    handler_params:\n      - key: field2array\n        enable: \"{{must .roles}}\"\n        field: \"[roles]\"\n        save_field: role_list\n      - key: arr2arrayObj\n        enable: \"{{must .role_list}}\"\n        foreach: \"[role_list]\"\n        item: item\n        fields:\n          - field: \"role_id\"\n            template: \"{{.item}}\"\n          - field: user_id\n            template: \"[user_id]\"\n          - field: user_role_id\n            template: \"{{uuid}}\"\n        save_field: user_role_list",
+          "code_desc": "前端传一个普通数组，转对象数组",
+          "collect_doc_id": "79d0939d-16f6-4c8d-b611-5a55409162ad",
+          "order_index": "210"
+        },
+        {
+          "title": "filter_arr",
+          "sub_title": "过滤数组",
+          "code": "      - key: filter_arr\n        foreach: \"[change_list]\"\n        item: item\n        if_template: \"{{and (eq .item.operation \\\"remove\\\") (ne .item.has_group \\\"0\\\") }}\"\n        save_field: remove_list",
+          "code_desc": "过滤数组，一般把增、删、改的数据过滤，分别对应操作",
+          "collect_doc_id": "74973d56-9773-432f-b1d5-3b68ad40998d",
+          "order_index": "220"
+        },
+        {
+          "title": "prop_arr",
+          "sub_title": "对象数组转数组",
+          "code": "    handler_params:\n      - key: prop_arr\n        foreach: \"[detail_list]\"\n        value: \"[config_detail_id]\"\n        save_field: config_detail_id_list",
+          "code_desc": "过滤对象数组的某个字段转数组，比如传对象数组过来，过滤成简单ID数组，好根据ID删除",
+          "collect_doc_id": "f272ba24-4c3e-4072-be07-abae59c93907",
+          "order_index": "230"
+        },
+        {
+          "title": "arr2dict",
+          "sub_title": "数组转对象",
+          "code": "      - key: arr2dict\n        name: 如果有children 表示有个二级数组\n        enable: \"{{must .config}}\"\n        foreach: \"[config]\"\n        children: \"children\"\n        result_name: \"children_config\"\n        field: \"[name]\"\n        value: \"[value]\"\n        save_field: config",
+          "code_desc": "数据列表里面，套了一个二级数组，将二级数组转对象。是转key /value 对象。\n比如参数管理",
+          "collect_doc_id": "67193cc3-900e-4c27-a3f6-75ee2dba5688",
+          "order_index": "240"
+        },
+        {
+          "title": "handler_cache",
+          "sub_title": "处理缓存",
+          "code": "      - key: handler_cache\n        enable: \"{{and (eq (get_key \\\"can_cache\\\") \\\"true\\\") (must .set_cache)}}\"\n        name: 批量设置缓存\n        method: BULK_SET_CACHE\n        foreach: \"[config]\"\n        item: item\n        field: \"[item.children_config]\"\n        room: config\n        second: 0\n        fields:\n          - field: \"config.config_detail_query\"\n          - field: \"[item.group_id]\"",
+          "code_desc": "缓存设置，参数管理的查询就用了缓存，不用每次都充数据库查。\n查询与设置利用拦截器，只要设置个cache 标签，服务访问先查询有没有缓存，没有缓存执行，执行完成设置缓存。如果有缓存就直接返回",
+          "collect_doc_id": "77e10054-791e-4889-a5c8-1fc2b9a6e514",
+          "order_index": "250"
+        },
+        {
+          "title": "group_by",
+          "sub_title": "数据分组",
+          "code": "      - key: group_by\n        enable: \"{{must .params_modify_list}}\"\n        foreach: \"[params_modify_list]\"\n        children: \"children\"\n        fields:\n          - field: \"[doc_params_id]\"\n        save_field: params_modify_list",
+          "code_desc": "数据分组，也利用为去重",
+          "collect_doc_id": "31e7d7f9-c87e-4558-bd76-f673d34e1c84",
+          "order_index": "260"
+        },
+        {
+          "title": "combine_array",
+          "sub_title": "数组结合数组",
+          "code": "      - key: combine_array\n        enable: \"{{must .width_doc}}\"\n        foreach: \"[group_list]\"\n        field: \"[doc_group_id]\"\n        right: \"[doc_list]\"\n        right_field: \"[parent_dir]\"\n        children: \"children\"",
+          "code_desc": "一般利用2个服务结合，将一个数字拼接到另外一个数组中取，比如参数管理，二级数组",
+          "collect_doc_id": "70bbd0a8-5e8a-4083-9986-e8c0c320ebe0",
+          "order_index": "260"
+        },
+        {
+          "title": "update_array_from_array",
+          "sub_title": "更新数组",
+          "code": "      - key: update_array_from_array\n        name: \"根据group+name 更新操作，有修改，没有就新增\"\n        foreach: \"[change_list]\"\n        item: item\n        field: \"[group_id&name_copy]\"\n        right: \"[local_detail_list]\"\n        right_field: \"[group_id&name]\"\n        fields:\n          - field: operation\n            name: 如果操作是删除，还是原来的删除，如果是新增操作，存在这改为修改\n            template: \"{{ if eq .item.operation \\\"add\\\"}}modify{{else}}{{.item.operation}}{{end}}\"\n          - field: config_detail_id\n            template: \"[right.config_detail_id]\"",
+          "code_desc": "从另外一个数组，找到相同的记录，本更新字段。\na数组从b数组里面更新字段,治取交集部分更新",
+          "collect_doc_id": "c0f45c6a-688e-46b7-ba0f-ac544f27c3b5",
+          "order_index": "260"
+        },
+        {
+          "title": "to_tree",
+          "sub_title": "转树形结构",
+          "code": "  - key: menu_query\n    http: true\n    module: sql\n    data_file: menu_query.sql\n    result_handler:\n      - key: result2params\n        fields:\n          - to: \"[menu_list]\"\n      - key: to_tree\n        foreach: \"[menu_list]\"\n        id: menu_id\n        pid: parent_id\n        children: children\n        save_field: menu_tree\n      - key: param2result\n        field: \"[menu_tree]\"",
+          "code_desc": "列表转树形结构",
+          "collect_doc_id": "6e77eedf-b68b-43e3-9510-1a5c60b3073a",
+          "order_index": "290"
+        },
+        {
+          "title": "update_order",
+          "sub_title": "修改顺序",
+          "code": "    handler_params:\n      - key: update_order\n        foreach: \"[dataList]\"\n        field: \"order_id\"\n        children: \"children\"\n      - key: to_list\n        foreach: \"[dataList]\"\n        children: children\n        save_field: dataList",
+          "code_desc": "支持修改树都序号",
+          "collect_doc_id": "6779d656-023d-43e0-802d-e321a1fe9650",
+          "order_index": "300"
+        },
+        {
+          "title": "to_tree",
+          "sub_title": "列表转树",
+          "code": "    result_handler:\n      - key: result2params\n        fields:\n          - to: \"[menu_list]\"\n      - key: to_tree\n        foreach: \"[menu_list]\"\n        id: menu_id\n        pid: parent_id\n        children: children\n        save_field: menu_tree\n      - key: param2result\n        field: \"[menu_tree]\"",
+          "code_desc": "列表转树",
+          "collect_doc_id": "d33644e2-457f-4afa-96fc-c0ad137d5edc",
+          "order_index": "310"
+        },
+        {
+          "title": "to_list",
+          "sub_title": "树转列表",
+          "code": "    handler_params:\n      - key: update_order\n        foreach: \"[dataList]\"\n        field: \"order_id\"\n        children: \"children\"\n      - key: to_list\n        foreach: \"[dataList]\"\n        children: children\n        save_field: dataList",
+          "code_desc": "树转列表",
+          "collect_doc_id": "efe3adb4-5447-4999-8fbb-964af43eec6c",
+          "order_index": "311"
+        }
+      ]
+    }
+  ]
+}

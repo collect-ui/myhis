@@ -1,0 +1,263 @@
+{
+  "tooltip": {
+    "trigger": "item",
+    "backgroundColor": "rgba(0,0,0,0.5)",
+    "borderColor": "rgba(89,211,255,1)",
+    "borderWidth": 2,
+    "padding": 5,
+    "textStyle": {
+      "color": "rgba(89,211,255,1)",
+      "fontSize": 18,
+      "width": 300,
+      "height": 40
+    },
+    "formatter": "{c}",
+    "extraCssText": "box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);"
+  },
+  "grid": {
+    "bottom": "20%",
+    "top": "20%",
+    "right": "0%",
+    "left": "0%"
+  },
+  "xAxis": {
+    "data": [
+      "学习前",
+      "学习后"
+    ],
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false
+    },
+    "axisLabel": {
+      "show": true,
+      "textStyle": {
+        "color": "#fff",
+        "fontSize": 16
+      },
+      "margin": 15
+    }
+  },
+  "yAxis": {
+    "splitLine": {
+      "show": false
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false
+    },
+    "axisLabel": {
+      "show": false
+    }
+  },
+  "series": [
+    {
+      "name": "",
+      "type": "pictorialBar",
+      "symbolSize": [
+        40,
+        15
+      ],
+      "symbolOffset": [
+        0,
+        -6
+      ],
+      "z": 12,
+      "itemStyle": {
+        "normal": {
+          "color": {
+            "colorStops": [
+              {
+                "offset": 0,
+                "color": "rgba(54,127,223,1)"
+              },
+              {
+                "offset": 1,
+                "color": "rgba(94,162,254,1)"
+              }
+            ],
+            "x": 0,
+            "y": 0,
+            "x2": 0,
+            "y2": 1,
+            "type": "linear",
+            "global": false
+          }
+        }
+      },
+      "data": [
+        {
+          "name": "",
+          "value": 100,
+          "symbolPosition": "end"
+        },
+        {
+          "name": "",
+          "value": 100,
+          "symbolPosition": "end"
+        }
+      ]
+    },
+    {
+      "stack": "1",
+      "type": "bar",
+      "silent": true,
+      "barWidth": 40,
+      "data": [
+        {
+          "value": 66
+        },
+        {
+          "value": 75
+        }
+      ],
+      "itemStyle": {
+        "normal": {
+          "color": {
+            "x": 0,
+            "y": 0,
+            "x2": 0,
+            "y2": 1,
+            "type": "linear",
+            "global": false,
+            "colorStops": [
+              {
+                "offset": 0,
+                "color": "rgba(0,255,245,0.5)"
+              },
+              {
+                "offset": 1,
+                "color": "#43bafe"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "",
+      "type": "pictorialBar",
+      "symbolSize": [
+        40,
+        10
+      ],
+      "symbolOffset": [
+        0,
+        5
+      ],
+      "z": 12,
+      "itemStyle": {
+        "normal": {
+          "color": {
+            "colorStops": [
+              {
+                "offset": 0,
+                "color": "rgba(89,211,255,1)"
+              },
+              {
+                "offset": 1,
+                "color": "rgba(23,237,194,1)"
+              }
+            ],
+            "x": 0,
+            "y": 0,
+            "x2": 0,
+            "y2": 1,
+            "type": "linear",
+            "global": false
+          }
+        }
+      },
+      "data": [
+        {
+          "name": "",
+          "value": 100
+        },
+        {
+          "name": "",
+          "value": 100
+        }
+      ]
+    },
+    {
+      "name": "",
+      "type": "pictorialBar",
+      "symbolSize": [
+        40,
+        14
+      ],
+      "symbolOffset": [
+        0,
+        -6
+      ],
+      "itemStyle": {
+        "normal": {
+          "color": {
+            "colorStops": [
+              {
+                "offset": 0,
+                "color": "rgba(89,211,255,1)"
+              },
+              {
+                "offset": 1,
+                "color": "rgba(23,237,194,1)"
+              }
+            ],
+            "x": 0,
+            "y": 0,
+            "x2": 0,
+            "y2": 1,
+            "type": "linear",
+            "global": false
+          }
+        }
+      },
+      "z": 12,
+      "data": [
+        {
+          "name": "",
+          "value": 66,
+          "symbolPosition": "end"
+        },
+        {
+          "name": "",
+          "value": 75,
+          "symbolPosition": "end"
+        }
+      ]
+    },
+    {
+      "stack": "1",
+      "type": "bar",
+      "itemStyle": {
+        "normal": {
+          "color": "#3E8BE6",
+          "opacity": 0.7
+        }
+      },
+      "label": {
+        "show": true,
+        "position": "top",
+        "distance": 10,
+        "color": "#FFFFFF",
+        "fontSize": 16
+      },
+      "silent": true,
+      "barWidth": 40,
+      "data": [
+        {
+          "name": "学习前",
+          "value": 34
+        },
+        {
+          "name": "学习后",
+          "value": 25
+        }
+      ]
+    }
+  ]
+}

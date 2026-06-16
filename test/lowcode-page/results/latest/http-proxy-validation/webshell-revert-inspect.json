@@ -1,0 +1,281 @@
+{
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "status": 200,
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "title": "智投标书",
+  "bodyText": "collect\n首页\n大屏管理\n课程管理\n招投标\n运维管理\n文档\n系统管理\n在线shell\n服务器列表（双击登录）\n我的电脑（my-computer）\n本机（local）\n虚拟机（virtual）\n演示环境（ys）\n开发环境（kf）\n本地月神（ys_local）\n阿里云（only_office）\n公司环境（gs）\n演示环境（gs_yshj）\n阿吉泰（gs_ys）\n威海市立（sl）\n月神（slys）\n天伦院（tly）\n月神（ys_tly）\n利民（lm_ys）\n月神（ys_lm）\n新环境（new）\n10.96.1.15（petal-server）\n常用服务器\n虚拟机-192.168.232.130（linux）\n本机-10.96.32.180（主用户）\n虚拟机-10.96.32.116（windows）\n虚拟机-202.140.140.117（江苏云）\n阿吉泰-172.26.0.149（月神数据库）\n阿吉泰-172.26.0.236（月神-开发环境）\n阿吉泰-172.26.0.237（月神测试）\n本机-10.96.32.180（doc文档）\n月神-200.200.200.120（妇幼月神）\n虚拟机-104.197.158.172（google）\n快速开始\n建议优先使用最近连接，右侧目录树支持双击或右键登录，系统会自动带出默认用户。\n服务器管理\n右键树节点可新增、编辑、删除、查看记录。\n终端分割\n右键标签可水平/垂直分割并打开文件管理。\n工作空间\n可切换项目和宽度，支持多文件分组查看。\nTOP1\n192.168.232.130（linux）\n虚拟机 · 使用231次\n登录\nTOP2\n10.96.32.180（主用户）\n本机 · 使用71次\n登录\nTOP3\n10.96.32.116（windows）\n虚拟机 · 使用36次\n登录\nTOP4\n202.140.140.117（江苏云）\n虚拟机 · 使用9次\n登录\nTOP5\n172.26.0.149（月神数据库）\n阿吉泰 · 使用7次\n登录\n172.26.0.236（月神-开发环境）\n阿吉泰 · 使用5次\n登录\n172.26.0.237（月神测试）\n阿吉泰 · 使用4次\n登录\n10.96.32.180（doc文档）\n本机 · 使用4次\n登录\n200.200.200.120（妇幼月神）\n月神 · 使用3次\n登录\n104.197.158.172（google）\n虚拟机 · 使用2次\n登录\n批量执行",
+  "inputs": [
+    {
+      "placeholder": "IP/名称",
+      "value": "",
+      "type": "text",
+      "cls": "ant-input css-mncuj7"
+    },
+    {
+      "placeholder": null,
+      "value": "",
+      "type": "text",
+      "cls": ""
+    },
+    {
+      "placeholder": null,
+      "value": "",
+      "type": "text",
+      "cls": ""
+    },
+    {
+      "placeholder": "回车搜索(至少2个字符)",
+      "value": "",
+      "type": "text",
+      "cls": "ant-input ant-input-sm css-mncuj7"
+    },
+    {
+      "placeholder": null,
+      "value": "",
+      "type": "text",
+      "cls": ""
+    },
+    {
+      "placeholder": "激活窗口批量执行",
+      "value": "",
+      "type": "text",
+      "cls": "ant-input css-mncuj7 ant-input-outlined co-ui-input"
+    }
+  ],
+  "buttons": [
+    {
+      "text": "",
+      "title": null,
+      "cls": "ant-tabs-nav-more"
+    },
+    {
+      "text": "",
+      "title": "新增节点",
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-icon-only co-ui-button"
+    },
+    {
+      "text": "",
+      "title": null,
+      "cls": "ant-input-clear-icon ant-input-clear-icon-hidden"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "登录",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "",
+      "title": null,
+      "cls": "css-mncuj7 ant-float-btn ant-float-btn-default ant-float-btn-circle"
+    },
+    {
+      "text": "",
+      "title": null,
+      "cls": "ant-drawer-close"
+    },
+    {
+      "text": "",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-btn-icon-only co-ui-button webshell-drawer-close-btn"
+    },
+    {
+      "text": "test",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-primary ant-btn-color-primary ant-btn-variant-solid ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "后端客户端",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "企业微信通讯",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "天 枢",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "月神后端",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "前端代码",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "核心前端低代码",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "项目管理",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-default ant-btn-color-default ant-btn-variant-outlined ant-btn-sm co-ui-button"
+    },
+    {
+      "text": "",
+      "title": "新增",
+      "cls": "ant-btn css-mncuj7 ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-btn-icon-only co-ui-button"
+    },
+    {
+      "text": "",
+      "title": "同步",
+      "cls": "ant-btn css-mncuj7 ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-btn-icon-only co-ui-button"
+    },
+    {
+      "text": "",
+      "title": "内容搜索",
+      "cls": "ant-btn css-mncuj7 ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-btn-icon-only co-ui-button"
+    },
+    {
+      "text": "",
+      "title": null,
+      "cls": "ant-input-clear-icon ant-input-clear-icon-hidden"
+    },
+    {
+      "text": "",
+      "title": null,
+      "cls": "layout-collapse-trigger"
+    },
+    {
+      "text": "",
+      "title": null,
+      "cls": "ant-btn css-mncuj7 ant-btn-text ant-btn-color-default ant-btn-variant-text ant-btn-sm ant-btn-icon-only co-ui-button"
+    }
+  ],
+  "treeTitles": [
+    "我的电脑（my-computer）",
+    "本机（local）",
+    "虚拟机（virtual）",
+    "演示环境（ys）",
+    "开发环境（kf）",
+    "本地月神（ys_local）",
+    "阿里云（only_office）",
+    "公司环境（gs）",
+    "演示环境（gs_yshj）",
+    "阿吉泰（gs_ys）",
+    "威海市立（sl）",
+    "月神（slys）",
+    "天伦院（tly）",
+    "月神（ys_tly）",
+    "利民（lm_ys）",
+    "月神（ys_lm）",
+    "新环境（new）",
+    "10.96.1.15（petal-server）",
+    "虚拟机-192.168.232.130（linux）",
+    "本机-10.96.32.180（主用户）",
+    "虚拟机-10.96.32.116（windows）",
+    "虚拟机-202.140.140.117（江苏云）",
+    "阿吉泰-172.26.0.149（月神数据库）",
+    "阿吉泰-172.26.0.236（月神-开发环境）",
+    "阿吉泰-172.26.0.237（月神测试）",
+    "本机-10.96.32.180（doc文档）",
+    "月神-200.200.200.120（妇幼月神）",
+    "虚拟机-104.197.158.172（google）",
+    "__pycache__",
+    "bridge-home",
+    "imgs",
+    "issues",
+    "local-debs",
+    "local-libs",
+    "mail",
+    "media_files",
+    "protonmail-bridge-local",
+    "PyMySQL",
+    "test",
+    "venv",
+    "e_1778508888005_4.txt",
+    "c_1778508888005_4.txt",
+    "b_1778508888005_4.txt",
+    "a_1778508888005_4.txt",
+    "d_1778508888005_4.txt",
+    "e_1778508830999_3.txt",
+    "c_1778508830999_3.txt",
+    "b_1778508830999_3.txt",
+    "a_1778508830999_3.txt",
+    "d_1778508830999_3.txt",
+    "e_1778508773166_2.txt",
+    "c_1778508773166_2.txt",
+    "b_1778508773166_2.txt",
+    "a_1778508773166_2.txt",
+    "d_1778508773166_2.txt",
+    "e_1778508716066_1.txt",
+    "c_1778508716066_1.txt",
+    "b_1778508716066_1.txt",
+    "a_1778508716066_1.txt",
+    "d_1778508716066_1.txt",
+    "e_1778508472723_4.txt",
+    "c_1778508472723_4.txt",
+    "b_1778508472723_4.txt",
+    "a_1778508472723_4.txt",
+    "d_1778508472723_4.txt",
+    "e_1778508419360_3.txt",
+    "c_1778508419360_3.txt",
+    "b_1778508419360_3.txt",
+    "a_1778508419360_3.txt",
+    "d_1778508419360_3.txt",
+    "e_1778508367058_2.txt",
+    "c_1778508367058_2.txt",
+    "b_1778508367058_2.txt",
+    "a_1778508367058_2.txt",
+    "d_1778508367058_2.txt",
+    "e_1778508314247_1.txt",
+    "c_1778508314247_1.txt",
+    "b_1778508314247_1.txt",
+    "a_1778508314247_1.txt",
+    "d_1778508314247_1.txt"
+  ]
+}

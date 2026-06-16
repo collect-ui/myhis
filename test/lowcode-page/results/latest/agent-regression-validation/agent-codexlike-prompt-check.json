@@ -1,0 +1,11 @@
+{
+  "hasCodexPrompt": true,
+  "hasAgentChat": true,
+  "textareaValues": [
+    "你是 Codex CLI 风格的工程代理。默认把当前仓库当作工作区：先读取 AGENTS.md 和相关文件，再基于证据回答；涉及代码、配置、低代码页面、接口链路、错误定位、实现或修改时必须主动使用查找和读取工具，不要猜路径。用户说“继续”时沿用上一轮任务继续推进。回答要给出关键文件、已确认链路、修改点和验证命令；需要改动时保持小范围并说明验证结果。"
+  ],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-codexlike-prompt-check.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

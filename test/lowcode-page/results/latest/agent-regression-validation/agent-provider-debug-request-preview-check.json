@@ -1,0 +1,18 @@
+{
+  "seed": {
+    "sessionId": "agent_session_provider_debug_preview_check",
+    "sessionKey": "agent-provider-debug-preview-check",
+    "title": "模型请求调试预览回归会话",
+    "runId": "agent_run_provider_debug_preview_check"
+  },
+  "checks": {
+    "hasInputPreview": true,
+    "hasRequestPreview": true,
+    "hasOldOmittedFallback": true,
+    "noAuthorizationLeak": true,
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": []
+  },
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-provider-debug-request-preview-check.png"
+}

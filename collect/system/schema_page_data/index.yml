@@ -1,0 +1,408 @@
+service:
+  - key: translate_user_list
+    http: true
+    module: empty
+    params:
+      user_list:
+        check:
+          template: "{{must .user_list}}"
+          err_msg: 用户不能为空
+    handler_params:
+      - key: prop_arr
+        name: "获取id"
+        enable: "{{gt (len .user_list) 0}}"
+        foreach: "[user_list]"
+        value: "[create_user]"
+        save_field: belong_id_list
+      - key: service2field
+        name: "获取属性数据"
+        enable: "{{gt (len .user_list) 0}}"
+        service:
+          service: system.get_page_data_dict_list
+          schema_page_code: "user_manage_form"
+          belong_id_list: "[belong_id_list]"
+        save_field: attr_list
+      - key: update_array_from_array
+        enable: "{{gt (len .attr_list) 0}}"
+        name: "更新属性"
+        foreach: "[user_list]"
+        item: item
+        field: "[create_user]"
+        right: "[attr_list]"
+        right_field: "[belong_id]"
+        right_value_field: "*"
+        none_fill_right: true
+      - key: param2result
+        field: user_list
+  - key: restoreConfig
+    http: true
+    module: empty
+    params:
+      schema_page_code:
+        check:
+          template: "{{must .schema_page_code}}"
+          err_msg: schema_page_code不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.get_page_schema_field
+          schema_page_code: "[schema_page_code]"
+        save_field: schema_fields
+      - key: schema_transfer
+        operation: "restore_config"
+        foreach: "[schema_fields]"
+        save_field: restore_result_data
+      - key: param2result
+        field: "[restore_result_data]"
+  - key: get_frontend_doc_data
+    http: true
+    module: empty
+    params:
+      schema_page_code:
+        template: "frontend_doc"
+      belong_id:
+        check:
+          template: "{{must .belong_id}}"
+          err_msg: 所属ID不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.frontend_doc_group_query
+          frontend_doc_group_id: "[belong_id]"
+          to_obj: true
+        save_field: result
+        template: "{{must .result.code}}"
+        err_msg: 文档不存在
+      - key: service2field
+        service:
+          service: system.get_page_data_dict
+        append_param: true
+        save_field: frontend_doc_group_code
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: "[frontend_doc_group_code.frontend_doc_group_code]"
+            template: "[result.code]"
+      - key: param2result
+        field: "[frontend_doc_group_code]"
+  - key: get_page_data_dict
+    http: true
+    module: empty
+    params:
+      schema_page_code:
+        check:
+          template: "{{must .schema_page_code}}"
+          err_msg: 所需的schema_page_code不能为空
+      belong_id:
+        check:
+          template: "{{must .belong_id}}"
+          err_msg: 所属ID不能为空
+    handler_params:
+
+      - key: service2field
+        service:
+          service: system.get_page_schema_field
+          schema_page_code: "[schema_page_code]"
+        save_field: schema_fields
+      - key: service2field
+        service:
+          service: system.get_page_data
+          schema_page_code: "[schema_page_code]"
+          belong_id: "[belong_id]"
+        save_field: result_data
+      - key: schema_transfer
+        operation: "restore"
+        foreach: "[schema_fields]"
+        field: "[result_data]"
+        save_field: restore_result_data
+
+      - key: param2result
+        field: "[restore_result_data]"
+
+
+  - key: get_page_data_dict_list
+    http: true
+    module: empty
+    params:
+      schema_page_code:
+        check:
+          template: "{{must .schema_page_code}}"
+          err_msg: 所需的schema_page_code不能为空
+      belong_id_list:
+        check:
+          template: "{{must .belong_id_list}}"
+          err_msg: 所属ID列表不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.get_page_schema_field
+          schema_page_code: "[schema_page_code]"
+        save_field: schema_fields
+      - key: service2field
+        service:
+          service: system.get_page_data
+          schema_page_code: "[schema_page_code]"
+          belong_id_list: "[belong_id_list]"
+        save_field: result_data
+      - key: schema_transfer
+        operation: "restore_list"
+        foreach: "[schema_fields]"
+        field: "[result_data]"
+        save_original: true
+        save_field: restore_result_data
+
+      - key: param2result
+        field: "[restore_result_data]"
+
+
+
+  - key: save_frontend_doc_file
+    http: true
+    module: empty
+    params:
+      summary:
+        check:
+          template: "{{must .summary}}"
+          err_msg: 概要不能为空
+      description:
+        default: ""
+      belong_id:
+        check:
+          template: "{{must .belong_id}}"
+          err_msg: 所属ID不能为空
+      schema_page_code:
+        template: "frontend_doc"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.save_page_data
+        append_param: true
+        save_field: change_list
+      - key: params2result
+        fields:
+          - from: "[change_list]"
+            to: change_list
+
+  - key:  save_page_data
+    http: true
+    module: empty
+    modify_config: page_data_modify.json
+    params:
+      belong_id:
+        check:
+          template: "{{must .belong_id}}"
+          err_msg: 所属ID不能为空
+      schema_page_code:
+        check:
+          template: "{{must .schema_page_code}}"
+          err_msg: 页面编码不能为空
+    handler_params:
+      - key: service2field
+        name: 获取树的字段规则
+        service:
+          service: system.get_page_schema_field_group
+          schema_page_code: "[schema_page_code]"
+          to_type: "backend"
+        save_field: schema_fields_tree
+#      - key: service2field
+#        service:
+#          service: system.get_page_schema_field
+#          schema_page_code: "[schema_page_code]"
+#        save_field: schema_fields
+#      - key: to_tree
+#        foreach: "[schema_fields]"
+#        id: key
+#        pid: parent_key
+#        children: children
+#        save_field: schema_fields_tree
+      - key: schema_transfer
+        operation: "transfer"
+        foreach: "[schema_fields_tree]"
+        save_field: remote_data
+      - key: update_array
+        foreach: "[remote_data]"
+        item: item
+        fields:
+          - field: belong_id
+            template: "[belong_id]"
+      - key: service2field
+        service:
+          service: system.get_page_data
+          belong_id: "[belong_id]"
+        save_field: local_data
+      - key: get_modify_data
+        save_field: change_list
+      - key: filter_arr
+        name: 过滤添加列表
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation \"add\" }}"
+        save_field: add_list
+      - key: update_array
+        enable: "{{must .add_list}}"
+        foreach: "[add_list]"
+        item: item
+        fields:
+          - field: belong_id
+            template: "[belong_id]"
+          - field: create_time
+            template: "{{current_date_time}}"
+          - field: schema_page_data_id
+            template: "{{uuid}}"
+          - field: create_user
+            template: "{{.session_user_id}}"
+          - field: schema_page_code
+            template: "[schema_page_code]"
+      - key: service2field
+        enable: "{{must .add_list}}"
+        service:
+          service: system.schema_page_data_save_bulk
+          data_list: "[add_list]"
+      - key: filter_arr
+        name: 过滤添加列表
+        enable: "{{must .change_list}}"
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation \"modify\" }}"
+        save_field: update_list
+      - key: service2field
+        enable: "{{must .update_list}}"
+        service:
+          service: system.schema_page_data_update_bulk
+          data_list: "[update_list]"
+      - key: filter_arr
+        name: 过滤添加列表
+        enable: "{{must .change_list}}"
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation \"remove\" }}"
+        save_field: remove_list
+      - key: prop_arr
+        enable: "{{must .remove_list}}"
+        foreach: "[remove_list]"
+        value: "[schema_page_data_id]"
+        save_field: schema_page_data_id_list
+      - key: service2field
+        enable: "{{must .remove_list}}"
+        service:
+          service: system.schema_page_data_remove
+          schema_page_data_id_list: "[schema_page_data_id_list]"
+      - key: params2result
+        fields:
+          - from: "[change_list]"
+            to: change_list
+  - key: to_page_data
+    name: 这个是一个示例，先将数据按照规则打散，然后再组装起来
+    http: true
+    module: empty
+    params:
+      summary:
+        check:
+          template: "{{must .summary}}"
+          err_msg: 概要不能为空
+      description:
+        default: ""
+      belong_id:
+        check:
+          template: "{{must .belong_id}}"
+          err_msg: 所属ID不能为空
+      primary_list:
+        default: []
+      schema_page_code:
+        template: "frontend_doc"
+
+    handler_params:
+      - key: service2field
+        service:
+          service: system.get_page_schema_field
+          schema_page_code: "[schema_page_code]"
+        save_field: schema_fields
+      - key: to_tree
+        foreach: "[schema_fields]"
+        id: key
+        pid: parent_key
+        children: children
+        save_field: schema_fields_tree
+      - key: schema_transfer
+        operation: "transfer"
+        foreach: "[schema_fields_tree]"
+        save_field: result_data
+      - key: schema_transfer
+        operation: "restore"
+        foreach: "[schema_fields]"
+        field: "[result_data]"
+        save_field: restore_result_data
+
+      - key: params2result
+        fields:
+          - from: "[schema_fields]"
+            to: schema_fields
+          - from: "[schema_fields_tree]"
+            to: schema_fields_tree
+
+          - from: "[result_data]"
+            to: result_data
+          - from: "[restore_result_data]"
+            to: restore_result_data
+
+
+
+
+
+  - key: get_page_data
+    module: sql
+    http: true
+    params:
+      belong_id:
+        check:
+          template: "{{or (must .belong_id) (must .belong_id_list)}}"
+          err_msg: 所属ID不能为空
+    data_file: get_page_data.sql
+  - key: schema_page_data_save_bulk
+    module: bulk_create
+    http: true
+    params:
+      data_list:
+        check:
+          template: "{{must .data_list}}"
+          err_msg: 记录不能为空
+    table: schema_page_data
+    model_field: "[data_list]"
+  - key: schema_page_data_update_bulk
+    module: bulk_upsert
+    http: true
+    params:
+      data_list:
+        check:
+          template: "{{must .data_list}}"
+          err_msg: 记录不能为空
+    table: schema_page_data
+    model_field: "[data_list]"
+  - key: schema_page_data_remove
+    module: model_delete
+    http: true
+    params:
+      schema_page_data_id_list:
+        check:
+          template: "{{must .schema_page_data_id_list}}"
+          err_msg: 记录不能为空
+    table: schema_page_data
+    filter:
+      schema_page_data_id__in: "[schema_page_data_id_list]"
+
+  - key: delete_schema_page_data
+    module: model_delete
+    http: true
+    params:
+      schema_page_code:
+        check:
+          template: "{{must .schema_page_code}}"
+          err_msg: 编码
+      belong_id_list:
+        check:
+          template: "{{must .belong_id_list}}"
+          err_msg: 所属ID列表不能为空
+    table: schema_page_data
+    filter:
+      schema_page_code: "[schema_page_code]"
+      belong_id__id: "[belong_id_list]"

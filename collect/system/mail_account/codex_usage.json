@@ -1,0 +1,13 @@
+{
+  "url": "{{.codex_usage_url}}",
+  "method": "get",
+  "header": {
+    "Authorization": "Bearer {{.access_token}}",
+    "Accept": "application/json",
+    "ChatGPT-Account-Id": "{{.account_id}}"
+  },
+  "data": {
+    "_": "1"
+  },
+  "result_json": true
+}

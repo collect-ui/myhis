@@ -1,0 +1,565 @@
+{
+  "tag": "layout-fit",
+  "storeName": "hisPatientCrudDemo",
+  "className": "h100 overflow-hidden",
+  "initStore": {
+    "searchForm": {
+      "keyword": ""
+    },
+    "patientForm": {
+      "patient_id": "",
+      "patient_no": "",
+      "patient_name": "",
+      "gender": "男",
+      "age": 30,
+      "department": "",
+      "diagnosis": "",
+      "visit_time": "",
+      "status": "待诊"
+    },
+    "dataList": [],
+    "count": 0,
+    "selection": [],
+    "dialogVisible": false,
+    "detailVisible": false,
+    "op": "add",
+    "detailRecord": {}
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "patientList",
+      "api": "post:/template_data/data?service=his.patient_query_mock",
+      "appendFormFields": "patient-search-form",
+      "adapt": {
+        "dataList": "${data.rows}",
+        "count": "${data.count}"
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "div",
+      "style": {
+        "height": "100%",
+        "display": "flex",
+        "flexDirection": "column",
+        "backgroundColor": "#f6f8fb",
+        "padding": 12,
+        "gap": 10
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "justifyContent": "space-between",
+            "gap": 12
+          },
+          "children": [
+            {
+              "tag": "form",
+              "name": "patient-search-form",
+              "layout": "inline",
+              "initialValues": "${searchForm}",
+              "submitOnEnter": true,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "keyword",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "患者姓名/门诊号",
+                      "allowClear": true,
+                      "style": {
+                        "width": 220
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "children": [
+                    {
+                      "tag": "button",
+                      "type": "primary",
+                      "icon": "SearchOutlined",
+                      "children": "查询",
+                      "action": [
+                        {
+                          "tag": "reload-init-action",
+                          "group": "patientList"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "display": "flex",
+                "gap": 8
+              },
+              "children": [
+                {
+                  "tag": "button",
+                  "icon": "ReloadOutlined",
+                  "children": "刷新",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "patientList"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "icon": "PlusOutlined",
+                  "children": "新增",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "dialogVisible": true,
+                        "op": "add",
+                        "patientForm": {
+                          "patient_id": "",
+                          "patient_no": "",
+                          "patient_name": "",
+                          "gender": "男",
+                          "age": 30,
+                          "department": "",
+                          "diagnosis": "",
+                          "visit_time": "",
+                          "status": "待诊"
+                        }
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "patient-op-form"
+                    },
+                    {
+                      "tag": "update-form",
+                      "formName": "patient-op-form",
+                      "value": "${patientForm}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "table",
+          "rowData": "${dataList}",
+          "selection": "${selection}",
+          "rowSelection": "single",
+          "keyField": "patient_id",
+          "style": {
+            "height": "calc(100vh - 155px)"
+          },
+          "defaultColDef": {
+            "resizable": true,
+            "sortable": true
+          },
+          "columnDefs": [
+            {
+              "headerName": "门诊号",
+              "field": "patient_no",
+              "width": 130,
+              "pinned": "left"
+            },
+            {
+              "headerName": "患者姓名",
+              "field": "patient_name",
+              "width": 120,
+              "pinned": "left"
+            },
+            {
+              "headerName": "性别",
+              "field": "gender",
+              "width": 80
+            },
+            {
+              "headerName": "年龄",
+              "field": "age",
+              "width": 80
+            },
+            {
+              "headerName": "科室",
+              "field": "department",
+              "width": 140
+            },
+            {
+              "headerName": "诊断",
+              "field": "diagnosis",
+              "flex": 1,
+              "minWidth": 180,
+              "tooltipField": "diagnosis"
+            },
+            {
+              "headerName": "就诊时间",
+              "field": "visit_time",
+              "width": 170
+            },
+            {
+              "headerName": "状态",
+              "field": "status",
+              "width": 100
+            },
+            {
+              "headerName": "操作",
+              "field": "op",
+              "width": 220,
+              "pinned": "right",
+              "sortable": false,
+              "cellRender": [
+                {
+                  "tag": "button",
+                  "size": "small",
+                  "icon": "FileSearchOutlined",
+                  "children": "详情",
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=his.patient_detail_mock",
+                      "data": {
+                        "patient_id": "${row.patient_id}"
+                      },
+                      "adapt": {
+                        "detailRecord": "${data}",
+                        "detailVisible": true
+                      }
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "size": "small",
+                  "icon": "EditOutlined",
+                  "children": "编辑",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "dialogVisible": true,
+                        "op": "edit",
+                        "patientForm": "${row}"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "patient-op-form"
+                    },
+                    {
+                      "tag": "update-form",
+                      "formName": "patient-op-form",
+                      "value": "${row}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "danger": true,
+                  "size": "small",
+                  "icon": "DeleteOutlined",
+                  "children": "删除",
+                  "confirm": {
+                    "title": "确认删除",
+                    "description": "${'确认删除 '+row.patient_name+' 的记录吗？'}"
+                  },
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=his.patient_delete_mock",
+                      "data": {
+                        "patient_id": "${row.patient_id}",
+                        "patient_name": "${row.patient_name}"
+                      },
+                      "showResultMsg": true
+                    },
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "dataList": "${dataList.filter((item)=>item.patient_id!==row.patient_id)}",
+                        "count": "${count > 0 ? count - 1 : 0}"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "style": {
+            "fontSize": 12,
+            "color": "#5b6472"
+          },
+          "children": "${'共 '+count+' 条 mock 数据'}"
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "open": "${dialogVisible}",
+      "title": "${op === 'add' ? '新增患者记录' : '编辑患者记录'}",
+      "width": 720,
+      "children": [
+        {
+          "tag": "form",
+          "name": "patient-op-form",
+          "initialValues": "${patientForm}",
+          "labelCol": {
+            "span": 5
+          },
+          "wrapperCol": {
+            "span": 18
+          },
+          "children": [
+            {
+              "tag": "form-item",
+              "name": "patient_id",
+              "label": "记录ID",
+              "children": [
+                {
+                  "tag": "input",
+                  "disabled": true,
+                  "placeholder": "新增时自动生成"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "patient_no",
+              "label": "门诊号",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入门诊号"
+                }
+              ],
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "例如 MZ20260612001"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "patient_name",
+              "label": "患者姓名",
+              "rules": [
+                {
+                  "required": true,
+                  "message": "请输入患者姓名"
+                }
+              ],
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入姓名"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "gender",
+              "label": "性别",
+              "children": [
+                {
+                  "tag": "select",
+                  "options": [
+                    {
+                      "label": "男",
+                      "value": "男"
+                    },
+                    {
+                      "label": "女",
+                      "value": "女"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "age",
+              "label": "年龄",
+              "children": [
+                {
+                  "tag": "input",
+                  "isNumber": true,
+                  "min": 0,
+                  "max": 130
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "department",
+              "label": "科室",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入科室"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "diagnosis",
+              "label": "诊断",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "请输入诊断"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "visit_time",
+              "label": "就诊时间",
+              "children": [
+                {
+                  "tag": "input",
+                  "placeholder": "YYYY-MM-DD HH:mm:ss"
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "status",
+              "label": "状态",
+              "children": [
+                {
+                  "tag": "select",
+                  "options": [
+                    {
+                      "label": "待诊",
+                      "value": "待诊"
+                    },
+                    {
+                      "label": "就诊中",
+                      "value": "就诊中"
+                    },
+                    {
+                      "label": "已完成",
+                      "value": "已完成"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "tag": "button",
+          "children": "取消",
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "dialogVisible": false
+              }
+            }
+          ]
+        },
+        {
+          "tag": "button",
+          "type": "primary",
+          "icon": "SaveOutlined",
+          "children": "保存",
+          "action": [
+            {
+              "tag": "submit-form",
+              "formName": "patient-op-form"
+            },
+            {
+              "tag": "ajax",
+              "enable": "${op === 'add'}",
+              "api": "post:/template_data/data?service=his.patient_create_mock",
+              "appendFormFields": "patient-op-form",
+              "showResultMsg": true,
+              "adapt": {
+                "dataList": "${[data, ...dataList]}",
+                "count": "${count + 1}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "enable": "${op === 'edit'}",
+              "api": "post:/template_data/data?service=his.patient_update_mock",
+              "appendFormFields": "patient-op-form",
+              "showResultMsg": true,
+              "adapt": {
+                "dataList": "${dataList.map((item)=>item.patient_id===data.patient_id?data:item)}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "value": {
+                "dialogVisible": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "dialog",
+      "open": "${detailVisible}",
+      "title": "患者详情",
+      "width": 620,
+      "children": [
+        {
+          "tag": "table",
+          "rowData": "${detailRecord.items || []}",
+          "keyField": "field",
+          "style": {
+            "height": 300
+          },
+          "columnDefs": [
+            {
+              "headerName": "字段",
+              "field": "label",
+              "width": 160
+            },
+            {
+              "headerName": "值",
+              "field": "value",
+              "flex": 1
+            }
+          ]
+        }
+      ],
+      "footer": [
+        {
+          "tag": "button",
+          "type": "primary",
+          "children": "关闭",
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "detailVisible": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "ossoft_user_group_id": "os_users_root",
+    "user_name": "{{.root_username}}",
+    "user_pwd": "{{.root_password}}"
+  }
+  {{ if .normal_username }}
+,
+  {
+    "ossoft_user_group_id": "os_users_normal",
+    "user_name": "{{.normal_username}}",
+    "user_pwd": "{{.normal_password}}"
+  }
+  {{ end}}
+]

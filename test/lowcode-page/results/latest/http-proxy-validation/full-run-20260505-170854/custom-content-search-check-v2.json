@@ -1,0 +1,14 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "dialogVisible": true,
+  "lineCount": 6,
+  "openRequestHit": true,
+  "openPayload": "{\"service\":\"webshell.workspace_file_content\",\"project_code\":\"backend\",\"path\":\"/data/project/moongod-backend/assets_operations/area_organization_info_tree/gm_dao.py\",\"max_bytes\":2097152}",
+  "openRequestContainsPath": true,
+  "modelHasImport": true,
+  "modelCount": 4,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true
+}

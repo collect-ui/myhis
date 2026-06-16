@@ -1,0 +1,405 @@
+service:
+  - key: workspace_project_query
+    module: sql
+    http: true
+    params:
+      project_name:
+        template: "{{ if .project_name }}%{{.project_name}}%{{ end }}"
+      project_code:
+        default: ""
+      project_code_keyword:
+        template: "{{ if .project_code_keyword }}%{{.project_code_keyword}}%{{ end }}"
+      git_keyword:
+        template: "{{ if .git_keyword }}%{{.git_keyword}}%{{ end }}"
+      server_id:
+        default: ""
+      exclude_id:
+        default: ""
+      webshell_workspace_project_id:
+        default: ""
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 10
+      start:
+        template: "({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+    data_file: workspace_project_list.sql
+    count_file: workspace_project_count.sql
+    pagination: pagination
+  - key: workspace_project_add
+    module: model_save
+    http: true
+    table: webshell_workspace_project
+    params:
+      webshell_workspace_project_id:
+        template: "{{uuid}}"
+      project_name:
+        check:
+          template: "{{must .project_name}}"
+          err_msg: 项目名称不能为空
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      order_id:
+        default: 1
+      show_home:
+        default: "1"
+      server_id:
+        check:
+          template: "{{must .server_id}}"
+          err_msg: 服务器不能为空
+      server_os_users_id:
+        check:
+          template: "{{must .server_os_users_id}}"
+          err_msg: 登录用户不能为空
+      project_dir:
+        check:
+          template: "{{must .project_dir}}"
+          err_msg: 项目目录不能为空
+      git_repo_url:
+        check:
+          template: "{{must .git_repo_url}}"
+          err_msg: Git地址不能为空
+      project_type:
+        default: "go"
+      collect_source_root:
+        default: ""
+        check:
+          template: "{{if eq .project_type \"go\"}}{{must .collect_source_root}}{{else}}true{{end}}"
+          err_msg: Go项目 collect源码路径不能为空
+      python_pkg_path:
+        default: ""
+        check:
+          template: "{{if eq .project_type \"python\"}}{{must .python_pkg_path}}{{else}}true{{end}}"
+          err_msg: Python项目安装包路径不能为空
+      exclude_dirs:
+        default: "node_modules,.git,dist,.next"
+      is_delete:
+        default: "0"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_project_query
+          project_code: "[project_code]"
+          pagination: false
+        save_field: current_project
+        template: "{{is_empty .current_project}}"
+        err_msg: "[{{.project_code}}] 已存在"
+  - key: workspace_project_update
+    module: model_update
+    http: true
+    table: webshell_workspace_project
+    params:
+      webshell_workspace_project_id:
+        check:
+          template: "{{must .webshell_workspace_project_id}}"
+          err_msg: 主键不能为空
+      project_type:
+        default: "go"
+      collect_source_root:
+        default: ""
+        check:
+          template: "{{if eq .project_type \"go\"}}{{must .collect_source_root}}{{else}}true{{end}}"
+          err_msg: Go项目 collect源码路径不能为空
+      python_pkg_path:
+        default: ""
+        check:
+          template: "{{if eq .project_type \"python\"}}{{must .python_pkg_path}}{{else}}true{{end}}"
+          err_msg: Python项目安装包路径不能为空
+      exclude_dirs:
+        default: "node_modules,.git,dist,.next"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    filter:
+      webshell_workspace_project_id: "[webshell_workspace_project_id]"
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_project_query
+          project_code: "[project_code]"
+          pagination: false
+          exclude_id: "[webshell_workspace_project_id]"
+        save_field: current_project
+        template: "{{is_empty .current_project}}"
+        err_msg: "[{{.project_code}}] 已存在"
+  - key: workspace_project_sync_files
+    module: empty
+    http: true
+    modify_config: workspace_file_sync_modify.json
+    params:
+      webshell_workspace_project_id:
+        check:
+          template: "{{must .webshell_workspace_project_id}}"
+          err_msg: 项目主键不能为空
+      exclude_dirs:
+        default: "node_modules,.git,dist,.next"
+    handler_params:
+      - key: update_field
+        fields:
+          - field: sync_lock_key
+            template: "webshell:workspace_sync:{{.webshell_workspace_project_id}}"
+          - field: sync_lock_owner
+            template: "{{.session_user_id}}"
+      - key: sync_lock
+        field: "[sync_lock_key]"
+        operation: acquire
+        right: "[sync_lock_owner]"
+        second: 12000
+      - key: service2field
+        service:
+          service: webshell.workspace_project_query
+          webshell_workspace_project_id: "[webshell_workspace_project_id]"
+          pagination: false
+        save_field: project_list
+        template: "{{must .project_list}}"
+        err_msg: 未找到项目
+      - key: arr2obj
+        field: "project_list"
+      - key: update_field
+        fields:
+          - field: exclude_dirs_effective
+            template: "{{if .exclude_dirs}}{{.exclude_dirs}}{{else if .project_list.exclude_dirs}}{{.project_list.exclude_dirs}}{{else}}node_modules,.git,dist,.next{{end}}"
+      - key: service2field
+        service:
+          service: project.server_os_users_query
+          server_os_users_id: "[project_list.server_os_users_id]"
+          to_obj: true
+        save_field: server_user
+      - key: handler_password
+        operation: "decrypt"
+        field: "[server_user.user_pwd]"
+        save_field: plain_pwd
+      - key: service2field
+        service:
+          service: project.server_dir_tree_shell
+          ip: "[server_user.server_ip]"
+          username: "[server_user.user_name]"
+          password: "[plain_pwd]"
+          path: "[project_list.project_dir]"
+          exclude_dirs: "[exclude_dirs_effective]"
+        save_field: tree_data
+      - key: filter_arr
+        enable: "{{must .tree_data.dir_list}}"
+        foreach: "[tree_data.dir_list]"
+        item: item
+        if_template: "{{must .item.id}}"
+        save_field: file_list
+      - key: update_array
+        enable: "{{must .file_list}}"
+        foreach: "[file_list]"
+        item: item
+        fields:
+          - field: file_id
+            template: "{{.item.id}}"
+          - field: project_code
+            template: "{{.project_list.project_code}}"
+          - field: name
+            template: "{{.item.name}}"
+          - field: path
+            template: "{{.item.path}}"
+          - field: parent_id
+            template: "{{.item.parent_id}}"
+          - field: is_dir
+            template: "{{if .item.is_dir}}1{{else}}0{{end}}"
+          - field: is_delete
+            template: "0"
+          - field: create_time
+            template: "{{current_date_time}}"
+          - field: create_user
+            template: "{{.session_user_id}}"
+          - field: modify_time
+            template: "{{current_date_time}}"
+          - field: modify_user
+            template: "{{.session_user_id}}"
+      - key: service2field
+        service:
+          service: webshell.workspace_file_query
+          project_code: "[project_list.project_code]"
+          pagination: false
+        save_field: local_file_list
+      - key: get_modify_data
+        save_field: change_list
+      - key: filter_arr
+        enable: "{{must .change_list}}"
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation \"add\"}}"
+        save_field: add_change_list
+      - key: filter_arr
+        enable: "{{must .change_list}}"
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation \"remove\"}}"
+        save_field: remove_change_list
+      - key: update_array
+        enable: "{{must .add_change_list}}"
+        foreach: "[add_change_list]"
+        item: item
+        fields:
+          - field: project_code
+            template: "{{.project_list.project_code}}"
+          - field: is_delete
+            template: "0"
+          - field: create_time
+            template: "{{current_date_time}}"
+          - field: create_user
+            template: "{{.session_user_id}}"
+          - field: modify_time
+            template: "{{current_date_time}}"
+          - field: modify_user
+            template: "{{.session_user_id}}"
+
+      - key: prop_arr
+        enable: "{{must .remove_change_list}}"
+        foreach: "[remove_change_list]"
+        value: "[file_id]"
+        save_field: remove_file_id_list
+      - key: service2field
+        enable: "{{must .remove_file_id_list}}"
+        service:
+          service: webshell.workspace_file_delete
+          project_code: "[project_list.project_code]"
+          file_id_list: "[remove_file_id_list]"
+      - key: service2field
+        enable: "{{must .add_change_list}}"
+        service:
+          service: webshell.workspace_file_bulk_save
+          file_list: "[add_change_list]"
+      - key: sync_lock
+        field: "[sync_lock_key]"
+        operation: release
+      - key: params2result
+        fields:
+          - from: "[tree_data.current_dir]"
+            to: "current_dir"
+          - from: "[tree_data.elapsed_ms]"
+            to: "elapsed_ms"
+          - from: "[exclude_dirs_effective]"
+            to: "exclude_dirs_effective"
+          - from: "[project_list.project_code]"
+            to: "project_code"
+          - from: "[add_change_list]"
+            to: "add_change_list"
+          - from: "[remove_file_id_list]"
+            to: "remove_file_id_list"
+          - from: "[change_list]"
+            to: "change_list"
+          - from: "[remove_change_list]"
+            to: "remove_change_list"
+  - key: workspace_file_content
+    module: workspace_file_access
+    http: true
+    params:
+      operation:
+        default: "content"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: 文件路径不能为空
+      max_bytes:
+        default: 2097152
+  - key: workspace_file_content_batch
+    module: workspace_file_access
+    http: true
+    params:
+      operation:
+        default: "content_batch"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      paths:
+        check:
+          template: "{{must .paths}}"
+          err_msg: 文件路径不能为空
+      max_bytes:
+        default: 2097152
+  - key: workspace_file_save
+    module: workspace_file_access
+    http: true
+    params:
+      operation:
+        default: "save"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: 文件路径不能为空
+      content:
+        default: ""
+      max_write_bytes:
+        default: 5242880
+  - key: workspace_file_content_search
+    module: workspace_content_search
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      keyword:
+        check:
+          template: "{{must .keyword}}"
+          err_msg: 关键字不能为空
+      match_case:
+        default: false
+      max_results:
+        type: int
+        default: 100
+      context_lines:
+        type: int
+        default: 1
+      max_scan_files:
+        type: int
+        default: 1200
+      max_file_bytes:
+        type: int
+        default: 262144
+      max_matches_per_file:
+        type: int
+        default: 20
+      include_glob:
+        default: ""
+      exclude_dirs:
+        default: ""
+  - key: workspace_project_delete
+    module: model_update
+    http: true
+    table: webshell_workspace_project
+    params:
+      webshell_workspace_project_id:
+        check:
+          template: "{{must .webshell_workspace_project_id}}"
+          err_msg: 主键不能为空
+      is_delete:
+        default: "1"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    filter:
+      webshell_workspace_project_id: "[webshell_workspace_project_id]"

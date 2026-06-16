@@ -1,0 +1,50 @@
+{
+  "ok": true,
+  "active_tab_text": "arr2obj",
+  "title": "arr2obj(数组结果转对象)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "数组结果转对象结果"
+  ],
+  "textarea_count": 3,
+  "textarea_values": [
+    "result_handler:\n      - key: arr2obj\n        enable: \"[to_obj]\"",
+    "仅仅用于服务的结果是一个数组，将数组转对象，方便其他服务模板取值，不用从数组取，直接.xx.xx 属性",
+    "- key: get_user_modify_data\n    http: true\n    log: true\n    module: empty\n    modify_config: user_modify.json\n    params:\n      user_id:\n        check:\n          template: \"{{must .user_id}}\"\n          err_msg: 用户ID不能为空\n      right_ldap_group:\n        default: []\n    handler_params:\n      - key: service2field\n        service:\n          service: hrm.user_list\n          user_id: \"[user_id]\"\n          count: false\n          to_obj: true\n        save_field: user_info\n      - key: service2field\n        enable: \"{{must .user_info.roles}}\"\n        service:\n          service: hrm.ldap_group_query\n          roles: \"[user_info.roles]\"\n        save_field: right_ldap_group"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "arr2obj"
+        ],
+        [
+          "field",
+          "string",
+          "",
+          "参数中的某个字段，不传就是对结果"
+        ]
+      ]
+    }
+  ],
+  "body_text": "arr2obj(数组结果转对象)  \n示例\n数组结果转对象结果\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\narr2obj\n\n\nfield\n\t\nstring\n\t\n\t\n参数中的某个字段，不传就是对结果\n示例\n1. service2field,调用其他服务，获取对象结果。这里user_info 是对象\n菜单导航\n示例\n参数\n示例\n1.service2field,调用其他服务，获取对象结果。这里user_info 是对象",
+  "task_id": "H-006",
+  "source_group": "参数处理",
+  "source_title": "arr2obj",
+  "source_doc_text": "6.arr2obj\n数组结果转对象",
+  "read_at": "2026-05-07T08:21:10.165Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-006-source.png"
+}

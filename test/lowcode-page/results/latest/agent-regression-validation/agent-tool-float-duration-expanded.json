@@ -1,0 +1,25 @@
+{
+  "selected": "主回归会话\nactive\n16:19",
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-duration-expanded.png",
+  "firstText": "第 1 步 · 找文件\n工具名: codexcli_glob\n耗时: 14ms\n完成\n它做了什么: 按文件名在项目里找相关文件，目标是 collect/frontend/page_data/data/server/webshell*.json。\n结果: 找到 14 个相关文件，模型会从这些 WebShell 页面和片段里继续判断登录链路。\n文件列表:\n1. collect/frontend/page_data/data/server/webshell.json (18 KB)\n2. collect/frontend/page_data/data/server/webshell_editor_fragment.json (3 KB)\n3. collect/frontend/page_data/data/server/webshell_editor_pool_file_dialog_fragment.json (21 KB)\n4. collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_dialog_fragment.json (40 KB)\n5. collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_style_fragment.json (2 KB)\n6. collect/frontend/page_data/data/server/webshell_editor_pool_http_fragment.json (47 KB)\n7. collect/frontend/page_data/data/server/webshell_editor_pool_http_group_dialog_fragment.json (3 KB)\n8. collect/frontend/page_data/data/server/webshell_editor_pool_panel_fragment.json (24 KB)\n9. collect/frontend/page_data/data/server/webshell_editor_pool_project_dialog_fragment.json (11 KB)\n10. collect/frontend/page_data/data/server/webshell_editor_pool_project_manage_dialog_fragment.json (21 KB)\n11. collect/frontend/page_data/data/server/webshell_editor_pool_route.json (12 KB)\n12. collect/frontend/page_data/data/server/webshell_editor_pool_source_fragment.json (80 KB)\n13. collect/frontend/page_data/data/server/webshell_editor_pool_workspace_fragment.json (204 KB)\n14. collect/frontend/page_data/data/server/webshell_ssh_fragment.json (94 KB)",
+  "hasNumericDuration": true,
+  "hasToolName": true,
+  "hasIntent": true,
+  "hasSummary": true,
+  "before": {
+    "x": 793,
+    "y": 195,
+    "width": 620,
+    "height": 477.4375
+  },
+  "after": {
+    "x": 305,
+    "y": 191,
+    "width": 1110,
+    "height": 684
+  },
+  "expandedLarger": true,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

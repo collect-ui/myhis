@@ -1,0 +1,15 @@
+{
+  "pageURL": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/agent_regression",
+  "sessionKey": "provider-debug-20260524051616",
+  "title": "模型请求调试-20260524051616",
+  "runID": "agent_run_1dd74fd1-1d01-43db-81bf-e6d470857d71",
+  "hasDebugChain": true,
+  "hasModelRequest": true,
+  "hasFunctionOutput": true,
+  "hasRequestBytes": true,
+  "hasTokenRedacted": false,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-provider-debug/agent-provider-debug.png"
+}

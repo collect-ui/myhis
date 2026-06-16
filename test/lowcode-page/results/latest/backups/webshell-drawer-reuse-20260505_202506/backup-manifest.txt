@@ -1,0 +1,6 @@
+backup_dir=test/lowcode-page/results/latest/backups/webshell-drawer-reuse-20260505_202506
+created_at=2026-05-05 20:25:53 +0800
+
+collect/frontend/page_data/data/server/webshell.json -> webshell.json
+collect/frontend/page_data/data/server/webshell_editor_fragment.json -> webshell_editor_fragment.json
+collect/frontend/page_data/data/server/webshell_editor_pool_route.json -> webshell_editor_pool_route.json

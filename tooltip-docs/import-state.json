@@ -1,0 +1,327 @@
+{
+  "version": 1,
+  "updated_at": "2026-05-07T16:35:32+08:00",
+  "source_mode": "headless_browser_click_tree_only",
+  "constraints": [
+    "禁止直接查后台接口JSON作为文档内容来源",
+    "逐条任务推进，不做批量一键写入"
+  ],
+  "current_task_id": "",
+  "tasks": [
+    {
+      "id": "M-001",
+      "source_group": "模块处理",
+      "source_title": "sql",
+      "target_file": "kv/module/sql.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-001.md",
+      "note": "2026-05-07 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-002",
+      "source_group": "模块处理",
+      "source_title": "bulk_service",
+      "target_file": "kv/module/bulk_service.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-002.md",
+      "note": "2026-05-07 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-003",
+      "source_group": "模块处理",
+      "source_title": "model_save",
+      "target_file": "kv/module/model_save.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-003.md",
+      "note": "2026-05-07 16:19:27 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-004",
+      "source_group": "模块处理",
+      "source_title": "model_update",
+      "target_file": "kv/module/model_update.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-004.md",
+      "note": "2026-05-07 16:19:42 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-005",
+      "source_group": "模块处理",
+      "source_title": "model_delete",
+      "target_file": "kv/module/model_delete.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-005.md",
+      "note": "2026-05-07 16:19:47 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-006",
+      "source_group": "模块处理",
+      "source_title": "bulk_create",
+      "target_file": "kv/module/bulk_create.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-006.md",
+      "note": "2026-05-07 16:19:51 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-007",
+      "source_group": "模块处理",
+      "source_title": "bulk_upsert",
+      "target_file": "kv/module/bulk_upsert.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-007.md",
+      "note": "2026-05-07 16:19:55 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-008",
+      "source_group": "模块处理",
+      "source_title": "empty",
+      "target_file": "kv/module/empty.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-008.md",
+      "note": "2026-05-07 16:19:59 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-009",
+      "source_group": "模块处理",
+      "source_title": "http",
+      "target_file": "kv/module/http.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-009.md",
+      "note": "2026-05-07 16:20:03 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-010",
+      "source_group": "模块处理",
+      "source_title": "ldap",
+      "target_file": "kv/module/ldap.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-010.md",
+      "note": "2026-05-07 16:20:08 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "M-011",
+      "source_group": "模块处理",
+      "source_title": "service_flow",
+      "target_file": "kv/module/service_flow.md",
+      "status": "completed",
+      "evidence_file": "evidence/M-011.md",
+      "note": "2026-05-07 16:20:12 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-001",
+      "source_group": "参数处理",
+      "source_title": "service2field",
+      "target_file": "kv/key/service2field.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-001.md",
+      "note": "2026-05-07 16:20:44 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-002",
+      "source_group": "参数处理",
+      "source_title": "get_modify_data",
+      "target_file": "kv/key/get_modify_data.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-002.md",
+      "note": "2026-05-07 16:20:53 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-003",
+      "source_group": "参数处理",
+      "source_title": "update_field",
+      "target_file": "kv/key/update_field.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-003.md",
+      "note": "2026-05-07 16:20:57 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-004",
+      "source_group": "参数处理",
+      "source_title": "check_field",
+      "target_file": "kv/key/check_field.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-004.md",
+      "note": "2026-05-07 16:21:01 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-005",
+      "source_group": "参数处理",
+      "source_title": "update_array",
+      "target_file": "kv/key/update_array.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-005.md",
+      "note": "2026-05-07 16:21:06 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-006",
+      "source_group": "参数处理",
+      "source_title": "arr2obj",
+      "target_file": "kv/key/arr2obj.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-006.md",
+      "note": "2026-05-07 16:21:10 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-007",
+      "source_group": "参数处理",
+      "source_title": "filter_arr",
+      "target_file": "kv/key/filter_arr.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-007.md",
+      "note": "2026-05-07 16:21:14 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-008",
+      "source_group": "参数处理",
+      "source_title": "prop_arr",
+      "target_file": "kv/key/prop_arr.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-008.md",
+      "note": "2026-05-07 16:21:18 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-009",
+      "source_group": "参数处理",
+      "source_title": "arr2dict",
+      "target_file": "kv/key/arr2dict.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-009.md",
+      "note": "2026-05-07 16:21:22 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-010",
+      "source_group": "参数处理",
+      "source_title": "param2result",
+      "target_file": "kv/key/param2result.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-010.md",
+      "note": "2026-05-07 16:21:27 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-011",
+      "source_group": "参数处理",
+      "source_title": "params2result",
+      "target_file": "kv/key/params2result.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-011.md",
+      "note": "2026-05-07 16:21:31 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-012",
+      "source_group": "参数处理",
+      "source_title": "result2params",
+      "target_file": "kv/key/result2params.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-012.md",
+      "note": "2026-05-07 16:21:35 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-013",
+      "source_group": "参数处理",
+      "source_title": "result2map",
+      "target_file": "kv/key/result2map.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-013.md",
+      "note": "2026-05-07 16:21:39 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-014",
+      "source_group": "参数处理",
+      "source_title": "count2map",
+      "target_file": "kv/key/count2map.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-014.md",
+      "note": "2026-05-07 16:21:44 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-015",
+      "source_group": "参数处理",
+      "source_title": "combine_array",
+      "target_file": "kv/key/combine_array.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-015.md",
+      "note": "2026-05-07 16:21:48 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "H-016",
+      "source_group": "参数处理",
+      "source_title": "update_array_from_array",
+      "target_file": "kv/key/update_array_from_array.md",
+      "status": "completed",
+      "evidence_file": "evidence/H-016.md",
+      "note": "2026-05-07 16:21:52 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-001",
+      "source_group": "如何编写服务",
+      "source_title": "什么是服务service",
+      "target_file": "key/service.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-001.md",
+      "note": "2026-05-07 16:21:56 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-002",
+      "source_group": "如何编写服务",
+      "source_title": "什么是参数",
+      "target_file": "key/params.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-002.md",
+      "note": "2026-05-07 16:21:59 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-003",
+      "source_group": "如何编写服务",
+      "source_title": "什么是参数处理",
+      "target_file": "key/handler_params.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-003.md",
+      "note": "2026-05-07 16:22:04 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-004",
+      "source_group": "如何编写服务",
+      "source_title": "什么是参数处理",
+      "target_file": "key/result_handler.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-004.md",
+      "note": "2026-05-07 16:22:08 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-005",
+      "source_group": "如何编写服务",
+      "source_title": "生命周期",
+      "target_file": "key/module.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-005.md",
+      "note": "2026-05-07 16:22:11 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-006",
+      "source_group": "模板函数",
+      "source_title": "must",
+      "target_file": "key/check.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-006.md",
+      "note": "2026-05-07 16:22:16 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-007",
+      "source_group": "模板函数",
+      "source_title": "current_date_time",
+      "target_file": "key/default.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-007.md",
+      "note": "2026-05-07 16:22:20 已完成，来源为无头浏览器点击读取"
+    },
+    {
+      "id": "K-008",
+      "source_group": "模板函数",
+      "source_title": "get_key",
+      "target_file": "key/template.md",
+      "status": "completed",
+      "evidence_file": "evidence/K-008.md",
+      "note": "2026-05-07 16:22:24 已完成，来源为无头浏览器点击读取"
+    }
+  ]
+}

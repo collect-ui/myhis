@@ -1,0 +1,40 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "treeVisible": true,
+  "groupVisible": true,
+  "leafSelected": true,
+  "consoleOpened": true,
+  "controls": {
+    "mode": true,
+    "method": true,
+    "url": true,
+    "send": true,
+    "save": true
+  },
+  "cases": {
+    "frontend": {
+      "sent": true,
+      "responseLen": 0,
+      "ok": false,
+      "responsePreview": ""
+    },
+    "backend": {
+      "sent": true,
+      "responseLen": 0,
+      "ok": false,
+      "responsePreview": ""
+    }
+  },
+  "storeControlsPresent": false,
+  "consoleErrors": [
+    "Access to XMLHttpRequest at 'https://postman-echo.com/get?source=custom-console-flow&source=custom-console-flow&service=system.login&remember=true&login_model=inner&username=zhangzhi&tenant_id=wego&password=zhangzhi%40888' from origin 'http://192.168.232.130:8015' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "请求失败: F2",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    "GET https://postman-echo.com/get?source=custom-console-flow&source=custom-console-flow&service=system.login&remember=true&login_model=inner&username=zhangzhi&tenant_id=wego&password=zhangzhi%40888 => net::ERR_FAILED"
+  ],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/custom-console-flow-check.png",
+  "pass": false
+}

@@ -1,0 +1,243 @@
+{
+  "color": [
+    "#1c77e2",
+    "#d9950c"
+  ],
+  "grid": {
+    "left": "10%",
+    "right": "10%",
+    "top": "20%",
+    "bottom": "5%",
+    "containLabel": true
+  },
+  "legend": {
+    "show": true,
+    "icon": "rect",
+    "itemWidth": 12,
+    "itemHeight": 12,
+    "top": 40,
+    "right": 50,
+    "textStyle": {
+      "color": "#fff"
+    }
+  },
+  "xAxis": [
+    {
+      "data": [
+        "任务点学习",
+        "非任务点学习"
+      ],
+      "axisTick": {
+        "show": false
+      },
+      "axisLine": {
+        "show": false
+      },
+      "axisLabel": {
+        "interval": 0,
+        "textStyle": {
+          "color": "#fff",
+          "fontSize": 16
+        },
+        "margin": 26
+      }
+    },
+    {
+      "data": [
+        "任务点学习",
+        "非任务点学习"
+      ],
+      "axisTick": {
+        "show": false
+      },
+      "axisLine": {
+        "show": false
+      },
+      "axisLabel": {
+        "show": false
+      }
+    }
+  ],
+  "yAxis": {
+    "splitLine": {
+      "show": false
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false
+    },
+    "axisLabel": {
+      "show": false,
+      "textStyle": {
+        "color": "#fff",
+        "fontSize": 16
+      }
+    }
+  },
+  "series": [
+    {
+      "name": "学习前",
+      "data": [
+        67,
+        61
+      ],
+      "type": "bar",
+      "barGap": "30%",
+      "barWidth": 30,
+      "itemStyle": {
+        "opacity": 1
+      },
+      "label": {
+        "show": true,
+        "position": "top",
+        "distance": 10,
+        "color": "#FFFFFF",
+        "fontSize": 16
+      },
+      "showBackground": true,
+      "backgroundStyle": {
+        "color": "#1c77e2",
+        "opacity": 0.1
+      }
+    },
+    {
+      "name": "学习后",
+      "data": [
+        83,
+        80
+      ],
+      "type": "bar",
+      "barGap": "30%",
+      "barWidth": 30,
+      "itemStyle": {
+        "opacity": 1
+      },
+      "label": {
+        "show": true,
+        "position": "top",
+        "distance": 10,
+        "color": "#FFFFFF",
+        "fontSize": 16
+      },
+      "showBackground": true,
+      "backgroundStyle": {
+        "color": "#d9950c",
+        "opacity": 0.1
+      }
+    },
+    {
+      "name": "",
+      "type": "pictorialBar",
+      "barGap": "30%",
+      "barWidth": 30,
+      "z": 12,
+      "symbolPosition": "end",
+      "data": [
+        {
+          "value": 67,
+          "symbolSize": [
+            30,
+            16
+          ],
+          "symbolOffset": [
+            0,
+            -8
+          ],
+          "itemStyle": {
+            "opacity": 1,
+            "color": "#12b1eb"
+          }
+        },
+        {
+          "value": 61,
+          "symbolSize": [
+            30,
+            16
+          ],
+          "symbolOffset": [
+            0,
+            -8
+          ],
+          "itemStyle": {
+            "opacity": 1,
+            "color": "#12b1eb"
+          }
+        }
+      ]
+    },
+    {
+      "name": "",
+      "type": "pictorialBar",
+      "barGap": "30%",
+      "barWidth": 30,
+      "symbolSize": [
+        30,
+        16
+      ],
+      "symbolOffset": [
+        0,
+        -8
+      ],
+      "z": 12,
+      "itemStyle": {
+        "opacity": 1,
+        "color": "#e3b20f"
+      },
+      "symbolPosition": "end",
+      "data": [
+        83,
+        80
+      ]
+    },
+    {
+      "name": "",
+      "type": "pictorialBar",
+      "xAxisIndex": 1,
+      "barGap": "30%",
+      "barWidth": 30,
+      "symbolSize": [
+        30,
+        16
+      ],
+      "symbolOffset": [
+        0,
+        8
+      ],
+      "z": 12,
+      "itemStyle": {
+        "opacity": 1,
+        "color": "#1978e4"
+      },
+      "data": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "",
+      "type": "pictorialBar",
+      "xAxisIndex": 1,
+      "barGap": "30%",
+      "barWidth": 30,
+      "symbolSize": [
+        30,
+        16
+      ],
+      "symbolOffset": [
+        0,
+        8
+      ],
+      "z": 12,
+      "itemStyle": {
+        "opacity": 1,
+        "color": "#d68907"
+      },
+      "data": [
+        1,
+        1
+      ]
+    }
+  ]
+}

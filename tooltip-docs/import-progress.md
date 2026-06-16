@@ -1,0 +1,297 @@
+# Tooltip 文档迁移执行日志
+
+## 作用
+- 记录文档迁移与改写全过程的时间线、完成项、验证结果与后续动作，便于复盘和快速恢复现场。
+
+## 2026-05-07
+- 初始化迁移框架：
+  - 新建设计文档 `IMPORT_DESIGN.md`
+  - 新建状态文件 `import-state.json`
+  - 新建无头目录快照 `_headless_doc_tree_snapshot.json`
+  - 新建证据目录 `evidence/`
+- 当前未开始正文改写，下一条任务：`M-001`（模块处理/sql -> kv/module/sql.md）。
+
+## 2026-05-07（继续）
+- 完成 `M-001`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> 1.sql`
+  - 目标写入：`kv/module/sql.md`
+  - 证据：`evidence/M-001.md` + `evidence/M-001-source.png` + `evidence/M-001-source.json`
+- 下一条任务切换为：`M-002`（模块处理/bulk_service -> kv/module/bulk_service.md）。
+
+- 完成 `M-002`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> 2.bulk_service`
+  - 目标写入：`kv/module/bulk_service.md`
+  - 证据：`evidence/M-002.md` + `evidence/M-002-source.png` + `evidence/M-002-source.json`
+- 下一条任务切换为：`M-003`（模块处理/model_save -> kv/module/model_save.md）。
+- 完成 `M-003`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> model_save`
+  - 页面标题：`model_save(表新增行)`
+  - 目标写入：`kv/module/model_save.md`
+  - 证据：`evidence/M-003.md` + `evidence/M-003-source.png` + `evidence/M-003-source.json`
+- 完成 `M-004`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> model_update`
+  - 页面标题：`model_update(表修改行数据)`
+  - 目标写入：`kv/module/model_update.md`
+  - 证据：`evidence/M-004.md` + `evidence/M-004-source.png` + `evidence/M-004-source.json`
+- 完成 `M-005`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> model_delete`
+  - 页面标题：`model_delete(表数据删除)`
+  - 目标写入：`kv/module/model_delete.md`
+  - 证据：`evidence/M-005.md` + `evidence/M-005-source.png` + `evidence/M-005-source.json`
+- 完成 `M-006`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> bulk_create`
+  - 页面标题：`bulk_create(表批量保存)`
+  - 目标写入：`kv/module/bulk_create.md`
+  - 证据：`evidence/M-006.md` + `evidence/M-006-source.png` + `evidence/M-006-source.json`
+- 完成 `M-007`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> bulk_upsert`
+  - 页面标题：`bulk_upsert(批量修改多行)`
+  - 目标写入：`kv/module/bulk_upsert.md`
+  - 证据：`evidence/M-007.md` + `evidence/M-007-source.png` + `evidence/M-007-source.json`
+- 完成 `M-008`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> empty`
+  - 页面标题：`empty(空模块)`
+  - 目标写入：`kv/module/empty.md`
+  - 证据：`evidence/M-008.md` + `evidence/M-008-source.png` + `evidence/M-008-source.json`
+- 完成 `M-009`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> http`
+  - 页面标题：`http(http请求)`
+  - 目标写入：`kv/module/http.md`
+  - 证据：`evidence/M-009.md` + `evidence/M-009-source.png` + `evidence/M-009-source.json`
+- 完成 `M-010`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> ldap`
+  - 页面标题：`ldap(ldap)`
+  - 目标写入：`kv/module/ldap.md`
+  - 证据：`evidence/M-010.md` + `evidence/M-010-source.png` + `evidence/M-010-source.json`
+- 完成 `M-011`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模块处理 -> service_flow`
+  - 页面标题：`service_flow(服务流程化)`
+  - 目标写入：`kv/module/service_flow.md`
+  - 证据：`evidence/M-011.md` + `evidence/M-011-source.png` + `evidence/M-011-source.json`
+- 完成 `H-001`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> service2field`
+  - 页面标题：`service2field(服务转字段)`
+  - 目标写入：`kv/key/service2field.md`
+  - 证据：`evidence/H-001.md` + `evidence/H-001-source.png` + `evidence/H-001-source.json`
+- 完成 `H-002`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> get_modify_data`
+  - 页面标题：`get_modify_data(比对数据)`
+  - 目标写入：`kv/key/get_modify_data.md`
+  - 证据：`evidence/H-002.md` + `evidence/H-002-source.png` + `evidence/H-002-source.json`
+- 完成 `H-003`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> update_field`
+  - 页面标题：`update_field(更新普通字段)`
+  - 目标写入：`kv/key/update_field.md`
+  - 证据：`evidence/H-003.md` + `evidence/H-003-source.png` + `evidence/H-003-source.json`
+- 完成 `H-004`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> check_field`
+  - 页面标题：`check_field(检查普通字段)`
+  - 目标写入：`kv/key/check_field.md`
+  - 证据：`evidence/H-004.md` + `evidence/H-004-source.png` + `evidence/H-004-source.json`
+- 完成 `H-005`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> update_array`
+  - 页面标题：`update_array(更新数组)`
+  - 目标写入：`kv/key/update_array.md`
+  - 证据：`evidence/H-005.md` + `evidence/H-005-source.png` + `evidence/H-005-source.json`
+- 完成 `H-006`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> arr2obj`
+  - 页面标题：`arr2obj(数组结果转对象)`
+  - 目标写入：`kv/key/arr2obj.md`
+  - 证据：`evidence/H-006.md` + `evidence/H-006-source.png` + `evidence/H-006-source.json`
+- 完成 `H-007`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> filter_arr`
+  - 页面标题：`filter_arr(过滤数组)`
+  - 目标写入：`kv/key/filter_arr.md`
+  - 证据：`evidence/H-007.md` + `evidence/H-007-source.png` + `evidence/H-007-source.json`
+- 完成 `H-008`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> prop_arr`
+  - 页面标题：`prop_arr(对象数组转数组)`
+  - 目标写入：`kv/key/prop_arr.md`
+  - 证据：`evidence/H-008.md` + `evidence/H-008-source.png` + `evidence/H-008-source.json`
+- 完成 `H-009`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> arr2dict`
+  - 页面标题：`arr2dict(数组转对象)`
+  - 目标写入：`kv/key/arr2dict.md`
+  - 证据：`evidence/H-009.md` + `evidence/H-009-source.png` + `evidence/H-009-source.json`
+- 完成 `H-010`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> param2result`
+  - 页面标题：`param2result(参数转结果)`
+  - 目标写入：`kv/key/param2result.md`
+  - 证据：`evidence/H-010.md` + `evidence/H-010-source.png` + `evidence/H-010-source.json`
+- 完成 `H-011`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> params2result`
+  - 页面标题：`params2result(多参数转结果)`
+  - 目标写入：`kv/key/params2result.md`
+  - 证据：`evidence/H-011.md` + `evidence/H-011-source.png` + `evidence/H-011-source.json`
+- 完成 `H-012`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> result2params`
+  - 页面标题：`result2params(结果转参数)`
+  - 目标写入：`kv/key/result2params.md`
+  - 证据：`evidence/H-012.md` + `evidence/H-012-source.png` + `evidence/H-012-source.json`
+- 完成 `H-013`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> result2map`
+  - 页面标题：`result2map(结果转字段)`
+  - 目标写入：`kv/key/result2map.md`
+  - 证据：`evidence/H-013.md` + `evidence/H-013-source.png` + `evidence/H-013-source.json`
+- 完成 `H-014`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> count2map`
+  - 页面标题：`count2map(count 转字段)`
+  - 目标写入：`kv/key/count2map.md`
+  - 证据：`evidence/H-014.md` + `evidence/H-014-source.png` + `evidence/H-014-source.json`
+- 完成 `H-015`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> combine_array`
+  - 页面标题：`combine_array(数组结合数组)`
+  - 目标写入：`kv/key/combine_array.md`
+  - 证据：`evidence/H-015.md` + `evidence/H-015-source.png` + `evidence/H-015-source.json`
+- 完成 `H-016`：
+  - 源读取：无头浏览器点击 `服务文档 -> 参数处理 -> update_array_from_array`
+  - 页面标题：`update_array_from_array(更新数组)`
+  - 目标写入：`kv/key/update_array_from_array.md`
+  - 证据：`evidence/H-016.md` + `evidence/H-016-source.png` + `evidence/H-016-source.json`
+- 完成 `K-001`：
+  - 源读取：无头浏览器点击 `服务文档 -> 如何编写服务 -> 什么是服务service`
+  - 页面标题：`什么是服务service(服务描述)`
+  - 目标写入：`key/service.md`
+  - 证据：`evidence/K-001.md` + `evidence/K-001-source.png` + `evidence/K-001-source.json`
+- 完成 `K-002`：
+  - 源读取：无头浏览器点击 `服务文档 -> 如何编写服务 -> 什么是参数`
+  - 页面标题：`什么是参数(服务描述)`
+  - 目标写入：`key/params.md`
+  - 证据：`evidence/K-002.md` + `evidence/K-002-source.png` + `evidence/K-002-source.json`
+- 完成 `K-003`：
+  - 源读取：无头浏览器点击 `服务文档 -> 如何编写服务 -> 什么是参数处理`
+  - 页面标题：`什么是参数处理(服务描述)`
+  - 目标写入：`key/handler_params.md`
+  - 证据：`evidence/K-003.md` + `evidence/K-003-source.png` + `evidence/K-003-source.json`
+- 完成 `K-004`：
+  - 源读取：无头浏览器点击 `服务文档 -> 如何编写服务 -> 什么是参数处理`
+  - 页面标题：`什么是参数处理(服务描述)`
+  - 目标写入：`key/result_handler.md`
+  - 证据：`evidence/K-004.md` + `evidence/K-004-source.png` + `evidence/K-004-source.json`
+- 完成 `K-005`：
+  - 源读取：无头浏览器点击 `服务文档 -> 如何编写服务 -> 生命周期`
+  - 页面标题：`生命周期(服务描述)`
+  - 目标写入：`key/module.md`
+  - 证据：`evidence/K-005.md` + `evidence/K-005-source.png` + `evidence/K-005-source.json`
+- 完成 `K-006`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模板函数 -> must`
+  - 页面标题：`must(判断是否存在参数)`
+  - 目标写入：`key/check.md`
+  - 证据：`evidence/K-006.md` + `evidence/K-006-source.png` + `evidence/K-006-source.json`
+- 完成 `K-007`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模板函数 -> current_date_time`
+  - 页面标题：`current_date_time(生成时间)`
+  - 目标写入：`key/default.md`
+  - 证据：`evidence/K-007.md` + `evidence/K-007-source.png` + `evidence/K-007-source.json`
+- 完成 `K-008`：
+  - 源读取：无头浏览器点击 `服务文档 -> 模板函数 -> get_key`
+  - 页面标题：`get_key(获取配置文件参数)`
+  - 目标写入：`key/template.md`
+  - 证据：`evidence/K-008.md` + `evidence/K-008-source.png` + `evidence/K-008-source.json`
+
+## 2026-05-07（文档优化回合）
+- 针对用户反馈的 YAML 示例缩进问题，完成二次修复：
+  - 修复生成脚本中的缩进规则（避免 `- key` 下同级字段错位）。
+  - 修复存量任务文档中的错误示例（含 `bulk_create` 等）。
+- 针对 35 条任务文档执行结构化优化：
+  - 统一结构为：`作用`、`参数`（有则保留）、`示例`、`说明要点`。
+  - 压缩过长段落，去重重复语句，示例长度超长时截断。
+- 自测与验证结果：
+  - 任务文档总数：35
+  - `yml` 示例块解析：35/35 通过（`error_count=0`）
+  - 结构完整性检查：35/35 通过（`badCount=0`）
+- 继续优化（第二轮）：
+  - 修复 4 处仍不合法的 YAML 示例：`bulk_service`、`get_modify_data`、`handler_params`、`result_handler`。
+  - 统一处理 `来源` 行中的换行，改为单行 `A / B` 形式，提升悬停展示可读性。
+  - 复测通过：任务文档 YAML 示例解析 `error_count=0`。
+
+## 2026-05-07（模板函数悬停文档补齐）
+- 背景：
+  - 用户反馈悬停 `must` 出现“未找到悬停文档”。
+  - 当前悬停规则优先命中：`tooltip-docs/<project_type>/key/template/value/<func>.md`。
+- 本轮完成：
+  - 新增 Go 函数文档目录：`go/key/template/value/`（32 个函数，来源 `all_register.go`）。
+  - 新增 Python 函数文档目录：`python/key/template/value/`（33 个函数，来源 `service_router.yml/filter_handler`）。
+  - 修复 `index` 命名冲突：
+    - `go/key/template/value/index.md` 作为 `index` 函数文档。
+    - 新增 `go/key/template/value/README.md` 作为目录说明。
+- 自测结果：
+  - 注册项与文档一一对应检查：Go `missing=[]`，Python `missing=[]`。
+  - 无头悬停验证通过：
+    - `must` 命中文档
+    - `unix_time2datetime` 命中文档
+  - 报告：`test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-template-func-hover-doc-check.json`
+  - 截图：`test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-template-func-hover-doc-check.png`
+
+## 2026-05-08（文档阅读结构统一）
+- 目标：
+  - 按“低代码执行视角”统一文档阅读顺序，优先回答“这个字段/模块做什么、什么时候生效、怎么配置”。
+  - 解决 `save_field` 等文档中“配置位置在前、作用不突出”的阅读问题。
+- 执行：
+  - 全量改写核心悬停文档（共 79 份）：
+    - `tooltip-docs/key/*.md`
+    - `tooltip-docs/kv/key/*.md`
+    - `tooltip-docs/kv/module/*.md`
+  - 统一章节结构为：
+    - `作用`
+    - `常见用途`
+    - `执行阶段（低代码视角）`
+    - `怎么用`（配置位置/参数）
+    - `示例`
+    - `注意事项`
+  - 清理并补全 26 份占位文档（原“请补充”模板），改为可直接阅读的业务说明与示例。
+- 校验结果：
+  - 占位符残留：0
+  - 统一结构缺失：0
+  - YAML 示例解析错误：0（79 份核心文档）
+
+## 2026-05-08（模板函数文档结构统一）
+- 范围：
+  - `tooltip-docs/go/key/template/value/*.md`
+  - `tooltip-docs/python/key/template/value/*.md`
+- 调整：
+  - 同步采用统一阅读结构：
+    - `作用`
+    - `常见用途`
+    - `执行阶段（低代码视角）`
+    - `怎么用`
+    - `示例`
+    - `注意事项`
+  - 统一了示例中的 `template` 引号写法，避免 YAML 解析错误。
+- 校验结果：
+  - 本轮模板函数文档：66 份（README 除外）
+  - 结构缺失：0
+  - YAML 示例解析错误：0
+  - 核心可悬停文档总计校验：145 份，结构缺失 0，占位符 0，YAML 错误 0
+
+## 2026-05-08（元信息后置）
+- 用户反馈：
+  - 悬停时希望优先看到“这个关键字做什么”，`来源/页面标题` 不要放在文档开头。
+- 调整：
+  - 将核心可悬停文档统一改为：
+    - `# 标题`
+    - `## 作用`（第一块）
+    - `## 常见用途`
+    - `## 执行阶段（低代码视角）`
+    - `## 怎么用`
+    - `## 示例`
+    - `## 注意事项`
+    - `## 元信息`（末尾，放来源与页面标题）
+  - 覆盖文档：145 份（`key/*`、`kv/key/*`、`kv/module/*`、`go/python template function`）
+- 校验：
+  - 145 份文档均包含统一结构
+  - YAML 示例解析错误：0
+
+## 2026-05-08（全目录统一完成）
+- 用户要求：`所有的都改`（全部文档统一为“作用优先，元信息后置”）。
+- 本轮覆盖：
+  - `tooltip-docs` 下全部 Markdown（含 `evidence/*`、目录索引、说明文档）。
+- 统一规则：
+  - 文档首个二级标题统一为 `## 作用`
+  - 不在标题后直接放 `来源/页面标题`；统一后置到 `## 元信息`
+  - 证据文档同步改为“作用在前，元信息在后”
+- 最终校验：
+  - `tooltip-docs` Markdown 总数：186
+  - 首个二级标题非 `## 作用`：0
+  - 标题与首个二级标题之间有前置说明：0
+  - `来源/页面标题` 出现在首个二级标题之前：0

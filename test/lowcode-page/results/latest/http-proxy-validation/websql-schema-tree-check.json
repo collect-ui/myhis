@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "console_error_count": 0,
+  "checks": {
+    "schema": "main",
+    "table": "agent_message",
+    "field": "agent_message_id",
+    "field_filter": "agent_session_id",
+    "index_filter": "menu_code",
+    "ddl_has_create_table": true
+  },
+  "errors": []
+}

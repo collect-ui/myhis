@@ -1,0 +1,31 @@
+{
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "drawerVisible": true,
+  "headerHeight": 0,
+  "closeVisible": true,
+  "dividerBefore": {
+    "cls": "co-ui-panel-resize Resizer",
+    "opacity": "1",
+    "display": "block",
+    "visibility": "visible"
+  },
+  "projectManageButtonVisible": true,
+  "projectManageOpened": true,
+  "dividerDuringProjectManage": {
+    "cls": "co-ui-panel-resize Resizer",
+    "opacity": "1",
+    "display": "block",
+    "visibility": "visible"
+  },
+  "contentSearchButtonVisible": true,
+  "contentSearchOpened": true,
+  "dividerDuringContentSearch": {
+    "cls": "co-ui-panel-resize Resizer",
+    "opacity": "1",
+    "display": "block",
+    "visibility": "visible"
+  },
+  "drawerVisibleAfterClose": true,
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-ui-adjust-check-2026-05-05T12-52-18-174Z.png",
+  "pass": false
+}

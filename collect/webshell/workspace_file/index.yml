@@ -1,0 +1,455 @@
+service:
+  - key: workspace_file_query
+    module: sql
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      name:
+        template: "{{ if .name }}%{{.name}}%{{ end }}"
+      keyword:
+        template: "{{ if .keyword }}%{{.keyword}}%{{ end }}"
+      parent_id:
+        default: ""
+      root_only:
+        default: false
+      is_dir:
+        default: ""
+      path_exact:
+        default: ""
+      exclude_file_id:
+        default: ""
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 20
+      start:
+        template: "({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+    data_file: workspace_file_list.sql
+    count_file: workspace_file_count.sql
+    pagination: pagination
+  - key: workspace_file_tree_query
+    module: sql
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+    data_file: workspace_file_tree_list.sql
+    result_handler:
+      - key: result2params
+        fields:
+          - to: "[tree_list]"
+      - key: to_tree
+        foreach: "[tree_list]"
+        id: file_id
+        pid: parent_id
+        children: children
+        save_field: tree_data
+      - key: param2result
+        field: "[tree_data]"
+  - key: workspace_file_add
+    module: model_save
+    http: true
+    table: webshell_workspace_file
+    params:
+      file_id:
+        template: "{{uuid}}"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: 路径不能为空
+      parent_id:
+        default: ""
+      is_dir:
+        default: "1"
+      is_delete:
+        default: "0"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_file_query
+          project_code: "[project_code]"
+          path_exact: "[path]"
+          pagination: false
+        save_field: current_file
+        template: "{{is_empty .current_file}}"
+        err_msg: "路径[{{.path}}]已存在"
+  - key: workspace_file_update
+    module: model_update
+    http: true
+    table: webshell_workspace_file
+    params:
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: 主键不能为空
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    filter:
+      file_id: "[file_id]"
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_file_query
+          project_code: "[project_code]"
+          path_exact: "[path]"
+          exclude_file_id: "[file_id]"
+          pagination: false
+        save_field: current_file
+        template: "{{is_empty .current_file}}"
+        err_msg: "路径[{{.path}}]已存在"
+  - key: workspace_file_delete
+    module: model_update
+    http: true
+    table: webshell_workspace_file
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      file_id_list:
+        check:
+          template: "{{must .file_id_list}}"
+          err_msg: 主键列表不能为空
+      is_delete:
+        default: "1"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    update_fields:
+      - is_delete
+      - modify_time
+      - modify_user
+    filter:
+      project_code: "[project_code]"
+      file_id__in: "[file_id_list]"
+  - key: workspace_file_delete_by_project
+    module: model_delete
+    http: true
+    table: webshell_workspace_file
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+    filter:
+      project_code: "[project_code]"
+  - key: workspace_file_bulk_save
+    module: bulk_create
+    http: true
+    table: webshell_workspace_file
+    params:
+      file_list:
+        check:
+          template: "{{must .file_list}}"
+          err_msg: 文件列表不能为空
+    model_field: "[file_list]"
+  - key: workspace_file_remote_add
+    module: workspace_file_mutation
+    params:
+      operation:
+        default: "add"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: 路径不能为空
+      is_dir:
+        default: "1"
+  - key: workspace_file_remote_update
+    module: workspace_file_mutation
+    params:
+      operation:
+        default: "update"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: 文件主键不能为空
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: 路径不能为空
+  - key: workspace_file_remote_move
+    module: workspace_file_mutation
+    params:
+      operation:
+        default: "move"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: 文件主键不能为空
+      target_parent_id:
+        default: ""
+      rows:
+        default: []
+  - key: workspace_file_remote_delete
+    module: workspace_file_mutation
+    params:
+      operation:
+        default: "delete"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      path:
+        default: ""
+      file_id:
+        default: ""
+      path_list:
+        default: []
+      file_id_list:
+        default: []
+  - key: workspace_file_remote_copy
+    module: workspace_file_mutation
+    params:
+      operation:
+        default: "copy"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      target_parent_id:
+        default: ""
+      path:
+        default: ""
+      file_id:
+        default: ""
+      path_list:
+        default: []
+      file_id_list:
+        default: []
+  - key: workspace_file_add_with_sync
+    module: empty
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: 路径不能为空
+      parent_id:
+        default: ""
+      is_dir:
+        default: "1"
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_file_remote_add
+        append_param: true
+        save_field: remote_result
+      - key: params2result
+        fields:
+          - from: "[remote_result]"
+            to: "remote_result"
+          - from: "[project_code]"
+            to: "project_code"
+  - key: workspace_file_update_with_sync
+    module: empty
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: 文件主键不能为空
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: 名称不能为空
+      path:
+        check:
+          template: "{{must .path}}"
+          err_msg: 路径不能为空
+      parent_id:
+        default: ""
+      is_dir:
+        default: "1"
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_file_remote_update
+        append_param: true
+        save_field: remote_result
+      - key: params2result
+        fields:
+          - from: "[remote_result]"
+            to: "remote_result"
+          - from: "[project_code]"
+            to: "project_code"
+  - key: workspace_file_move_with_sync
+    module: empty
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      file_id:
+        check:
+          template: "{{must .file_id}}"
+          err_msg: 文件主键不能为空
+      target_parent_id:
+        default: ""
+      rows:
+        default: []
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_file_remote_move
+        append_param: true
+        save_field: remote_result
+      - key: params2result
+        fields:
+          - from: "[remote_result]"
+            to: "remote_result"
+          - from: "[project_code]"
+            to: "project_code"
+  - key: workspace_file_delete_with_sync
+    module: empty
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      path:
+        default: ""
+      file_id:
+        default: ""
+      path_list:
+        default: []
+      file_id_list:
+        default: []
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_file_remote_delete
+        append_param: true
+        save_field: remote_result
+      - key: params2result
+        fields:
+          - from: "[remote_result]"
+            to: "remote_result"
+          - from: "[project_code]"
+            to: "project_code"
+  - key: workspace_file_copy_with_sync
+    module: empty
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      target_parent_id:
+        default: ""
+      path:
+        default: ""
+      file_id:
+        default: ""
+      path_list:
+        default: []
+      file_id_list:
+        default: []
+    handler_params:
+      - key: service2field
+        service:
+          service: webshell.workspace_file_remote_copy
+        append_param: true
+        save_field: remote_result
+      - key: params2result
+        fields:
+          - from: "[remote_result]"
+            to: "remote_result"
+          - from: "[project_code]"
+            to: "project_code"
+  - key: workspace_file_recent_open
+    module: sql
+    http: true
+    params:
+      recent_id:
+        template: "{{uuid}}"
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      file_path:
+        check:
+          template: "{{must .file_path}}"
+          err_msg: 文件路径不能为空
+      file_name:
+        default: ""
+      now_time:
+        template: "{{current_date_time}}"
+    data_file: workspace_file_recent_open.sql
+  - key: workspace_file_recent_query
+    module: sql
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+    data_file: workspace_file_recent_list.sql
+  - key: workspace_file_recent_delete
+    module: sql
+    http: true
+    params:
+      project_code:
+        check:
+          template: "{{must .project_code}}"
+          err_msg: 项目编码不能为空
+      recent_id:
+        check:
+          template: "{{must .recent_id}}"
+          err_msg: 记录主键不能为空
+    data_file: workspace_file_recent_delete.sql

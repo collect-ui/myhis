@@ -1,0 +1,186 @@
+service:
+  - key: course_grade_group
+    http: true
+    params:
+      course_id:
+        check:
+          template: "{{or (must .course_id) .showLastCourse}}"
+          err_msg: 课程不能为空
+      dashboard_type:
+        check:
+          template: "{{must .dashboard_type}}"
+          err_msg: 大屏类型不能为空
+      course_stage:
+        check:
+          template: "{{must .course_stage}}"
+          err_msg: 课程阶段不能为空
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: sport.course_grade_query
+        save_field: course_grade
+        append_param: true
+        template: "{{must .course_grade}}"
+        err_msg: "未录入课堂的大屏数据分析成绩"
+      - key: update_array
+        name: 根据课程阶段取值
+        foreach: "[course_grade]"
+        item: item
+        fields:
+          - field: score
+            type: int
+            template: "{{ if eq .course_stage `in`  }} {{.item.in_score}} {{ else if eq .course_stage `after` }}{{.item.after_score}} {{ else if eq .course_stage `before` }} {{.item.before_score}} {{ else }} 0 {{ end }}"
+      - key: group_by
+        enable: "{{must .course_grade}}"
+        foreach: "[course_grade]"
+        children: "children"
+        append_item_param: false
+        fields:
+          - field: "[group_name]"
+        save_field: group_list
+
+      - key: agg
+        name: 聚合求分组统计数据
+        foreach: "[group_list]"
+        item: item
+        children: "[children]"
+        fields:
+          - to: "[passed_num]"
+            name: 通过人数
+            from: "[score]"
+            type: "count"
+            template: "{{ ge (cast .item.score \"int\" ) 60 }}"
+          - to: "[not_passed_num]"
+            name: 未通过人数
+            from: "[score]"
+            type: "count"
+            template: "{{ lt (cast .item.score \"int\" ) 60 }}"
+          - to: "[total_score]"
+            name: 小组总分
+            from: "[score]"
+            type: "sum"
+      - key: update_array
+        foreach: "[group_list]"
+        item: item
+        fields:
+          - field: all_score
+            type: int
+            template: "{{ multiply ( len .item.children ) 100 }}"
+      - key: param2result
+        field: group_list
+  - key: course_grade
+    http: true
+    params:
+      course_id:
+        check:
+          template: "{{or (must .course_id) .showLastCourse}}"
+          err_msg: 课程不能为空
+      student_size:
+        default: 7
+      group_size:
+        default: 4
+    handler_params:
+      - key: service2field
+        name: 查询课堂成绩
+        service:
+          service: chart.course_grade_group
+        append_param: true
+        save_field: group_list
+        template: "{{must .group_list}}"
+        err_msg: 找到任何数据
+      - key: prop_arr
+        foreach: "[group_list]"
+        value: "[group_name]"
+        save_field: group_name_list
+      - key: filter_arr
+        foreach: "[group_list]"
+        item: item
+        if_template: "{{eq .item.group_name `质检组`}}"
+        save_field: zhijian_group
+      - key: arr2obj
+        field: "[zhijian_group]"
+      - key: service2field
+        service:
+          service: chart.student_course_grade
+        save_field: course_grade
+        append_param: true
+      - key: service2field
+        service:
+          service: chart.group_grade
+          group: "[zhijian_group]"
+        save_field: zhijian_group_grade
+      - key: filter_arr
+        foreach: "[group_list]"
+        item: item
+        if_template: "{{eq .item.group_name `检修组`}}"
+        save_field: jianxiu_group
+      - key: arr2obj
+        field: "[jianxiu_group]"
+      - key: service2field
+        service:
+          service: chart.group_grade
+          group: "[zhijian_group]"
+        save_field: jianxiu_group_grade
+      - key: filter_arr
+        foreach: "[group_list]"
+        item: item
+        if_template: "{{eq .item.group_name `抢修组`}}"
+        save_field: qiangxiu_group
+      - key: arr2obj
+        field: "[qiangxiu_group]"
+      - key: service2field
+        service:
+          service: chart.group_grade
+          group: "[qiangxiu_group]"
+        save_field: qiangxiu_group_grade
+      - key: filter_arr
+        foreach: "[group_list]"
+        item: item
+        if_template: "{{eq .item.group_name `维修组`}}"
+        save_field: weixiu_group
+      - key: arr2obj
+        field: "[weixiu_group]"
+      - key: service2field
+        service:
+          service: chart.group_grade
+          group: "[weixiu_group]"
+        save_field: weixiu_group_grade
+      - key: params2result
+        fields:
+          - from: "[group_list]"
+            to: group_list
+          - from: "[course_grade]"
+            to: course_grade
+          - from: "[zhijian_group_grade]"
+            to: zhijian_group_grade
+          - from: "[jianxiu_group_grade]"
+            to: jianxiu_group_grade
+          - from: "[weixiu_group_grade]"
+            to: weixiu_group_grade
+          - from: "[qiangxiu_group_grade]"
+            to: qiangxiu_group_grade
+          - from: "[zhijian_group]"
+            to: zhijian_group
+    module: empty
+  - key: student_course_grade
+    http: true
+    params:
+      group_name_list:
+        default:  []
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: course_grade.json
+    module: empty
+  - key: group_grade
+    http: true
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: group_grade.json
+    module: empty

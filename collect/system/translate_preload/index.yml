@@ -1,0 +1,7 @@
+service:
+  - key: translate_preload
+    http: false
+    module: empty
+    startup: true
+    handler_params:
+      - key: translate

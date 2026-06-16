@@ -1,0 +1,92 @@
+service:
+
+
+  - key: technical_doc_save
+    module: model_save
+    http: true
+    table: technical_doc
+    params:
+      technical_doc_id:
+        template: "{{uuid}}"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+      type:
+        check:
+          template: "{{must .type}}"
+          err_msg: "类型不能为空"
+      parent_id:
+        default: ""
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: "名称不能为空"
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.technical_doc_query
+          parent_id: "[parent_id]"
+          name: "[name]"
+        save_field: local_doc
+        template: "{{eq (len .local_doc) 0}}"
+        err_msg: "该目录下文档【{{.name}}】已经存在"
+  - key: technical_doc_update
+    module: model_update
+    http: true
+    table: technical_doc
+    params:
+      technical_doc_id:
+        check:
+          template: "{{must .technical_doc_id}}"
+          err_msg: "ID不能为空"
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.technical_doc_query
+          parent_id: "[parent_id]"
+          name: "[name]"
+          exclude: "[technical_doc_id]"
+        save_field: local_doc
+        template: "{{eq (len .local_doc) 0}}"
+        err_msg: "该目录下文档【{{.name}}】已经存在"
+    filter:
+      technical_doc_id: "[technical_doc_id]"
+
+
+  - key: technical_doc_delete
+    http: true
+    module: model_delete
+    table: technical_doc
+    params:
+      technical_doc_id_list:
+        check:
+          template: "{{must .technical_doc_id_list}}"
+          err_msg: 目录不能为空
+    filter:
+      technical_doc_id__in: "[technical_doc_id_list]"
+
+  - key: technical_doc_query
+    http: true
+    module: sql
+    params:
+      to_true:
+        default: false
+      search:
+        template: "{{ if .search}}%{{.search}}%{{ end}}"
+    data_file: technical_doc_query.sql
+    result_handler:
+      - key: result2params
+        enable: "[to_tree]"
+        fields:
+          - to: "[data_list]"
+      - key: to_tree
+        enable: "[to_tree]"
+        foreach: "[data_list]"
+        id: technical_doc_id
+        pid: parent_id
+        children: children
+        save_field: data_tree
+      - key: param2result
+        enable: "[to_tree]"
+        field: data_tree

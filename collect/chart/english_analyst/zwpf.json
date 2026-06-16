@@ -1,0 +1,176 @@
+{
+  "grid": {
+    "left": "10%",
+    "top": "20%",
+    "bottom": "20%",
+    "right": "10%"
+  },
+  "tooltip": {
+    "show": false
+  },
+  "calculable": true,
+  "series": [
+    {
+      "type": "pie",
+      "radius": "10%",
+      "hoverAnimation": false,
+      "labelLine": {
+        "show": false
+      },
+      "itemStyle": {
+        "color": "#c2d7fd"
+      },
+      "tooltip": {
+        "show": false
+      },
+      "data": [
+        0
+      ]
+    },
+    {
+      "type": "pie",
+      "radius": [
+        "15%",
+        "16%"
+      ],
+      "hoverAnimation": false,
+      "labelLine": {
+        "show": false
+      },
+      "itemStyle": {
+        "color": "#c2d7fd",
+        "opacity": 0.4
+      },
+      "tooltip": {
+        "show": false
+      },
+      "data": [
+        0
+      ]
+    },
+    {
+      "type": "pie",
+      "radius": [
+        "71%",
+        "72%"
+      ],
+      "hoverAnimation": false,
+      "labelLine": {
+        "show": false
+      },
+      "itemStyle": {
+        "color": "#b7cffc",
+        "opacity": 0.4
+      },
+      "tooltip": {
+        "show": false
+      },
+      "data": [
+        0
+      ]
+    },
+    {
+      "type": "pie",
+      "name": "",
+      "radius": [
+        "20%",
+        "80%"
+      ],
+      "roseType": true,
+      "zlevel": 10,
+      "label": {
+        "position": "inside",
+        "rich": {
+          "a": {
+            "fontSize": 14,
+            "color": "#eef4ff",
+            "lineHeight": 20,
+            "align": "center"
+          }
+        },
+        "padding": [
+          0,
+          0
+        ],
+        "distanceToLabelLine": 0,
+        "alignTo": "labelLine"
+      },
+      "data": [
+        {
+          "value": 61,
+          "name": "学习前",
+          "theta1": 0,
+          "theta2": 0.4552238805970149,
+          "itemStyle": {
+            "color": {
+              "type": "radial",
+              "x": 0,
+              "y": 0.5100257840147576,
+              "r": 1,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "rgba(40,242,230,0)"
+                },
+                {
+                  "offset": 0.32,
+                  "color": "rgba(40,242,230,0)"
+                },
+                {
+                  "offset": 0.95,
+                  "color": "rgba(40,242,230,0.4)"
+                },
+                {
+                  "offset": 0.95,
+                  "color": "rgba(40,242,230,1)"
+                },
+                {
+                  "offset": 1,
+                  "color": "rgba(40,242,230,1)"
+                }
+              ],
+              "globalCoord": false
+            }
+          }
+        },
+        {
+          "value": 73,
+          "name": "学习后",
+          "theta1": 0.4552238805970149,
+          "theta2": 1,
+          "itemStyle": {
+            "color": {
+              "type": "radial",
+              "x": 0.7826930895354032,
+              "y": 0.5,
+              "r": 0.7826930895354032,
+              "colorStops": [
+                {
+                  "offset": 0,
+                  "color": "rgba(0,203,255,0)"
+                },
+                {
+                  "offset": 0.32,
+                  "color": "rgba(0,203,255,0)"
+                },
+                {
+                  "offset": 0.95,
+                  "color": "rgba(0,203,255,0.4)"
+                },
+                {
+                  "offset": 0.95,
+                  "color": "rgba(0,203,255,1)"
+                },
+                {
+                  "offset": 1,
+                  "color": "rgba(0,203,255,1)"
+                }
+              ],
+              "globalCoord": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

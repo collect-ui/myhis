@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "active_tab_text": "arr2dict",
+  "title": "arr2dict(数组转对象)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [],
+  "textarea_count": 3,
+  "textarea_values": [
+    "- key: arr2dict\n        name: 如果有children 表示有个二级数组\n        enable: \"{{must .config}}\"\n        foreach: \"[config]\"\n        children: \"children\"\n        result_name: \"children_config\"\n        field: \"[name]\"\n        value: \"[value]\"\n        save_field: config",
+    "数据列表里面，套了一个二级数组，将二级数组转对象。是转key /value 对象。\n比如参数管理",
+    "- key: arr2dict\n        enable: \"{{must .config_params}}\"\n        foreach: \"[config_params]\"\n        field: \"[name]\"\n        value: \"[value]\"\n        save_field: config"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "",
+          "arr2dict"
+        ],
+        [
+          "foreach",
+          "string",
+          "是",
+          "循环的数组"
+        ],
+        [
+          "children",
+          "string",
+          "",
+          "如果有children 表示有个二级数组，转二级字段里面对象"
+        ],
+        [
+          "result_name",
+          "string",
+          "",
+          "转换的结果对象，二级数组有效"
+        ],
+        [
+          "field",
+          "string",
+          "",
+          "字段名[你的变量]"
+        ],
+        [
+          "value",
+          "string",
+          "",
+          "字段值[你的变量]"
+        ]
+      ]
+    }
+  ],
+  "body_text": "arr2dict(数组转对象)  \n示例\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n\t\narr2dict\n\n\nforeach\n\t\nstring\n\t\n是\n\t\n循环的数组\n\n\nchildren\n\t\nstring\n\t\n\t\n如果有children 表示有个二级数组，转二级字段里面对象\n\n\nresult_name\n\t\nstring\n\t\n\t\n转换的结果对象，二级数组有效\n\n\nfield\n\t\nstring\n\t\n\t\n字段名[你的变量]\n\n\nvalue\n\t\nstring\n\t\n\t\n字段值[你的变量]\n示例\n1. 只有一级的数组\n菜单导航\n示例\n参数\n示例\n1.只有一级的数组",
+  "task_id": "H-009",
+  "source_group": "参数处理",
+  "source_title": "arr2dict",
+  "source_doc_text": "24.arr2dict\n数组转对象",
+  "read_at": "2026-05-07T08:21:22.878Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-009-source.png"
+}

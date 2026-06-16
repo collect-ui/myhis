@@ -1,0 +1,8 @@
+# 项目点路由
+service:
+  - name: "文档读取"
+    path: "ui/index.yml"
+  - name: "img 目录"
+    path: "img_dir/index.yml"
+  - name: "img"
+    path: "img/index.yml"

@@ -1,0 +1,42 @@
+service:
+  - key: upload_course_video
+    http: true
+    module: empty
+    params:
+      course_id:
+        check:
+          template: "{{must .course_id}}"
+          err_msg: "课程不能为空"
+    handler_params:
+      - key: to_local_file
+        field: "{{get_key \"local_file_dir\"}}/{{sub_str current_date_time 0 10}}/user_{{  replace (sub_str current_date_time -8 0) \":\" \"\"}}/"
+        save_field: "fileData"
+      - key: service2field
+        service:
+          service: sport.course_video_save
+          path: "[fileData.path]"
+          size: "[fileData.size]"
+        append_param: true
+      - key: param2result
+        field: "[fileData.path]"
+
+  - key: upload_course_attachment
+    name: 上传主图
+    http: true
+    module: empty
+    params:
+      type:
+        default: "course"
+      only_path:
+        default: true
+        type: bool
+    handler_params:
+      - key: to_local_file
+        field: "{{get_key \"local_file_dir\"}}/{{.type}}/images/{{sub_str current_date_time 0 10}}/"
+        save_field: "fileData"
+      - key: param2result
+        enable: "[only_path]"
+        field: "[fileData.path]"
+      - key: param2result
+        enable: "{{ not .only_path }}"
+        field: "[fileData]"

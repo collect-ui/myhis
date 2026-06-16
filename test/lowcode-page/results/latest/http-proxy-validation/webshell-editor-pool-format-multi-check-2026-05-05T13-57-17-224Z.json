@@ -1,0 +1,105 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-05T13:57:17.843Z",
+  "projects": [
+    {
+      "code": "backend",
+      "name": "月神后端"
+    },
+    {
+      "code": "autodesk",
+      "name": "后端客户端"
+    },
+    {
+      "code": "sport-ui",
+      "name": "前端代码"
+    },
+    {
+      "code": "collect-ui",
+      "name": "核心前端低代码"
+    }
+  ],
+  "targets": {
+    "sql": {
+      "project_code": "backend",
+      "project_name": "月神后端",
+      "keyword": "select",
+      "file_path": "/data/project/moongod-backend/backend/plugins/python/数据清理.sql",
+      "line_no": 4
+    },
+    "python": {
+      "project_code": "backend",
+      "project_name": "月神后端",
+      "keyword": "import",
+      "file_path": "/data/project/moongod-backend/assets_operations/area_organization_info_tree/gm_dao.py",
+      "line_no": 1
+    },
+    "yaml": {
+      "project_code": "backend",
+      "project_name": "月神后端",
+      "keyword": "module",
+      "file_path": "/data/project/moongod-backend/backend_data_service/auto_test/auto_test_record/index.yml",
+      "line_no": 4
+    }
+  },
+  "cases": {
+    "sql": {
+      "ok": true,
+      "target": {
+        "project_code": "backend",
+        "project_name": "月神后端",
+        "keyword": "select",
+        "file_path": "/data/project/moongod-backend/backend/plugins/python/数据清理.sql",
+        "line_no": 4
+      },
+      "openedUri": "file:///virtual/workspace-editor-pool-8chd66bl/slot-1.txt",
+      "openedLanguage": "sql",
+      "setOk": true,
+      "before": "select  id,name  from demo_table where id=1 and name='x' order   by id desc",
+      "after": "select\n  id,\n  name\nfrom\n  demo_table\nwhere\n  id = 1\n  and name = 'x'\norder by\n  id desc\n",
+      "changed": true,
+      "verifyPass": true,
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-format-sql-2026-05-05T13-57-17-224Z.png"
+    },
+    "python": {
+      "ok": true,
+      "target": {
+        "project_code": "backend",
+        "project_name": "月神后端",
+        "keyword": "import",
+        "file_path": "/data/project/moongod-backend/assets_operations/area_organization_info_tree/gm_dao.py",
+        "line_no": 1
+      },
+      "openedUri": "file:///virtual/workspace-editor-pool-8chd66bl/slot-2.txt",
+      "openedLanguage": "python",
+      "setOk": true,
+      "before": "def foo():\n\tprint('x')  \n\tif True:\n\t\treturn 1",
+      "after": "def foo():\n    print('x')\n    if True:\n        return 1\n",
+      "changed": true,
+      "verifyPass": true,
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-format-python-2026-05-05T13-57-17-224Z.png"
+    },
+    "yaml": {
+      "ok": true,
+      "target": {
+        "project_code": "backend",
+        "project_name": "月神后端",
+        "keyword": "module",
+        "file_path": "/data/project/moongod-backend/backend_data_service/auto_test/auto_test_record/index.yml",
+        "line_no": 4
+      },
+      "openedUri": "file:///virtual/workspace-editor-pool-8chd66bl/slot-3.txt",
+      "openedLanguage": "yaml",
+      "setOk": true,
+      "before": "root:\n\tchild: value  \n\tlist:\n\t\t- a\n\t\t- b  ",
+      "after": "root:\n  child: value\n  list:\n    - a\n    - b\n",
+      "changed": true,
+      "verifyPass": true,
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-format-yaml-2026-05-05T13-57-17-224Z.png"
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true
+}

@@ -1,0 +1,17 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "openedWorkspace": true,
+  "hasUnexpectedErrorText": false,
+  "hasSourceTab": false,
+  "hasHttpTab": false,
+  "drawerVisible": true,
+  "httpTreeVisible": false,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "steps": [
+    "goto ok"
+  ],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-headless-smoke-2026-05-05T12-34-56-580Z.png",
+  "pass": false
+}

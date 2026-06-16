@@ -1,0 +1,56 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "modelsBeforeSend": [
+    {
+      "uri": "file:///workspace-http-console-body-default.json",
+      "len": 2,
+      "preview": "{}"
+    },
+    {
+      "uri": "file:///workspace-http-console-response-default.json",
+      "len": 0,
+      "preview": ""
+    }
+  ],
+  "modelsAfterSend": [
+    {
+      "uri": "file:///workspace-http-console-body-default.json",
+      "len": 2,
+      "preview": "{}"
+    },
+    {
+      "uri": "file:///workspace-http-console-response-default.json",
+      "len": 112,
+      "preview": "{\n  \"success\": false,\n  \"code\": \"NO_RESPONSE\",\n  \"msg\": \"服务器无响应，请检查服务是否运行\",\n  \"data\": null,\n  \"response\": null\n}"
+    }
+  ],
+  "modePickBackend": false,
+  "methodPickGet": true,
+  "controls": {
+    "url": true,
+    "send": true,
+    "mode": true,
+    "method": true
+  },
+  "cases": {
+    "frontend": {
+      "ok": true,
+      "responseLen": 63419,
+      "preview": "{\n  \"success\": true,\n  \"code\": \"0\",\n  \"msg\": \"执行成功\",\n  \"data\": [\n    {\n      \"children\": [\n        {\n          \"cn_title\": \"tset\",\n          \"collect_doc_id\": \"61ccc2a5-df6f-41b2-ac55-b42e3ea23eb6\",\n          \"display_title\": \"登录(tset)\",\n  "
+    },
+    "backend": {
+      "ok": false,
+      "responseLen": 112,
+      "preview": "{\n  \"success\": false,\n  \"code\": \"NO_RESPONSE\",\n  \"msg\": \"服务器无响应，请检查服务是否运行\",\n  \"data\": null,\n  \"response\": null\n}"
+    }
+  },
+  "consoleErrors": [
+    "Access to XMLHttpRequest at 'https://postman-echo.com/get?source=custom-console-flow-2&source=custom-console-flow-2' from origin 'http://192.168.232.130:8015' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "请求失败: F2",
+    "Failed to load resource: net::ERR_FAILED"
+  ],
+  "failedRequests": [
+    "GET https://postman-echo.com/get?source=custom-console-flow-2&source=custom-console-flow-2 => net::ERR_FAILED"
+  ],
+  "pass": false
+}

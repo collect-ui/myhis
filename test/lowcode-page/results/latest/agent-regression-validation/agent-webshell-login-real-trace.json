@@ -1,0 +1,11 @@
+{
+  "ok": false,
+  "prompt": "请帮我看看webshell 登录逻辑",
+  "assistantText": "已确认 webshell 登录链路：\n\n入口",
+  "traceText": "queued\nrun_id: agent_run_3463b980-a864-4872-a9d6-d0f7e9130b1d · 2026-05-22 15:16:59\nqueued\n无工具调用记录",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailures": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-webshell-login-real-trace.png",
+  "bodyTail": "ive\n13:02\n新会话 A\nactive\n13:01\nmain.go 代码块贴底测试 20260522041416\nactive\n12:14\n新会话 A\nactive\n12:04\n新会话 A\nactive\n11:53\n新会话 A\nactive\n11:43\n新会话 A\nactive\n11:38\n新会话 A\nactive\n11:18\nmock markdown\nactive\n11:03\n请全部读取 /data/project/\nactive\n10:57\n请使用工具读取 /data/projec\nactive\n10:56\n请使用工具读取 /data/projec\nactive\n10:50\n请使用工具读取 /data/projec\nactive\n10:50\nhello\nactive\n10:49\nhello\nactive\n10:48\n更早\n新会话 A\nactive\n05-19\n新会话 A\nactive\n05-19\n新会话 A\nactive\n05-19\n新会话 A\nactive\n05-19\n新会话 A\nactive\n05-19\n新会话 A\nactive\n05-19\n新会话 A\nactive\n05-19\n日志定位助手\nactive\n05-15\n新会话 B\nactive\n05-14\nAgent 测试回归页\nactive\n05-14\n你住在哪里\nactive\n05-03\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\nAgent 测试回归页\nactive\n04-23\n新会话 A\nSkill MCP 已连接\n概要：A Pane 正在流式输出...\n左右\n上下\nSession A\nTrace Log\nACTIVE\n新会话 A\nA Pane 正在流式输出...\ngpt-5-mini\nU\n用户 · 2026-05-22 07:16:59\n\n请帮我看看webshell 登录逻辑\n\nAI\nAgent · 2026-05-22 07:16:59\n\n已确认 webshell 登录链路：\n\n入口\n服务器\n回归定位\nConsole 检查\n验收清单\nWebshell 登录\n提示词设置\n用户提示词\n图片\nEnter 换行，Ctrl+Enter 发送\n发送"
+}

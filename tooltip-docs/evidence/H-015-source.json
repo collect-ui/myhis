@@ -1,0 +1,72 @@
+{
+  "ok": true,
+  "active_tab_text": "combine_array",
+  "title": "combine_array(数组结合数组)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "将数组拼接到另外一个数组中去，将右边的数据拼接到左边"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "- key: combine_array\n        enable: \"{{must .width_doc}}\"\n        foreach: \"[group_list]\"\n        field: \"[doc_group_id]\"\n        right: \"[doc_list]\"\n        right_field: \"[parent_dir]\"\n        children: \"children\"",
+    "一般利用2个服务结合，将一个数字拼接到另外一个数组中取，比如参数管理，二级数组"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "combine_array"
+        ],
+        [
+          "foreach",
+          "string",
+          "是",
+          "左边的数组"
+        ],
+        [
+          "field",
+          "string",
+          "是",
+          "左边关键字段"
+        ],
+        [
+          "right",
+          "string",
+          "是",
+          "右边的数组"
+        ],
+        [
+          "right_field",
+          "string",
+          "是",
+          "右边的关键字段"
+        ],
+        [
+          "children",
+          "string",
+          "是",
+          "生成的字段名称"
+        ]
+      ]
+    }
+  ],
+  "body_text": "combine_array(数组结合数组)  \n示例\n将数组拼接到另外一个数组中去，将右边的数据拼接到左边\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\ncombine_array\n\n\nforeach\n\t\nstring\n\t\n是\n\t\n左边的数组\n\n\nfield\n\t\nstring\n\t\n是\n\t\n左边关键字段\n\n\nright\n\t\nstring\n\t\n是\n\t\n右边的数组\n\n\nright_field\n\t\nstring\n\t\n是\n\t\n右边的关键字段\n\n\nchildren\n\t\nstring\n\t\n是\n\t\n生成的字段名称\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-015",
+  "source_group": "参数处理",
+  "source_title": "combine_array",
+  "source_doc_text": "27.combine_array\n数组结合数组",
+  "read_at": "2026-05-07T08:21:48.195Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-015-source.png"
+}

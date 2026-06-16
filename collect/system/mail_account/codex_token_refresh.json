@@ -1,0 +1,14 @@
+{
+  "url": "{{.codex_token_url}}",
+  "method": "post",
+  "header": {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  "result_json": true,
+  "accept_all_status": true,
+  "data": {
+    "grant_type": "refresh_token",
+    "refresh_token": "[refresh_token]",
+    "client_id": "[codex_client_id]"
+  }
+}

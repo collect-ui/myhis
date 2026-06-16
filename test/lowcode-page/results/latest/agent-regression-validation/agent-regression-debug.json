@@ -1,0 +1,22 @@
+{
+  "before": {
+    "hasMenuState": true,
+    "paneCount": 1,
+    "tabCount": 2,
+    "body": "collect\n首页\n大屏管理\n课程管理\n招投标\n运维管理\n文档\n系统管理\nAgent测试回归\nAgent Chat\n30 sessions\n新建会话\n查 询\n重 置\n今天\n日志定位助手\nagent-regression-browser-20260513-b\n2026-05-15 09:40:33\nresp_0efcf1afc374786c016a067990606081919e016b65ed591bc6\n主回归会话\nagent-regression-browser-20260513-a\n2026-05-15 09:40:13\nresp_0d20236cf0f4411e016a06797c42e88191a797a7df539b11e7\n新会话 B\nagent-regression-b-1778708181092\n2026-05-14 05:36:44\nresp_0c2b5b90440f3512016a04eeebc05881918d6d0e46f51a54d9\nAgent 测试回归页\nagent-regression-ctrlenter-test\n2026-05-14 05:36:06\nresp_0e1eb7e2a5c08430016a04eec629c88191999462966d5a618b\n你住在哪里\nagent-regression-chat-1776936319415\n2026-05-03 07:28:53\nresp_0a4107d2c84b9fb30169f688b43ea48191be6805d82f36f461\nAgent 测试回归页\nagent-left-flow-1776931981092\n2026-04-23 16:13:01\n暂无摘要\nAgent 测试回归页\nagent-regression-browser-20260423080724\n2026-04-23 16:07:28\nresp_0037cd1bab8d354b0169e9d33ff2f48197a1c5b286f75a6500\nAgent 测试回归页\nagent-regression-bottom-1776931020203\n2026-04-23 15:57:03\nresp_0b5338d6d8ccc5c50169e9d0ce85048196b5a1bc28bedaa2d2\nAg"
+  },
+  "afterRight": {
+    "menu": true,
+    "menuText": "左右分屏\n上下分屏",
+    "hasMenuState": true,
+    "paneCount": 1
+  },
+  "afterClick": {
+    "paneCount": 1,
+    "hasB": false,
+    "splitText": null
+  },
+  "logs": [
+    "pageerror: TypeError: Cannot read properties of undefined (reading 'updateValues')\n    at choose (eval at Fv (http://127.0.0.1:8015/collect-ui/assets/index-DhKegCZI.js:656:6540), <anonymous>:3:506)\n    at HTMLDivElement.eval (eval at Fv (http://127.0.0.1:8015/collect-ui/assets/index-DhKegCZI.js:656:6540), <anonymous>:3:1544)"
+  ]
+}

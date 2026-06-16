@@ -1,0 +1,46 @@
+{
+  "ok": true,
+  "active_tab_text": "result2map",
+  "title": "result2map(结果转字段)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [],
+  "textarea_count": 2,
+  "textarea_values": [
+    "无",
+    "就是将结果，外层在包一层对象。\n这个用比较少，一般可能利用params2result。"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "params2result"
+        ],
+        [
+          "field",
+          "template",
+          "是",
+          "结果字段的key"
+        ]
+      ]
+    }
+  ],
+  "body_text": "result2map(结果转字段)  \n示例\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nparams2result\n\n\nfield\n\t\ntemplate\n\t\n是\n\t\n结果字段的key\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-013",
+  "source_group": "参数处理",
+  "source_title": "result2map",
+  "source_doc_text": "17.result2map\n结果转字段",
+  "read_at": "2026-05-07T08:21:39.729Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-013-source.png"
+}

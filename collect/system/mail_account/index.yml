@@ -1,0 +1,1016 @@
+service:
+  - key: mail_account_query
+    http: true
+    module: sql
+    table: mail_account
+    params:
+      mail_account_id:
+      email_name:
+      email_name_list:
+        default: []
+      email_name_list_sql:
+        default: ""
+      search:
+        template: "{{ if .search }}%{{.search}}%{{ end }}"
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 100
+      start:
+        template: " ({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+      count:
+        default: true
+      to_obj:
+        default: false
+    data_file: query.sql
+    count_file: count.sql
+    pagination: pagination
+    count: "[count]"
+    result_handler:
+      - key: arr2obj
+        enable: "[to_obj]"
+
+  - key: mail_account_bulk_create
+    http: true
+    module: bulk_create
+    table: mail_account
+    params:
+      mail_account_list:
+        check:
+          template: "{{must .mail_account_list}}"
+          err_msg: 邮箱列表不能为空
+    handler_params:
+      - key: update_array
+        foreach: "[mail_account_list]"
+        item: item
+        fields:
+          - field: mail_account_id
+            template: "{{uuid}}"
+          - field: is_current_running
+            template: "0"
+          - field: proton_registered
+            template: "0"
+          - field: proton_password
+            template: "Zhangzhi@888"
+          - field: create_time
+            template: "{{current_date_time}}"
+          - field: create_user
+            template: "{{.session_user_id}}"
+          - field: is_delete
+            template: "0"
+    model_field: "[mail_account_list]"
+
+  - key: mail_account_update
+    http: true
+    module: model_update
+    table: mail_account
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+    filter:
+      mail_account_id: "[mail_account_id]"
+
+  - key: mail_account_clear_current_running
+    module: model_update
+    table: mail_account
+    params:
+      is_current_running:
+        default: "0"
+      current_run_mark_time:
+        default: ""
+    filter:
+      is_current_running: "1"
+
+  - key: mail_account_save_settings
+    http: true
+    module: empty
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+      is_current_running:
+        default: "0"
+      is_disabled:
+        default: "0"
+      proton_registered:
+        default: "0"
+      proton_email:
+        default: ""
+      proton_password:
+        default: "Zhangzhi@888"
+      current_run_mark_time:
+        template: "{{current_date_time}}"
+      current_run_mark_time_for_save:
+        default: ""
+    handler_params:
+      - key: update_field
+        fields:
+          - field: current_run_mark_time_for_save
+            template: "{{if eq (printf \"%v\" .is_current_running) \"1\"}}{{.current_run_mark_time}}{{end}}"
+      - key: service2field
+        enable: "{{eq (printf \"%v\" .is_current_running) \"1\"}}"
+        service:
+          service: system.mail_account_clear_current_running
+      - key: service2field
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          is_current_running: "[is_current_running]"
+          is_disabled: "[is_disabled]"
+          current_run_mark_time: "[current_run_mark_time_for_save]"
+          proton_registered: "[proton_registered]"
+          proton_email: "[proton_email]"
+          proton_password: "[proton_password]"
+
+  - key: mail_account_codex_device_code_http
+    module: http
+    http: true
+    params:
+      codex_domain:
+        template: "{{if .codex_domain}}{{.codex_domain}}{{else}}{{if (get_key `codex_domain`)}}{{get_key `codex_domain`}}{{else}}auth.openai.com{{end}}{{end}}"
+      codex_device_auth_url:
+        template: "{{if .codex_device_auth_url}}{{.codex_device_auth_url}}{{else}}https://{{.codex_domain}}/api/accounts/deviceauth/usercode{{end}}"
+      codex_client_id:
+        template: "{{if .codex_client_id}}{{.codex_client_id}}{{else}}{{get_key `codex_client_id`}}{{end}}"
+      codex_scope:
+        template: "{{if .codex_scope}}{{.codex_scope}}{{else}}{{if (get_key `codex_scope`)}}{{get_key `codex_scope`}}{{else}}openid profile email offline_access{{end}}{{end}}"
+      codex_login_hint:
+        default: ""
+    http_json: codex_device_auth.json
+    success: "{{ if and .device_auth_id .user_code }}true{{ else }}false{{ end }}"
+
+  - key: mail_account_codex_token_http
+    module: http
+    http: true
+    params:
+      codex_domain:
+        template: "{{if .codex_domain}}{{.codex_domain}}{{else}}{{if (get_key `codex_domain`)}}{{get_key `codex_domain`}}{{else}}auth.openai.com{{end}}{{end}}"
+      codex_device_auth_complete_url:
+        template: "{{if .codex_device_auth_complete_url}}{{.codex_device_auth_complete_url}}{{else}}https://{{.codex_domain}}/api/accounts/deviceauth/token{{end}}"
+      codex_client_id:
+        template: "{{if .codex_client_id}}{{.codex_client_id}}{{else}}{{get_key `codex_client_id`}}{{end}}"
+      device_auth_id:
+        check:
+          template: "{{must .device_auth_id}}"
+          err_msg: device_auth_id不能为空
+      user_code:
+        check:
+          template: "{{must .user_code}}"
+          err_msg: user_code不能为空
+    http_json: codex_device_auth_complete.json
+    success: "{{ if and .authorization_code .code_verifier }}true{{ else }}false{{ end }}"
+
+  - key: mail_account_codex_exchange_token_http
+    module: http
+    http: true
+    params:
+      codex_domain:
+        template: "{{if .codex_domain}}{{.codex_domain}}{{else}}{{if (get_key `codex_domain`)}}{{get_key `codex_domain`}}{{else}}auth.openai.com{{end}}{{end}}"
+      codex_token_url:
+        template: "{{if .codex_token_url}}{{.codex_token_url}}{{else}}https://{{.codex_domain}}/oauth/token{{end}}"
+      codex_client_id:
+        template: "{{if .codex_client_id}}{{.codex_client_id}}{{else}}{{get_key `codex_client_id`}}{{end}}"
+      redirect_uri:
+        template: "{{if .redirect_uri}}{{.redirect_uri}}{{else}}https://{{.codex_domain}}/deviceauth/callback{{end}}"
+      authorization_code:
+        check:
+          template: "{{must .authorization_code}}"
+          err_msg: authorization_code不能为空
+      code_verifier:
+        check:
+          template: "{{must .code_verifier}}"
+          err_msg: code_verifier不能为空
+    http_json: codex_token_exchange.json
+    success: "{{ if or .access_token .refresh_token }}true{{ else }}false{{ end }}"
+
+  - key: mail_account_codex_refresh_token_http
+    module: http
+    http: true
+    params:
+      codex_domain:
+        template: "{{if .codex_domain}}{{.codex_domain}}{{else}}{{if (get_key `codex_domain`)}}{{get_key `codex_domain`}}{{else}}auth.openai.com{{end}}{{end}}"
+      codex_token_url:
+        template: "{{if .codex_token_url}}{{.codex_token_url}}{{else}}https://{{.codex_domain}}/oauth/token{{end}}"
+      codex_client_id:
+        template: "{{if .codex_client_id}}{{.codex_client_id}}{{else}}{{get_key `codex_client_id`}}{{end}}"
+      refresh_token:
+        check:
+          template: "{{must .refresh_token}}"
+          err_msg: refresh_token不能为空
+    http_json: codex_token_refresh.json
+    success: "{{ if .access_token }}true{{ else }}false{{ end }}"
+
+  - key: mail_account_codex_usage_http
+    module: http
+    http: true
+    params:
+      codex_usage_url:
+        template: "{{if .codex_usage_url}}{{.codex_usage_url}}{{else}}https://chatgpt.com/backend-api/wham/usage{{end}}"
+      access_token:
+        check:
+          template: "{{must .access_token}}"
+          err_msg: access_token不能为空
+      account_id:
+        default: ""
+    http_json: codex_usage.json
+    success: "{{ if .plan_type }}true{{ else }}{{if .user_id}}true{{else}}false{{end}}{{ end }}"
+
+  - key: mail_account_codex_generate_and_save
+    http: true
+    module: empty
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+      codex_domain:
+        template: "{{if .codex_domain}}{{.codex_domain}}{{else}}{{if (get_key `codex_domain`)}}{{get_key `codex_domain`}}{{else}}auth.openai.com{{end}}{{end}}"
+      codex_scope:
+        default: "openid profile email offline_access"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.mail_account_query
+          mail_account_id: "[mail_account_id]"
+          to_obj: true
+          pagination: false
+          count: false
+        save_field: current_mail_account
+      - key: service2field
+        service:
+          service: system.mail_account_codex_device_code_http
+          codex_login_hint: "[current_mail_account.email_name]"
+          codex_scope: "[codex_scope]"
+        save_field: codex_device_auth_data
+      - key: update_field
+        fields:
+          - field: codex_device_auth_id
+            template: "{{if .codex_device_auth_data.device_auth_id}}{{.codex_device_auth_data.device_auth_id}}{{end}}"
+          - field: codex_device_code
+            template: "{{if .codex_device_auth_data.device_auth_id}}{{.codex_device_auth_data.device_auth_id}}{{end}}"
+          - field: codex_user_code
+            template: "{{if .codex_device_auth_data.user_code}}{{.codex_device_auth_data.user_code}}{{end}}"
+          - field: codex_verification_uri
+            template: "https://{{.codex_domain}}/codex/device"
+          - field: codex_verification_uri_complete
+            template: "https://{{.codex_domain}}/codex/device"
+          - field: codex_interval
+            template: "{{if .codex_device_auth_data.interval}}{{.codex_device_auth_data.interval}}{{end}}"
+          - field: codex_expires_in
+            template: "{{if .codex_device_auth_data.expires_at}}{{.codex_device_auth_data.expires_at}}{{end}}"
+          - field: codex_scope
+            template: "{{if .codex_device_auth_data.scope}}{{.codex_device_auth_data.scope}}{{else}}{{.codex_scope}}{{end}}"
+          - field: codex_auth_status
+            template: "device_code_generated"
+          - field: codex_auth_msg
+            template: "{{if .codex_device_auth_data.message}}{{.codex_device_auth_data.message}}{{else}}请在浏览器完成授权后点击回填Token{{end}}"
+          - field: codex_last_auth_time
+            template: "{{current_date_time}}"
+          - field: codex_auth_json
+            template: "{\"device_auth_id\":\"{{if .codex_device_auth_data.device_auth_id}}{{.codex_device_auth_data.device_auth_id}}{{end}}\",\"user_code\":\"{{if .codex_device_auth_data.user_code}}{{.codex_device_auth_data.user_code}}{{end}}\",\"verification_uri\":\"https://{{.codex_domain}}/codex/device\",\"interval\":\"{{if .codex_device_auth_data.interval}}{{.codex_device_auth_data.interval}}{{end}}\",\"expires_at\":\"{{if .codex_device_auth_data.expires_at}}{{.codex_device_auth_data.expires_at}}{{end}}\",\"scope\":\"{{if .codex_device_auth_data.scope}}{{.codex_device_auth_data.scope}}{{else}}{{.codex_scope}}{{end}}\"}"
+      - key: service2field
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          codex_device_auth_id: "[codex_device_auth_id]"
+          codex_device_code: "[codex_device_code]"
+          codex_user_code: "[codex_user_code]"
+          codex_verification_uri: "[codex_verification_uri]"
+          codex_verification_uri_complete: "[codex_verification_uri_complete]"
+          codex_interval: "[codex_interval]"
+          codex_expires_in: "[codex_expires_in]"
+          codex_scope: "[codex_scope]"
+          codex_auth_status: "[codex_auth_status]"
+          codex_auth_msg: "[codex_auth_msg]"
+          codex_last_auth_time: "[codex_last_auth_time]"
+          codex_auth_json: "[codex_auth_json]"
+      - key: params2result
+        fields:
+          - from: "[codex_device_auth_data]"
+            to: codex_device_auth_data
+          - from: "[codex_device_auth_id]"
+            to: codex_device_auth_id
+          - from: "[codex_device_code]"
+            to: codex_device_code
+          - from: "[codex_user_code]"
+            to: codex_user_code
+          - from: "[codex_verification_uri]"
+            to: codex_verification_uri
+          - from: "[codex_verification_uri_complete]"
+            to: codex_verification_uri_complete
+          - from: "[codex_interval]"
+            to: codex_interval
+          - from: "[codex_expires_in]"
+            to: codex_expires_in
+          - from: "[codex_scope]"
+            to: codex_scope
+          - from: "[codex_auth_status]"
+            to: codex_auth_status
+          - from: "[codex_auth_msg]"
+            to: codex_auth_msg
+
+  - key: mail_account_codex_query_usage_and_save
+    http: true
+    module: empty
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+      try_backfill_token:
+        default: false
+      try_refresh_token:
+        default: true
+    handler_params:
+      - key: service2field
+        service:
+          service: system.mail_account_query
+          mail_account_id: "[mail_account_id]"
+          to_obj: true
+          pagination: false
+          count: false
+        save_field: current_mail_account
+      - key: service2field
+        enable: "{{and (eq (printf \"%v\" .try_backfill_token) \"true\") (eq (printf \"%v\" .current_mail_account.codex_access_token) \"\") (ne (printf \"%v\" .current_mail_account.codex_device_auth_id) \"\") (ne (printf \"%v\" .current_mail_account.codex_user_code) \"\")}}"
+        service:
+          service: system.mail_account_codex_backfill_token
+          mail_account_id: "[mail_account_id]"
+      - key: service2field
+        enable: "{{eq (printf \"%v\" .try_backfill_token) \"true\"}}"
+        service:
+          service: system.mail_account_query
+          mail_account_id: "[mail_account_id]"
+          to_obj: true
+          pagination: false
+          count: false
+        save_field: current_mail_account
+      - key: service2field
+        enable: "{{and (eq (printf \"%v\" .try_refresh_token) \"true\") (ne (printf \"%v\" .current_mail_account.codex_refresh_token) \"\")}}"
+        service:
+          service: system.mail_account_codex_refresh_and_save
+          mail_account_id: "[mail_account_id]"
+      - key: service2field
+        enable: "{{eq (printf \"%v\" .try_refresh_token) \"true\"}}"
+        service:
+          service: system.mail_account_query
+          mail_account_id: "[mail_account_id]"
+          to_obj: true
+          pagination: false
+          count: false
+        save_field: current_mail_account
+      - key: check_field
+        fields:
+          - field: "[current_mail_account.codex_access_token]"
+            template: "{{must .current_mail_account.codex_access_token}}"
+            err_msg: access_token为空，请先生成并回填Token后再查询用量
+      - key: service2field
+        service:
+          service: system.mail_account_codex_usage_http
+          access_token: "[current_mail_account.codex_access_token]"
+          account_id: "[current_mail_account.codex_account_id]"
+        save_field: codex_usage_data
+      - key: update_field
+        fields:
+          - field: codex_usage_json
+            template: "{{to_json .codex_usage_data}}"
+          - field: codex_usage_plan_type
+            template: "{{if .codex_usage_data.plan_type}}{{.codex_usage_data.plan_type}}{{else}}{{.current_mail_account.codex_usage_plan_type}}{{end}}"
+          - field: codex_usage_allowed
+            template: "{{if .codex_usage_data.rate_limit}}{{if .codex_usage_data.rate_limit.allowed}}{{.codex_usage_data.rate_limit.allowed}}{{else}}false{{end}}{{else}}{{.current_mail_account.codex_usage_allowed}}{{end}}"
+          - field: codex_usage_limit_reached
+            template: "{{if .codex_usage_data.rate_limit}}{{if .codex_usage_data.rate_limit.limit_reached}}{{.codex_usage_data.rate_limit.limit_reached}}{{else}}false{{end}}{{else}}{{.current_mail_account.codex_usage_limit_reached}}{{end}}"
+          - field: codex_usage_used_percent
+            template: "{{if .codex_usage_data.rate_limit}}{{if .codex_usage_data.rate_limit.primary_window}}{{.codex_usage_data.rate_limit.primary_window.used_percent}}{{else}}{{.current_mail_account.codex_usage_used_percent}}{{end}}{{else}}{{.current_mail_account.codex_usage_used_percent}}{{end}}"
+          - field: codex_usage_reset_at
+            template: "{{if .codex_usage_data.rate_limit}}{{if .codex_usage_data.rate_limit.primary_window}}{{.codex_usage_data.rate_limit.primary_window.reset_at}}{{else}}{{.current_mail_account.codex_usage_reset_at}}{{end}}{{else}}{{.current_mail_account.codex_usage_reset_at}}{{end}}"
+          - field: codex_usage_last_query_time
+            template: "{{current_date_time}}"
+          - field: codex_usage_msg
+            template: "{{if .codex_usage_data.rate_limit_reached_type}}{{.codex_usage_data.rate_limit_reached_type.type}}{{else}}usage_query_ok{{end}}"
+      - key: service2field
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          codex_usage_json: "[codex_usage_json]"
+          codex_usage_plan_type: "[codex_usage_plan_type]"
+          codex_usage_allowed: "[codex_usage_allowed]"
+          codex_usage_limit_reached: "[codex_usage_limit_reached]"
+          codex_usage_used_percent: "[codex_usage_used_percent]"
+          codex_usage_reset_at: "[codex_usage_reset_at]"
+          codex_usage_last_query_time: "[codex_usage_last_query_time]"
+          codex_usage_msg: "[codex_usage_msg]"
+      - key: params2result
+        fields:
+          - from: "[codex_usage_data]"
+            to: codex_usage_data
+          - from: "[codex_usage_plan_type]"
+            to: codex_usage_plan_type
+          - from: "[codex_usage_allowed]"
+            to: codex_usage_allowed
+          - from: "[codex_usage_limit_reached]"
+            to: codex_usage_limit_reached
+          - from: "[codex_usage_used_percent]"
+            to: codex_usage_used_percent
+          - from: "[codex_usage_reset_at]"
+            to: codex_usage_reset_at
+          - from: "[codex_usage_last_query_time]"
+            to: codex_usage_last_query_time
+          - from: "[codex_usage_msg]"
+            to: codex_usage_msg
+
+  - key: mail_account_codex_refresh_and_save
+    http: true
+    module: empty
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.mail_account_query
+          mail_account_id: "[mail_account_id]"
+          to_obj: true
+          pagination: false
+          count: false
+        save_field: current_mail_account
+      - key: check_field
+        fields:
+          - field: "[current_mail_account.codex_refresh_token]"
+            template: "{{must .current_mail_account.codex_refresh_token}}"
+            err_msg: refresh_token为空，请重新完成登录授权
+      - key: service2field
+        service:
+          service: system.mail_account_codex_refresh_token_http
+          refresh_token: "[current_mail_account.codex_refresh_token]"
+        save_field: codex_token_data
+      - key: update_field
+        fields:
+          - field: codex_access_token
+            template: "{{if .codex_token_data.access_token}}{{.codex_token_data.access_token}}{{else}}{{.current_mail_account.codex_access_token}}{{end}}"
+          - field: codex_refresh_token
+            template: "{{if .codex_token_data.refresh_token}}{{.codex_token_data.refresh_token}}{{else}}{{.current_mail_account.codex_refresh_token}}{{end}}"
+          - field: codex_id_token
+            template: "{{if .codex_token_data.id_token}}{{.codex_token_data.id_token}}{{else}}{{.current_mail_account.codex_id_token}}{{end}}"
+          - field: codex_token_type
+            template: "{{if .codex_token_data.token_type}}{{.codex_token_data.token_type}}{{else}}{{.current_mail_account.codex_token_type}}{{end}}"
+          - field: codex_scope
+            template: "{{if .codex_token_data.scope}}{{.codex_token_data.scope}}{{else}}{{.current_mail_account.codex_scope}}{{end}}"
+          - field: codex_expires_in
+            template: "{{if .codex_token_data.expires_in}}{{.codex_token_data.expires_in}}{{else}}{{.current_mail_account.codex_expires_in}}{{end}}"
+          - field: codex_account_id
+            template: "{{if .codex_token_data.account_id}}{{.codex_token_data.account_id}}{{else}}{{if (jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{if (jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{.current_mail_account.codex_account_id}}{{end}}{{end}}{{end}}"
+          - field: codex_expires_at
+            template: "{{if .codex_token_data.expires_at}}{{.codex_token_data.expires_at}}{{else}}{{.current_mail_account.codex_expires_at}}{{end}}"
+          - field: codex_auth_status
+            template: "{{if .codex_token_data.error}}{{if (str_contains (printf \"%v\" .codex_token_data.error.code) \"refresh_token_reused\")}}need_relogin{{else}}token_refresh_error{{end}}{{else}}token_refreshed{{end}}"
+          - field: codex_auth_msg
+            template: "{{if .codex_token_data.error}}{{.codex_token_data.error.message}}{{else if .codex_token_data.message}}{{.codex_token_data.message}}{{else}}Token刷新完成{{end}}"
+          - field: codex_last_auth_time
+            template: "{{current_date_time}}"
+          - field: codex_auth_json
+            template: "{\"device_auth_id\":\"{{if .current_mail_account.codex_device_auth_id}}{{.current_mail_account.codex_device_auth_id}}{{end}}\",\"user_code\":\"{{if .current_mail_account.codex_user_code}}{{.current_mail_account.codex_user_code}}{{end}}\",\"authorization_code\":\"{{if .current_mail_account.codex_authorization_code}}{{.current_mail_account.codex_authorization_code}}{{end}}\",\"code_verifier\":\"{{if .current_mail_account.codex_code_verifier}}{{.current_mail_account.codex_code_verifier}}{{end}}\",\"access_token\":\"{{if .codex_token_data.access_token}}{{.codex_token_data.access_token}}{{else}}{{.current_mail_account.codex_access_token}}{{end}}\",\"refresh_token\":\"{{if .codex_token_data.refresh_token}}{{.codex_token_data.refresh_token}}{{else}}{{.current_mail_account.codex_refresh_token}}{{end}}\",\"id_token\":\"{{if .codex_token_data.id_token}}{{.codex_token_data.id_token}}{{else}}{{.current_mail_account.codex_id_token}}{{end}}\",\"token_type\":\"{{if .codex_token_data.token_type}}{{.codex_token_data.token_type}}{{else}}{{.current_mail_account.codex_token_type}}{{end}}\",\"scope\":\"{{if .codex_token_data.scope}}{{.codex_token_data.scope}}{{else}}{{.current_mail_account.codex_scope}}{{end}}\",\"expires_in\":\"{{if .codex_token_data.expires_in}}{{.codex_token_data.expires_in}}{{else}}{{.current_mail_account.codex_expires_in}}{{end}}\",\"expires_at\":\"{{if .codex_token_data.expires_at}}{{.codex_token_data.expires_at}}{{else}}{{.current_mail_account.codex_expires_at}}{{end}}\",\"account_id\":\"{{if .codex_token_data.account_id}}{{.codex_token_data.account_id}}{{else}}{{if (jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{if (jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{.current_mail_account.codex_account_id}}{{end}}{{end}}{{end}}\"}"
+      - key: service2field
+        enable: "{{not .codex_token_data.error}}"
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          codex_access_token: "[codex_access_token]"
+          codex_refresh_token: "[codex_refresh_token]"
+          codex_id_token: "[codex_id_token]"
+          codex_token_type: "[codex_token_type]"
+          codex_scope: "[codex_scope]"
+          codex_expires_in: "[codex_expires_in]"
+          codex_account_id: "[codex_account_id]"
+          codex_expires_at: "[codex_expires_at]"
+          codex_auth_status: "[codex_auth_status]"
+          codex_auth_msg: "[codex_auth_msg]"
+          codex_last_auth_time: "[codex_last_auth_time]"
+          codex_auth_json: "[codex_auth_json]"
+      - key: service2field
+        enable: "{{and .codex_token_data.error (str_contains (printf \"%v\" .codex_token_data.error.code) \"refresh_token_reused\")}}"
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          codex_auth_status: "[codex_auth_status]"
+          codex_auth_msg: "[codex_auth_msg]"
+          codex_last_auth_time: "[codex_last_auth_time]"
+      - key: params2result
+        fields:
+          - from: "[codex_token_data]"
+            to: codex_token_data
+          - from: "[codex_access_token]"
+            to: codex_access_token
+          - from: "[codex_refresh_token]"
+            to: codex_refresh_token
+          - from: "[codex_id_token]"
+            to: codex_id_token
+          - from: "[codex_token_type]"
+            to: codex_token_type
+          - from: "[codex_scope]"
+            to: codex_scope
+          - from: "[codex_expires_in]"
+            to: codex_expires_in
+          - from: "[codex_account_id]"
+            to: codex_account_id
+          - from: "[codex_expires_at]"
+            to: codex_expires_at
+          - from: "[codex_auth_status]"
+            to: codex_auth_status
+          - from: "[codex_auth_msg]"
+            to: codex_auth_msg
+
+  - key: mail_account_codex_backfill_token
+    http: true
+    module: empty
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: system.mail_account_query
+          mail_account_id: "[mail_account_id]"
+          to_obj: true
+          pagination: false
+          count: false
+        save_field: current_mail_account
+      - key: check_field
+        fields:
+          - field: "[current_mail_account.codex_device_auth_id]"
+            template: "{{must .current_mail_account.codex_device_auth_id}}"
+            err_msg: 请先生成Device Code
+          - field: "[current_mail_account.codex_user_code]"
+            template: "{{must .current_mail_account.codex_user_code}}"
+            err_msg: user_code不能为空
+      - key: service2field
+        service:
+          service: system.mail_account_codex_token_http
+          device_auth_id: "[current_mail_account.codex_device_auth_id]"
+          user_code: "[current_mail_account.codex_user_code]"
+        save_field: codex_complete_data
+      - key: update_field
+        fields:
+          - field: codex_authorization_code
+            template: "{{if .codex_complete_data.authorization_code}}{{.codex_complete_data.authorization_code}}{{else}}{{end}}"
+          - field: codex_code_verifier
+            template: "{{if .codex_complete_data.code_verifier}}{{.codex_complete_data.code_verifier}}{{else}}{{end}}"
+          - field: codex_auth_status
+            template: "{{if and .codex_complete_data.authorization_code .codex_complete_data.code_verifier}}device_login_completed{{else}}device_code_generated{{end}}"
+      - key: service2field
+        service:
+          service: system.mail_account_codex_exchange_token_http
+          authorization_code: "[codex_authorization_code]"
+          code_verifier: "[codex_code_verifier]"
+        save_field: codex_token_data
+      - key: update_field
+        fields:
+          - field: codex_access_token
+            template: "{{if .codex_token_data.access_token}}{{.codex_token_data.access_token}}{{else}}{{.current_mail_account.codex_access_token}}{{end}}"
+          - field: codex_refresh_token
+            template: "{{if .codex_token_data.refresh_token}}{{.codex_token_data.refresh_token}}{{else}}{{.current_mail_account.codex_refresh_token}}{{end}}"
+          - field: codex_id_token
+            template: "{{if .codex_token_data.id_token}}{{.codex_token_data.id_token}}{{else}}{{.current_mail_account.codex_id_token}}{{end}}"
+          - field: codex_token_type
+            template: "{{if .codex_token_data.token_type}}{{.codex_token_data.token_type}}{{else}}{{.current_mail_account.codex_token_type}}{{end}}"
+          - field: codex_scope
+            template: "{{if .codex_token_data.scope}}{{.codex_token_data.scope}}{{else}}{{.current_mail_account.codex_scope}}{{end}}"
+          - field: codex_expires_in
+            template: "{{if .codex_token_data.expires_in}}{{.codex_token_data.expires_in}}{{else}}{{.current_mail_account.codex_expires_in}}{{end}}"
+          - field: codex_account_id
+            template: "{{if .codex_token_data.account_id}}{{.codex_token_data.account_id}}{{else}}{{if (jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{if (jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{.current_mail_account.codex_account_id}}{{end}}{{end}}{{end}}"
+          - field: codex_expires_at
+            template: "{{if .codex_token_data.expires_at}}{{.codex_token_data.expires_at}}{{else}}{{.current_mail_account.codex_expires_at}}{{end}}"
+          - field: codex_auth_status
+            template: "token_ready"
+          - field: codex_auth_msg
+            template: "{{if .codex_token_data.message}}{{.codex_token_data.message}}{{else}}Token回填完成{{end}}"
+          - field: codex_last_auth_time
+            template: "{{current_date_time}}"
+          - field: codex_auth_json
+            template: "{\"device_auth_id\":\"{{if .current_mail_account.codex_device_auth_id}}{{.current_mail_account.codex_device_auth_id}}{{end}}\",\"user_code\":\"{{if .current_mail_account.codex_user_code}}{{.current_mail_account.codex_user_code}}{{end}}\",\"authorization_code\":\"{{if .codex_authorization_code}}{{.codex_authorization_code}}{{end}}\",\"code_verifier\":\"{{if .codex_code_verifier}}{{.codex_code_verifier}}{{end}}\",\"access_token\":\"{{if .codex_token_data.access_token}}{{.codex_token_data.access_token}}{{end}}\",\"refresh_token\":\"{{if .codex_token_data.refresh_token}}{{.codex_token_data.refresh_token}}{{end}}\",\"id_token\":\"{{if .codex_token_data.id_token}}{{.codex_token_data.id_token}}{{end}}\",\"token_type\":\"{{if .codex_token_data.token_type}}{{.codex_token_data.token_type}}{{end}}\",\"scope\":\"{{if .codex_token_data.scope}}{{.codex_token_data.scope}}{{else}}{{.current_mail_account.codex_scope}}{{end}}\",\"expires_in\":\"{{if .codex_token_data.expires_in}}{{.codex_token_data.expires_in}}{{else}}{{.current_mail_account.codex_expires_in}}{{end}}\",\"expires_at\":\"{{if .codex_token_data.expires_at}}{{.codex_token_data.expires_at}}{{end}}\",\"account_id\":\"{{if .codex_token_data.account_id}}{{.codex_token_data.account_id}}{{else}}{{if (jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.access_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{if (jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\")}}{{jwt_claim .codex_token_data.id_token \"https://api.openai.com/auth->chatgpt_account_id\"}}{{else}}{{.current_mail_account.codex_account_id}}{{end}}{{end}}{{end}}\"}"
+      - key: service2field
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          codex_authorization_code: "[codex_authorization_code]"
+          codex_code_verifier: "[codex_code_verifier]"
+          codex_access_token: "[codex_access_token]"
+          codex_refresh_token: "[codex_refresh_token]"
+          codex_id_token: "[codex_id_token]"
+          codex_token_type: "[codex_token_type]"
+          codex_scope: "[codex_scope]"
+          codex_expires_in: "[codex_expires_in]"
+          codex_account_id: "[codex_account_id]"
+          codex_expires_at: "[codex_expires_at]"
+          codex_auth_status: "[codex_auth_status]"
+          codex_auth_msg: "[codex_auth_msg]"
+          codex_last_auth_time: "[codex_last_auth_time]"
+          codex_auth_json: "[codex_auth_json]"
+      - key: params2result
+        fields:
+          - from: "[codex_complete_data]"
+            to: codex_complete_data
+          - from: "[codex_token_data]"
+            to: codex_token_data
+          - from: "[codex_authorization_code]"
+            to: codex_authorization_code
+          - from: "[codex_code_verifier]"
+            to: codex_code_verifier
+          - from: "[codex_access_token]"
+            to: codex_access_token
+          - from: "[codex_refresh_token]"
+            to: codex_refresh_token
+          - from: "[codex_id_token]"
+            to: codex_id_token
+          - from: "[codex_token_type]"
+            to: codex_token_type
+          - from: "[codex_scope]"
+            to: codex_scope
+          - from: "[codex_expires_in]"
+            to: codex_expires_in
+          - from: "[codex_account_id]"
+            to: codex_account_id
+          - from: "[codex_expires_at]"
+            to: codex_expires_at
+          - from: "[codex_auth_status]"
+            to: codex_auth_status
+          - from: "[codex_auth_msg]"
+            to: codex_auth_msg
+
+  - key: mail_account_import_batch
+    http: true
+    module: empty
+    params:
+      mail_account_list:
+        check:
+          template: "{{must .mail_account_list}}"
+          err_msg: 邮箱列表不能为空
+      email_name_list_sql:
+        default: ""
+      email_name_list:
+        default: []
+      create_list:
+        default: []
+      skip_list:
+        default: []
+      exist_list:
+        default: []
+      total_count:
+        default: 0
+      create_count:
+        default: 0
+      skip_count:
+        default: 0
+    handler_params:
+      - key: update_array
+        foreach: "[mail_account_list]"
+        item: item
+        fields:
+          - field: exists
+            template: "0"
+      - key: update_field
+        fields:
+          - field: total_count
+            template: "{{len .mail_account_list}}"
+      - key: prop_arr
+        foreach: "[mail_account_list]"
+        value: "[email_name]"
+        save_field: email_name_list
+      - key: service2field
+        enable: "{{must .email_name_list}}"
+        service:
+          service: system.mail_account_query
+          email_name_list: "[email_name_list]"
+          pagination: false
+          count: false
+        save_field: exist_list
+      - key: update_array_from_array
+        enable: "{{gt (len .exist_list) 0}}"
+        foreach: "[mail_account_list]"
+        item: item
+        field: "[email_name]"
+        right: "[exist_list]"
+        right_field: "[email_name]"
+        fields:
+          - field: exists
+            template: "1"
+          - field: mail_account_id
+            template: "[right.mail_account_id]"
+      - key: filter_arr
+        foreach: "[mail_account_list]"
+        item: item
+        if_template: "{{eq (printf \"%v\" .item.exists) \"1\"}}"
+        save_field: skip_list
+      - key: filter_arr
+        foreach: "[mail_account_list]"
+        item: item
+        if_template: "{{ne (printf \"%v\" .item.exists) \"1\"}}"
+        save_field: create_list
+      - key: service2field
+        enable: "{{must .create_list}}"
+        service:
+          service: system.mail_account_bulk_create
+          mail_account_list: "[create_list]"
+      - key: update_field
+        fields:
+          - field: create_count
+            template: "{{len .create_list}}"
+          - field: skip_count
+            template: "{{len .skip_list}}"
+      - key: params2result
+        fields:
+          - from: "[create_list]"
+            to: create_list
+          - from: "[skip_list]"
+            to: skip_list
+          - from: "[exist_list]"
+            to: exist_list
+          - from: "[create_count]"
+            to: create_count
+          - from: "[skip_count]"
+            to: skip_count
+          - from: "[total_count]"
+            to: total_count
+
+  - key: mail_account_upload_auth_json
+    http: true
+    module: empty
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+    handler_params:
+      - key: mail_account_auth_json_import
+        save_field: auth_json_data
+      - key: service2field
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          codex_access_token: "[auth_json_data.codex_access_token]"
+          codex_refresh_token: "[auth_json_data.codex_refresh_token]"
+          codex_id_token: "[auth_json_data.codex_id_token]"
+          codex_account_id: "[auth_json_data.codex_account_id]"
+          codex_auth_json: "[auth_json_data.codex_auth_json]"
+          codex_auth_status: "[auth_json_data.codex_auth_status]"
+          codex_auth_msg: "[auth_json_data.codex_auth_msg]"
+          codex_last_auth_time: "[auth_json_data.codex_last_auth_time]"
+      - key: service2field
+        service:
+          service: system.mail_account_codex_query_usage_and_save
+          mail_account_id: "[mail_account_id]"
+          try_refresh_token: true
+        save_field: usage_result
+      - key: params2result
+        fields:
+          - from: "[mail_account_id]"
+            to: mail_account_id
+          - from: "[auth_json_data.codex_access_token]"
+            to: codex_access_token
+          - from: "[auth_json_data.codex_refresh_token]"
+            to: codex_refresh_token
+          - from: "[auth_json_data.codex_id_token]"
+            to: codex_id_token
+          - from: "[auth_json_data.codex_account_id]"
+            to: codex_account_id
+          - from: "[auth_json_data.codex_last_auth_time]"
+            to: codex_last_auth_time
+          - from: "[usage_result.codex_usage_plan_type]"
+            to: codex_usage_plan_type
+          - from: "[usage_result.codex_usage_used_percent]"
+            to: codex_usage_used_percent
+          - from: "[usage_result.codex_usage_allowed]"
+            to: codex_usage_allowed
+          - from: "[usage_result.codex_usage_limit_reached]"
+            to: codex_usage_limit_reached
+          - from: "[usage_result.codex_usage_reset_at]"
+            to: codex_usage_reset_at
+          - from: "[usage_result.codex_usage_last_query_time]"
+            to: codex_usage_last_query_time
+
+  - key: mail_account_codex_apply_local_auth
+    http: true
+    module: empty
+    params:
+      mail_account_id:
+        check:
+          template: "{{must .mail_account_id}}"
+          err_msg: 邮箱记录ID不能为空
+      target_auth_path:
+        default: "~/.codex/auth.json"
+      backup:
+        default: false
+    handler_params:
+      - key: service2field
+        service:
+          service: system.mail_account_query
+          mail_account_id: "[mail_account_id]"
+          to_obj: true
+          pagination: false
+          count: false
+        save_field: current_mail_account
+      - key: check_field
+        fields:
+          - field: "[current_mail_account.codex_access_token]"
+            template: "{{must .current_mail_account.codex_access_token}}"
+            err_msg: access_token 为空，请先完成 Token 回填
+          - field: "[current_mail_account.codex_refresh_token]"
+            template: "{{must .current_mail_account.codex_refresh_token}}"
+            err_msg: refresh_token 为空，请先完成 Token 回填
+          - field: "[current_mail_account.codex_id_token]"
+            template: "{{must .current_mail_account.codex_id_token}}"
+            err_msg: id_token 为空，请先完成 Token 回填
+          - field: "[current_mail_account.codex_account_id]"
+            template: "{{must .current_mail_account.codex_account_id}}"
+            err_msg: account_id 为空，请先完成 Token 回填
+      - key: update_field
+        fields:
+          - field: auth_json_content
+            template: |
+              {
+                "auth_mode": "chatgpt",
+                "OPENAI_API_KEY": null,
+                "tokens": {
+                  "id_token": {{to_json .current_mail_account.codex_id_token}},
+                  "access_token": {{to_json .current_mail_account.codex_access_token}},
+                  "refresh_token": {{to_json .current_mail_account.codex_refresh_token}},
+                  "account_id": {{to_json .current_mail_account.codex_account_id}}
+                },
+                "last_refresh": "{{current_date_format "2006-01-02T15:04:05.000000000Z07:00"}}"
+              }
+      - key: local_file_write
+        field: "[target_auth_path]"
+        value: "[auth_json_content]"
+        save_field: auth_file_write_result
+      - key: update_field
+        fields:
+          - field: codex_auth_msg
+            template: "已应用到本地 ~/.codex/auth.json"
+          - field: codex_last_auth_time
+            template: "{{current_date_time}}"
+      - key: service2field
+        service:
+          service: system.mail_account_update
+          mail_account_id: "[mail_account_id]"
+          codex_auth_msg: "[codex_auth_msg]"
+          codex_last_auth_time: "[codex_last_auth_time]"
+      - key: params2result
+        fields:
+          - from: "[auth_file_write_result.target_path]"
+            to: target_path
+          - from: "[auth_file_write_result.backup_path]"
+            to: backup_path
+          - from: "[auth_file_write_result.bytes]"
+            to: bytes
+          - from: "[auth_file_write_result.updated_at]"
+            to: updated_at
+          - from: "[target_auth_path]"
+            to: target_auth_path
+
+  - key: mail_account_codex_query_usage_all_and_save
+    http: true
+    module: bulk_service
+    params:
+      email_name_list:
+        default: []
+      all_mail_account_list:
+        default: []
+      mail_account_list:
+        default: []
+      result_list:
+        default: []
+      success_list:
+        default: []
+      fail_list:
+        default: []
+      total_count:
+        default: 0
+      success_count:
+        default: 0
+      fail_count:
+        default: 0
+    handler_params:
+      - key: service2field
+        service:
+          service: system.mail_account_query
+          email_name_list: "[email_name_list]"
+          pagination: false
+          count: false
+        save_field: all_mail_account_list
+      - key: filter_arr
+        foreach: "[all_mail_account_list]"
+        item: item
+        if_template: "{{and (ne (printf \"%v\" .item.codex_account_id) \"\") (ne (printf \"%v\" .item.codex_access_token) \"\") (ne (printf \"%v\" .item.codex_auth_status) \"need_relogin\") (ne .item.is_disabled \"1\")}}"
+        save_field: mail_account_list
+    batch:
+      loop_max: 1
+      foreach: "[mail_account_list]"
+      service:
+        service: system.mail_account_codex_query_usage_and_save
+        mail_account_id: "[mail_account_id]"
+        try_backfill_token: false
+      append_item_param: true
+      save_field: result
+    result_handler:
+      - key: result2params
+        fields:
+          - to: "[result_list]"
+      - key: filter_arr
+        foreach: "[result_list]"
+        item: item
+        if_template: "{{eq (printf \"%v\" .item.result.Success) \"true\"}}"
+        save_field: success_list
+      - key: filter_arr
+        foreach: "[result_list]"
+        item: item
+        if_template: "{{ne (printf \"%v\" .item.result.Success) \"true\"}}"
+        save_field: fail_list
+      - key: filter_arr
+        foreach: "[fail_list]"
+        item: item
+        if_template: "{{str_contains (printf \"%v\" .item.result.Msg) \"refresh_token_reused\"}}"
+        save_field: need_relogin_list
+      - key: update_array
+        foreach: "[need_relogin_list]"
+        item: item
+        fields:
+          - field: err_msg
+            template: "{{.item.result.Msg}}"
+      - key: service2field
+        enable: "{{must .need_relogin_list}}"
+        service:
+          service: system.mail_account_codex_mark_need_relogin_batch
+          need_relogin_list: "[need_relogin_list]"
+      - key: update_field
+        fields:
+          - field: total_count
+            template: "{{len .mail_account_list}}"
+          - field: success_count
+            template: "{{len .success_list}}"
+          - field: fail_count
+            template: "{{len .fail_list}}"
+      - key: params2result
+        fields:
+          - from: "[total_count]"
+            to: total_count
+          - from: "[success_count]"
+            to: success_count
+          - from: "[fail_count]"
+            to: fail_count
+          - from: "[fail_list]"
+            to: fail_list
+          - from: "[result_list]"
+            to: result_list
+
+  - key: mail_account_codex_mark_need_relogin_batch
+    http: true
+    module: bulk_service
+    params:
+      need_relogin_list:
+        default: []
+      mark_total:
+        default: 0
+    batch:
+      loop_max: 1
+      foreach: "[need_relogin_list]"
+      service:
+        service: system.mail_account_update
+        mail_account_id: "[mail_account_id]"
+        codex_auth_status: "need_relogin"
+        codex_auth_msg: "[err_msg]"
+        codex_last_auth_time: "{{current_date_time}}"
+      append_item_param: true
+    result_handler:
+      - key: update_field
+        fields:
+          - field: mark_total
+            template: "{{len .need_relogin_list}}"
+      - key: params2result
+        fields:
+          - from: "[mark_total]"
+            to: mark_total
+
+  - key: mail_account_delete
+    http: true
+    module: model_delete
+    table: mail_account
+    params:
+      mail_account_id_list:
+        check:
+          template: "{{must .mail_account_id_list}}"
+          err_msg: 请选择要删除的邮箱记录
+    filter:
+      mail_account_id__in: "[mail_account_id_list]"

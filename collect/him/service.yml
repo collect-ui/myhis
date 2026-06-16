@@ -1,0 +1,3 @@
+service:
+  - name: "pix_outp_reg_master"
+    path: "pix_outp_reg_master/index.yml"

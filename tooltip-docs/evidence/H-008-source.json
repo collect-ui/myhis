@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "active_tab_text": "prop_arr",
+  "title": "prop_arr(对象数组转数组)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "对象数组转简单数组"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "handler_params:\n      - key: prop_arr\n        foreach: \"[detail_list]\"\n        value: \"[config_detail_id]\"\n        save_field: config_detail_id_list",
+    "过滤对象数组的某个字段转数组，比如传对象数组过来，过滤成简单ID数组，好根据ID删除"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "prop_arr"
+        ],
+        [
+          "foreach",
+          "string",
+          "是",
+          "数组循环对象，[你的变量]"
+        ],
+        [
+          "value",
+          "string",
+          "是",
+          "value 取值，[你的item的变量]"
+        ]
+      ]
+    }
+  ],
+  "body_text": "prop_arr(对象数组转数组)  \n示例\n对象数组转简单数组\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nprop_arr\n\n\nforeach\n\t\nstring\n\t\n是\n\t\n数组循环对象，[你的变量]\n\n\nvalue\n\t\nstring\n\t\n是\n\t\nvalue 取值，[你的item的变量]\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-008",
+  "source_group": "参数处理",
+  "source_title": "prop_arr",
+  "source_doc_text": "23.prop_arr\n对象数组转数组",
+  "read_at": "2026-05-07T08:21:18.647Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-008-source.png"
+}

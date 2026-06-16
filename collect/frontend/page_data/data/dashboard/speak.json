@@ -1,0 +1,549 @@
+{
+  "tag": "layout-fit",
+  "className": "overflow-auto",
+  "initStore": {
+    "student_detail": null,
+    "class_all": null,
+    "student_list": null
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "reload-data",
+      "api": "post:/template_data/data?service=chart.speak_analyst",
+      "data": {
+      },
+      "adapt": {
+        "student_detail": "${data.student_detail}",
+        "class_all": "${data.class_all}",
+        "student_list": "${data.student_list}"
+      }
+    }
+  ],
+  "style": {
+    "backgroundImage": "url(/data/img/page_bg.png)",
+    "fontFamily": "'Microsoft YaHei' !important",
+    "margin": "0px 0px",
+    "padding": "0px, 0px",
+    "color": "#20DFE2",
+    "overflowX": "hidden",
+    "backgroundRepeat": "no-repeat",
+    "backgroundSize": "100% 100%",
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "children": [
+    {
+      "tag": "div",
+      "style": {
+        "backgroundImage": "url(/data/img/top_bg1.png)",
+        "backgroundPosition": "center bottom",
+        "backgroundRepeat": "no-repeat",
+        "backgroundSize": "auto 100%",
+        "height": "60px",
+        "textAlign": "center",
+        "lineHeight": "60px"
+      },
+      "children": [
+        {
+          "tag": "span",
+          "style": {
+            "fontSize": "26px",
+            "letterSpacing": "0.2rem",
+            "fontWeight": "bold",
+            "fontFamily": "Microsoft YaHei",
+            "backgroundImage": "-webkit-gradient(linear, 0 0, 0 bottom, from(rgba(46, 233, 216, 1)), to(rgba(47, 129, 237, 1)))",
+            "WebkitBackgroundClip": "text",
+            "WebkitTextFillColor": "transparent"
+          },
+          "children": [
+            "2024级汽车服务与营销专业比亚迪订单班口语训练评价"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "row",
+      "className": "flex1",
+      "children": [
+        {
+          "tag": "col",
+          "span": 8,
+          "style": {
+            "padding": "10px 10px 10px 10px"
+          },
+          "children": [
+            {
+              "style": {
+                "height": "100%",
+                "backgroundImage": "url(/data/img/1_imgbg4.png)",
+                "backgroundPosition": "center, center",
+                "backgroundRepeat": "no-repeat",
+                "backgroundSize": "100% 100%",
+                "padding": "10px",
+                "boxSizing": "border-box",
+                "display": "flex",
+                "flexDirection": "column"
+              },
+              "tag": "div",
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "fontWeight": "bold",
+                    "fontSize": "18px",
+                    "fontFamily": "Microsoft YaHei",
+                    "textAlign": "center",
+                    "lineHeight": "50px"
+                  },
+                  "children": "周施旋同学口语训练情况"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "fontWeight": "bold",
+                    "fontSize": 18,
+                    "lineHeight": "32px",
+                    "height": 32,
+                    "borderLeft": "3px solid rgba(46, 233, 216, 1)",
+                    "paddingLeft": 10
+                  },
+                  "children": "系统评价"
+                },
+                {
+                  "tag": "row",
+                  "children": [
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "chart",
+                          "style": {
+                            "height": "18vh"
+                          },
+                          "visible": "${student_detail}",
+                          "option": "${student_detail}"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "style": {
+                        "textAlign": "center",
+                        "fontWeight": "bold",
+                        "fontSize": "16px",
+                        "margin": "5px auto"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "children": "班级平均分：70.13分"
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "fontWeight": "bold",
+                            "fontSize": "20px",
+                            "padding": "20px",
+                            "lineHeight": 1.5,
+                            "boxSizing": "border-box",
+                            "textAlign": "center"
+                          },
+                          "children": [
+                            {
+                              "tag": "div",
+                              "children": "周施旋得分："
+                            },
+                            "92分"
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "fontWeight": "bold",
+                    "fontSize": 18,
+                    "lineHeight": "32px",
+                    "height": 32,
+                    "borderLeft": "3px solid rgba(46, 233, 216, 1)",
+                    "paddingLeft": 10,
+                    "marginBottom": 8
+                  },
+                  "children": "口语难点分析"
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "flex": 1,
+                    "lineHeight": 2,
+                    "fontSize": "18px",
+                    "fontWeight": 700,
+                    "overflowY": "auto",
+                    "backgroundColor": "rgba(255, 255, 255, 0.05)"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "children": "1、Do you have any preferences?  "
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontWeight": "normal",
+                        "marginLeft": "1rem"
+                      },
+                      "children": "\uD83D\uDC4DExcellent！"
+                    },
+                    {
+                      "tag": "div",
+                      "children": "2、Do you want to sit inside and feel the inner space in person?  "
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontWeight": "normal",
+                        "marginLeft": "1rem"
+                      },
+                      "children": "\uD83D\uDC4DExcellent！"
+                    },
+                    {
+                      "tag": "div",
+                      "children": "3、Is the room satisfied with your needs?  "
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontWeight": "normal",
+                        "marginLeft": "1rem"
+                      },
+                      "children": "\uD83C\uDF89Great！"
+                    },
+                    {
+                      "tag": "div",
+                      "children": "4、May I have a look at your driving license?  "
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontWeight": "normal",
+                        "marginLeft": "1rem"
+                      },
+                      "children": "\uD83D\uDE0AGood！"
+                    },
+                    {
+                      "tag": "div",
+                      "children": "5、I'll register for you right now.  "
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "color": "#FFFFFF",
+                        "fontWeight": "normal",
+                        "marginLeft": "1rem"
+                      },
+                      "children": "\uD83D\uDE0AGood！"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "col",
+          "span": 16,
+          "style": {
+            "padding": "10px 10px 10px 0px",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+            {
+              "style": {
+                "height": "50%",
+                "backgroundImage": "url(/data/img/1_imgbg2.png)",
+                "backgroundPosition": "center, center",
+                "backgroundRepeat": "no-repeat",
+                "backgroundSize": "100% 100%",
+                "padding": "10px",
+                "boxSizing": "border-box",
+                "display": "flex",
+                "flexDirection": "column"
+              },
+              "tag": "div",
+              "children": [
+                {
+                  "tag": "chart",
+                  "style": {
+                    "height": "100%"
+                  },
+                  "visible": "${class_all}",
+                  "option": "${class_all}"
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "style": {
+                "marginTop": 10,
+                "flex": 1
+              },
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "style": {
+                    "backgroundImage": "url(/data/img/bg2.png)",
+                    "backgroundPosition": "center center",
+                    "backgroundRepeat": "no-repeat",
+                    "backgroundSize": "100% 100%",
+                    "padding": "10px 30px",
+                    "boxSizing": "border-box"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "20px",
+                        "fontWeight": "bold",
+                        "lineHeight": "40px",
+                        "marginBottom": "10px"
+                      },
+                      "children": "学生名单"
+                    },
+                    {
+                      "tag": "span",
+                      "children": [
+                        {
+                          "tag": "listview",
+                          "keyField": "id",
+                          "itemData": "${student_list}",
+                          "itemAttr": {
+                            "tag": "div",
+                            "style": {
+                              "cursor": "pointer",
+                              "color": "#00FCFC",
+                              "backgroundImage": "url(/data/img/title_bg0.png)",
+                              "backgroundPosition": "center center",
+                              "backgroundRepeat": "no-repeat",
+                              "backgroundSize": "100% 100%",
+                              "display": "inline-block",
+                              "margin": "5px 10px",
+                              "textAlign": "center",
+                              "padding": "5px",
+                              "width": "78px",
+                              "alignContent": "center",
+                              "boxSizing": "border-box"
+                            },
+                            "children": "${row.tname}"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "style": {
+                    "backgroundImage": "url(/data/img/bg3.png)",
+                    "backgroundPosition": "center center",
+                    "backgroundRepeat": "no-repeat",
+                    "backgroundSize": "100% 100%",
+                    "padding": "10px 30px",
+                    "boxSizing": "border-box"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "20px",
+                        "fontWeight": "bold",
+                        "lineHeight": "40px",
+                        "marginBottom": "10px",
+                        "textAlign": "right"
+                      },
+                      "children": "学生得分排名"
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "margin": "4%"
+                      },
+                      "children": [
+                        {
+                          "tag": "div",
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "backgroundImage": "url(/data/img/1.png)",
+                                "backgroundRepeat": "no-repeat",
+                                "backgroundPosition": "15px center",
+                                "backgroundSize": "35px auto",
+                                "backgroundColor": "rgba(255, 255, 255, 0.1)",
+                                "color": "#FFFFFF",
+                                "fontSize": "16px",
+                                "fontWeight": "bold",
+                                "height": "48px",
+                                "lineHeight": "48px",
+                                "margin": "2px auto",
+                                "paddingLeft": "60px",
+                                "position": "relative"
+                              },
+                              "children": [
+                                "周施旋",
+                                {
+                                  "tag": "span",
+                                  "style": {
+                                    "position": "absolute",
+                                    "right": "0px",
+                                    "paddingRight": "10px"
+                                  },
+                                  "children": "92.00分"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "backgroundImage": "url(/data/img/2.png)",
+                                "backgroundRepeat": "no-repeat",
+                                "backgroundPosition": "15px center",
+                                "backgroundSize": "35px auto",
+                                "backgroundColor": "rgba(255, 255, 255, 0.1)",
+                                "color": "#FFFFFF",
+                                "fontSize": "16px",
+                                "fontWeight": "bold",
+                                "height": "48px",
+                                "lineHeight": "48px",
+                                "margin": "2px auto",
+                                "paddingLeft": "60px",
+                                "position": "relative"
+                              },
+                              "children": [
+                                "周皓",
+                                {
+                                  "tag": "span",
+                                  "style": {
+                                    "position": "absolute",
+                                    "right": "0px",
+                                    "paddingRight": "10px"
+                                  },
+                                  "children": "87.50分"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "backgroundImage": "url(/data/img/4.png)",
+                                "backgroundRepeat": "no-repeat",
+                                "backgroundPosition": "15px center",
+                                "backgroundSize": "35px auto",
+                                "backgroundColor": "rgba(255, 255, 255, 0.1)",
+                                "color": "#FFFFFF",
+                                "fontSize": "16px",
+                                "fontWeight": "bold",
+                                "height": "48px",
+                                "lineHeight": "48px",
+                                "margin": "2px auto",
+                                "paddingLeft": "60px",
+                                "position": "relative"
+                              },
+                              "children": [
+                                "彭成霖",
+                                {
+                                  "tag": "span",
+                                  "style": {
+                                    "position": "absolute",
+                                    "right": "0px",
+                                    "paddingRight": "10px"
+                                  },
+                                  "children": "83.30分"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "backgroundImage": "url(/data/img/4.png)",
+                                "backgroundRepeat": "no-repeat",
+                                "backgroundPosition": "15px center",
+                                "backgroundSize": "35px auto",
+                                "backgroundColor": "rgba(255, 255, 255, 0.1)",
+                                "color": "#FFFFFF",
+                                "fontSize": "16px",
+                                "fontWeight": "bold",
+                                "height": "48px",
+                                "lineHeight": "48px",
+                                "margin": "2px auto",
+                                "paddingLeft": "60px",
+                                "position": "relative"
+                              },
+                              "children": [
+                                "欧阳玲玉",
+                                {
+                                  "tag": "span",
+                                  "style": {
+                                    "position": "absolute",
+                                    "right": "0px",
+                                    "paddingRight": "10px"
+                                  },
+                                  "children": "82.70分"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "div",
+                              "style": {
+                                "backgroundImage": "url(/data/img/5.png)",
+                                "backgroundRepeat": "no-repeat",
+                                "backgroundPosition": "15px center",
+                                "backgroundSize": "35px auto",
+                                "backgroundColor": "rgba(255, 255, 255, 0.1)",
+                                "color": "#FFFFFF",
+                                "fontSize": "16px",
+                                "fontWeight": "bold",
+                                "height": "48px",
+                                "lineHeight": "48px",
+                                "margin": "2px auto",
+                                "paddingLeft": "60px",
+                                "position": "relative"
+                              },
+                              "children": [
+                                "朱雯萱",
+                                {
+                                  "tag": "span",
+                                  "style": {
+                                    "position": "absolute",
+                                    "right": "0px",
+                                    "paddingRight": "10px"
+                                  },
+                                  "children": "82.40分"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

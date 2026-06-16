@@ -1,0 +1,15 @@
+{
+  "targetPath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+  "listEnter": {
+    "beforeCount": 363,
+    "afterCount": 364,
+    "nextLineText": "  - ",
+    "pass": true
+  },
+  "fieldEnter": {
+    "beforeCount": 364,
+    "afterCount": 365,
+    "nextLineText": "    ",
+    "pass": true
+  }
+}

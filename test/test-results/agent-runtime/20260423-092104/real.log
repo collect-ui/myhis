@@ -1,0 +1,12 @@
+2026-04-23T09:21:06.676554732+08:00	moon/model		skip	0
+2026-04-23T09:21:06.676570202+08:00	moon/model/autodesk		skip	0
+2026-04-23T09:21:06.676590395+08:00	moon/model/base		skip	0
+2026-04-23T09:21:06.676601597+08:00	moon/model/devops		skip	0
+2026-04-23T09:21:06.676608611+08:00	moon/model/doc		skip	0
+2026-04-23T09:21:06.676615342+08:00	moon/model/sport		skip	0
+2026-04-23T09:21:06.676622148+08:00	moon/model/work_task		skip	0
+2026-04-23T09:21:06.676629121+08:00	moon/plugins		skip	0
+2026-04-23T09:21:06.676641476+08:00	moon/test		skip	0
+2026-04-23T09:21:07.785033271+08:00	moon	TestAgentRuntimeSessionRunFlowRealOpenAI	pass	0.95
+2026-04-23T09:21:09.907224554+08:00	moon	TestAgentRuntimeSessionMultiTurnRealChat	pass	2.12
+2026-04-23T09:21:09.91528823+08:00	moon		pass	3.239

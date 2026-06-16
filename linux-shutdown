@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+PID_FILE="run-dev.pid"
+CONFIG_FILE="conf/application.properties"
+
+PORT="$(grep -E '^server_port=' "$CONFIG_FILE" 2>/dev/null | head -n 1 | cut -d'=' -f2 || true)"
+
+get_port_pids() {
+  if [ -z "${PORT:-}" ]; then
+    return 0
+  fi
+  lsof -t -iTCP:"$PORT" -sTCP:LISTEN 2>/dev/null | sort -u || true
+}
+
+stop_one_pid() {
+  local pid="$1"
+  if [ -z "${pid:-}" ]; then
+    return 0
+  fi
+  if ! kill -0 "$pid" 2>/dev/null; then
+    return 0
+  fi
+
+  CHILD_PIDS="$(pgrep -P "$pid" || true)"
+  if [ -n "${CHILD_PIDS:-}" ]; then
+    echo "[linux-shutdown] stop child pids: $CHILD_PIDS"
+    kill $CHILD_PIDS 2>/dev/null || true
+  fi
+  kill "$pid" 2>/dev/null || true
+}
+
+echo "[linux-shutdown] begin"
+
+if [ -f "$PID_FILE" ]; then
+  OLD_PID="$(cat "$PID_FILE" 2>/dev/null || true)"
+  if [ -n "${OLD_PID:-}" ] && kill -0 "$OLD_PID" 2>/dev/null; then
+    echo "[linux-shutdown] stop pid from pid file: $OLD_PID"
+    stop_one_pid "$OLD_PID"
+  fi
+  rm -f "$PID_FILE"
+fi
+
+if [ -n "${PORT:-}" ]; then
+  PORT_PIDS="$(get_port_pids)"
+  if [ -n "${PORT_PIDS:-}" ]; then
+    echo "[linux-shutdown] stop pids on port $PORT: $PORT_PIDS"
+    kill $PORT_PIDS 2>/dev/null || true
+  else
+    echo "[linux-shutdown] no process on port $PORT"
+  fi
+fi
+
+for _ in $(seq 1 25); do
+  sleep 0.2
+  PORT_PIDS="$(get_port_pids)"
+  if [ -z "${PORT_PIDS:-}" ]; then
+    break
+  fi
+done
+
+PORT_PIDS="$(get_port_pids)"
+if [ -n "${PORT_PIDS:-}" ]; then
+  echo "[linux-shutdown] force kill pids on port $PORT: $PORT_PIDS"
+  kill -9 $PORT_PIDS 2>/dev/null || true
+fi
+
+if [ -f "$PID_FILE" ]; then
+  rm -f "$PID_FILE"
+fi
+
+echo "[linux-shutdown] done"

@@ -1,0 +1,38 @@
+{
+  "count": 3,
+  "rows": [
+    {
+      "patient_id": "P20260612001",
+      "patient_no": "MZ20260612001",
+      "patient_name": "张明",
+      "gender": "男",
+      "age": 42,
+      "department": "心内科",
+      "diagnosis": "胸闷待查",
+      "visit_time": "2026-06-12 08:30:00",
+      "status": "待诊"
+    },
+    {
+      "patient_id": "P20260612002",
+      "patient_no": "MZ20260612002",
+      "patient_name": "刘芳",
+      "gender": "女",
+      "age": 36,
+      "department": "呼吸科",
+      "diagnosis": "咳嗽、发热",
+      "visit_time": "2026-06-12 09:10:00",
+      "status": "就诊中"
+    },
+    {
+      "patient_id": "P20260612003",
+      "patient_no": "MZ20260612003",
+      "patient_name": "王强",
+      "gender": "男",
+      "age": 58,
+      "department": "消化科",
+      "diagnosis": "腹痛待查",
+      "visit_time": "2026-06-12 10:20:00",
+      "status": "已完成"
+    }
+  ]
+}

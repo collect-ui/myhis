@@ -1,0 +1,309 @@
+{
+  "tag": "app",
+  "children": [
+    {
+      "tag": "css",
+      "src": "/data/index.css"
+    },
+    {
+      "tag": "layout",
+      "children": [
+        {
+          "tag": "header",
+          "children": [
+            {
+              "tag": "label",
+              "style": {
+                "fontSize": "20px",
+                "fontWeight": "bold",
+                "color": "#fff",
+                "paddingRight": "20px"
+              },
+              "children": "collect"
+            },
+            {
+              "tag": "menu",
+              "visible": "${menuShow==='top'}",
+              "theme": "dark",
+              "mode": "horizontal",
+              "changeRouter": true,
+              "rule": {
+                "key_field": "menu_code",
+                "label_field": "menu_name",
+                "icon_field": "icon",
+                "to_field": "url"
+              },
+              "style": {
+                "backgroundColor": "inherit",
+                "flex": 1
+              },
+              "items": "${menu_list.filter((item)=>item.in_menu!=='0')}"
+            },
+            {
+              "tag": "layout-fit",
+
+              "initStore": {
+                "msg": {
+                  "num": 0,
+                  "feedback_num": 0
+                },
+                "user": {}
+              },
+              "initAction": [
+                {
+                  "tag": "ajax",
+                  "enable": "${window.location.href.endsWith(\"login\")?false:true}",
+                  "description": "页面初始化请求-加载数据",
+                  "api": "post:/template_data/data?service=system.current_user",
+                  "adapt": {
+                    "user": "${data}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "group": "update-msg-count",
+                  "enable": "${window.location.href.endsWith(\"login\")?false:true}",
+                  "description": "页面初始化请求-加载数据",
+                  "api": "post:/template_data/data?service=system.msg_count",
+                  "adapt": {
+                    "msg": "${data}"
+                  }
+                }
+              ],
+              "timer": {
+                "name": "更新消息数量",
+                "interval": 5000,
+                "enable": "${window.location.href.endsWith(\"login\")?false:true}",
+                "action": [
+                  {
+                    "tag": "reload-init-action",
+                    "group": "update-msg-count"
+                  }
+                ]
+              },
+              "children": [
+
+                {
+                  "tag": "div",
+                  "style": {
+                    "display": "flex"
+                  },
+                  "children": [
+
+                    {
+                      "tag": "dropdown",
+                      "menu": {
+                        "items": [
+                          {
+                            "label": "点击问题反馈",
+                            "code": "feedback"
+                          }
+                        ]
+                      },
+                      "action": [
+                        {
+                          "tag": "redirect",
+                          "url": "/collect-ui/#/framework/feedback"
+                        }
+                      ],
+                      "arrow": true,
+                      "children": [
+                        {
+                          "tag": "icon",
+                          "style": {
+                            "color": "white",
+                            "fontSize": "18px",
+                            "marginRight": 20,
+                            "cursor": "pointer"
+                          },
+                          "icon": "BulbOutlined"
+                        }
+                      ]
+                    },
+
+                    {
+                      "tag": "dropdown",
+                      "menu": {
+                        "items": [
+                          {
+                            "visible": "${msg.num>0?true:false}",
+                            "label": [
+                              "系统有 ",
+                              "${msg.num}",
+                              " 个新【用户注册】，点击跳转查看详情"
+                            ],
+                            "code": "register_list"
+
+                          },
+                          {
+                            "visible": "${msg.feedback_num>0?true:false}",
+                            "label": [
+                              "系统有 ",
+                              "${msg.feedback_num}",
+                              " 个【问题反馈】，点击跳转查看详情"
+                            ],
+                            "code": "feedback_list"
+
+                          }
+                        ]
+                      },
+                      "action": [
+                        {
+                          "tag": "redirect",
+                          "enable": "${code=='register_list'}",
+                          "url": "/collect-ui/#/framework/register_list"
+                        },
+                        {
+                          "tag": "redirect",
+                          "enable": "${code=='feedback_list'}",
+                          "url": "/collect-ui/#/framework/feedback_list"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "badge",
+                          "count": "${msg.num+msg.feedback_num}",
+                          "style": {
+                            "marginRight": 40
+                          },
+                          "children": [
+                            {
+                              "tag": "icon",
+                              "icon": "BellOutlined",
+                              "style": {
+                                "color": "white",
+                                "fontSize": "18px",
+                                "marginRight": 40,
+                                "cursor": "pointer"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "dropdown",
+                      "menu": {
+                        "items": [
+                          {
+                            "label": "注销",
+                            "code": "logout"
+                          }
+                        ]
+                      },
+                      "action": [
+                        {
+                          "tag": "ajax",
+                          "enable": "${code=='logout'}",
+                          "api": "post:/template_data/data?service=system.logout"
+                        },
+                        {
+                          "tag": "redirect",
+                          "url": "/#/login"
+                        }
+                      ],
+                      "arrow": true,
+                      "children": [
+                        "${user.nick}",
+                        {
+                          "tag": "icon",
+                          "style": {
+                            "marginLeft": 10
+                          },
+                          "icon": "DownOutlined"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "style": {
+            "color": "#fff",
+            "height": 44,
+            "paddingInline": 48,
+            "lineHeight": "44px",
+            "backgroundColor": "#4096ff",
+            "padding": "0 20px",
+            "display": "flex"
+          }
+        },
+        {
+          "tag": "layout",
+          "children": [
+            {
+              "tag": "sider",
+              "visible": "${menuShow==='left'}",
+              "width": "240px",
+              "collapsible": true,
+              "collapsedWidth": "40",
+              "children": [
+                {
+                  "tag": "form",
+                  "name": "framework-form",
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "menu",
+                      "children": [
+                        {
+                          "tag": "menu",
+                          "mode": "inline",
+                          "changeRouter": true,
+                          "rule": {
+                            "key_field": "menu_code",
+                            "label_field": "menu_name",
+                            "icon_field": "icon",
+                            "to_field": "url"
+                          },
+                          "defaultOpenKeys": [
+                            "home",
+                            "dashboard",
+                            "sub1"
+                          ],
+                          "items": "${menu_list.filter((item)=>item.in_menu!==false)}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "content",
+              "style": {
+                "display": "flex",
+                "flexDirection": "column",
+                "overflow": "hidden"
+              },
+              "children": [
+                {
+                  "tag": "router-tab",
+                  "className": "dark-theme-tabs"
+                },
+                {
+                  "tag": "outlet",
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=system.location_tracker_save",
+                      "data": {
+                        "menu_code": "${menu_code}",
+                        "path": "${path}"
+                      }
+                    }
+                  ],
+                  "style": {
+                    "flex": 1,
+                    "overflow": "hidden"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

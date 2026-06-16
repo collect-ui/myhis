@@ -1,0 +1,16 @@
+{
+  "login": {
+    "count": 0,
+    "success": true,
+    "code": "0",
+    "msg": "成功",
+    "data": {
+      "nick": "谢鹏",
+      "user_id": "4fd6536a-a803-4de6-ab3b-605fcd903314",
+      "userid": "4fd6536a-a803-4de6-ab3b-605fcd903314",
+      "username": "001"
+    }
+  },
+  "importedPrefix": "mail-page-20260415131544",
+  "deletedEmail": "mail-page-20260415131544-1@example.com"
+}

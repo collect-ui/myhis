@@ -1,0 +1,75 @@
+{
+  "tooltip": {
+    "trigger": "item",
+    "formatter": "{b} : {c} ({d}%)"
+  },
+  "visualMap": {
+    "show": false,
+    "min": 500,
+    "max": 600,
+    "inRange": {}
+  },
+  "series": [
+    {
+      "name": "学习风格",
+      "type": "pie",
+      "radius": "70%",
+      "center": [
+        "50%",
+        "50%"
+      ],
+      "color": [
+        "rgb(50,100,255)",
+        "rgb(250,55,126)",
+        "rgb(255,72,79)",
+        "rgb(255,115,33)",
+        "rgb(55,212,92)",
+        "rgb(156,32,209)"
+      ],
+      "data": [
+        {
+          "value": 65.4,
+          "name": "场依存型"
+        },
+        {
+          "value": 34.6,
+          "name": "场独立型"
+        }
+      ],
+      "label": {
+        "normal": {
+          "formatter": "{c|{c}%}\\n{b|{b}}",
+          "rich": {
+            "c": {
+              "color": "rgb(241,246,104)",
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "lineHeight": 5
+            },
+            "b": {
+              "color": "#00FCFC",
+              "fontSize": 15,
+              "height": 40
+            }
+          }
+        }
+      },
+      "labelLine": {
+        "normal": {
+          "lineStyle": {
+            "color": "rgb(98,137,169)"
+          },
+          "smooth": 0.2,
+          "length": 30,
+          "length2": 20
+        }
+      },
+      "itemStyle": {
+        "normal": {
+          "shadowColor": "rgba(0, 0, 0, 0.8)",
+          "shadowBlur": 50
+        }
+      }
+    }
+  ]
+}

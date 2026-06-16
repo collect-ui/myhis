@@ -1,0 +1,36 @@
+{
+  "pageURL": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/agent_regression",
+  "login": {
+    "attempted": true,
+    "filledUser": true,
+    "filledPassword": false,
+    "clicked": true,
+    "finalURL": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/agent_regression"
+  },
+  "paneCount": 2,
+  "paneWorkspaceSelectCount": 2,
+  "allWorkspaceSelectCount": 3,
+  "optionCount": 8,
+  "optionTexts": [
+    "test · /data/project/ai-study",
+    "后端客户端 · /data/project/sport",
+    "月神前端 · /data/project/moongod-frontend",
+    "企业微信通讯 · /data/project/auto-check",
+    "天枢 · /data/project/tianshu-platform",
+    "月神后端 · /data/project/moongod-backend",
+    "前端代码 · /data/project/sport-ui",
+    "核心前端低代码 · /data/project/collect-ui"
+  ],
+  "paneAWorkspaceText": "后端客户端 · /data/project/sport",
+  "paneBWorkspaceText": "test · /data/project/ai-study\ntest · /data/project/ai-study",
+  "topbarWorkspaceText": "test · /data/project/ai-study",
+  "storage": {
+    "legacy": null,
+    "paneA": "autodesk",
+    "paneB": null
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-workspace/agent-workspace-split.png"
+}

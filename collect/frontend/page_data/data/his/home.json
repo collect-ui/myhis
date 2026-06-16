@@ -1,0 +1,96 @@
+{
+  "tag": "layout-fit",
+  "storeName": "hisHome",
+  "className": "overflow-auto",
+  "initStore": {
+    "summary": [
+      {
+        "name": "Oracle主库",
+        "value": "10.96.1.32:1521/wghisfat",
+        "status": "已配置"
+      },
+      {
+        "name": "登录模式",
+        "value": "免登录",
+        "status": "已启用"
+      },
+      {
+        "name": "菜单来源",
+        "value": "JSON文件",
+        "status": "已启用"
+      },
+      {
+        "name": "Demo模块",
+        "value": "患者CRUD",
+        "status": "Mock接口"
+      }
+    ]
+  },
+  "children": [
+    {
+      "tag": "div",
+      "style": {
+        "padding": 20,
+        "backgroundColor": "#f5f7fb",
+        "minHeight": "100%"
+      },
+      "children": [
+        {
+          "tag": "div",
+          "style": {
+            "marginBottom": 16
+          },
+          "children": [
+            {
+              "tag": "h2",
+              "style": {
+                "margin": "0 0 6px 0",
+                "fontSize": 22,
+                "fontWeight": 600,
+                "color": "#1f2937"
+              },
+              "children": "HIS项目控制台"
+            },
+            {
+              "tag": "div",
+              "style": {
+                "fontSize": 13,
+                "color": "#5b6472"
+              },
+              "children": "当前项目使用 Oracle 主库和静态 JSON 菜单，页面 demo 不创建业务表。"
+            }
+          ]
+        },
+        {
+          "tag": "table",
+          "rowData": "${summary}",
+          "keyField": "name",
+          "style": {
+            "height": 260
+          },
+          "defaultColDef": {
+            "resizable": true,
+            "sortable": false
+          },
+          "columnDefs": [
+            {
+              "headerName": "配置项",
+              "field": "name",
+              "width": 180
+            },
+            {
+              "headerName": "当前值",
+              "field": "value",
+              "flex": 1
+            },
+            {
+              "headerName": "状态",
+              "field": "status",
+              "width": 140
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

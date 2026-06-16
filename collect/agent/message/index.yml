@@ -1,0 +1,195 @@
+service:
+  - key: message_query
+    http: true
+    must_login: false
+    module: sql
+    params:
+      agent_session_id:
+        default: ""
+      agent_run_id:
+        default: ""
+      role:
+        default: ""
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 50
+      start:
+        template: "({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+      to_obj:
+        default: false
+    data_file: query.sql
+    count_file: count.sql
+    result_handler:
+      - key: arr2obj
+        enable: "[to_obj]"
+  - key: message_max_seq_query
+    must_login: false
+    module: sql
+    params:
+      agent_session_id:
+        default: ""
+    data_file: max_seq.sql
+    result_handler:
+      - key: arr2obj
+  - key: message_latest_assistant_query
+    must_login: false
+    module: sql
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+    data_file: latest_assistant.sql
+    result_handler:
+      - key: arr2obj
+  - key: message_save
+    must_login: false
+    module: model_save
+    table: agent_message
+    params:
+      agent_message_id:
+        check:
+          template: "{{must .agent_message_id}}"
+          err_msg: agent_message_id 不能为空
+      agent_session_id:
+        check:
+          template: "{{must .agent_session_id}}"
+          err_msg: agent_session_id 不能为空
+      agent_run_id:
+        default: ""
+      role:
+        default: ""
+      message_type:
+        default: ""
+      content_text:
+        default: ""
+      content_json:
+        default: ""
+      seq_no:
+        type: int
+        default: 1
+      source:
+        default: "agent_runtime"
+      token_count:
+        type: int
+        default: 0
+      status:
+        default: "completed"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        default: ""
+      is_delete:
+        default: "0"
+  - key: message_stream_start_update
+    must_login: false
+    module: model_update
+    table: agent_message
+    params:
+      agent_message_id:
+        check:
+          template: "{{must .agent_message_id}}"
+          err_msg: agent_message_id 不能为空
+      status:
+        default: "running"
+      create_user:
+        default: ""
+    update_fields:
+      - status
+      - create_user
+    filter:
+      agent_message_id: "[agent_message_id]"
+  - key: message_content_update
+    must_login: false
+    module: model_update
+    table: agent_message
+    params:
+      agent_message_id:
+        check:
+          template: "{{must .agent_message_id}}"
+          err_msg: agent_message_id 不能为空
+      content_text:
+        default: ""
+      status:
+        default: ""
+    update_fields:
+      - content_text
+      - status
+    filter:
+      agent_message_id: "[agent_message_id]"
+  - key: message_content_json_update
+    must_login: false
+    module: model_update
+    table: agent_message
+    params:
+      agent_message_id:
+        check:
+          template: "{{must .agent_message_id}}"
+          err_msg: agent_message_id 不能为空
+      content_text:
+        default: ""
+      content_json:
+        default: ""
+      status:
+        default: ""
+    update_fields:
+      - content_text
+      - content_json
+      - status
+    filter:
+      agent_message_id: "[agent_message_id]"
+  - key: message_run_failed_update
+    must_login: false
+    module: model_update
+    table: agent_message
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      role:
+        default: "assistant"
+      running_status:
+        default: "running"
+      status:
+        default: "failed"
+      content_text:
+        default: "运行中断：服务重启或模型请求超过租约未更新，请重新发送。"
+    update_fields:
+      - status
+      - content_text
+    filter:
+      agent_run_id: "[agent_run_id]"
+      role: "[role]"
+      status: "[running_status]"
+  - key: message_cancel_update
+    must_login: false
+    module: model_update
+    table: agent_message
+    params:
+      agent_run_id:
+        check:
+          template: "{{must .agent_run_id}}"
+          err_msg: agent_run_id 不能为空
+      role:
+        default: "assistant"
+      running_status:
+        default: "running"
+      status:
+        default: "cancelled"
+      content_text:
+        default: "用户已终止本次请求"
+    update_fields:
+      - status
+      - content_text
+    filter:
+      agent_run_id: "[agent_run_id]"
+      role: "[role]"
+      status: "[running_status]"

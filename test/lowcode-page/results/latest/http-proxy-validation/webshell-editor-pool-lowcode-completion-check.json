@@ -1,0 +1,94 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "startedAt": "2026-05-07T07:39:09.944Z",
+  "expected": {
+    "pythonKeys": [
+      "arr2obj",
+      "add_param"
+    ],
+    "goKeys": [
+      "service2field"
+    ]
+  },
+  "steps": {
+    "pythonHint": true,
+    "pythonSuggest": true,
+    "pythonArrayEnter": true,
+    "pythonFirstKeySuggest": true,
+    "pythonAutoKeySuggest": true,
+    "goHint": true,
+    "goSuggest": true,
+    "goIsolation": true
+  },
+  "details": {
+    "python": {
+      "hintTitle": "Ctrl+S 保存 | Ctrl+D 复制行 | Ctrl+Y 删除行 | Alt+Shift+↑/↓ 移动行 | Ctrl+/ 行注释 | Ctrl+Shift+/ 块注释 | Ctrl+Alt+L 格式化 | Ctrl+F 查找 | Ctrl+R 替换 | F3/Shift+F3 查找下一个/上一个 | Ctrl+G 跳转行 | Ctrl+W/Shift+Ctrl+W 扩展/缩小选区 | Ctrl+L 选中整行 | Ctrl/Command+悬停点击 配置跳转\nPython低代码提示: 按 YAML 位置智能补全（service/params/check/handler_params/result_handler），支持 module/service/model/sql_file/data_json 等值提示；长停悬浮读取 tooltip-docs 文档；Ctrl/Command+悬停点击支持配置跳转",
+      "hasStandaloneLowcodeHint": false,
+      "suggest": {
+        "clickLine": 887,
+        "clickColumn": 14,
+        "clickText": "      - key: ",
+        "suggestions": [
+          "add_all_param",
+          "add_param",
+          "arr2obj",
+          "arrsort",
+          "combine",
+          "combine_service",
+          "field2json",
+          "file_response",
+          "filter_arr",
+          "hook",
+          "ignore_from_reg_list",
+          "level_2",
+          "new_col"
+        ]
+      },
+      "arrayEnter": {
+        "targetLine": 886,
+        "insertedLine": 887,
+        "insertedLineText": "        ",
+        "keySuggestLine": 888,
+        "keySuggestLineText": "      - ",
+        "expectedListPrefix": "      - ",
+        "firstKeySuggestions": [
+          "key",
+          "append_param",
+          "data_json",
+          "enable",
+          "fields",
+          "foreach",
+          "foreach_key_fields",
+          "from_item",
+          "from_list",
+          "from_list_fields",
+          "if_template",
+          "ifTemplate",
+          "item"
+        ],
+        "autoKeySuggestions": [
+          "key"
+        ]
+      }
+    },
+    "go": {
+      "hintTitle": "Ctrl+S 保存 | Ctrl+D 复制行 | Ctrl+Y 删除行 | Alt+Shift+↑/↓ 移动行 | Ctrl+/ 行注释 | Ctrl+Shift+/ 块注释 | Ctrl+Alt+L 格式化 | Ctrl+F 查找 | Ctrl+R 替换 | F3/Shift+F3 查找下一个/上一个 | Ctrl+G 跳转行 | Ctrl+W/Shift+Ctrl+W 扩展/缩小选区 | Ctrl+L 选中整行 | Ctrl/Command+悬停点击 配置跳转\nGo低代码提示: 按 YAML 位置智能补全（service/params/handler_params/result_handler/data_handler），支持 module/service/table/modify_config/data_file 等值提示；长停悬浮读取 tooltip-docs 文档；Ctrl/Command+悬停点击支持配置跳转",
+      "hasStandaloneLowcodeHint": false,
+      "suggest": {
+        "clickLine": 201,
+        "clickColumn": 14,
+        "clickText": "  - key: serv",
+        "suggestions": [
+          "service2field",
+          "session_remove",
+          "gen_sport_level"
+        ]
+      }
+    }
+  },
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-lowcode-completion-check.png",
+  "endedAt": "2026-05-07T07:39:25.806Z"
+}

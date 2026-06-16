@@ -1,0 +1,45 @@
+.zj .co-ui-title {
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1;
+    padding: 4px;
+    color: #000a;
+}
+
+.zj .co-ui-title .title-block {
+
+    display: none;
+
+
+}
+
+.zj .co-ui-layout-fit .top-header {
+    padding: 0px;
+    background: #FAFAFA;
+}
+.zj .ant-select-single {
+    font-size: 14px;
+    height: 24px;
+    background: #ECECEC;
+}
+.zj .ant-select-selector{
+    border-radius: 2px;
+}
+.zj .co-ui-form-item.ant-form-item {
+    margin-bottom: 2px;
+}
+.zj .ant-input {
+    padding: 0px 11px;
+    border-radius: 2px;
+}
+
+.zj .ant-form-item .ant-form-item-control-input {
+    min-height: 24px;
+}
+
+.zj .ant-form-item .ant-form-item-label >label {
+    height: 24px;
+}
+.zj .co-ui-layout-fit .bar {
+    padding: 2px 0 0 10px;
+}

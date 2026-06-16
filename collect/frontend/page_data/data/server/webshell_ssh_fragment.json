@@ -1,0 +1,2327 @@
+{
+  "tag": "layout",
+  "children": [
+    {
+      "tag": "sider",
+      "collapsed": "${siderOpen!=='1'}",
+      "width": "320px",
+      "className": "border-right",
+      "style": {
+        "background": "linear-gradient(180deg, #f8fafc 0%, #f3f6fb 100%)",
+        "borderRight": "1px solid #e5e7eb",
+        "boxShadow": "inset -1px 0 0 #eef2f7"
+      },
+      "action": [
+        {
+          "tag": "localstore",
+          "method": "write",
+          "key": "sider-open",
+          "value": "${collapse?'0':'1'}"
+        },
+        {
+          "tag": "update-store",
+          "value": {
+            "siderOpen": "${collapse?'0':'1'}"
+          }
+        }
+      ],
+      "collapsible": true,
+      "collapsedWidth": "40",
+      "children": [
+        {
+          "tag": "layout-fit",
+          "title": "服务器列表（双击登录）",
+          "searchToolBar": [
+            {
+              "tag": "form",
+              "name": "server-search-form",
+              "initialValues": "${searchForm}",
+              "layout": "inline",
+              "wrapperCol": {
+                "span": 24
+              },
+              "action": [
+                {
+                  "tag": "reload-init-action",
+                  "group": "server-env-tree",
+                  "description": "查询"
+                }
+              ],
+              "submitOnChange": true,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "style": {
+                    "marginInlineEnd": "8px"
+                  },
+                  "children": [
+                    {
+                      "tag": "button",
+                      "type": "primary",
+                      "icon": "PlusOutlined",
+                      "title": "新增节点",
+                      "action": [
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "addNodeVisible": true
+                          }
+                        },
+                        {
+                          "tag": "reset-form",
+                          "formName": "add-node-form"
+                        },
+                        {
+                          "tag": "update-form",
+                          "formName": "add-node-form",
+                          "value": {
+                            "parent_id": "${treeSelected.server_env_id}",
+                            "server_env_id": "${treeSelected.server_env_id}",
+                            "type": "${treeSelected.server_id?'2':'1'}"
+                          }
+                        },
+                        {
+                          "tag": "ajax",
+                          "api": "post:/template_data/data?service=project.my_env",
+                          "appendFormFields": "server-search-form",
+                          "adapt": {
+                            "env_data": "${data}"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "name": "search",
+                  "className": "flex1",
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "IP/名称",
+                      "allowClear": true,
+                      "addonAfterIcon": "SearchOutlined",
+                      "addonAfterTitle": "搜索"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "children": [
+            {
+              "tag": "tree",
+              "showLine": true,
+              "className": "h100",
+              "style": {
+                "padding": "8px",
+                "border": "1px solid #e5e7eb",
+                "borderRadius": "10px",
+                "background": "#ffffff"
+              },
+              "treeSelected": "${treeSelected}",
+              "showIcon": true,
+              "treeKey": "${item.server_id?item.server_id:item.server_env_id}",
+              "treeTitle": "${item.server_id?item.server_ip+'（'+item.server_busi_name+'）':item.server_env_name+'（'+item.server_env_code+'）'}",
+              "treeIcon": "${item.server_id?'DesktopOutlined':'FolderOutlined'}",
+              "treeData": "${server_env_data}",
+              "openLevel": 1,
+              "rightMenu": [
+                {
+                  "type": "item",
+                  "icon": "PlusOutlined",
+                  "code": "add",
+                  "label": "新增数据"
+                },
+                {
+                  "type": "item",
+                  "icon": "EditOutlined",
+                  "code": "edit",
+                  "label": "修改数据"
+                },
+                {
+                  "type": "item",
+                  "icon": "LoginOutlined",
+                  "code": "login",
+                  "label": "登录",
+                  "visible": "${node&&node.server_ip}"
+                },
+                {
+                  "type": "separator"
+                },
+                {
+                  "type": "submenu",
+                  "label": "其他",
+                  "children": [
+                    {
+                      "type": "item",
+                      "icon": "DeleteOutlined",
+                      "code": "delete",
+                      "label": "删除数据"
+                    },
+                    {
+                      "type": "item",
+                      "code": "history",
+                      "icon": "HistoryOutlined",
+                      "label": "操作记录",
+                      "action": [
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "historyShow": true,
+                            "historyDialogTitle": "${'【'+node.server_ip+'（'+node.server_busi_name+'）'+'】操作记录'}",
+                            "lastRightServer": "${node}",
+                            "historySearchForm": {
+                              "page": 1,
+                              "size": 20
+                            }
+                          }
+                        },
+                        {
+                          "tag": "reload-init-action",
+                          "group": "reload-history",
+                          "description": "查询"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "rightMenuAction": [
+                {
+                  "tag": "update-store",
+                  "description": "右键登录-打开登陆框",
+                  "enable": "${item.code==='login' && node.server_ip}",
+                  "value": {
+                    "loginVisible": true,
+                    "lastDblData": "${node}"
+                  }
+                },
+                {
+                  "tag": "reset-form",
+                  "enable": "${item.code==='login' && node.server_ip}",
+                  "formName": "webshell-login-form"
+                },
+                {
+                  "tag": "update-form",
+                  "enable": "${item.code==='login' && node.server_ip}",
+                  "formName": "webshell-login-form",
+                  "value": {
+                    "server_ip": "${lastDblData.server_env_name+'-'+lastDblData.server_ip+'（'+lastDblData.server_busi_name+'）'}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "enable": "${item.code==='login' && node.server_ip}",
+                  "api": "post:/template_data/data?service=project.server_os_users_query",
+                  "data": {
+                    "server_id": "${lastDblData.server_id}"
+                  },
+                  "adapt": {
+                    "userList": "${data}"
+                  }
+                },
+                {
+                  "tag": "update-form",
+                  "enable": "${item.code==='login' && userList.length>0}",
+                  "formName": "webshell-login-form",
+                  "value": {
+                    "server_os_users_id": "${userList[0].server_os_users_id}"
+                  }
+                },
+                {
+                  "tag": "reset-form",
+                  "enable": "${['add','edit'].indexOf(item.code)>=0}",
+                  "formName": "add-node-form"
+                },
+                {
+                  "tag": "update-store",
+                  "enable": "${item.code==='add'}",
+                  "value": {
+                    "addNodeVisible": true,
+                    "nodeOp": "add",
+                    "updateNodeForm": {}
+                  }
+                },
+                {
+                  "enable": "${item.code==='add'}",
+                  "tag": "update-form",
+                  "formName": "add-node-form",
+                  "value": {
+                    "parent_id": "${node.server_env_id}",
+                    "server_env_id": "${node.server_env_id}",
+                    "type": "${node.server_id?'2':'1'}"
+                  }
+                },
+                {
+                  "enable": "${item.code==='edit'}",
+                  "tag": "update-form",
+                  "formName": "add-node-form",
+                  "value": {
+                    "type": "${node.server_id?'2':'1'}"
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "enable": "${item.code==='edit'}",
+                  "value": {
+                    "addNodeVisible": true,
+                    "nodeOp": "edit",
+                    "updateNodeForm": {}
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "name": "查询环境信息",
+                  "enable": "${item.code==='edit' && !node.server_id}",
+                  "api": "post:/template_data/data?service=project.env_tree",
+                  "data": {
+                    "to_tree": false,
+                    "server_env_id": "${node.server_env_id}",
+                    "to_obj": true
+                  },
+                  "adapt": {
+                    "updateNodeForm": "${data}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "name": "查询服务器信息",
+                  "enable": "${item.code==='edit' && node.server_id}",
+                  "api": "post:/template_data/data?service=project.server_list",
+                  "data": {
+                    "server_id": "${node.server_id}",
+                    "show_detail": true
+                  },
+                  "adapt": {
+                    "updateNodeForm": "${data}"
+                  }
+                },
+                {
+                  "tag": "update-form",
+                  "name": " 更新表单",
+                  "enable": "${item.code==='edit'}",
+                  "formName": "add-node-form",
+                  "useStore": true,
+                  "value": "${updateNodeForm}"
+                },
+                {
+                  "tag": "check",
+                  "enable": "${item.code=='delete' && !node.server_id}",
+                  "title": "${'【'+node.server_env_name+'】下存在'+node?.children.length+'个节点，请先删除节点'}",
+                  "check": "${!node.children || (node.children && node.children.length<=0)}"
+                },
+                {
+                  "tag": "confirm",
+                  "title": "确认提示",
+                  "content": "${node.server_id?'确认删除所选【'+node.server_ip+'（'+node.server_busi_name+'）'+'】服务器吗？':'确认删除所选【'+node.server_env_name+'（'+node.server_env_code+'）'+'】环境吗'}",
+                  "enable": "${item.code==='delete'}"
+                },
+                {
+                  "tag": "ajax",
+                  "name": "删除环境",
+                  "enable": "${item.code=='delete' && !node.server_id}",
+                  "group": "server-env-tree",
+                  "api": "post:/template_data/data?service=project.server_env_delete",
+                  "data": {
+                    "server_env_id_list": "${[node.server_env_id]}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "name": "删除服务器",
+                  "enable": "${item.code=='delete' && node.server_id}",
+                  "group": "server-env-tree",
+                  "api": "post:/template_data/data?service=project.server_delete",
+                  "data": {
+                    "server_id_list": "${[node.server_id]}"
+                  }
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "server-env-tree",
+                  "enable": "${item.code=='delete'}",
+                  "description": "页面初始化请求"
+                },
+                {
+                  "tag": "ajax",
+                  "name": "增删改之后出发查询",
+                  "enable": "${['add','edit','delete'].indexOf(item.code)>=0}",
+                  "api": "post:/template_data/data?service=project.my_env",
+                  "appendFormFields": "server-search-form",
+                  "adapt": {
+                    "env_data": "${data}"
+                  }
+                }
+              ],
+              "dblAction": [
+                {
+                  "tag": "update-store",
+                  "description": "打开登陆框",
+                  "enable": "${node.server_ip}",
+                  "value": {
+                    "loginVisible": true,
+                    "lastDblData": "${node}"
+                  }
+                },
+                {
+                  "tag": "reset-form",
+                  "enable": "${node.server_ip}",
+                  "formName": "webshell-login-form"
+                },
+                {
+                  "tag": "update-form",
+                  "enable": "${node.server_ip}",
+                  "formName": "webshell-login-form",
+                  "value": {
+                    "server_ip": "${lastDblData.server_env_name+'-'+lastDblData.server_ip+'（'+lastDblData.server_busi_name+'）'}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "api": "post:/template_data/data?service=project.server_os_users_query",
+                  "data": {
+                    "server_id": "${lastDblData.server_id}"
+                  },
+                  "adapt": {
+                    "userList": "${data}"
+                  }
+                },
+                {
+                  "tag": "update-form",
+                  "enable": "${userList.length>0?true:false}",
+                  "formName": "webshell-login-form",
+                  "value": {
+                    "server_os_users_id": "${userList[0].server_os_users_id}"
+                  }
+                }
+              ]
+            },
+            {
+              "tag": "dialog",
+              "title": "${nodeOp==='add'?'新增节点':'修改节点'}",
+              "open": "${addNodeVisible}",
+              "action": [
+                {
+                  "tag": "submit-form",
+                  "formName": "add-node-form"
+                },
+                {
+                  "tag": "ajax",
+                  "name": "添加环境节点",
+                  "enable": "${nodeOp==='add' && getFormValue('add-node-form','type')==='1'}",
+                  "api": "post:/template_data/data?service=project.add_current_project_env",
+                  "appendFormFields": "add-node-form"
+                },
+                {
+                  "tag": "ajax",
+                  "name": "修改环境节点",
+                  "enable": "${nodeOp==='edit' && getFormValue('add-node-form','type')==='1'}",
+                  "api": "post:/template_data/data?service=project.server_env_update",
+                  "appendFormFields": "add-node-form",
+                  "appendFields": "${updateNodeForm}"
+                },
+                {
+                  "tag": "ajax",
+                  "name": "添加服务器节点",
+                  "enable": "${nodeOp==='add' && getFormValue('add-node-form','type')==='2'}",
+                  "api": "post:/template_data/data?service=project.server_add",
+                  "appendFormFields": "add-node-form"
+                },
+                {
+                  "tag": "ajax",
+                  "name": "修改服务器节点",
+                  "enable": "${nodeOp==='edit' && getFormValue('add-node-form','type')==='2'}",
+                  "api": "post:/template_data/data?service=project.server_modify",
+                  "appendFormFields": "add-node-form",
+                  "appendFields": "${updateNodeForm}"
+                },
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "addNodeVisible": false
+                  }
+                },
+                {
+                  "tag": "reload-init-action",
+                  "group": "server-env-tree",
+                  "description": "页面初始化请求"
+                }
+              ],
+              "children": [
+                {
+                  "tag": "form",
+                  "name": "add-node-form",
+                  "initialValues": "${addNodeForm}",
+                  "labelCol": {
+                    "span": 4
+                  },
+                  "wrapperCol": {
+                    "span": 20
+                  },
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "type",
+                      "label": "类型",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择类型"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "select",
+                          "disabled": "${nodeOp==='edit'}",
+                          "placeholder": "请选择类型",
+                          "options": [
+                            {
+                              "value": "1",
+                              "label": "环境"
+                            },
+                            {
+                              "value": "2",
+                              "label": "服务器"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "noStyle": true,
+                      "itemVisible": "${type==='1'}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "parent_id",
+                          "label": "上级",
+                          "children": [
+                            {
+                              "disabled": "${nodeOp==='edit'}",
+                              "tag": "tree-select",
+                              "placeholder": "请输入名称,不选为根节点",
+                              "allowClear": true,
+                              "treeIcon": "FolderOutlined",
+                              "treeLine": true,
+                              "openLevel": 2,
+                              "valueKey": "${item.server_env_id}",
+                              "treeTitle": "${item.server_env_name+'（'+item.server_env_code+'）'}",
+                              "showSearch": true,
+                              "showIcon": true,
+                              "treeData": "${env_data}"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "label": "环境名称",
+                          "name": "server_env_name",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "环境名称不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入环境名称"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "label": "环境编码",
+                          "name": "server_env_code",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "环境编码不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入环境编码"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "label": "排序号",
+                          "name": "order_id",
+                          "rules": [
+                            {
+                              "required": true,
+                              "type": "number",
+                              "message": "排序号不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "isNumber": true,
+                              "placeholder": "请输入排序号"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "noStyle": true,
+                      "itemVisible": "${type==='2'}",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "server_env_id",
+                          "label": "所属环境",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "所属环境不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "disabled": "${nodeOp==='edit'}",
+                              "tag": "tree-select",
+                              "placeholder": "请输入名称",
+                              "allowClear": true,
+                              "openLevel": 2,
+                              "valueKey": "${item.server_env_id}",
+                              "treeTitle": "${item.server_env_name+'（'+item.server_env_code+'）'}",
+                              "treeIcon": "FolderOutlined",
+                              "treeData": "${env_data}",
+                              "treeLine": true,
+                              "showIcon": true,
+                              "showSearch": true
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "server_busi_name",
+                          "label": "资源名称",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "资源名称不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入资源名称"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "server_ip",
+                          "label": "服务器IP",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "服务器IP不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入服务器IP"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "divider",
+                          "orientation": "left",
+                          "children": "管理员账号/密码"
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "root_username",
+                          "label": "账号",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "管理员账号不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入管理员账号"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "root_password",
+                          "label": "密码",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "管理员密码不能为空"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "showPassword": true,
+                              "placeholder": "请输入管理员密码",
+                              "addonAfterIcon": "LoginOutlined",
+                              "addonAfterTitle": "登录测试",
+                              "addonAfterAction": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=project.server_info",
+                                  "data": {
+                                    "ip": "${getFormValue('add-node-form','server_ip')}",
+                                    "username": "${getFormValue('add-node-form','root_username')}",
+                                    "password": "${getFormValue('add-node-form','root_password')}"
+                                  },
+                                  "showResultMsg": true
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "divider",
+                          "orientation": "left",
+                          "children": "普通账号/密码"
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "normal_username",
+                          "label": "账号",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "placeholder": "请输入普通账号"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "normal_password",
+                          "label": "密码",
+                          "children": [
+                            {
+                              "tag": "input",
+                              "showPassword": true,
+                              "placeholder": "请输入普通密码",
+                              "addonAfterIcon": "LoginOutlined",
+                              "addonAfterTitle": "登录测试",
+                              "addonAfterAction": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=project.server_info",
+                                  "data": {
+                                    "ip": "${getFormValue('add-node-form','server_ip')}",
+                                    "username": "${getFormValue('add-node-form','normal_username')}",
+                                    "password": "${getFormValue('add-node-form','normal_password')}"
+                                  },
+                                  "showResultMsg": true
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "dialog",
+              "open": "${loginVisible}",
+              "title": "在线Shell登陆",
+              "action": [
+                {
+                  "tag": "submit-form",
+                  "formName": "webshell-login-form"
+                },
+                {
+                  "tag": "ajax",
+                  "api": "post:/template_data/data?service=webshell.gen_token",
+                  "appendFormFields": "webshell-login-form",
+                  "adapt": {
+                    "last_webshell_token": "${data}"
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "loginVisible": false
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "enable": "${last_group_id!==''?true:false}",
+                  "value": {
+                    "tmp": "${panelList.findIndex(item=>item.id===last_group_id)}"
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "enable": "${tmp>=0?true:false}",
+                  "value": {
+                    "last_webshell_x": "${tmp}",
+                    "tmp2": "${panelList[tmp].children.findIndex(item=>item.id===last_shell_id)}"
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "enable": "${tmp<0?true:false}",
+                  "value": {
+                    "last_webshell_x": 0,
+                    "last_webshell_y": 0
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "enable": "${tmp2>=0?true:false}",
+                  "value": {
+                    "last_webshell_y": "${tmp2}"
+                  }
+                },
+                {
+                  "tag": "update-store",
+                  "enable": "${tmp2<0?true:false}",
+                  "value": {
+                    "last_webshell_y": 0
+                  }
+                },
+                {
+                  "tag": "arr-push",
+                  "description": "基于现有group新增webshell",
+                  "enable": "${panelList.length>0}",
+                  "from": "panelList",
+                  "method": "${panelList[last_webshell_x].children[last_webshell_y].addChildren(value)} ",
+                  "value": {
+                    "token": "${last_webshell_token}",
+                    "title": "${lastDblData.server_ip+'（'+lastDblData.server_busi_name+'）'}",
+                    "path": "./"
+                  }
+                },
+                {
+                  "tag": "method",
+                  "description": "执行激活标签方法",
+                  "enable": "${panelList.length>0}",
+                  "method": "${panelList[last_webshell_x].children[last_webshell_y].setActiveKey(last_webshell_token) }"
+                },
+                {
+                  "tag": "arr-push",
+                  "description": "添加新的group",
+                  "enable": "${panelList.length<=0}",
+                  "from": "panelList",
+                  "value": {
+                    "id": "${uuid()}",
+                    "order": 1,
+                    "description": "横向分组",
+                    "children": [
+                      {
+                        "id": "${uuid()}",
+                        "order": 1,
+                        "description": "纵向分组",
+                        "activeKey": "${last_webshell_token}",
+                        "content": [
+                          {
+                            "path": "./",
+                            "token": "${last_webshell_token}",
+                            "title": "${lastDblData.server_ip+'（'+lastDblData.server_busi_name+'）'}"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "tag": "method",
+                  "method": "${panelList.forEach(item=>item.initialize())}"
+                },
+                {
+                  "tag": "method",
+                  "description": "新建终端后定位到底部",
+                  "method": "${window.__webshellTerminalPinBottom&&window.__webshellTerminalPinBottom.schedule&&window.__webshellTerminalPinBottom.schedule()}"
+                }
+              ],
+              "children": [
+                {
+                  "tag": "form",
+                  "name": "webshell-login-form",
+                  "initialValues": {
+                    "server_ip": "",
+                    "server_os_users_id": null
+                  },
+                  "labelCol": {
+                    "span": 4
+                  },
+                  "wrapperCol": {
+                    "span": 20
+                  },
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "server_ip",
+                      "label": "服务器",
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "请输入服务器IP",
+                          "disabled": true
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "server_os_users_id",
+                      "label": "用户",
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择用户"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "select",
+                          "allowClear": true,
+                          "fieldNames": {
+                            "label": "user_name",
+                            "value": "server_os_users_id"
+                          },
+                          "placeholder": "请选择用户",
+                          "options": "${userList}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "bottomToolBar": [
+            {
+              "tag": "layout-fit",
+              "title": "常用服务器",
+              "children": [
+                {
+                  "tag": "tree",
+                  "showLine": true,
+                  "rightMenu": [
+                    {
+                      "type": "item",
+                      "icon": "LoginOutlined",
+                      "code": "login",
+                      "label": "登录"
+                    }
+                  ],
+                  "rightMenuAction": [
+                    {
+                      "tag": "update-store",
+                      "description": "右键登录-打开登陆框",
+                      "enable": "${item.code==='login' && node.server_ip}",
+                      "value": {
+                        "loginVisible": true,
+                        "lastDblData": "${node}"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "enable": "${item.code==='login' && node.server_ip}",
+                      "formName": "webshell-login-form"
+                    },
+                    {
+                      "tag": "update-form",
+                      "enable": "${item.code==='login' && node.server_ip}",
+                      "formName": "webshell-login-form",
+                      "value": {
+                        "server_ip": "${lastDblData.server_env_name+'-'+lastDblData.server_ip+'（'+lastDblData.server_busi_name+'）'}"
+                      }
+                    },
+                    {
+                      "tag": "ajax",
+                      "enable": "${item.code==='login' && node.server_ip}",
+                      "api": "post:/template_data/data?service=project.server_os_users_query",
+                      "data": {
+                        "server_id": "${lastDblData.server_id}"
+                      },
+                      "adapt": {
+                        "userList": "${data}"
+                      }
+                    },
+                    {
+                      "tag": "update-form",
+                      "enable": "${item.code==='login' && userList.length>0}",
+                      "formName": "webshell-login-form",
+                      "value": {
+                        "server_os_users_id": "${userList[0].server_os_users_id}"
+                      }
+                    }
+                  ],
+                  "style": {
+                    "overflow": "auto",
+                    "height": 200,
+                    "padding": "6px",
+                    "border": "1px solid #e2e8f0",
+                    "borderRadius": "8px",
+                    "background": "#ffffff"
+                  },
+                  "dblAction": [
+                    {
+                      "tag": "update-store",
+                      "description": "打开登陆框",
+                      "enable": "${node.server_ip}",
+                      "value": {
+                        "loginVisible": true,
+                        "lastDblData": "${node}"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "enable": "${node.server_ip}",
+                      "formName": "webshell-login-form"
+                    },
+                    {
+                      "tag": "update-form",
+                      "enable": "${node.server_ip}",
+                      "formName": "webshell-login-form",
+                      "value": {
+                        "server_ip": "${lastDblData.server_env_name+'-'+lastDblData.server_ip+'（'+lastDblData.server_busi_name+'）'}"
+                      }
+                    },
+                    {
+                      "tag": "ajax",
+                      "api": "post:/template_data/data?service=project.server_os_users_query",
+                      "data": {
+                        "server_id": "${lastDblData.server_id}"
+                      },
+                      "adapt": {
+                        "userList": "${data}"
+                      }
+                    },
+                    {
+                      "tag": "update-form",
+                      "enable": "${userList.length>0?true:false}",
+                      "formName": "webshell-login-form",
+                      "value": {
+                        "server_os_users_id": "${userList[0].server_os_users_id}"
+                      }
+                    }
+                  ],
+                  "treeSelected": "${treeSelected}",
+                  "treeKey": "${item.server_id?item.server_id:item.server_env_id}",
+                  "treeTitle": "${item.server_id?item.server_env_name+'-'+item.server_ip+'（'+item.server_busi_name+'）':item.server_env_name+'（'+item.server_env_code+'）'}",
+                  "treeIcon": "${item.server_id?'DesktopOutlined':'FolderOutlined'}",
+                  "treeData": "${recently_server_list}",
+                  "openLevel": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "content",
+      "className": "webshell-container",
+      "style": {
+        "background": "linear-gradient(180deg, #f9fbff 0%, #ffffff 35%)",
+        "display": "flex",
+        "flexDirection": "column"
+      },
+      "children": [
+        {
+          "tag": "panel-group",
+          "visible": "${panelList.length>0}",
+          "description": "外层水平分组",
+          "direction": "horizontal",
+          "children": [
+            {
+              "tag": "listview",
+              "itemData": "${panelList}",
+              "keyField": "id",
+              "rowClickAction": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "last_group_id": "${row.id}"
+                  }
+                }
+              ],
+              "itemAttr": {
+                "tag": "panel",
+                "id": "${row.id}",
+                "minSize": 10,
+                "order": "${row.order}",
+                "className": "border-right",
+                "children": [
+                  {
+                    "tag": "panel-group",
+                    "description": "里层上下分组",
+                    "direction": "vertical",
+                    "children": [
+                      {
+                        "tag": "listview",
+                        "itemData": "${[...row.children]}",
+                        "rowClickAction": [
+                          {
+                            "tag": "update-store",
+                            "value": {
+                              "last_shell_id": "${row.id}"
+                            }
+                          }
+                        ],
+                        "keyField": "id",
+                        "itemAttr": {
+                          "tag": "panel",
+                          "id": "${row.id}",
+                          "minSize": 10,
+                          "order": "${row.order}",
+                          "className": "${row.id==last_shell_id?'shell-group-active':''}",
+                          "children": [
+                            {
+                              "tag": "tabs",
+                              "size": "small",
+                              "withHistory": true,
+                              "type": "editable-card",
+                              "hideAdd": true,
+                              "itemAttr": {
+                                "label": "${row.title}",
+                                "children": [
+                                  {
+                                    "style": {
+                                      "background": "#000",
+                                      "color": "white"
+                                    },
+                                    "tag": "layout-fit",
+                                    "children": [
+                                      {
+                                        "tag": "ssh",
+                                        "refName": "${row.token}",
+                                        "onOpen": [
+                                          {
+                                            "tag": "method",
+                                            "description": "终端打开后定位到底部",
+                                            "method": "${window.__webshellTerminalPinBottom&&window.__webshellTerminalPinBottom.schedule&&window.__webshellTerminalPinBottom.schedule()}"
+                                          },
+                                          {
+                                            "tag": "method",
+                                            "enable": "${isCopy===1}",
+                                            "description": "进入复制路径",
+                                            "method": "${getFormRef(token)?.[0]?.current?.send?.('cd '+row.path)}"
+                                          },
+                                          {
+                                            "tag": "update-store",
+                                            "value": {
+                                              "isCopy": 0
+                                            }
+                                          }
+                                        ],
+                                        "token": "${row.token}"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              "removeAction": [
+                                {
+                                  "tag": "update-store",
+                                  "description": "设置右键对象为空",
+                                  "value": {
+                                    "lastRightSsh": []
+                                  }
+                                },
+                                {
+                                  "tag": "method",
+                                  "description": "关闭标签",
+                                  "method": "${row.removeByKey(key)}"
+                                },
+                                {
+                                  "tag": "method",
+                                  "description": "如果关闭的标签是激活的标签，则激活标签往前移动一个",
+                                  "enable": "${row.content.length>0 && row.activeKey==key}",
+                                  "method": "${row.setActiveKey(row.content[row.content.length-1].token)}"
+                                },
+                                {
+                                  "tag": "method",
+                                  "method": "${panelList.filter(item=>item.checkNoneTab())}"
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "panelList": "${panelList.filter(item=>item.children.length>0)}"
+                                  }
+                                }
+                              ],
+                              "keyField": "token",
+                              "activeKey": "${row.activeKey}",
+                              "itemData": "${[...row.content]}",
+                              "rightMenu": [
+                                {
+                                  "type": "item",
+                                  "icon": "TbLayoutRows",
+                                  "code": "horizontal",
+                                  "label": "水平分割"
+                                },
+                                {
+                                  "type": "item",
+                                  "icon": "TbLayoutColumns",
+                                  "code": "vertical",
+                                  "label": "垂直分割"
+                                },
+                                {
+                                  "type": "item",
+                                  "icon": "EditOutlined",
+                                  "code": "rename",
+                                  "label": "重命名"
+                                },
+                                {
+                                  "type": "item",
+                                  "icon": "FaFolder",
+                                  "code": "folder",
+                                  "label": "文件管理",
+                                  "action": [
+                                    {
+                                      "tag": "update-current-path"
+                                    },
+                                    {
+                                      "tag": "update-store",
+                                      "description": "打开对话框",
+                                      "value": {
+                                        "fileInfoList": [],
+                                        "fileManageShow": true,
+                                        "lastRightSsh": "${[row]}"
+                                      }
+                                    },
+                                    {
+                                      "tag": "update-form",
+                                      "enable": "${lastRightSsh.length>0}",
+                                      "description": "设置表单路径",
+                                      "formName": "webshell-file-manage",
+                                      "value": {
+                                        "path": "${lastRightSsh[0]?.path}"
+                                      }
+                                    },
+                                    {
+                                      "tag": "reload-init-action",
+                                      "group": "reload-sftp-file"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "rightMenuAction": [
+                                {
+                                  "tag": "update-store",
+                                  "enable": "${item.code==='rename'}",
+                                  "description": "打开标签重命名弹窗",
+                                  "value": {
+                                    "shellRenameVisible": true,
+                                    "shellRenameToken": "${row.token}",
+                                    "shellRenameForm": {
+                                      "title": "${row.title}"
+                                    }
+                                  }
+                                },
+                                {
+                                  "tag": "method",
+                                  "enable": "${item.code==='rename'}",
+                                  "description": "聚焦并全选标签名称",
+                                  "method": "${(()=>{const focus=()=>{const doc=window.document;const el=doc.getElementById('webshell-tab-rename-form_title')||doc.querySelector('.ant-modal input');if(el){el.focus();if(el.select){el.select();}}};window.setTimeout(focus,0);window.setTimeout(focus,120);window.setTimeout(focus,320);})()}"
+                                },
+                                {
+                                  "tag": "update-current-path",
+                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}"
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                  "value": {
+                                    "isCopy": 1
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                  "api": "post:/template_data/data?service=webshell.gen_token_from_token",
+                                  "data": {
+                                    "token": "${row.token}"
+                                  },
+                                  "adapt": {
+                                    "last_webshell_token": "${data}"
+                                  }
+                                },
+                                {
+                                  "tag": "method",
+                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                  "description": "分屏创建期间不触发终端输出状态",
+                                  "method": "${window.__webshellTabStatus&&window.__webshellTabStatus.suppress&&window.__webshellTabStatus.suppress(last_webshell_token,3600)}"
+                                },
+                                {
+                                  "tag": "arr-push",
+                                  "description": "水平分割，添加数据",
+                                  "enable": "${item.code==='horizontal'}",
+                                  "from": "panelList",
+                                  "value": {
+                                    "id": "${uuid()}",
+                                    "order": 1,
+                                    "description": "横向分组",
+                                    "children": [
+                                      {
+                                        "id": "${uuid()}",
+                                        "order": 1,
+                                        "description": "纵向分组",
+                                        "activeKey": "${last_webshell_token}",
+                                        "content": [
+                                          {
+                                            "token": "${last_webshell_token}",
+                                            "title": "${row.title}",
+                                            "path": "${row.path}"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "tag": "arr-push",
+                                  "description": "垂直分割，添加数据",
+                                  "enable": "${item.code==='vertical'}",
+                                  "method": "${(()=>{const token=String((row&&row.token)||row||'');const groups=Array.isArray(panelList)?panelList:[];let group=null;for(const item of groups){const children=Array.isArray(item&&item.children)?item.children:[];const hit=children.some(child=>Array.isArray(child&&child.content)&&child.content.some(tab=>String(tab&&tab.token||'')===token));if(hit){group=item;break;}}if(!group&&row&&row.parent&&row.parent.parent){group=row.parent.parent;}if(group&&typeof group.addChildren==='function'){group.addChildren(value);}})()}",
+                                  "value": {
+                                    "id": "${uuid()}",
+                                    "order": 1,
+                                    "description": "纵向分组",
+                                    "activeKey": "${last_webshell_token}",
+                                    "content": [
+                                      {
+                                        "token": "${last_webshell_token}",
+                                        "title": "${row.title}",
+                                        "path": "${row.path}"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "tag": "method",
+                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                  "method": "${panelList.forEach(item=>item.initialize())}"
+                                },
+                                {
+                                  "tag": "method",
+                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                  "description": "分屏完成后定位到底部",
+                                  "method": "${window.__webshellTerminalPinBottom&&window.__webshellTerminalPinBottom.schedule&&window.__webshellTerminalPinBottom.schedule()}"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "joinAttr": {
+                          "tag": "panel-resize"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "joinAttr": {
+                "tag": "panel-resize"
+              }
+            }
+          ]
+        },
+        {
+          "tag": "layout-fit",
+          "visible": "${panelList.length<=0}",
+          "title": "快速开始",
+          "style": {
+            "margin": "8% 14%",
+            "padding": "14px",
+            "borderRadius": "12px",
+            "border": "1px solid #dbe4ef",
+            "background": "linear-gradient(160deg, #ffffff 0%, #f8fbff 55%, #f1f5f9 100%)",
+            "boxShadow": "0 16px 32px -20px rgba(15, 23, 42, 0.42)"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "style": {
+                "fontSize": "13px",
+                "color": "#334155",
+                "marginBottom": "10px",
+                "lineHeight": "20px",
+                "fontWeight": 500
+              },
+              "children": "建议优先使用最近连接，右侧目录树支持双击或右键登录，系统会自动带出默认用户。"
+            },
+            {
+              "tag": "div",
+              "style": {
+                "marginBottom": "12px",
+                "display": "grid",
+                "gridTemplateColumns": "repeat(auto-fit, minmax(180px, 1fr))",
+                "gap": "8px"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "padding": "8px 10px",
+                    "border": "1px solid #dbe4ef",
+                    "borderRadius": "8px",
+                    "background": "#ffffff"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "12px",
+                        "fontWeight": 600,
+                        "color": "#1e293b",
+                        "marginBottom": "2px"
+                      },
+                      "children": "服务器管理"
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "12px",
+                        "color": "#64748b",
+                        "lineHeight": "18px"
+                      },
+                      "children": "右键树节点可新增、编辑、删除、查看记录。"
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "padding": "8px 10px",
+                    "border": "1px solid #dbe4ef",
+                    "borderRadius": "8px",
+                    "background": "#ffffff"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "12px",
+                        "fontWeight": 600,
+                        "color": "#1e293b",
+                        "marginBottom": "2px"
+                      },
+                      "children": "终端分割"
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "12px",
+                        "color": "#64748b",
+                        "lineHeight": "18px"
+                      },
+                      "children": "右键标签可水平/垂直分割、重命名并打开文件管理。"
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "style": {
+                    "padding": "8px 10px",
+                    "border": "1px solid #dbe4ef",
+                    "borderRadius": "8px",
+                    "background": "#ffffff"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "12px",
+                        "fontWeight": 600,
+                        "color": "#1e293b",
+                        "marginBottom": "2px"
+                      },
+                      "children": "工作空间"
+                    },
+                    {
+                      "tag": "div",
+                      "style": {
+                        "fontSize": "12px",
+                        "color": "#64748b",
+                        "lineHeight": "18px"
+                      },
+                      "children": "可切换项目和宽度，支持多文件分组查看。"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "style": {
+                "padding": "8px",
+                "border": "1px solid #e2e8f0",
+                "borderRadius": "8px",
+                "background": "#ffffff"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "visible": "${recently_server_list.filter(item=>item.server_ip).length<=0}",
+                  "style": {
+                    "padding": "10px",
+                    "fontSize": "12px",
+                    "color": "#64748b"
+                  },
+                  "children": "暂无常用服务器，请先在左侧服务器列表登录后再返回此页。"
+                },
+                {
+                  "tag": "listview",
+                  "visible": "${recently_server_list.length>0}",
+                  "style": {
+                    "fontSize": 0
+                  },
+                  "itemData": "${recently_server_list.filter(item=>item.server_ip)}",
+                  "keyField": "server_id",
+                  "itemAttr": {
+                    "tag": "div",
+                    "style": {
+                      "display": "inline-flex",
+                      "position": "relative",
+                      "alignItems": "center",
+                      "justifyContent": "space-between",
+                      "padding": "8px 10px",
+                      "width": "calc(33.33% - 8px)",
+                      "minWidth": "240px",
+                      "margin": "0 8px 8px 0",
+                      "verticalAlign": "top",
+                      "border": "1px solid #dbe4ef",
+                      "borderRadius": "8px",
+                      "background": "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "visible": "${recently_server_list.filter(item=>item.server_ip).findIndex(item=>item.server_id===row.server_id)<5}",
+                        "style": {
+                          "position": "absolute",
+                          "top": "-1px",
+                          "left": "-1px",
+                          "zIndex": 2,
+                          "fontSize": "8px",
+                          "padding": "0 5px 0 5px",
+                          "borderRadius": "0 8px 8px 0",
+                          "border": "1px solid ${(()=>{const n=recently_server_list.filter(item=>item.server_ip).findIndex(item=>item.server_id===row.server_id)+1;return n===1?'#991b1b':n===2?'#b91c1c':n===3?'#dc2626':n===4?'#ef4444':'#f87171'})()}",
+                          "borderLeft": "none",
+                          "background": "${(()=>{const n=recently_server_list.filter(item=>item.server_ip).findIndex(item=>item.server_id===row.server_id)+1;return n===1?'linear-gradient(180deg, #ef4444 0%, #dc2626 48%, #991b1b 100%)':n===2?'linear-gradient(180deg, #f87171 0%, #ef4444 52%, #b91c1c 100%)':n===3?'linear-gradient(180deg, #fca5a5 0%, #f87171 52%, #dc2626 100%)':n===4?'linear-gradient(180deg, #fecaca 0%, #fca5a5 52%, #ef4444 100%)':'linear-gradient(180deg, #fee2e2 0%, #fecaca 52%, #f87171 100%)'})()}",
+                          "color": "#ffffff",
+                          "fontWeight": 600,
+                          "letterSpacing": "0.1px",
+                          "textShadow": "0 1px 1px rgba(127, 29, 29, 0.45)",
+                          "boxShadow": "${(()=>{const n=recently_server_list.filter(item=>item.server_ip).findIndex(item=>item.server_id===row.server_id)+1;return n===1?'0 2px 7px -3px rgba(153, 27, 27, 0.85), inset 0 1px 0 rgba(255,255,255,0.22)':n===2?'0 2px 6px -3px rgba(185, 28, 28, 0.72), inset 0 1px 0 rgba(255,255,255,0.24)':n===3?'0 2px 6px -3px rgba(220, 38, 38, 0.62), inset 0 1px 0 rgba(255,255,255,0.26)':n===4?'0 2px 5px -3px rgba(239, 68, 68, 0.52), inset 0 1px 0 rgba(255,255,255,0.3)':'0 2px 4px -3px rgba(248, 113, 113, 0.45), inset 0 1px 0 rgba(255,255,255,0.34)'})()}",
+                          "pointerEvents": "none",
+                          "whiteSpace": "nowrap"
+                        },
+                        "children": "${'TOP'+(recently_server_list.filter(item=>item.server_ip).findIndex(item=>item.server_id===row.server_id)+1)}"
+                      },
+                      {
+                        "tag": "div",
+                        "style": {
+                          "minWidth": 0
+                        },
+                        "children": [
+                          {
+                            "tag": "div",
+                            "style": {
+                              "display": "flex",
+                              "alignItems": "center",
+                              "justifyContent": "space-between",
+                              "fontSize": "13px",
+                              "fontWeight": 600,
+                              "color": "#1e293b",
+                              "whiteSpace": "nowrap",
+                              "overflow": "hidden",
+                              "textOverflow": "ellipsis",
+                              "flex": 1,
+                              "minWidth": 0,
+                              "direction": "rtl",
+                              "textAlign": "left"
+                            },
+                            "children": [
+                              {
+                                "tag": "div",
+                                "style": {
+                                  "display": "flex",
+                                  "alignItems": "center",
+                                  "gap": "6px",
+                                  "minWidth": 0,
+                                  "overflow": "hidden",
+                                  "textOverflow": "ellipsis"
+                                },
+                                "children": [
+                                  {
+                                    "tag": "icon",
+                                    "icon": "StarFilled",
+                                    "style": {
+                                      "fontSize": "12px",
+                                      "color": "#f59e0b"
+                                    }
+                                  },
+                                  {
+                                    "tag": "icon",
+                                    "icon": "DesktopOutlined",
+                                    "style": {
+                                      "fontSize": "13px",
+                                      "color": "#2563eb"
+                                    }
+                                  },
+                                  {
+                                    "tag": "span",
+                                    "style": {
+                                      "overflow": "hidden",
+                                      "textOverflow": "ellipsis"
+                                    },
+                                    "children": "${row.server_ip+'（'+row.server_busi_name+'）'}"
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "div",
+                            "style": {
+                              "fontSize": "12px",
+                              "color": "#64748b"
+                            },
+                            "children": "${row.server_env_name+' · 使用'+(row.login_count||0)+'次'}"
+                          }
+                        ]
+                      },
+                      {
+                        "tag": "button",
+                        "size": "small",
+                        "type": "primary",
+                        "icon": "LoginOutlined",
+                        "children": "登录",
+                        "action": [
+                          {
+                            "tag": "update-store",
+                            "value": {
+                              "loginVisible": true,
+                              "lastDblData": "${row}"
+                            }
+                          },
+                          {
+                            "tag": "reset-form",
+                            "formName": "webshell-login-form"
+                          },
+                          {
+                            "tag": "update-form",
+                            "formName": "webshell-login-form",
+                            "value": {
+                              "server_ip": "${row.server_env_name+'-'+row.server_ip+'（'+row.server_busi_name+'）'}"
+                            }
+                          },
+                          {
+                            "tag": "ajax",
+                            "api": "post:/template_data/data?service=project.server_os_users_query",
+                            "data": {
+                              "server_id": "${row.server_id}"
+                            },
+                            "adapt": {
+                              "userList": "${data}"
+                            }
+                          },
+                          {
+                            "tag": "update-form",
+                            "enable": "${userList.length>0}",
+                            "formName": "webshell-login-form",
+                            "value": {
+                              "server_os_users_id": "${userList[0].server_os_users_id}"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "dialog",
+          "open": "${shellRenameVisible}",
+          "title": "重命名标签",
+          "width": 420,
+          "cancelAction": [
+            {
+              "tag": "update-store",
+              "value": {
+                "shellRenameToken": "",
+                "shellRenameForm": {
+                  "title": ""
+                }
+              }
+            }
+          ],
+          "action": [
+            {
+              "tag": "submit-form",
+              "formName": "webshell-tab-rename-form"
+            },
+            {
+              "tag": "check",
+              "title": "标签名称不能为空",
+              "check": "${String(getFormValue('webshell-tab-rename-form','title')||'').trim().length>0}"
+            },
+            {
+              "tag": "check",
+              "title": "未找到要重命名的标签",
+              "check": "${String(shellRenameToken||'').length>0}"
+            },
+            {
+              "tag": "update-store",
+              "description": "按 token 更新所有分屏里的目标标签名称",
+              "value": {
+                "panelList": "${(()=>{const token=String(shellRenameToken||'');const renameTo=String(getFormValue('webshell-tab-rename-form','title')||'').trim();const optionalKeys=['project_code','project_name','project_id','id','code','name','type'];const toTab=(tab)=>{const isTarget=String(tab&&tab.token||'')===token;const next={token:String(tab&&tab.token||''),title:String(isTarget?renameTo:((tab&&tab.title)||'')),path:String((tab&&tab.path)||'./')};optionalKeys.forEach(key=>{const value=tab&&tab[key];if(value!==undefined&&value!==null){next[key]=String(value);}});return next;};return (Array.isArray(panelList)?panelList:[]).map(group=>({id:String(group&&group.id||''),order:Number(group&&group.order||1),description:String(group&&group.description||''),children:(Array.isArray(group&&group.children)?group.children:[]).map(child=>({id:String(child&&child.id||''),order:Number(child&&child.order||1),description:String(child&&child.description||''),activeKey:String(child&&child.activeKey||''),content:(Array.isArray(child&&child.content)?child.content:[]).map(toTab)}))}));})()}",
+                "shellRenameVisible": false,
+                "shellRenameToken": "",
+                "shellRenameForm": {
+                  "title": ""
+                }
+              }
+            },
+            {
+              "tag": "method",
+              "method": "${panelList.forEach(item=>item.initialize())}"
+            }
+          ],
+          "children": [
+            {
+              "tag": "form",
+              "name": "webshell-tab-rename-form",
+              "initialValues": "${shellRenameForm}",
+              "labelCol": {
+                "span": 6
+              },
+              "wrapperCol": {
+                "span": 18
+              },
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "title",
+                  "label": "标签名称",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "请输入标签名称"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "请输入新的标签名称",
+                      "autoFocus": true,
+                      "onFocus": "${(e)=>{const el=e&&e.currentTarget;if(el&&el.select){window.setTimeout(()=>el.select(),0);}}}",
+                      "onPressEnter": "${(e)=>{if(e&&e.nativeEvent&&e.nativeEvent.isComposing){return;}if(e&&e.preventDefault){e.preventDefault();}if(e&&e.stopPropagation){e.stopPropagation();}const el=e&&e.currentTarget;const modal=el&&el.closest?el.closest('.ant-modal'):null;const btn=modal&&modal.querySelector?modal.querySelector('.ant-modal-footer .ant-btn-primary'):null;if(btn&&!btn.disabled){window.setTimeout(()=>btn.click(),0);}}}",
+                      "allowClear": true
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "dialog",
+          "open": "${historyShow}",
+          "title": "${historyDialogTitle}",
+          "width": "60%",
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "historyShow": false
+              }
+            }
+          ],
+          "children": [
+            {
+              "tag": "layout-fit",
+              "searchToolBar": [
+                {
+                  "tag": "form",
+                  "layout": "inline",
+                  "name": "webshell-history",
+                  "initialValues": {},
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "reload-history",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "submitOnEnter": true,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "label": "搜索",
+                      "name": "search",
+                      "style": {
+                        "width": "400px",
+                        "marginBottom": "10px"
+                      },
+                      "children": [
+                        {
+                          "tag": "input",
+                          "placeholder": "操作用户"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "children": [
+                        {
+                          "tag": "button",
+                          "htmlType": "submit",
+                          "children": "刷新",
+                          "action": [
+                            {
+                              "tag": "reload-init-action",
+                              "group": "reload-history",
+                              "description": "页面初始化请求"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "children": [
+                {
+                  "tag": "table",
+                  "style": {
+                    "height": 500
+                  },
+                  "headerHeight": 28,
+                  "rowHeight": 26,
+                  "rowData": "${historyList}",
+                  "columnDefs": [
+                    {
+                      "field": "server_busi_name",
+                      "headerName": "名称",
+                      "minWidth": 120,
+                      "flex": 1
+                    },
+                    {
+                      "field": "server_ip",
+                      "headerName": "IP",
+                      "width": 160
+                    },
+                    {
+                      "field": "create_user_name",
+                      "headerName": "操作用户",
+                      "width": 160
+                    },
+                    {
+                      "field": "user_name",
+                      "headerName": "登陆用户",
+                      "width": 160
+                    },
+                    {
+                      "field": "create_time",
+                      "headerName": "开始时间",
+                      "width": 160
+                    },
+                    {
+                      "field": "close_time",
+                      "headerName": "结束时间",
+                      "width": 160
+                    },
+                    {
+                      "field": "",
+                      "headerName": "操作",
+                      "width": 100,
+                      "suppressSizeToFit": true,
+                      "pinned": "right",
+                      "cellRender": {
+                        "tag": "span",
+                        "children": [
+                          {
+                            "tag": "button",
+                            "type": "text",
+                            "icon": "CaretRightOutlined",
+                            "size": "small",
+                            "children": "回放",
+                            "action": [
+                              {
+                                "tag": "update-store",
+                                "value": {
+                                  "playShow": true,
+                                  "playTitle": "${row.server_busi_name+'（'+row.server_ip+'） '+row?.create_time+' 至 '+row?.close_time}"
+                                }
+                              },
+                              {
+                                "tag": "ajax",
+                                "api": "post:/template_data/data?service=webshell.webshell_log_query",
+                                "data": {
+                                  "token": "${row.token}"
+                                },
+                                "adapt": {
+                                  "historyLogList": "${data}"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "bottomToolBar": [
+                {
+                  "tag": "pagination",
+                  "showSizeChanger": true,
+                  "align": "end",
+                  "pageSize": "${historySearchForm.size}",
+                  "current": "${historySearchForm.page}",
+                  "total": "${historyCount}",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "reload-history",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "showTotal": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "dialog",
+          "open": "${fileManageShow}",
+          "width": "60%",
+          "title": "${lastRightSsh.length>0?lastRightSsh[0]?.title+'-文件管理':'文件管理'}",
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "fileManageShow": false
+              }
+            }
+          ],
+          "children": [
+            {
+              "tag": "layout-fit",
+              "searchToolBar": [
+                {
+                  "tag": "form",
+                  "layout": "inline",
+                  "name": "webshell-file-manage",
+                  "initialValues": {
+                    "path": ""
+                  },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "reload-sftp-file"
+                    }
+                  ],
+                  "submitOnEnter": true,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "label": "路径",
+                      "name": "path",
+                      "style": {
+                        "width": "400px",
+                        "marginBottom": "10px"
+                      },
+                      "children": [
+                        {
+                          "tag": "input"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "children": [
+                        {
+                          "tag": "button",
+                          "htmlType": "submit",
+                          "children": "刷新",
+                          "action": [
+                            {
+                              "tag": "reload-init-action",
+                              "group": "reload-sftp-file"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "form-item",
+                      "name": "fileList",
+                      "children": [
+                        {
+                          "tag": "upload",
+                          "uploadConfig": {
+                            "api": "post:/template_data/data?service=webshell.upload_file_by_token",
+                            "data": {
+                              "token": "${lastRightSsh[0]?.token}",
+                              "path": "${lastRightSsh[0]?.path}"
+                            }
+                          },
+                          "children": [
+                            {
+                              "tag": "button",
+                              "style": {
+                                "marginLeft": "60px"
+                              },
+                              "children": "上传"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "children": [
+                {
+                  "tag": "table",
+                  "style": {
+                    "height": 500
+                  },
+                  "headerHeight": 28,
+                  "rowHeight": 26,
+                  "rowData": "${fileInfoList}",
+                  "columnDefs": [
+                    {
+                      "field": "name",
+                      "headerName": "名称",
+                      "minWidth": 120,
+                      "flex": 1,
+                      "cellRender": {
+                        "tag": "span",
+                        "children": [
+                          {
+                            "tag": "span",
+                            "visible": "${(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+                            "action": [
+                              {
+                                "tag": "update-store",
+                                "value": {
+                                  "current_dir": "${current_dir==='/'?'/'+row.name:current_dir+'/'+row.name}"
+                                }
+                              },
+                              {
+                                "tag": "method",
+                                "description": "设置对象路径",
+                                "method": "${lastRightSsh[0]?.setPath(current_dir)}"
+                              },
+                              {
+                                "tag": "update-form",
+                                "enable": "${lastRightSsh.length>0}",
+                                "description": "设置表单路径",
+                                "formName": "webshell-file-manage",
+                                "value": {
+                                  "path": "${lastRightSsh[0]?.path}"
+                                }
+                              },
+                              {
+                                "tag": "reload-init-action",
+                                "group": "reload-sftp-file"
+                              }
+                            ],
+                            "className": "sftp-folder",
+                            "children": [
+                              {
+                                "tag": "icon",
+                                "icon": "FolderOutlined",
+                                "style": {
+                                  "margin": "2px 6px 2px 0px"
+                                }
+                              },
+                              {
+                                "tag": "span",
+                                "children": "${row.name}"
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "span",
+                            "visible": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+                            "style": {
+                              "margin": "2px 6px 2px 0px"
+                            },
+                            "children": [
+                              {
+                                "tag": "icon",
+                                "style": {
+                                  "margin": "2px 6px"
+                                },
+                                "icon": "FileOutlined"
+                              },
+                              "${row.name}"
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "field": "size_info",
+                      "headerName": "大小",
+                      "width": 160
+                    },
+                    {
+                      "field": "is_dir",
+                      "headerName": "类型",
+                      "width": 160,
+                      "cellRender": {
+                        "tag": "span",
+                        "children": "${row.is_dir?'文件夹':'文件'}"
+                      }
+                    },
+                    {
+                      "field": "modify_time",
+                      "headerName": "修改时间",
+                      "width": 160
+                    },
+                    {
+                      "field": "",
+                      "headerName": "操作",
+                      "width": 180,
+                      "suppressSizeToFit": true,
+                      "pinned": "right",
+                      "cellRender": {
+                        "tag": "span",
+                        "visible": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+                        "children": [
+                          {
+                            "tag": "progress",
+                            "type": "circle",
+                            "visible": "${lastDownloadRowName==row.name}",
+                            "percent": "${downloadingPercent}",
+                            "size": 18
+                          },
+                          {
+                            "tag": "button",
+                            "type": "text",
+                            "icon": "DownloadOutlined",
+                            "size": "small",
+                            "children": "下载",
+                            "loading": "${lastDownloadRowName==row.name}",
+                            "action": [
+                              {
+                                "tag": "ajax",
+                                "api": "post:/template_data/data?service=webshell.download_by_token",
+                                "download": true,
+                                "downloadingPercent": "${downloadingPercent}",
+                                "start": {
+                                  "lastDownloadRowName": "${row.name}",
+                                  "downloadingPercent": 0
+                                },
+                                "end": {
+                                  "lastDownloadRowName": ""
+                                },
+                                "data": {
+                                  "token": "${lastRightSsh[0]?.token}",
+                                  "path": "${lastRightSsh[0]?.path+'/'+row.name}"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "button",
+                            "danger": true,
+                            "type": "text",
+                            "icon": "DeleteOutlined",
+                            "confirm": {
+                              "title": "确认删除吗？",
+                              "description": "${'确认删除【'+row.name+'】文件吗'}"
+                            },
+                            "action": [
+                              {
+                                "tag": "ajax",
+                                "api": "post:/template_data/data?service=webshell.remove_file_by_token",
+                                "data": {
+                                  "token": "${lastRightSsh[0]?.token}",
+                                  "path": "${lastRightSsh[0]?.path+'/'+row.name}"
+                                }
+                              },
+                              {
+                                "tag": "reload-init-action",
+                                "group": "reload-sftp-file"
+                              }
+                            ],
+                            "size": "small",
+                            "children": "删除"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "dialog",
+          "open": "${playShow}",
+          "width": "80%",
+          "title": "${playTitle}",
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "playShow": false
+              }
+            }
+          ],
+          "style": {
+            "marginTop": "-8vh"
+          },
+          "children": [
+            {
+              "tag": "layout-fit",
+              "style": {
+                "height": "80vh"
+              },
+              "children": [
+                {
+                  "refName": "history",
+                  "tag": "ssh"
+                }
+              ],
+              "bottomToolBar": [
+                {
+                  "tag": "form",
+                  "layout": "inline",
+                  "name": "play",
+                  "initialValues": {
+                    "times": "1"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "style": {
+                        "display": "flex",
+                        "width": "100%"
+                      },
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "children": [
+                            {
+                              "tag": "button",
+                              "size": "small",
+                              "icon": "CaretRightOutlined",
+                              "action": [
+                                {
+                                  "tag": "update-history"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "times",
+                          "children": [
+                            {
+                              "tag": "select",
+                              "size": "small",
+                              "style": {
+                                "width": 80
+                              },
+                              "placeholder": "请选择",
+                              "options": [
+                                {
+                                  "value": "1",
+                                  "label": "1x"
+                                },
+                                {
+                                  "value": "2",
+                                  "label": "2x"
+                                },
+                                {
+                                  "value": "3",
+                                  "label": "3x"
+                                },
+                                {
+                                  "value": "10",
+                                  "label": "10x"
+                                },
+                                {
+                                  "value": "20",
+                                  "label": "20x"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "style": {
+                            "flex": 1
+                          },
+                          "children": [
+                            {
+                              "tag": "progress",
+                              "percent": 80
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "button",
+      "isFloatButton": true,
+      "icon": "DeploymentUnitOutlined",
+      "style": {
+        "right": 124,
+        "top": 24,
+        "position": "absolute",
+        "zIndex": 3000
+      },
+      "tooltip": "工作空间",
+      "action": [
+        {
+          "tag": "update-store",
+          "value": {
+            "workspaceVisible": true
+          }
+        },
+        {
+          "tag": "localstore",
+          "method": "write",
+          "key": "workspace-visible",
+          "value": true
+        }
+      ]
+    }
+  ]
+}

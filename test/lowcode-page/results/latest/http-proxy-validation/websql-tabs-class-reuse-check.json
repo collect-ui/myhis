@@ -1,0 +1,114 @@
+{
+  "pass": true,
+  "missing": [],
+  "mismatches": [],
+  "hashes": {
+    "editorHash": "css-mncuj7",
+    "sqlHash": "css-mncuj7",
+    "resultHash": "css-mncuj7"
+  },
+  "editor": {
+    "className": "ant-tabs ant-tabs-top ant-tabs-editable ant-tabs-small ant-tabs-card ant-tabs-editable-card co-ui-tabs co-ui-tabs-header-only css-mncuj7",
+    "tabCount": 4,
+    "removeCount": 4,
+    "inkBarCount": 1,
+    "navBeforeBorder": "rgb(0, 138, 225)",
+    "active": {
+      "text": "a_1778508888005_4.txt",
+      "className": "ant-tabs-tab ant-tabs-tab-with-remove ant-tabs-tab-active",
+      "h": 23,
+      "padding": "1px 10px 0px",
+      "margin": "0px 0px 0px 2px",
+      "borderBottom": "0px none rgb(255, 255, 255)",
+      "borderRadius": "2px 2px 0px 0px",
+      "background": "rgb(0, 138, 225)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "14px",
+      "lineHeight": "22px",
+      "svgCount": 1
+    },
+    "inactive": {
+      "text": "e_1778508888005_4.txt",
+      "className": "ant-tabs-tab ant-tabs-tab-with-remove",
+      "h": 23,
+      "padding": "1px 10px 0px",
+      "margin": "0px",
+      "borderBottom": "0px none rgba(0, 0, 0, 0.88)",
+      "borderRadius": "2px 2px 0px 0px",
+      "background": "rgb(255, 255, 255)",
+      "color": "rgba(0, 0, 0, 0.88)",
+      "fontSize": "14px",
+      "lineHeight": "22px",
+      "svgCount": 1
+    }
+  },
+  "websql": {
+    "loadedWebshellCss": true,
+    "hasWebshellContainer": true,
+    "customTabNodeCount": 0,
+    "sql": {
+      "className": "ant-tabs ant-tabs-top ant-tabs-editable ant-tabs-small ant-tabs-card ant-tabs-editable-card workspace-websql-tabs co-ui-tabs co-ui-tabs-header-only css-mncuj7",
+      "tabCount": 2,
+      "removeCount": 2,
+      "inkBarCount": 1,
+      "navBeforeBorder": "rgb(0, 138, 225)",
+      "active": {
+        "text": "本地 SQLite",
+        "className": "ant-tabs-tab ant-tabs-tab-with-remove ant-tabs-tab-active",
+        "h": 23,
+        "padding": "1px 10px 0px",
+        "margin": "0px 0px 0px 2px",
+        "borderBottom": "0px none rgb(255, 255, 255)",
+        "borderRadius": "2px 2px 0px 0px",
+        "background": "rgb(0, 138, 225)",
+        "color": "rgb(255, 255, 255)",
+        "fontSize": "14px",
+        "lineHeight": "22px",
+        "svgCount": 1
+      },
+      "inactive": {
+        "text": "MySQL",
+        "className": "ant-tabs-tab ant-tabs-tab-with-remove",
+        "h": 23,
+        "padding": "1px 10px 0px",
+        "margin": "0px",
+        "borderBottom": "0px none rgba(0, 0, 0, 0.88)",
+        "borderRadius": "2px 2px 0px 0px",
+        "background": "rgb(255, 255, 255)",
+        "color": "rgba(0, 0, 0, 0.88)",
+        "fontSize": "14px",
+        "lineHeight": "22px",
+        "svgCount": 1
+      }
+    },
+    "result": {
+      "className": "ant-tabs ant-tabs-top ant-tabs-editable ant-tabs-small ant-tabs-card ant-tabs-editable-card workspace-websql-result-tabs co-ui-tabs co-ui-tabs-header-only css-mncuj7",
+      "tabCount": 1,
+      "removeCount": 1,
+      "inkBarCount": 1,
+      "navBeforeBorder": "rgb(0, 138, 225)",
+      "active": {
+        "text": "75 行 09:52:17",
+        "className": "ant-tabs-tab ant-tabs-tab-with-remove ant-tabs-tab-active",
+        "h": 23,
+        "padding": "1px 10px 0px",
+        "margin": "0px",
+        "borderBottom": "0px none rgb(255, 255, 255)",
+        "borderRadius": "2px 2px 0px 0px",
+        "background": "rgb(0, 138, 225)",
+        "color": "rgb(255, 255, 255)",
+        "fontSize": "14px",
+        "lineHeight": "22px",
+        "svgCount": 1
+      },
+      "inactive": null
+    }
+  },
+  "errors": [],
+  "pageErrors": [],
+  "failed": [],
+  "screenshots": {
+    "editor": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/editor-pool-tabs-class-reuse-baseline.png",
+    "websql": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-tabs-class-reuse-check.png"
+  }
+}

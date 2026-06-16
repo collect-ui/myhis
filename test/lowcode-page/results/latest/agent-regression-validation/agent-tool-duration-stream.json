@@ -1,0 +1,12 @@
+{
+  "toolCount": 14,
+  "firstTool": {
+    "name": "codexcli_glob",
+    "duration_ms": 34,
+    "call_id": "preflight_codexcli_glob_1"
+  },
+  "allHaveDuration": true,
+  "missing": [],
+  "doneStatus": "completed",
+  "runId": "agent_run_995da62d-5539-4d56-97b0-54b266fb31bc"
+}

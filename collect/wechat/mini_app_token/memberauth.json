@@ -1,0 +1,9 @@
+{
+  "url": "https://api.weixin.qq.com/wxa/memberauth?access_token={{.access_token}}",
+  "method": "post",
+  "header": {},
+  "result_json": true,
+  "data": {
+    "action": "get_experiencer"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "ok": true,
+  "active_tab_text": "update_field",
+  "title": "update_field(更新普通字段)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "更新参数中的字段"
+  ],
+  "textarea_count": 3,
+  "textarea_values": [
+    "handler_params:\n      - key: update_field\n        name: 更新字段\n        fields:\n          - field: user_info\n            template: \"[modify_data.user_info]\"\n          - field: change_list\n            template: \"[modify_data.change_list]\"",
+    "更新params中的字段",
+    "- key: update_field\n        fields:\n          - field: \"[menu.role_id_list]\"\n            template: \"[role_id_list]\"\n          - field: \"[menu.role_list]\"\n            template: \"[role_list]\""
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "update_field"
+        ],
+        [
+          "fields",
+          "array",
+          "是",
+          "更新的字段内容"
+        ],
+        [
+          "fields[field]",
+          "string",
+          "是",
+          "字段名称"
+        ],
+        [
+          "fields[template]",
+          "template",
+          "是",
+          "字段内容,支持模板生成变量，支持[]取参数中值"
+        ]
+      ]
+    }
+  ],
+  "body_text": "update_field(更新普通字段)  \n示例\n更新参数中的字段\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nupdate_field\n\n\nfields\n\t\narray\n\t\n是\n\t\n更新的字段内容\n\n\nfields[field]\n\t\nstring\n\t\n是\n\t\n字段名称\n\n\nfields[template]\n\t\ntemplate\n\t\n是\n\t\n字段内容,支持模板生成变量，支持[]取参数中值\n示例\n1. 支持修改二级\n菜单导航\n示例\n参数\n示例\n1.支持修改二级",
+  "task_id": "H-003",
+  "source_group": "参数处理",
+  "source_title": "update_field",
+  "source_doc_text": "3.update_field\n更新普通字段",
+  "read_at": "2026-05-07T08:20:57.502Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-003-source.png"
+}

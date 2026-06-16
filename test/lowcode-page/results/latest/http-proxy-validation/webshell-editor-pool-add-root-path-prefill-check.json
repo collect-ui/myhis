@@ -1,0 +1,11 @@
+{
+  "pass": true,
+  "checks": {
+    "projectSelected": true,
+    "dialogOpen": true,
+    "defaultPathOk": true,
+    "autoPathOk": true
+  },
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-add-root-path-prefill-check.png",
+  "error": ""
+}

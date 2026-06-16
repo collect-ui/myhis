@@ -1,0 +1,15 @@
+{
+  "pageUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "checks": {
+    "openedPage": true,
+    "sentLogin": true,
+    "sentUserInfo": true,
+    "hasCookiePairText": true,
+    "cookieShownUnderHeaders": true,
+    "responseSectionHasCookieTag": false
+  },
+  "cookieSample": "devops_session_id_product=z9efzbs722t2mbrrpvn9c55lqiyvg52v",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-cookie-under-headers-check.png",
+  "pass": true,
+  "error": ""
+}

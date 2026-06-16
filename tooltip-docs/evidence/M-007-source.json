@@ -1,0 +1,74 @@
+{
+  "ok": true,
+  "active_tab_text": "bulk_upsert",
+  "title": "bulk_upsert(批量修改多行)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "批量修改多行记录，支持修改不同记录不同值。像excel 导入可以用此模块，或者前台传大量数据对象过来。一条一条更新数据库连接释放比较慢，这个是一次性更新"
+  ],
+  "textarea_count": 3,
+  "textarea_values": [
+    "- key: collect_doc_params_update\n    module: bulk_upsert\n    table: \"collect_doc_params\"\n    params:\n      params:\n        check:\n          template: \"{{must .params}}\"\n          err_msg: 参数不能为空\n    model_field: \"[params]\"",
+    "批量修改多行记录",
+    "- key: bulk_update_user\n    module: bulk_upsert\n    params:\n      user_list:\n        check:\n          template: \"{{must .user_list}}\"\n          err_msg: 用户列表不能为空\n      fields:\n        default: [\"*\"]\n    handler_params:\n      - key: update_array\n        foreach: \"[user_list]\"\n        item: item\n        fields:\n          - field: password\n            template: \"{{ if .item.password }}{{md5 .item.password}}{{ end }}\"\n    table: \"user_account\"\n    options: \"[fields]\"\n    model_field: \"[user_list]\""
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "module",
+          "string",
+          "是",
+          "bulk_upsert"
+        ],
+        [
+          "table",
+          "string",
+          "是",
+          "修改哪个表"
+        ],
+        [
+          "model_field",
+          "string",
+          "是",
+          "数据列表取哪个参数,[你的参数]"
+        ],
+        [
+          "update_fields",
+          "array",
+          "",
+          "更新哪些字段，不填所有字段"
+        ],
+        [
+          "options",
+          "string",
+          "",
+          "支持update_fields 取动态变量，[你参数变量]"
+        ],
+        [
+          "ignore_fields",
+          "array",
+          "",
+          "忽略哪些字段"
+        ]
+      ]
+    }
+  ],
+  "body_text": "bulk_upsert(批量修改多行)  \n示例\n批量修改多行记录，支持修改不同记录不同值。像excel 导入可以用此模块，或者前台传大量数据对象过来。一条一条更新数据库连接释放比较慢，这个是一次性更新\n参数\n参数\t类型\t必须\t说明\nmodule\n\t\nstring\n\t\n是\n\t\nbulk_upsert\n\n\ntable\n\t\nstring\n\t\n是\n\t\n修改哪个表\n\n\nmodel_field\n\t\nstring\n\t\n是\n\t\n数据列表取哪个参数,[你的参数]\n\n\nupdate_fields\n\t\narray\n\t\n\t\n更新哪些字段，不填所有字段\n\n\noptions\n\t\nstring\n\t\n\t\n支持update_fields 取动态变量，[你参数变量]\n\n\nignore_fields\n\t\narray\n\t\n\t\n忽略哪些字段\n示例\n1. 批量修改用户，包含update_fields取动态变量\n菜单导航\n示例\n参数\n示例\n1.批量修改用户，包含update_fields取动态变量",
+  "task_id": "M-007",
+  "source_group": "模块处理",
+  "source_title": "bulk_upsert",
+  "source_doc_text": "7.bulk_upsert\n批量修改多行",
+  "read_at": "2026-05-07T08:19:55.468Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/M-007-source.png"
+}

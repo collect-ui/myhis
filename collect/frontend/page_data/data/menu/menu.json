@@ -1,0 +1,239 @@
+[
+  {
+    "menu_code": "login",
+    "menu_name": "登陆",
+    "url": "/login",
+    "data": "framework/login.json",
+    "in_menu": false
+  },
+  {
+    "menu_code": "home_first",
+    "menu_name": "首页",
+    "icon": "FaHome",
+    "api": "post:/template_data/data?service=frontend.home",
+    "data": "framework/home.json",
+    "url": "/home_full",
+    "in_menu": false
+  },
+  {
+    "menu_code": "training_dashboard_full",
+    "menu_name": "",
+    "icon": "FaHome",
+    "api": "post:/template_data/data?service=frontend.training_dashboard",
+    "data": "framework/training_dashboard.json",
+    "url": "/training_dashboard_full",
+    "in_menu": false
+  },
+  {
+    "menu_code": "learn_before_full",
+    "menu_name": "",
+    "icon": "FaHome",
+    "api": "post:/template_data/data?service=frontend.learn_before",
+    "data": "framework/learn_before.json",
+    "url": "/learn_before_full",
+    "in_menu": false
+  },
+  {
+    "menu_code": "first",
+    "menu_name": "首页",
+    "icon": "FaHome",
+    "is_index": "1",
+    "router_group": "/framework",
+    "group_path": "/framework",
+    "group_data": "framework.json",
+    "group_api": "post:/template_data/data?service=frontend.framework",
+    "api": "post:/template_data/data?service=frontend.home",
+    "data": "framework/home.json",
+    "url": "/framework/"
+  },
+  {
+    "menu_code": "dashboard",
+    "menu_name": "大屏管理",
+    "icon": "FaStoreAlt",
+    "children": [
+      {
+        "menu_code": "training_first",
+        "menu_name": "训练大屏",
+        "router_group": "/framework",
+        "api": "post:/template_data/data?service=frontend.training_dashboard",
+        "data": "framework/training_dashboard.json",
+        "url": "/framework/training_dashboard"
+      },
+      {
+        "menu_code": "learn_before",
+        "menu_name": "学前分析",
+        "router_group": "/framework",
+        "api": "post:/template_data/data?service=frontend.learn_before",
+        "data": "framework/learn_before.json",
+        "url": "/framework/learn_before"
+      },
+      {
+        "menu_code": "speak",
+        "menu_name": "口语评价",
+        "router_group": "/framework",
+        "api": "post:/template_data/data?service=frontend.speak",
+        "data": "framework/speak.json",
+        "url": "/framework/speak"
+      },
+      {
+        "menu_code": "course_in",
+        "menu_name": "课堂评价",
+        "router_group": "/framework",
+        "api": "post:/template_data/data?service=frontend.course_in",
+        "data": "framework/course_in.json",
+        "url": "/framework/course_in"
+      }
+    ]
+  },
+  {
+    "menu_code": "sub1",
+    "menu_name": "课程管理",
+    "icon": "FaStoreAlt",
+    "children": [
+      {
+        "menu_code": "app_level",
+        "menu_name": "训练类型",
+        "type": "group",
+        "children": [
+          {
+            "menu_code": "app",
+            "menu_name": "训练项目管理",
+            "router_group": "/framework",
+            "url": "/framework/training_type",
+            "api": "post:/template_data/data?service=frontend.training_type",
+            "data": "course/training_type.json"
+          },
+          {
+            "menu_code": "training_level",
+            "menu_name": "学生级别管理",
+            "router_group": "/framework",
+            "api": "post:/template_data/data?service=frontend.training_level",
+            "data": "framework/training_level.json",
+            "url": "/framework/training_level"
+          }
+        ]
+      },
+      {
+        "menu_code": "course_level",
+        "menu_name": "课程与打卡",
+        "type": "group",
+        "children": [
+          {
+            "menu_code": "course",
+            "menu_name": "课程查看",
+            "router_group": "/framework",
+            "api": "post:/template_data/data?service=frontend.course",
+            "url": "/framework/course",
+            "data": "course/course.json"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_code": "price",
+    "menu_name": "招投标",
+    "icon": "FaStoreAlt",
+    "children": [
+      {
+        "menu_code": "doc_price",
+        "menu_name": "价格库",
+        "router_group": "/framework",
+        "api": "post:/template_data/data?service=frontend.price",
+        "url": "/framework/price",
+        "data": "price/price.json"
+      }
+    ]
+  },
+  {
+    "menu_code": "technical-management",
+    "menu_name": "技术部分",
+    "icon": "FaWarehouse",
+    "children": [
+      {
+        "menu_code": "documentation",
+        "menu_name": "文档管理",
+        "type": "group",
+        "children": [
+          {
+            "menu_code": "doc",
+            "menu_name": "招标文档管理",
+            "router_group": "/framework",
+            "api": "post:/template_data/data?service=frontend.doc_manage",
+            "url": "/framework/doc_manage",
+            "data": "technical/doc_manage.json"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_code": "home",
+    "menu_name": "系统管理",
+    "icon": "FaHouseUser",
+    "children": [
+      {
+        "menu_code": "g1",
+        "menu_name": "人资管理",
+        "type": "group",
+        "children": [
+          {
+            "menu_code": "user",
+            "menu_name": "用户管理",
+            "router_group": "/framework",
+            "api": "post:/template_data/data?service=frontend.user",
+            "url": "/framework/user",
+            "data": "system/user.json"
+          },
+          {
+            "menu_code": "role",
+            "menu_name": "角色管理",
+            "api": "post:/template_data/data?service=frontend.role",
+            "router_group": "/framework",
+            "url": "/framework/role",
+            "data": "system/role.json"
+          }
+        ]
+      },
+      {
+        "menu_code": "g2",
+        "menu_name": "系统设置",
+        "type": "group",
+        "children": [
+
+          {
+            "menu_code": "menu_manage",
+            "menu_name": "菜单管理",
+            "api": "post:/template_data/data?service=frontend.menu_manage",
+            "router_group": "/framework",
+            "url": "/framework/menu_manage"
+          },
+          {
+            "menu_code": "sys_code",
+            "menu_name": "码表管理",
+            "api": "post:/template_data/data?service=frontend.sys_code",
+            "router_group": "/framework",
+            "url": "/framework/sys_code",
+            "data": "system/sys_code.json"
+          },
+          {
+            "menu_code": "attachment",
+            "menu_name": "素材管理",
+            "api": "post:/template_data/data?service=frontend.attachment",
+            "router_group": "/framework",
+            "url": "/framework/attachment",
+            "data": "system/attachment.json"
+          },
+          {
+            "menu_code": "pix_outp_reg_master",
+            "menu_name": "门诊号池管理",
+            "api": "post:/template_data/data?service=frontend.his_pix_outp_reg_master",
+            "router_group": "/framework",
+            "url": "/framework/pix_outp_reg_master",
+            "data": "his/pix_outp_reg_master.json"
+          }
+        ]
+      }
+    ]
+  }
+]

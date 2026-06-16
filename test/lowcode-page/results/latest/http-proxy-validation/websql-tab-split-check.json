@@ -1,0 +1,212 @@
+{
+  "targetUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "checks": {
+    "pageOpened": true,
+    "noPingOrDdlToolbarButtons": true,
+    "defaultSinglePanel": true,
+    "horizontalSplit": true,
+    "perPaneToolbars": true,
+    "twoSqlEditorsAfterSplit": true,
+    "secondaryExecution": true,
+    "primaryExecution": true,
+    "addSqlTabInSplitPane": true,
+    "thirdPaneFromSecondPane": true,
+    "threePaneToolbarsAndTabs": true,
+    "thirdExecution": true,
+    "verticalSplit": true,
+    "fourPaneAfterVerticalSplit": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "responses": {
+    "secondary": {
+      "count": 0,
+      "success": true,
+      "code": "0",
+      "msg": "执行成功",
+      "data": {
+        "columns": [
+          {
+            "field": "split_marker",
+            "filter": true,
+            "header": "split_marker",
+            "nullable": true,
+            "resizable": true,
+            "sortable": true,
+            "type": ""
+          }
+        ],
+        "cursor_offset": 0,
+        "driver": "sqlite",
+        "duration_ms": 0,
+        "executed_at": "2026-05-18T18:11:55.142784213+08:00",
+        "has_next": false,
+        "has_prev": false,
+        "max_rows": 500,
+        "next_cursor": -1,
+        "page_size": 50,
+        "prev_cursor": 0,
+        "row_count": 1,
+        "rows": [
+          {
+            "split_marker": "20260518"
+          }
+        ],
+        "skipped_rows": 0,
+        "statement_type": "select",
+        "truncated": false
+      },
+      "__requestData": {
+        "service": "webshell.websql_execute",
+        "commit_mode": "manual",
+        "connection_id": "builtin-local-sqlite",
+        "connection_name": "本地 SQLite",
+        "cursor_offset": 0,
+        "database": "",
+        "driver": "sqlite",
+        "dsn": "",
+        "host": "",
+        "max_rows": 500,
+        "operation": "execute",
+        "page_size": 50,
+        "password": "",
+        "port": "",
+        "project_code": "standalone",
+        "selection_start_column": 1,
+        "selection_start_line": 1,
+        "sql": "SELECT 20260518 AS split_marker;",
+        "sqlite_path": "./database/price.db",
+        "transaction_ttl_seconds": 120,
+        "username": ""
+      }
+    },
+    "primary": {
+      "count": 0,
+      "success": true,
+      "code": "0",
+      "msg": "执行成功",
+      "data": {
+        "columns": [
+          {
+            "field": "primary_marker",
+            "filter": true,
+            "header": "primary_marker",
+            "nullable": true,
+            "resizable": true,
+            "sortable": true,
+            "type": ""
+          }
+        ],
+        "cursor_offset": 0,
+        "driver": "sqlite",
+        "duration_ms": 0,
+        "executed_at": "2026-05-18T18:11:56.223014919+08:00",
+        "has_next": false,
+        "has_prev": false,
+        "max_rows": 500,
+        "next_cursor": -1,
+        "page_size": 50,
+        "prev_cursor": 0,
+        "row_count": 1,
+        "rows": [
+          {
+            "primary_marker": "18"
+          }
+        ],
+        "skipped_rows": 0,
+        "statement_type": "select",
+        "truncated": false
+      },
+      "__requestData": {
+        "service": "webshell.websql_execute",
+        "commit_mode": "manual",
+        "connection_id": "builtin-local-sqlite",
+        "connection_name": "本地 SQLite",
+        "cursor_offset": 0,
+        "database": "",
+        "driver": "sqlite",
+        "dsn": "",
+        "host": "",
+        "max_rows": 500,
+        "operation": "execute",
+        "page_size": 50,
+        "password": "",
+        "port": "",
+        "project_code": "standalone",
+        "selection_start_column": 1,
+        "selection_start_line": 1,
+        "sql": "SELECT 18 AS primary_marker;",
+        "sqlite_path": "./database/price.db",
+        "transaction_ttl_seconds": 120,
+        "username": ""
+      }
+    },
+    "third": {
+      "count": 0,
+      "success": true,
+      "code": "0",
+      "msg": "执行成功",
+      "data": {
+        "columns": [
+          {
+            "field": "third_marker",
+            "filter": true,
+            "header": "third_marker",
+            "nullable": true,
+            "resizable": true,
+            "sortable": true,
+            "type": ""
+          }
+        ],
+        "cursor_offset": 0,
+        "driver": "sqlite",
+        "duration_ms": 0,
+        "executed_at": "2026-05-18T18:11:59.141081397+08:00",
+        "has_next": false,
+        "has_prev": false,
+        "max_rows": 500,
+        "next_cursor": -1,
+        "page_size": 50,
+        "prev_cursor": 0,
+        "row_count": 1,
+        "rows": [
+          {
+            "third_marker": "303"
+          }
+        ],
+        "skipped_rows": 0,
+        "statement_type": "select",
+        "truncated": false
+      },
+      "__requestData": {
+        "service": "webshell.websql_execute",
+        "commit_mode": "manual",
+        "connection_id": "builtin-local-sqlite",
+        "connection_name": "本地 SQLite",
+        "cursor_offset": 0,
+        "database": "",
+        "driver": "sqlite",
+        "dsn": "",
+        "host": "",
+        "max_rows": 500,
+        "operation": "execute",
+        "page_size": 50,
+        "password": "",
+        "port": "",
+        "project_code": "standalone",
+        "selection_start_column": 1,
+        "selection_start_line": 1,
+        "sql": "SELECT 303 AS third_marker;",
+        "sqlite_path": "./database/price.db",
+        "transaction_ttl_seconds": 120,
+        "username": ""
+      }
+    }
+  },
+  "screenshots": {
+    "horizontal": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-tab-split-horizontal.png",
+    "vertical": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-tab-split-vertical.png"
+  },
+  "ok": true
+}

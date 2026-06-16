@@ -1,0 +1,34 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "backend",
+  "caseName": "auto_console_save_1777972271903",
+  "docId": "c70d6627-10ae-4139-aab0-edbfa4b66f8f",
+  "groupId": "22d4a5db-aa91-4a9b-a49b-053649358969",
+  "ui": {
+    "saveToast": "成功",
+    "detailHeaderCountShown": true,
+    "detailHeaderContentShown": true,
+    "detailHeadersCollapseWorks": true,
+    "metaNoHeaderCard": true,
+    "metaSingleRow": true,
+    "headerEditorSet": true,
+    "bodyEditorSet": true
+  },
+  "db": {
+    "project_code": "backend",
+    "request_headers": "{\n  \"X-Debug-Token\": \"token-123\",\n  \"Authorization\": \"Bearer demo\"\n}",
+    "code": "{\n  \"service\": \"config.doc_group_http_service_tree_query\",\n  \"to_tree\": true\n}",
+    "request_mode": "backend",
+    "request_method": "get",
+    "request_url": "https://postman-echo.com/get?source=console-save-all-1777972271903",
+    "headersSaved": true,
+    "bodySaved": true
+  },
+  "cleanupDeleted": true,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell-editor-pool-console-save-to-doc-check.png",
+  "pass": true,
+  "nonCanceledPageErrors": []
+}

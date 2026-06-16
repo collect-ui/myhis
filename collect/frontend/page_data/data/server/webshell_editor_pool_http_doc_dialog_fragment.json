@@ -1,0 +1,878 @@
+{
+  "tag": "dialog",
+  "title": "${(()=>{const type=String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service');if(workspaceHttpDocOp==='add'){return type==='service'?'新增分组':'新增接口';}return type==='service'?'编辑分组':'编辑接口';})()}",
+  "width": "90%",
+  "wrapClassName": "workspace-http-doc-dialog-tight",
+  "styles": {
+    "body": {
+      "padding": "10px 12px 8px",
+      "maxHeight": "calc(100vh - 220px)",
+      "overflow": "auto",
+      "background": "linear-gradient(180deg,#f8fafc 0%,#f4f7fb 100%)"
+    },
+    "content": {
+      "borderRadius": "12px",
+      "overflow": "hidden"
+    }
+  },
+  "zIndex": 1700,
+  "open": "${workspaceHttpDocDialogVisible}",
+  "cancelAction": [
+    {
+      "tag": "update-store",
+      "value": {
+        "workspaceHttpDocDialogVisible": false
+      }
+    }
+  ],
+  "action": [
+    {
+      "tag": "submit-form",
+      "formName": "workspace-http-doc-form"
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceHttpDocOp==='add' && String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service')==='service'}",
+      "showResultMsg": true,
+      "api": "post:/template_data/data?service=config.doc_group_save",
+      "data": {
+        "doc_group_list": "${(()=>{const formName='workspace-http-doc-form';const selected=workspaceHttpDocForm||{};const projectCode=String(getFormValue(formName,'project_code')||selected.project_code||project_code||workspaceCurrent||'');return [{doc_group_id:String(getFormValue(formName,'doc_group_id')||selected.doc_group_id||''),name:(getFormValue(formName,'title')||'').trim(),desc:(getFormValue(formName,'sub_title')||'').trim(),type:String(getFormValue(formName,'type')||selected.type||workspaceHttpDocFormType||'service'),project_code:projectCode,order_index:Number(getFormValue(formName,'order_index')||1)}];})()}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceHttpDocOp==='add' && String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service')!=='service'}",
+      "showResultMsg": true,
+      "api": "post:/template_data/data?service=config.doc_save",
+      "data": {
+        "doc": "${(()=>{const formName='workspace-http-doc-form';const selected=workspaceHttpDocForm||{};const parseJson=(text,fallback)=>{try{const raw=String(text===undefined||text===null?'':text).trim();return raw?JSON.parse(raw):fallback;}catch(err){return fallback;}};const requestValue=getFormValue(formName,'code');const headerValue=getFormValue(formName,'request_headers');const requestText=requestValue===undefined||requestValue===null||String(requestValue).trim()===''?String(selected.code||'{}'):String(requestValue);const headerText=headerValue===undefined||headerValue===null||String(headerValue).trim()===''?String(selected.request_headers||'{}'):String(headerValue);const headerObj=parseJson(headerText,parseJson(selected.request_headers,{}));const headersText=(()=>{try{return JSON.stringify(headerObj||{},null,2);}catch(err){return '{}';}})();const codeText=(()=>{const raw=String(requestText===undefined||requestText===null?'':requestText).trim();if(!raw){return '{}';}try{return JSON.stringify(JSON.parse(raw),null,2);}catch(err){return raw;}})();const projectCode=String(getFormValue(formName,'project_code')||selected.project_code||project_code||workspaceCurrent||'');return {title:(getFormValue(formName,'title')||'').trim(),sub_title:(getFormValue(formName,'sub_title')||'').trim(),type:String(getFormValue(formName,'type')||selected.type||workspaceHttpDocFormType||'2'),project_code:projectCode,parent_dir:String(getFormValue(formName,'parent_dir')||selected.parent_dir||''),order_index:Number(getFormValue(formName,'order_index')||1),request_mode:String(getFormValue(formName,'request_mode')||selected.request_mode||'frontend')==='backend'?'backend':'frontend',request_method:String(getFormValue(formName,'request_method')||selected.request_method||'post').toLowerCase(),request_url:String(getFormValue(formName,'request_url')||selected.request_url||'/template_data/data'),request_headers:headersText,code:codeText,code_desc:getFormValue(formName,'code_desc')||'',code_result:getFormValue(formName,'code_result')||''};})()}",
+        "important_list": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'important_list'))?getFormValue(formName,'important_list'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',order_index:idx+1})).filter(item=>item.name);})()}",
+        "params": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'params'))?getFormValue(formName,'params'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',type:item&&item.type?String(item.type):'',must:item&&item.must!==undefined&&item.must!==null?String(item.must):'',desc:item&&item.desc?String(item.desc):'',example:item&&item.example?String(item.example):'',order_index:idx+1})).filter(item=>item.name);})()}",
+        "result": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'result'))?getFormValue(formName,'result'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',type:item&&item.type?String(item.type):'',must:item&&item.must!==undefined&&item.must!==null?String(item.must):'',desc:item&&item.desc?String(item.desc):'',example:item&&item.example?String(item.example):'',order_index:idx+1})).filter(item=>item.name);})()}",
+        "demo": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'demo'))?getFormValue(formName,'demo'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',desc:item&&item.desc?String(item.desc):'',code:item&&item.code?String(item.code):'',code_result:item&&item.code_result?String(item.code_result):'',order_index:idx+1})).filter(item=>item.name||item.code||item.code_result);})()}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceHttpDocOp==='edit'}",
+      "showResultMsg": true,
+      "api": "post:/template_data/data?service=config.doc_edit",
+      "data": {
+        "doc": "${(()=>{const formName='workspace-http-doc-form';const selected=workspaceHttpDocForm||{};const parseJson=(text,fallback)=>{try{const raw=String(text===undefined||text===null?'':text).trim();return raw?JSON.parse(raw):fallback;}catch(err){return fallback;}};const requestValue=getFormValue(formName,'code');const headerValue=getFormValue(formName,'request_headers');const requestText=requestValue===undefined||requestValue===null||String(requestValue).trim()===''?String(selected.code||'{}'):String(requestValue);const headerText=headerValue===undefined||headerValue===null||String(headerValue).trim()===''?String(selected.request_headers||'{}'):String(headerValue);const headerObj=parseJson(headerText,parseJson(selected.request_headers,{}));const headersText=(()=>{try{return JSON.stringify(headerObj||{},null,2);}catch(err){return '{}';}})();const codeText=(()=>{const raw=String(requestText===undefined||requestText===null?'':requestText).trim();if(!raw){return '{}';}try{return JSON.stringify(JSON.parse(raw),null,2);}catch(err){return raw;}})();const projectCode=String(getFormValue(formName,'project_code')||selected.project_code||project_code||workspaceCurrent||'');return {collect_doc_id:String(getFormValue(formName,'collect_doc_id')||selected.collect_doc_id||''),title:(getFormValue(formName,'title')||'').trim(),sub_title:(getFormValue(formName,'sub_title')||'').trim(),type:String(getFormValue(formName,'type')||selected.type||workspaceHttpDocFormType||'2'),project_code:projectCode,parent_dir:String(getFormValue(formName,'parent_dir')||selected.parent_dir||''),order_index:Number(getFormValue(formName,'order_index')||1),request_mode:String(getFormValue(formName,'request_mode')||selected.request_mode||'frontend')==='backend'?'backend':'frontend',request_method:String(getFormValue(formName,'request_method')||selected.request_method||'post').toLowerCase(),request_url:String(getFormValue(formName,'request_url')||selected.request_url||'/template_data/data'),request_headers:headersText,code:codeText,code_desc:getFormValue(formName,'code_desc')||'',code_result:getFormValue(formName,'code_result')||''};})()}",
+        "important_list": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'important_list'))?getFormValue(formName,'important_list'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',order_index:idx+1})).filter(item=>item.name);})()}",
+        "params": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'params'))?getFormValue(formName,'params'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',type:item&&item.type?String(item.type):'',must:item&&item.must!==undefined&&item.must!==null?String(item.must):'',desc:item&&item.desc?String(item.desc):'',example:item&&item.example?String(item.example):'',order_index:idx+1})).filter(item=>item.name);})()}",
+        "result": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'result'))?getFormValue(formName,'result'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',type:item&&item.type?String(item.type):'',must:item&&item.must!==undefined&&item.must!==null?String(item.must):'',desc:item&&item.desc?String(item.desc):'',example:item&&item.example?String(item.example):'',order_index:idx+1})).filter(item=>item.name);})()}",
+        "demo": "${(()=>{const formName='workspace-http-doc-form';const list=Array.isArray(getFormValue(formName,'demo'))?getFormValue(formName,'demo'):[];return list.map((item,idx)=>Object.assign({},item,{name:item&&item.name?String(item.name):'',desc:item&&item.desc?String(item.desc):'',code:item&&item.code?String(item.code):'',code_result:item&&item.code_result?String(item.code_result):'',order_index:idx+1})).filter(item=>item.name||item.code||item.code_result);})()}"
+      }
+    },
+    {
+      "tag": "update-store",
+      "enable": "${workspaceHttpDocOp==='edit' && String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service')!=='service'}",
+      "targetStore": "${activeStore}",
+      "value": {
+        "workspaceHttpDocRefreshVersion": "${uuid()}"
+      }
+    },
+    {
+      "tag": "update-store",
+      "value": {
+        "workspaceHttpDocDialogVisible": false
+      }
+    },
+    {
+      "tag": "reload-init-action",
+      "targetStore": "${activeStore}",
+      "group": "reload-workspace-http-tree"
+    }
+  ],
+  "children": [
+    {
+      "tag": "form",
+      "name": "workspace-http-doc-form",
+      "initialValues": "${Object.assign({type:(workspaceHttpDocFormType||'service')}, workspaceHttpDocForm||{})}",
+      "labelCol": {
+        "span": 6
+      },
+      "wrapperCol": {
+        "span": 18
+      },
+      "children": [
+        {
+          "tag": "card",
+          "title": "${String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service')==='service'?'分组基础信息':'接口基础信息'}",
+          "style": {
+            "marginBottom": "10px",
+            "borderRadius": "10px",
+            "overflow": "hidden",
+            "border": "1px solid rgba(15,23,42,0.08)",
+            "boxShadow": "0 4px 14px rgba(15,23,42,0.04)"
+          },
+          "bodyStyle": {
+            "padding": "10px 12px 8px"
+          },
+          "headStyle": {
+            "background": "linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)",
+            "minHeight": "38px"
+          },
+          "children": [
+            {
+              "tag": "row",
+              "gutter": 8,
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "type",
+                      "label": "类型",
+                      "labelCol": {
+                        "span": 6
+                      },
+                      "wrapperCol": {
+                        "span": 18
+                      },
+                      "rules": [
+                        {
+                          "required": true,
+                          "message": "请选择类型"
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "select",
+                          "disabled": "${workspaceHttpDocOp==='edit'}",
+                          "placeholder": "请选择类型",
+                          "allowClear": false,
+                          "options": [
+                            {
+                              "label": "分组",
+                              "value": "service"
+                            },
+                            {
+                              "label": "接口",
+                              "value": "2"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "form-item",
+                      "name": "order_index",
+                      "label": "排序",
+                      "labelCol": {
+                        "span": 6
+                      },
+                      "wrapperCol": {
+                        "span": 18
+                      },
+                      "children": [
+                        {
+                          "tag": "input",
+                          "isNumber": true,
+                          "placeholder": "数字越小越靠前"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "noStyle": true,
+              "itemVisible": "${String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service')==='service'}",
+              "children": [
+                {
+                  "tag": "row",
+                  "gutter": 8,
+                  "children": [
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "title",
+                          "label": "分组名称",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入名称"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "allowClear": true,
+                              "placeholder": "例如：用户管理"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "sub_title",
+                          "label": "分组描述",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "children": [
+                            {
+                              "tag": "input",
+                              "allowClear": true,
+                              "placeholder": "补充说明这个分组的用途"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "noStyle": true,
+              "itemVisible": "${String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service')!=='service'}",
+              "children": [
+                {
+                  "tag": "row",
+                  "gutter": 8,
+                  "children": [
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "request_mode",
+                          "label": "请求模式",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "children": [
+                            {
+                              "tag": "select",
+                              "allowClear": false,
+                              "options": [
+                                {
+                                  "label": "前台直发",
+                                  "value": "frontend"
+                                },
+                                {
+                                  "label": "后端代发",
+                                  "value": "backend"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "label": "请求地址",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "children": [
+                            {
+                              "tag": "space",
+                              "isCompact": true,
+                              "block": true,
+                              "children": [
+                                {
+                                  "tag": "form-item",
+                                  "name": "request_method",
+                                  "noStyle": true,
+                                  "children": [
+                                    {
+                                      "tag": "select",
+                                      "allowClear": false,
+                                      "style": {
+                                        "width": "112px"
+                                      },
+                                      "options": [
+                                        {
+                                          "label": "GET",
+                                          "value": "get"
+                                        },
+                                        {
+                                          "label": "POST",
+                                          "value": "post"
+                                        },
+                                        {
+                                          "label": "PUT",
+                                          "value": "put"
+                                        },
+                                        {
+                                          "label": "DELETE",
+                                          "value": "delete"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "tag": "form-item",
+                                  "name": "request_url",
+                                  "noStyle": true,
+                                  "children": [
+                                    {
+                                      "tag": "input",
+                                      "allowClear": true,
+                                      "placeholder": "例如：/template_data/data",
+                                      "style": {
+                                        "width": "calc(100% - 112px)"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "parent_dir",
+                          "label": "所属分组",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择放置位置"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "tree-select",
+                              "allowClear": true,
+                              "showSearch": true,
+                              "showIcon": true,
+                              "treeLine": true,
+                              "openLevel": 2,
+                              "valueKey": "${item.id}",
+                              "treeTitle": "${item.display_title||item.title||item.name}",
+                              "treeData": "${workspaceHttpGroupTree||[]}",
+                              "placeholder": "请选择放置位置"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "title",
+                          "label": "接口名称",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请输入名称"
+                            }
+                          ],
+                          "children": [
+                            {
+                              "tag": "input",
+                              "allowClear": true,
+                              "placeholder": "例如：查询用户列表"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "sub_title",
+                          "label": "副标题",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "children": [
+                            {
+                              "tag": "input",
+                              "allowClear": true,
+                              "placeholder": "可选，用于补充一句话概述"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "code_desc",
+                          "label": "接口说明",
+                          "labelCol": {
+                            "span": 6
+                          },
+                          "wrapperCol": {
+                            "span": 18
+                          },
+                          "children": [
+                            {
+                              "tag": "input",
+                              "type": "textarea",
+                              "rows": 3,
+                              "placeholder": "说明接口用途、使用场景和调用约束"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+                ,
+                {
+                  "tag": "row",
+                  "gutter": 8,
+                  "style": {
+                    "marginTop": "2px"
+                  },
+                  "children": [
+                    {
+                      "tag": "col",
+                      "span": 24,
+                      "children": [
+                        {
+                          "tag": "div",
+                          "style": {
+                            "border": "1px solid rgba(15,23,42,0.1)",
+                            "borderRadius": "10px",
+                            "overflow": "hidden",
+                            "background": "#0b1020"
+                          },
+                          "children": [
+                            {
+                              "tag": "div",
+                              "style": {
+                                "padding": "7px 10px",
+                                "fontSize": "11px",
+                                "fontWeight": 600,
+                                "lineHeight": "16px",
+                                "color": "#e2e8f0",
+                                "background": "linear-gradient(180deg,#1b263b 0%,#111827 100%)",
+                                "borderBottom": "1px solid rgba(255,255,255,0.08)"
+                              },
+                              "children": "请求头 Headers"
+                            },
+                            {
+                              "tag": "form-item",
+                              "name": "request_headers",
+                              "noStyle": true,
+                              "children": [
+                                {
+                                  "tag": "editor",
+                                  "language": "json",
+                                  "theme": "vs-dark",
+                                  "height": "170px",
+                                  "value": "${getFormValue('workspace-http-doc-form','request_headers')||workspaceHttpDocForm.request_headers||'{}'}",
+                                  "path": "workspace-http-doc-header.json",
+                                  "options": {
+                                    "readOnly": false,
+                                    "minimap": {
+                                      "enabled": false
+                                    },
+                                    "fontSize": 13,
+                                    "wordWrap": "on",
+                                    "scrollBeyondLastLine": false
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "noStyle": true,
+          "itemVisible": "${String(getFormValue('workspace-http-doc-form','type')||workspaceHttpDocFormType||'service')!=='service'}",
+          "children": [
+            {
+              "tag": "row",
+              "gutter": 10,
+              "style": {
+                "marginBottom": "8px"
+              },
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "card",
+                      "title": "请求体示例",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "code",
+                          "noStyle": true,
+                          "children": [
+                            {
+                              "tag": "editor",
+                              "language": "json",
+                              "theme": "vs-dark",
+                              "height": "260px",
+                              "value": "${getFormValue('workspace-http-doc-form','code')||workspaceHttpDocForm.code||'{}'}",
+                              "path": "workspace-http-doc-request.json",
+                              "options": {
+                                "readOnly": false,
+                                "minimap": {
+                                  "enabled": false
+                                },
+                                "fontSize": 13,
+                                "wordWrap": "on",
+                                "scrollBeyondLastLine": false
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "card",
+                      "title": "返回体示例",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "code_result",
+                          "noStyle": true,
+                          "children": [
+                            {
+                              "tag": "editor",
+                              "language": "json",
+                              "theme": "vs-dark",
+                              "height": "260px",
+                              "value": "${getFormValue('workspace-http-doc-form','code_result')||workspaceHttpDocForm.code_result||''}",
+                              "path": "workspace-http-doc-response.json",
+                              "options": {
+                                "readOnly": false,
+                                "minimap": {
+                                  "enabled": false
+                                },
+                                "fontSize": 13,
+                                "wordWrap": "on",
+                                "scrollBeyondLastLine": false
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "gutter": 10,
+              "style": {
+                "marginBottom": "8px"
+              },
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 8,
+                  "children": [
+                    {
+                      "tag": "card",
+                      "title": "重点提示（建议一行一个约束）",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "important_list",
+                          "noStyle": true,
+                          "children": [
+                            {
+                              "tag": "input-table",
+                              "rowSelection": "multiple",
+                              "style": {
+                                "height": "220px"
+                              },
+                              "columnDefs": [
+                                {
+                                  "headerName": "提示内容",
+                                  "field": "name",
+                                  "editable": true,
+                                  "flex": 1
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 16,
+                  "children": [
+                    {
+                      "tag": "card",
+                      "title": "调用示例",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "demo",
+                          "noStyle": true,
+                          "children": [
+                            {
+                              "tag": "input-table",
+                              "rowSelection": "multiple",
+                              "style": {
+                                "height": "220px"
+                              },
+                              "columnDefs": [
+                                {
+                                  "headerName": "名称",
+                                  "field": "name",
+                                  "editable": true,
+                                  "minWidth": 130,
+                                  "flex": 1
+                                },
+                                {
+                                  "headerName": "说明",
+                                  "field": "desc",
+                                  "editable": true,
+                                  "minWidth": 180,
+                                  "flex": 1
+                                },
+                                {
+                                  "headerName": "请求体",
+                                  "field": "code",
+                                  "editable": true,
+                                  "minWidth": 220,
+                                  "flex": 2
+                                },
+                                {
+                                  "headerName": "返回体",
+                                  "field": "code_result",
+                                  "editable": true,
+                                  "minWidth": 220,
+                                  "flex": 2
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "row",
+              "gutter": 10,
+              "children": [
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "card",
+                      "title": "请求参数",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "params",
+                          "noStyle": true,
+                          "children": [
+                            {
+                              "tag": "input-table",
+                              "rowSelection": "multiple",
+                              "style": {
+                                "height": "280px"
+                              },
+                              "columnDefs": [
+                                {
+                                  "headerName": "参数名",
+                                  "field": "name",
+                                  "editable": true,
+                                  "minWidth": 140,
+                                  "flex": 2
+                                },
+                                {
+                                  "headerName": "类型",
+                                  "field": "type",
+                                  "editable": true,
+                                  "minWidth": 110,
+                                  "flex": 1
+                                },
+                                {
+                                  "headerName": "必填",
+                                  "field": "must",
+                                  "editable": true,
+                                  "minWidth": 90,
+                                  "width": 90
+                                },
+                                {
+                                  "headerName": "说明",
+                                  "field": "desc",
+                                  "editable": true,
+                                  "minWidth": 180,
+                                  "flex": 2
+                                },
+                                {
+                                  "headerName": "示例",
+                                  "field": "example",
+                                  "editable": true,
+                                  "minWidth": 180,
+                                  "flex": 2
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "col",
+                  "span": 12,
+                  "children": [
+                    {
+                      "tag": "card",
+                      "title": "返回结构",
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "result",
+                          "noStyle": true,
+                          "children": [
+                            {
+                              "tag": "input-table",
+                              "rowSelection": "multiple",
+                              "style": {
+                                "height": "280px"
+                              },
+                              "columnDefs": [
+                                {
+                                  "headerName": "字段名",
+                                  "field": "name",
+                                  "editable": true,
+                                  "minWidth": 140,
+                                  "flex": 2
+                                },
+                                {
+                                  "headerName": "类型",
+                                  "field": "type",
+                                  "editable": true,
+                                  "minWidth": 110,
+                                  "flex": 1
+                                },
+                                {
+                                  "headerName": "必返",
+                                  "field": "must",
+                                  "editable": true,
+                                  "minWidth": 90,
+                                  "width": 90
+                                },
+                                {
+                                  "headerName": "说明",
+                                  "field": "desc",
+                                  "editable": true,
+                                  "minWidth": 180,
+                                  "flex": 2
+                                },
+                                {
+                                  "headerName": "示例",
+                                  "field": "example",
+                                  "editable": true,
+                                  "minWidth": 180,
+                                  "flex": 2
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

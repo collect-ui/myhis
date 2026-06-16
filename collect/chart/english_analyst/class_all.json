@@ -1,0 +1,316 @@
+{
+  "tooltip": {
+    "trigger": "axis",
+    "axisPointer": {
+      "type": "shadow"
+    }
+  },
+  "legend": {
+    "show": true,
+    "textStyle": {
+      "color": "#20DFE2"
+    }
+  },
+  "grid": {
+    "top": "35",
+    "left": "3%",
+    "right": "3%",
+    "bottom": "20",
+    "containLabel": true
+  },
+  "xAxis": {
+    "type": "category",
+    "data": [
+      "周施旋",
+      "谭剑飞",
+      "彭成霖",
+      "李杨",
+      "任家乐",
+      "张文曙",
+      "林敏",
+      "陈梓豪",
+      "刘思阳",
+      "周皓",
+      "王同地",
+      "朱雯萱",
+      "王静怡",
+      "吴凯",
+      "欧阳玲玉",
+      "莫鑫宇",
+      "周定",
+      "陈瑜婷",
+      "周士杰",
+      "熊鑫卓",
+      "刘子明",
+      "王浩",
+      "盛繁莹",
+      "谷佳乐",
+      "李云映",
+      "邓慧婷"
+    ],
+    "axisLabel": {
+      "onpageshow": false,
+      "color": "#FFFFFF",
+      "rotate": 60
+    },
+    "axisPointer": {
+      "type": "shadow"
+    },
+    "nameTextStyle": {
+      "fontSize": 7
+    },
+    "axisLine": {
+      "lineStyle": {
+        "color": "#FFFFFF"
+      }
+    }
+  },
+  "yAxis": {
+    "type": "value",
+    "axisLabel": {
+      "formatter": "{value}"
+    },
+    "min": 0,
+    "max": 100,
+    "axisLine": {
+      "lineStyle": {
+        "color": "#FFFFFF"
+      }
+    },
+    "splitLine": {
+      "lineStyle": {
+        "color": "rgba(255,255,255,0.2)"
+      }
+    }
+  },
+  "series": [
+    {
+      "name": "正确率",
+      "type": "bar",
+      "stack": "系统评分",
+      "data": [
+        23,
+        16.2,
+        21.5,
+        19.5,
+        20,
+        16,
+        19,
+        16,
+        15,
+        21,
+        13,
+        21,
+        19,
+        21,
+        20.8,
+        18,
+        16,
+        17,
+        14,
+        14.2,
+        17,
+        17,
+        15,
+        18.4,
+        14,
+        11
+      ],
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 1,
+          "x2": 0,
+          "y2": 0,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#87C53E"
+            },
+            {
+              "offset": 1,
+              "color": "#97D44F"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "节奏",
+      "type": "bar",
+      "stack": "系统评分",
+      "data": [
+        23.7,
+        16,
+        21,
+        20,
+        21,
+        17,
+        18.4,
+        14,
+        17,
+        22.5,
+        20,
+        22,
+        18,
+        19,
+        21.5,
+        21,
+        14.9,
+        15,
+        13,
+        16,
+        19,
+        15,
+        14,
+        20,
+        15,
+        15
+      ],
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 1,
+          "x2": 0,
+          "y2": 0,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#40CDB9"
+            },
+            {
+              "offset": 1,
+              "color": "#2EAE9C"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "流利度",
+      "type": "bar",
+      "stack": "系统评分",
+      "data": [
+        22.8,
+        17,
+        20.8,
+        19.2,
+        20,
+        18,
+        18,
+        15,
+        14,
+        22.6,
+        17.5,
+        20.2,
+        17,
+        18,
+        21,
+        16,
+        17,
+        15,
+        14.6,
+        17.4,
+        17,
+        20,
+        16.4,
+        17,
+        16,
+        14
+      ],
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 1,
+          "x2": 0,
+          "y2": 0,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#2CB8E6"
+            },
+            {
+              "offset": 1,
+              "color": "#0096C7"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "发音",
+      "type": "bar",
+      "stack": "系统评分",
+      "data": [
+        22.5,
+        13.5,
+        20,
+        19,
+        19.8,
+        15.3,
+        17,
+        13.2,
+        18,
+        21.4,
+        17,
+        19.2,
+        19,
+        18,
+        19.4,
+        18.7,
+        16,
+        16,
+        13.5,
+        13.8,
+        16.5,
+        18,
+        12.2,
+        17.3,
+        13,
+        12
+      ],
+      "itemStyle": {
+        "color": {
+          "type": "linear",
+          "x": 0,
+          "y": 1,
+          "x2": 0,
+          "y2": 0,
+          "colorStops": [
+            {
+              "offset": 0,
+              "color": "#2C8CE6"
+            },
+            {
+              "offset": 1,
+              "color": "#1949BF"
+            }
+          ]
+        }
+      },
+      "yAxisIndex": 0,
+      "markLine": {
+        "symbol": "none",
+        "data": [
+          {
+            "silent": false,
+            "lineStyle": {
+              "type": "dashed",
+              "color": "#FA3934"
+            },
+            "label": {
+              "show": false,
+              "position": "end",
+              "formatter": "100",
+              "fontSize": "15"
+            },
+            "yAxis": 70.13076923076925
+          }
+        ]
+      }
+    }
+  ]
+}

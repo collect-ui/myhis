@@ -1,0 +1,232 @@
+{
+  "tag": "dialog",
+  "title": "${workspaceFileOp==='add'?'新增目录/文件':'编辑目录/文件'}",
+  "width": "680px",
+  "open": "${workspaceFileDialogVisible}",
+  "action": [
+    {
+      "tag": "submit-form",
+      "formName": "workspace-file-form"
+    },
+    {
+      "tag": "update-store",
+      "enable": "${workspaceFileOp==='add'}",
+      "value": {
+        "workspaceFileLastAddPath": "${(()=>{const v=getFormValue('workspace-file-form','path');if(v===undefined||v===null||String(v)===''){return path||'';}return String(v);})()}",
+        "workspaceFileLastAddName": "${(()=>{const v=getFormValue('workspace-file-form','name');if(v===undefined||v===null||String(v)===''){return name||'';}return String(v);})()}",
+        "workspaceFileLastAddParentId": "${(()=>{const v=getFormValue('workspace-file-form','parent_id');if(v===undefined||v===null){return parent_id||'';}return String(v);})()}",
+        "workspaceFileLastAddParentPath": "${(()=>{const v=getFormValue('workspace-file-form','path');const raw=String((v===undefined||v===null||String(v)==='')?(path||''):v).replace(/\\\\/g,'/');const seg=raw.split('/').filter(Boolean);if(seg.length<=1){return raw.startsWith('/')?'/':'';}const parent='/' + seg.slice(0,-1).join('/');return parent;})()}",
+        "workspaceFileLastAddIsDir": "${(()=>{const v=getFormValue('workspace-file-form','is_dir');if(v===undefined||v===null||String(v)===''){return is_dir||'1';}return String(v);})()}"
+      }
+    },
+    {
+      "tag": "update-store",
+      "enable": "${workspaceFileOp==='add' || workspaceFileOp==='edit'}",
+      "value": {
+        "workspaceTreeKeepProjectDir": "${workspaceFileCurrentProject.project_dir||''}",
+        "workspaceTreeKeepExpandPath": "${(()=>{const raw=String(getFormValue('workspace-file-form','path')||path||'').replace(/\\\\/g,'/');const seg=raw.split('/').filter(Boolean);if(seg.length<=1){return raw.startsWith('/')?'/':'';}return '/' + seg.slice(0,-1).join('/');})()}",
+        "workspaceTreeKeepTargetName": "${(()=>{const v=getFormValue('workspace-file-form','name');if(v===undefined||v===null||String(v)===''){return name||'';}return String(v);})()}",
+        "workspaceTreeKeepTargetPath": "${(()=>{const v=getFormValue('workspace-file-form','path');if(v===undefined||v===null||String(v)===''){return path||'';}return String(v);})()}",
+        "workspaceTreeKeepTargetIsDir": "${(()=>{const v=getFormValue('workspace-file-form','is_dir');if(v===undefined||v===null||String(v)===''){return is_dir||'1';}return String(v);})()}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceFileOp==='add'}",
+      "api": "post:/template_data/data?service=webshell.workspace_file_add_with_sync",
+      "appendFormFields": "workspace-file-form",
+      "data": {
+        "project_code": "${workspaceFileCurrentProject.project_code||workspaceCurrent}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceFileOp==='edit'}",
+      "api": "post:/template_data/data?service=webshell.workspace_file_update_with_sync",
+      "appendFormFields": "workspace-file-form",
+      "data": {
+        "project_code": "${workspaceFileCurrentProject.project_code||workspaceCurrent}",
+        "file_id": "${file_id || workspaceFileCurrentRow.file_id || ''}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${(workspaceFileOp==='add' || workspaceFileOp==='edit') && !!workspaceTreeKeepExpandPath}",
+      "api": "post:/template_data/data?service=webshell.workspace_file_query",
+      "data": {
+        "project_code": "${workspaceFileCurrentProject.project_code||workspaceCurrent}",
+        "path_exact": "${workspaceTreeKeepExpandPath||''}",
+        "is_dir": "1",
+        "pagination": false
+      },
+      "adapt": {
+        "workspaceTreeRefreshParentId": "${(()=>{const row=(Array.isArray(data)&&data.length>0)?data[0]:null;return row&&row.file_id?String(row.file_id):'';})()}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceFileOp==='add' || workspaceFileOp==='edit'}",
+      "api": "post:/template_data/data?service=webshell.workspace_file_query",
+      "data": {
+        "project_code": "${workspaceFileCurrentProject.project_code||workspaceCurrent}",
+        "parent_id": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const projectDir=norm(workspaceTreeKeepProjectDir||workspaceFileCurrentProject.project_dir||'');const parentPath=norm(workspaceTreeKeepExpandPath||'');if(projectDir&&parentPath===projectDir){return '';}if(workspaceTreeRefreshParentId){return workspaceTreeRefreshParentId;}if(workspaceFileOp==='add'){return workspaceFileLastAddParentId||'';}const v=getFormValue('workspace-file-form','parent_id');if(v===undefined||v===null){return parent_id||workspaceFileCurrentRow.parent_id||'';}return String(v);})()}",
+        "root_only": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const projectDir=norm(workspaceTreeKeepProjectDir||workspaceFileCurrentProject.project_dir||'');const parentPath=norm(workspaceTreeKeepExpandPath||'');if(projectDir&&parentPath===projectDir){return true;}const pid=String(workspaceTreeRefreshParentId||(workspaceFileOp==='add'?(workspaceFileLastAddParentId||''):(getFormValue('workspace-file-form','parent_id')||parent_id||workspaceFileCurrentRow.parent_id||''))).trim();return !pid;})()}",
+        "pagination": false
+      },
+      "adapt": {
+        "workspaceTreeLazyChildren": "${(()=>{const seen={};return (Array.isArray(data)?data:[]).filter(item=>{const k=String((item&&item.path)||(item&&item.file_id)||'');if(!k||seen[k]){return false;}seen[k]=true;return true;}).map(item=>Object.assign({}, item, { children: undefined, isLeaf: !(item.is_dir==='1'||item.is_dir===1||item.is_dir===true), key: item.file_id, title: item.name, __lazy_loaded: false }));})()}"
+      }
+    },
+    {
+      "tag": "update-store",
+      "enable": "${workspaceFileOp==='add' || workspaceFileOp==='edit'}",
+      "targetStore": "${activeStore}",
+      "value": {
+        "workspaceTree": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const fallbackId=workspaceFileOp==='add'?(workspaceFileLastAddParentId||''):(getFormValue('workspace-file-form','parent_id')||parent_id||workspaceFileCurrentRow.parent_id||'');const targetId=String(workspaceTreeRefreshParentId||fallbackId||'');const targetPath=norm(workspaceTreeKeepExpandPath||workspaceFileLastAddParentPath||'');const projectDir=norm(workspaceTreeKeepProjectDir||workspaceFileCurrentProject.project_dir||'');const children=Array.isArray(workspaceTreeLazyChildren)?workspaceTreeLazyChildren:[];const active=(Array.isArray(activeStore)&&activeStore[0])?activeStore[0]:null;const currentTree=active&&active.getValue?active.getValue('workspaceTree'):workspaceTree;if(!targetId&&(!targetPath||(projectDir&&targetPath===projectDir))){return children;}const setChildren=(nodes)=>{if(!Array.isArray(nodes)){return [];}return nodes.map(n=>{if(!n){return n;}const idMatch=targetId&&String(n.file_id||'')===targetId;const pathMatch=targetPath&&norm(n.path||'')===targetPath;if(idMatch||pathMatch){return Object.assign({}, n, { children: children, __lazy_loaded: true });}if(Array.isArray(n.children)&&n.children.length>0){return Object.assign({}, n, { children: setChildren(n.children) });}return n;});};return setChildren(Array.isArray(currentTree)?currentTree:[]);})()}",
+        "workspaceFileParentTree": "${Array.isArray(workspaceTree)?[...workspaceTree]:[]}"
+      }
+    },
+    {
+      "tag": "method",
+      "enable": "${(workspaceFileOp==='add' || workspaceFileOp==='edit') && !!workspaceTreeKeepExpandPath}",
+      "method": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const projectDir=norm(workspaceTreeKeepProjectDir||'');const expandPath=norm(workspaceTreeKeepExpandPath||'');const targetName=String(workspaceTreeKeepTargetName||'').trim();const targetIsDir=String(workspaceTreeKeepTargetIsDir||'1')==='1';const relative=expandPath&&projectDir&&expandPath.indexOf(projectDir)===0?expandPath.slice(projectDir.length):expandPath;const chain=relative.split('/').filter(Boolean);const getSwitcher=(titleEl,root)=>{let node=titleEl;while(node&&node!==root){if(node.classList&&node.classList.contains('ant-tree-treenode')){const list=node.getElementsByClassName('ant-tree-switcher');return list&&list.length>0?list[0]:null;}node=node.parentElement;}return null;};let tick=0;const tryRestore=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return false;}const root=doc.querySelector('.workspace-source-tree');if(!root){return false;}for(const seg of chain){const titles=[...root.querySelectorAll('.ant-tree-title')].filter(el=>String((el.textContent||'')).trim()===seg);for(const titleEl of titles){const switcher=getSwitcher(titleEl,root);if(!switcher||typeof switcher.click!=='function'){continue;}const cls=String(switcher.className||'');if(cls.indexOf('ant-tree-switcher_close')>=0){switcher.click();return false;}}}if(targetIsDir&&targetName){const target=[...root.querySelectorAll('.ant-tree-title')].find(el=>String((el.textContent||'')).trim()===targetName);if(target&&typeof target.click==='function'){target.click();return true;}}return chain.length===0||tick>6;};const timer=window.setInterval(()=>{tick+=1;const ok=tryRestore();if(ok||tick>=28){window.clearInterval(timer);}},240);window.setTimeout(tryRestore,180);})()}"
+    },
+    {
+      "tag": "method",
+      "enable": "${workspaceFileOp==='add' && String(workspaceFileLastAddIsDir||'1')!=='1'}",
+      "method": "${(()=>{const active=(Array.isArray(activeStore)&&activeStore[0]&&activeStore[0].getValue)?activeStore[0]:null;if(!active){return;}const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const activePath=norm(workspaceFileLastAddPath||'');const activeName=String(workspaceFileLastAddName||((activePath||'').split('/').pop())||'').trim();if(!activePath||!activeName){return;}const projectCode=String((workspaceFileCurrentProject&&workspaceFileCurrentProject.project_code)||workspaceCurrent||'');const row=(Array.isArray(workspaceTreeLazyChildren)?workspaceTreeLazyChildren:[]).find(item=>norm(item&&item.path)===activePath)||{};const selected=Object.assign({},row,{path:activePath,name:activeName,title:activeName,is_dir:'0',key:row.key||row.file_id||activePath,project_code:projectCode});active.setValue('workspaceTreeSelected',selected);active.setValue('workspaceActivePath',activePath);active.setValue('workspaceActiveName',activeName);active.setValue('workspaceCurrentFilePath',activePath);const currentPanels=Array.isArray(active.getValue('workspacePanelList'))?active.getValue('workspacePanelList'):[];const clonePanels=currentPanels.map(g=>Object.assign({},g,{children:(Array.isArray(g&&g.children)?g.children:[]).map(s=>Object.assign({},s,{content:(Array.isArray(s&&s.content)?s.content:[]).map(i=>Object.assign({},i))}))}));let group=clonePanels.find(item=>String(item&&item.id||'')===String(active.getValue('workspaceLastGroupId')||''))||clonePanels[0];if(!group){group={id:uuid(),order:1,description:'横向分组',children:[]};clonePanels.push(group);}if(!Array.isArray(group.children)){group.children=[];}let shell=group.children.find(item=>String(item&&item.id||'')===String(active.getValue('workspaceLastShellId')||''))||group.children[0];if(!shell){shell={id:uuid(),order:1,description:'纵向分组',activeKey:'',content:[]};group.children.push(shell);}if(!Array.isArray(shell.content)){shell.content=[];}const existed=shell.content.find(item=>String(item&&item.path||'')===activePath);if(existed){shell.activeKey=String(existed.token||'');}else{const token=String(uuid());shell.content=[...shell.content,{token:token,title:activeName,path:activePath,project_code:projectCode}];shell.activeKey=token;}active.setValue('workspacePanelList',clonePanels);window.setTimeout(()=>{const panels=Array.isArray(active.getValue('workspacePanelList'))?active.getValue('workspacePanelList'):[];panels.forEach(item=>item&&item.initialize&&item.initialize());},0);active.setValue('workspaceLastGroupId',String(group&&group.id||''));active.setValue('workspaceLastShellId',String(shell&&shell.id||''));active.setValue('workspaceHasOpenToken',String(shell&&shell.activeKey||''));})()}"
+    },
+    {
+      "tag": "method",
+      "enable": "${workspaceFileOp==='add' && String(workspaceFileLastAddIsDir||'1')!=='1'}",
+      "method": "${(()=>{const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const filePath=norm(workspaceFileLastAddPath||'');const fileName=String(workspaceFileLastAddName||((filePath||'').split('/').pop())||'').trim();if(!filePath||!fileName){return;}const projectDir=norm(workspaceTreeKeepProjectDir||workspaceFileCurrentProject.project_dir||'');const relative=filePath&&projectDir&&filePath.indexOf(projectDir)===0?filePath.slice(projectDir.length):filePath;const chain=relative.split('/').filter(Boolean).slice(0,-1);const getSwitcher=(titleEl,root)=>{let node=titleEl;while(node&&node!==root){if(node.classList&&node.classList.contains('ant-tree-treenode')){const list=node.getElementsByClassName('ant-tree-switcher');return list&&list.length>0?list[0]:null;}node=node.parentElement;}return null;};const clickTitle=(titleEl)=>{const target=titleEl&&titleEl.closest?titleEl.closest('.ant-tree-node-content-wrapper'):titleEl;if(target&&typeof target.click==='function'){target.click();return true;}return false;};let count=0;const tryClick=()=>{const doc=(typeof window!=='undefined'&&window.document)?window.document:null;if(!doc){return false;}const root=doc.querySelector('.workspace-source-tree');if(!root){return false;}for(const seg of chain){const title=[...root.querySelectorAll('.ant-tree-title')].find(el=>String((el.textContent||'')).trim()===seg);if(!title){continue;}const switcher=getSwitcher(title,root);const cls=String((switcher&&switcher.className)||'');if(switcher&&typeof switcher.click==='function'&&cls.indexOf('ant-tree-switcher_close')>=0){switcher.click();return false;}}const title=[...root.querySelectorAll('.ant-tree-title')].find(el=>String((el.textContent||'')).trim()===fileName);if(title){return clickTitle(title);}return false;};const timer=window.setInterval(()=>{count+=1;const ok=tryClick();if(ok||count>=60){window.clearInterval(timer);}},180);window.setTimeout(tryClick,120);})()}"
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceFileOp==='add' && String(workspaceFileLastAddIsDir||'1')!=='1'}",
+      "api": "post:/template_data/data?service=webshell.workspace_file_recent_open",
+      "data": {
+        "project_code": "${workspaceFileCurrentProject.project_code||workspaceCurrent}",
+        "file_path": "${workspaceFileLastAddPath||''}",
+        "file_name": "${workspaceFileLastAddName||''}"
+      }
+    },
+    {
+      "tag": "reload-init-action",
+      "enable": "${workspaceFileOp==='add' && String(workspaceFileLastAddIsDir||'1')!=='1'}",
+      "group": "reload-workspace-recent-files"
+    },
+    {
+      "tag": "update-store",
+      "value": {
+        "workspaceFileDialogVisible": false
+      }
+    }
+  ],
+  "children": [
+    {
+      "tag": "form",
+      "name": "workspace-file-form",
+      "initialValues": "${workspaceFileForm}",
+      "labelCol": {
+        "span": 5
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "changeAction": [
+        {
+          "tag": "update-form",
+          "enable": "${workspaceFileOp==='add'}",
+          "formName": "workspace-file-form",
+          "value": {
+            "path": "${(()=>{const trim=(v)=>String(v==null?'':v).trim();const clean=(v)=>{let s=trim(v).split('\\\\').join('/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const normName=(v)=>{let s=trim(v).split('\\\\').join('/');while(s.startsWith('/')){s=s.slice(1);}while(s.endsWith('/')){s=s.slice(0,-1);}return s;};const join=(base,name)=>{const b=clean(base);const n=normName(name);if(!b){return n?('/'+n):'';}if(!n){return b;}return b+'/'+n;};const find=(arr,id)=>{if(!Array.isArray(arr)||!id){return null;}for(const item of arr){if(!item){continue;}if(String(item.file_id||'')===String(id)){return item;}const child=find(item.children,id);if(child){return child;}}return null;};const parentId=trim(getFormValue('workspace-file-form','parent_id'));const name=trim(getFormValue('workspace-file-form','name'));const parentNode=find(Array.isArray(workspaceFileParentTree)?workspaceFileParentTree:[],parentId);const base=trim((parentNode&&parentNode.path)||workspaceFileCurrentProject.project_dir||'');return join(base,name);})()}",
+            "is_dir": "${(()=>{const trim=(v)=>String(v==null?'':v).trim();const name=trim(getFormValue('workspace-file-form','name'));const last=(name.split('/').pop()||'').trim();const hasSuffix=last.includes('.')&&!last.endsWith('.')&&last!=='.'&&last!=='..';return hasSuffix?'0':'1';})()}"
+          }
+        }
+      ],
+      "children": [
+        {
+          "tag": "form-item",
+          "name": "file_id",
+          "hidden": true,
+          "children": [
+            {
+              "tag": "input"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "name",
+          "label": "名称",
+          "rules": [
+            {
+              "required": true,
+              "message": "名称不能为空"
+            }
+          ],
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "请输入目录或文件名（有后缀自动识别为文件）",
+              "onPressEnter": "${(e)=>{if(e&&e.nativeEvent&&e.nativeEvent.isComposing){return;}if(e&&e.preventDefault){e.preventDefault();}if(e&&e.stopPropagation){e.stopPropagation();}const el=e&&e.currentTarget;const modal=el&&el.closest?el.closest('.ant-modal'):null;const btn=modal&&modal.querySelector?modal.querySelector('.ant-modal-footer .ant-btn-primary'):null;if(btn&&!btn.disabled){window.setTimeout(()=>btn.click(),0);}}}"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "parent_id",
+          "label": "上级目录",
+          "children": [
+            {
+              "tag": "tree-select",
+              "allowClear": true,
+              "showSearch": true,
+              "showIcon": true,
+              "treeLine": true,
+              "virtual": false,
+              "popupClassName": "ant-select-tree-dropdown",
+              "dropdownClassName": "ant-select-tree-dropdown",
+              "openLevel": 99,
+              "treeDefaultExpandAll": true,
+              "valueKey": "${item.file_id}",
+              "treeTitle": "${item.title || item.name}",
+              "treeIcon": "${item.icon || (item.is_dir?'FolderOutlined':'FileOutlined')}",
+              "treeData": "${(()=>{const isDir=(n)=>n&&(n.is_dir==='1'||n.is_dir===1||n.is_dir===true||n.is_dir==='true');const norm=(v)=>{let s=String(v||'').replace(/\\\\/g,'/');while(s.length>1&&s.endsWith('/')){s=s.slice(0,-1);}return s;};const currentPath=norm((workspaceFileCurrentRow&&workspaceFileCurrentRow.path)||getFormValue('workspace-file-form','path')||path||'');const rank=(n)=>{const p=norm(n&&n.path);return p&&currentPath&&(currentPath===p||currentPath.indexOf(p+'/')===0)?0:1;};const out=[];const walk=(arr)=>{if(!Array.isArray(arr)){return;}arr.forEach(n=>{if(!n||!isDir(n)){return;}const item=Object.assign({},n);delete item.children;out.push(item);if(Array.isArray(n.children)&&n.children.length>0){walk(n.children);}});};walk(Array.isArray(workspaceFileParentTree)?workspaceFileParentTree:[]);out.sort((a,b)=>{const ar=rank(a);const br=rank(b);if(ar!==br){return ar-br;}const ap=norm(a&&a.path);const bp=norm(b&&b.path);return String(a.title||a.name||ap).localeCompare(String(b.title||b.name||bp));});return out;})()}",
+              "placeholder": "不选则为根节点"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "is_dir",
+          "hidden": true,
+          "children": [
+            {
+              "tag": "input"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "path",
+          "label": "路径",
+          "rules": [
+            {
+              "required": true,
+              "message": "路径不能为空"
+            }
+          ],
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "例如: /frontend/src",
+              "onPressEnter": "${(e)=>{if(e&&e.nativeEvent&&e.nativeEvent.isComposing){return;}if(e&&e.preventDefault){e.preventDefault();}if(e&&e.stopPropagation){e.stopPropagation();}const el=e&&e.currentTarget;const modal=el&&el.closest?el.closest('.ant-modal'):null;const btn=modal&&modal.querySelector?modal.querySelector('.ant-modal-footer .ant-btn-primary'):null;if(btn&&!btn.disabled){window.setTimeout(()=>btn.click(),0);}}}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+service:
+  - key: learn_detail_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: chart.zhrw
+        save_field: zhrw
+      - key: service2field
+        service:
+          service: chart.all_detail
+        save_field: all_detail
+      - key: service2field
+        service:
+          service: chart.zzxx
+        save_field: zzxx
+      - key: service2field
+        service:
+          service: chart.zszw
+        save_field: zszw
+      - key: service2field
+        service:
+          service: chart.kypf
+        save_field: kypf
+      - key: service2field
+        service:
+          service: chart.zwpf
+        save_field: zwpf
+      - key: service2field
+        service:
+          service: chart.syts
+        save_field: syts
+      - key: service2field
+        service:
+          service: chart.shsj
+        save_field: shsj
+      - key: params2result
+        fields:
+          - from: "[all_detail]"
+            to: all_detail
+          - from: "[zhrw]"
+            to: zhrw
+          - from: "[zzxx]"
+            to: zzxx
+          - from: "[zszw]"
+            to: zszw
+          - from: "[kypf]"
+            to: kypf
+          - from: "[zwpf]"
+            to: zwpf
+          - from: "[syts]"
+            to: syts
+          - from: "[shsj]"
+            to: shsj
+  - key: shsj
+    http: true
+    module: empty
+    data_file: shsj.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: syts
+    http: true
+    module: empty
+    data_file: syts.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: zwpf
+    http: true
+    module: empty
+    data_file: zwpf.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: all_detail
+    http: true
+    module: empty
+    data_file: all_detail.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: zzxx
+    http: true
+    module: empty
+    data_file: zzxx.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: kypf
+    http: true
+    module: empty
+    data_file: kypf.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: zszw
+    http: true
+    module: empty
+    data_file: zszw.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: zhrw
+    http: true
+    module: empty
+    data_file: zhrw.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+
+  - key: course_in_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: chart.phone_group
+        save_field: phone_group
+      - key: service2field
+        service:
+          service: chart.course_in_grade
+        save_field: course_in_grade
+      - key: service2field
+        service:
+          service: chart.student_list2
+        save_field: student_list
+      - key: params2result
+        fields:
+          - from: "[phone_group]"
+            to: phone_group
+          - from: "[course_in_grade]"
+            to: course_in_grade
+          - from: "[student_list]"
+            to: student_list
+  - key: course_in_grade
+    http: true
+    module: empty
+    data_file: course_in_grade.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: phone_group
+    http: true
+    module: empty
+    data_file: phone_group.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: speak_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: chart.student_grade_detail
+        save_field: student_detail
+      - key: service2field
+        service:
+          service: chart.class_all
+        save_field: class_all
+      - key: service2field
+        service:
+          service: chart.student_list
+        save_field: student_list
+      - key: params2result
+        fields:
+          - from: "[student_detail]"
+            to: student_detail
+          - from: "[class_all]"
+            to: class_all
+          - from: "[student_list]"
+            to: student_list
+  - key: student_list
+    http: true
+    module: empty
+    data_file: student_list.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: student_list2
+    http: true
+    module: empty
+    data_file: student_list2.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: student_grade_detail
+    http: true
+    module: empty
+    data_file: student_detail.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: class_all
+    http: true
+    module: empty
+    data_file: class_all.json
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+  - key: class_grade_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: class_grade_analyst.json
+
+  - key: class_word_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: class_word_analyst.json
+
+  - key: memery_way
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: memery_way.json
+
+  - key: cognition_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: cognition_analyst.json
+
+  - key: style_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: style_analyst.json
+  - key: self_learn
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: self_learn.json
+
+  - key: special_analyst
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: special_analyst.json
+
+
+  - key: learn_before
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: chart.class_grade_analyst
+        save_field: class_grade_data
+      - key: service2field
+        service:
+          service: chart.class_word_analyst
+        save_field: class_word_analyst
+      - key: service2field
+        service:
+          service: chart.memery_way
+        save_field: memery_way
+      - key: service2field
+        service:
+          service: chart.cognition_analyst
+        save_field: cognition_analyst
+      - key: service2field
+        service:
+          service: chart.style_analyst
+        save_field: style_analyst
+      - key: service2field
+        service:
+          service: chart.self_learn
+        save_field: self_learn
+      - key: service2field
+        service:
+          service: chart.special_analyst
+        save_field: special_analyst
+      - key: params2result
+        fields:
+          - from: "[class_grade_data]"
+            to: class_grade_data
+          - from: "[class_word_analyst]"
+            to: class_word_analyst
+          - from: "[memery_way]"
+            to: memery_way
+          - from: "[cognition_analyst]"
+            to: cognition_analyst
+          - from: "[style_analyst]"
+            to: style_analyst
+          - from: "[self_learn]"
+            to: self_learn
+          - from: "[special_analyst]"
+            to: special_analyst

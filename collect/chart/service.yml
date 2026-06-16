@@ -1,0 +1,5 @@
+service:
+  - name: 学生成绩
+    path: student_grade/index.yml
+  - name: 英语成绩
+    path: english_analyst/index.yml

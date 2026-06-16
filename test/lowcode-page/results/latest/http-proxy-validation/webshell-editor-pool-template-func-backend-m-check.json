@@ -1,0 +1,27 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-07T12:36:26.123Z",
+  "pass": false,
+  "error": "must not found in suggestions: [\"count_file\",\"count_sql\",\"data_file\",\"data_json\",\"handler_params\",\"model\",\"result_handler\",\"service\",\"sql_file\",\"after_plugin\",\"always\",\"append_param\",\"batch\"]",
+  "screenshot": "",
+  "targetPath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+  "openedPath": "/data/project/moongod-backend/backend_data_service/jira/comments/index.yml",
+  "containsMust": false,
+  "containsUnixTime": false,
+  "suggestionsTop": [
+    "count_file",
+    "count_sql",
+    "data_file",
+    "data_json",
+    "handler_params",
+    "model",
+    "result_handler",
+    "service",
+    "sql_file",
+    "after_plugin",
+    "always",
+    "append_param",
+    "batch"
+  ],
+  "endedAt": "2026-05-07T12:36:33.695Z"
+}

@@ -1,0 +1,112 @@
+{
+  "tag": "dialog",
+  "title": "${workspaceHttpGroupOp==='add'?'新增分组':'编辑分组'}",
+  "width": 520,
+  "styles": {
+    "body": {
+      "padding": "12px 14px 6px"
+    }
+  },
+  "zIndex": 1690,
+  "open": "${workspaceHttpGroupDialogVisible}",
+  "cancelAction": [
+    {
+      "tag": "update-store",
+      "value": {
+        "workspaceHttpGroupDialogVisible": false
+      }
+    }
+  ],
+  "action": [
+    {
+      "tag": "submit-form",
+      "formName": "workspace-http-group-form"
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceHttpGroupOp==='add'}",
+      "showResultMsg": true,
+      "api": "post:/template_data/data?service=config.doc_group_save",
+      "data": {
+        "doc_group_list": "${(()=>{const formName='workspace-http-group-form';const selected=workspaceHttpGroupForm||{};const projectCode=String(getFormValue(formName,'project_code')||selected.project_code||project_code||workspaceCurrent||'');return [{name:(getFormValue(formName,'name')||'').trim(),desc:(getFormValue(formName,'desc')||'').trim(),project_code:projectCode,order_index:Number(getFormValue(formName,'order_index')||selected.order_index||1),type:String(selected.type||'service')}];})()}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "enable": "${workspaceHttpGroupOp==='edit'}",
+      "showResultMsg": true,
+      "api": "post:/template_data/data?service=config.doc_group_update",
+      "data": {
+        "doc_group_list": "${(()=>{const formName='workspace-http-group-form';const selected=workspaceHttpGroupForm||{};const projectCode=String(getFormValue(formName,'project_code')||selected.project_code||project_code||workspaceCurrent||'');return [{doc_group_id:String(getFormValue(formName,'doc_group_id')||selected.doc_group_id||''),name:(getFormValue(formName,'name')||'').trim(),desc:(getFormValue(formName,'desc')||'').trim(),project_code:projectCode,order_index:Number(getFormValue(formName,'order_index')||selected.order_index||1),type:String(selected.type||'service')}];})()}"
+      }
+    },
+    {
+      "tag": "update-store",
+      "value": {
+        "workspaceHttpGroupDialogVisible": false
+      }
+    },
+    {
+      "tag": "reload-init-action",
+      "targetStore": "${activeStore}",
+      "group": "reload-workspace-http-tree"
+    }
+  ],
+  "children": [
+    {
+      "tag": "form",
+      "name": "workspace-http-group-form",
+      "initialValues": "${workspaceHttpGroupForm}",
+      "labelCol": {
+        "span": 6
+      },
+      "wrapperCol": {
+        "span": 18
+      },
+      "children": [
+        {
+          "tag": "form-item",
+          "name": "name",
+          "label": "分组名称",
+          "rules": [
+            {
+              "required": true,
+              "message": "请输入分组名称"
+            }
+          ],
+          "children": [
+            {
+              "tag": "input",
+              "allowClear": true,
+              "placeholder": "例如：用户管理"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "desc",
+          "label": "分组描述",
+          "children": [
+            {
+              "tag": "input",
+              "allowClear": true,
+              "placeholder": "可选，用于补充说明分组用途"
+            }
+          ]
+        },
+        {
+          "tag": "form-item",
+          "name": "order_index",
+          "label": "排序",
+          "children": [
+            {
+              "tag": "input",
+              "isNumber": true,
+              "placeholder": "数字越小越靠前"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

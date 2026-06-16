@@ -1,0 +1,77 @@
+{
+  "name": "将价格列表转excel",
+  "sheets": [
+    {
+      "sheet_index": 0,
+      "title_height": 48,
+      "desc": "16*行数",
+      "title_style": {
+        "font": {
+          "family": "宋体",
+          "size": 12,
+          "color": "#ffffff"
+        },
+        "fill": {
+          "type": "pattern",
+          "color": [
+            "#3366FF"
+          ],
+          "pattern": 1
+        },
+        "alignment": {
+          "vertical": "center",
+          "WrapText": true
+        }
+      },
+      "name_style": {
+        "font": {
+          "family": "Arial",
+          "size": 10,
+          "color": "#ffffff"
+        },
+        "fill": {
+          "type": "pattern",
+          "color": [
+            "#0066CC"
+          ],
+          "pattern": 1
+        },
+        "alignment": {
+          "vertical": "center"
+        }
+      },
+      "content_style": {
+        "NumFmt": 49
+      },
+      "title": "价格列表",
+      "data": "[price_list]",
+      "fields": [
+        {
+          "field": "[code]",
+          "name": "编号",
+          "width": 10
+        },
+        {
+          "field": "[name]",
+          "name": "*名称",
+          "width": 20
+        },
+        {
+          "field": "[unit]",
+          "name": "单位",
+          "width": 20
+        },
+        {
+          "field": "[price]",
+          "name": "价格",
+          "width": 20
+        },
+        {
+          "field": "[ancestors]",
+          "name": "目录",
+          "width": 20
+        }
+      ]
+    }
+  ]
+}

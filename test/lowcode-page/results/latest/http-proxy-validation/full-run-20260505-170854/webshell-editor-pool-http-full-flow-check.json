@@ -1,0 +1,42 @@
+{
+  "apiUrl": "http://192.168.232.130:8015/template_data/data",
+  "projectCode": "backend",
+  "proxyUrl": "https://postman-echo.com/get?source=http-full-flow-check",
+  "created": {
+    "groupName": "full_flow_group_1777972420274",
+    "groupNameEdited": "full_flow_group_edited_1777972420274",
+    "docName": "full_flow_doc_1777972420274",
+    "docNameEdited": "full_flow_doc_edited_1777972420274",
+    "groupId": "bc3871b7-41bf-4065-85e2-86221daa3176",
+    "docId": "2b3ad28e-0146-49dd-b8a4-e3fb67226bfd"
+  },
+  "steps": {
+    "groupCreate": true,
+    "groupQuery": true,
+    "groupUpdate": true,
+    "groupQueryAfterUpdate": true,
+    "docCreate": true,
+    "docQuery": true,
+    "docDetail": true,
+    "docEdit": true,
+    "docDetailAfterEdit": true,
+    "directSend": true,
+    "proxySend": true,
+    "docDelete": true,
+    "groupDelete": true
+  },
+  "checks": {
+    "docProjectCodeOk": true,
+    "docModeUpdated": true,
+    "docMethodUpdated": true,
+    "docUrlUpdated": true,
+    "directSendHasData": true,
+    "proxySendHasStatusCode": true
+  },
+  "cleanup": {
+    "docDeleted": true,
+    "groupDeleted": true
+  },
+  "error": "",
+  "pass": true
+}

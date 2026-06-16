@@ -1,0 +1,13 @@
+script	exit_code	log
+webshell_editor_pool_console_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_check.log
+webshell_editor_pool_console_create_doc_closure_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_create_doc_closure_check.log
+webshell_editor_pool_console_request_matrix_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_request_matrix_check.log
+webshell_editor_pool_console_save_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_save_check.log
+webshell_editor_pool_console_save_to_doc_check	0	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_save_to_doc_check.log
+webshell_editor_pool_console_store_crud_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_console_store_crud_check.log
+webshell_editor_pool_content_search_check	1	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_content_search_check.log
+webshell_editor_pool_http_doc_dialog_ui_check	0	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_http_doc_dialog_ui_check.log
+webshell_editor_pool_http_full_flow_check	0	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_http_full_flow_check.log
+webshell_editor_pool_http_mode_flow_check	0	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_http_mode_flow_check.log
+webshell_editor_pool_http_project_isolation_check	0	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_http_project_isolation_check.log
+webshell_editor_pool_http_test2_login_chain_check	0	/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell_editor_pool_http_test2_login_chain_check.log

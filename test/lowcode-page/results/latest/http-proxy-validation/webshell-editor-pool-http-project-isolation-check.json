@@ -1,0 +1,32 @@
+{
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectA": "backend",
+  "projectB": "collect-ui",
+  "created": {
+    "groupAName": "iso_group_backend_1777970794977",
+    "groupBName": "iso_group_collect-ui_1777970794977",
+    "docAName": "iso_doc_backend_1777970794977",
+    "docBName": "iso_doc_collect-ui_1777970794977",
+    "groupAId": "f0f4c76c-46f7-494c-8834-ba7aef74c526",
+    "groupBId": "67f99e19-5120-40b4-8252-fcedf87305ec",
+    "docAId": "a5a91fee-d61a-4225-a269-d8ce99071c7e",
+    "docBId": "929ad46b-27a7-4de7-92a4-61d763569d0d"
+  },
+  "checks": {
+    "treeAHasA": true,
+    "treeAHasB": false,
+    "treeBHasA": false,
+    "treeBHasB": true,
+    "detailAOwnProject": true,
+    "detailAOtherProjectBlocked": true,
+    "detailBOwnProject": true,
+    "detailBOtherProjectBlocked": true
+  },
+  "cleanup": {
+    "docADeleted": true,
+    "docBDeleted": true,
+    "groupADeleted": true,
+    "groupBDeleted": true
+  },
+  "pass": true
+}

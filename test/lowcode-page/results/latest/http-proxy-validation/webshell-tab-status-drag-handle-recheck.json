@@ -1,0 +1,72 @@
+{
+  "checks": {
+    "splitIdle": true,
+    "handleFound": true,
+    "noActiveDuringDrag": true,
+    "noActiveAfterDrag": true
+  },
+  "details": {
+    "dotsAfterSplit": [
+      {
+        "className": "webshell-tab-status-dot is-stopped",
+        "active": false,
+        "token": "590090380003774464",
+        "text": "192.168.232.130（linux）"
+      },
+      {
+        "className": "webshell-tab-status-dot is-stopped",
+        "active": false,
+        "token": "590090403428962304",
+        "text": "192.168.232.130（linux）"
+      }
+    ],
+    "handles": [
+      {
+        "index": 0,
+        "cls": "co-ui-panel-resize Resizer",
+        "dir": "vertical",
+        "id": ":rq:",
+        "x": 320,
+        "y": 509,
+        "w": 1329,
+        "h": 0,
+        "display": "block",
+        "visibility": "visible"
+      }
+    ],
+    "dotsDragMid": [
+      {
+        "className": "webshell-tab-status-dot is-stopped",
+        "active": false,
+        "token": "590090380003774464",
+        "text": "192.168.232.130（linux）"
+      },
+      {
+        "className": "webshell-tab-status-dot is-stopped",
+        "active": false,
+        "token": "590090403428962304",
+        "text": "192.168.232.130（linux）"
+      }
+    ],
+    "dotsDragSettled": [
+      {
+        "className": "webshell-tab-status-dot is-stopped",
+        "active": false,
+        "token": "590090380003774464",
+        "text": "192.168.232.130（linux）"
+      },
+      {
+        "className": "webshell-tab-status-dot is-stopped",
+        "active": false,
+        "token": "590090403428962304",
+        "text": "192.168.232.130（linux）"
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "error": "",
+  "pass": true,
+  "report": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-drag-handle-recheck.json"
+}

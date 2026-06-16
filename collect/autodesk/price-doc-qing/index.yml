@@ -1,0 +1,187 @@
+service:
+  - key: qing_children_ids
+    http: true
+    module: sql
+    params:
+      price_doc_qing_tree_id:
+        check:
+          template: "{{ must .price_doc_qing_tree_id}}"
+          err_msg: ID不能为空
+    data_file: children_ids.sql
+    result_handler:
+      - key: result2params
+        fields:
+          - to: "[list]"
+      - key: prop_arr
+        foreach: "[list]"
+        value: "[price_doc_tree_id]"
+        save_field: price_doc_tree_id_list
+      - key: param2result
+        field: "[price_doc_tree_id_list]"
+
+
+
+
+  - key: qing_doc_price_query
+    http: true
+    module: sql
+    params:
+      search:
+        template: "{{ if .search }}%{{.search}}%{{ end }}"
+      nick:
+        default: ""
+      page:
+        type: int
+        default: 1
+      size:
+        default: 20
+        type: int
+      start:
+        template: " ({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+      count:
+        default: true
+    handler_params:
+      - key: service2field
+        enable: "{{must .price_doc_qing_tree_id}}"
+        service:
+          service: autodesk.qing_children_ids
+          price_doc_qing_tree_id: "[price_doc_qing_tree_id]"
+        save_field: doc_tree_id_list
+    data_file: doc_price_query.sql
+    count: "[count]"
+    count_file: doc_price_count.sql
+    pagination: pagination
+  - key: qing_doc_price_bulk_create
+    http: true
+    module: bulk_create
+    params:
+      doc_price_list:
+        check:
+          template: "{{must .doc_price_list}}"
+          err_msg: doc_price_list列表不能为空
+    table: price_doc_qing
+    model_field: doc_price_list
+  - key: qing_price_doc_bulk_update
+    http: true
+    module: bulk_upsert
+    params:
+      doc_price_list:
+        check:
+          template: "{{must .doc_price_list}}"
+          err_msg: doc_price_list列表不能为空
+    table: price_doc_qing
+    model_field: doc_price_list
+
+  - key: qing_doc_price_save_all
+    http: true
+    module: empty
+    handler_params:
+      - key: file2json
+        save_field: doc_list
+      - key: service2field
+        service:
+          service: autodesk.qing_doc_price_save_all_data
+          doc_list: "[doc_list]"
+        save_field: result
+      - key: param2result
+        field: result
+
+#      - key: param2result
+#        field: doc_list
+
+
+  - key: qing_doc_price_save_all_data
+    http: true
+    module: empty
+    log: true
+    modify_config: doc_modify.json
+    handler_params:
+#      - key: file2json
+#        save_field: doc_list
+      - key: group_by
+        enable: "{{must .doc_list}}"
+        foreach: "[doc_list]"
+        children: "_children"
+        append_item_param: true
+        rule: "last"
+        fields:
+          - field: "[code]"
+        save_field: doc_list
+      - key: update_array
+        foreach: doc_list
+        item: item
+        fields:
+          - field: project_name
+            template: "{{first_item .item.ancestors}}"
+          - field: project_id
+            template: "{{concat \"project_\" (genId .item.project_name)}}"
+          - field: doc_tree_id
+            name: 生成父ID
+            template: "{{join .item.ancestors \"#\" }}"
+          - field: doc_tree_id
+            template: "{{genId .item.doc_tree_id}}"
+
+          - field: price_doc_qing_id
+            name: 生成本身ID
+            template: "{{concat  (join .item.ancestors \"#\") \"#\" .item.name}}"
+          - field: price_doc_qing_id
+            template: "{{.item.code}}_{{genId .item.price_doc_qing_id}}"
+
+          - field: order_index
+            template: "[loop_index]"
+          - field: create_time
+            template: "{{current_date_time}}"
+          - field: ancestors
+            template: "{{join .item.ancestors \"/\" }}"
+          - field: price
+            type: float64
+            template: "[item.price]"
+      - key: service2field
+        service:
+          service: autodesk.qing_doc_price_query
+          project_id: "[project_id]"
+          pagination: false
+        save_field: local_doc_list
+      - key: get_modify_data
+        name: 获取修改数据
+        save_field: change_list
+      - key: filter_arr
+        name: 过滤新增数组
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation `add`}}"
+        save_field: add_list
+      - key: service2field
+        enable: "{{ if .add_list }}true{{end}}"
+        service:
+          service: autodesk.qing_doc_price_bulk_create
+          doc_price_list: "[add_list]"
+
+#      - key: filter_arr
+#        name: 过滤修改数组
+#        foreach: "[change_list]"
+#        item: item
+#        if_template: "{{eq .item.operation `modify`}}"
+#        save_field: modify_list
+#      - key: service2field
+#        enable: "{{ if .modify_list }}true{{end}}"
+#        service:
+#          service: autodesk.price_doc_bulk_update
+#          doc_price_list: "[modify_list]"
+      - key: params2result
+        fields:
+          - from: "[doc_list]"
+            to: doc_list
+          - from: "[local_doc_list]"
+            to: local_doc_list
+          - from: "[change_list]"
+            to: change_list
+
+
+
+
+

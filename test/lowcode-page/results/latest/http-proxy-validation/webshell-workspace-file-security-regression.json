@@ -1,0 +1,118 @@
+{
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectCode": "test",
+  "projectDir": "/data/project/test",
+  "sandboxDir": "/data/project/test/test",
+  "safeFilePath": "/data/project/test/test/security_1778418710299.txt",
+  "renameSourcePath": "/data/project/test/test/rename_1778418710299.txt",
+  "checks": {
+    "setupSandboxDir": true,
+    "saveInsideProject": true,
+    "readInsideProject": true,
+    "contentTraversalBlocked": true,
+    "contentOutsideBlocked": true,
+    "batchOutsideBlocked": true,
+    "saveTraversalBlocked": true,
+    "saveOutsideBlocked": true,
+    "addTraversalBlocked": true,
+    "addOutsideBlocked": true,
+    "renameOutsideBlocked": true,
+    "deleteTraversalBlocked": true,
+    "deleteOutsideBlocked": true,
+    "safeFileStillReadable": true
+  },
+  "details": {
+    "saveInside": {
+      "path": "/data/project/test/test/security_1778418710299.txt",
+      "size": 22,
+      "success": true
+    },
+    "readInside": {
+      "content_base64": "",
+      "content_text": "security-1778418710299",
+      "create_time": "",
+      "ext": "txt",
+      "kind": "text",
+      "mime": "text/plain; charset=utf-8",
+      "modify_time": "2026-05-10 21:11:50",
+      "name": "security_1778418710299.txt",
+      "path": "/data/project/test/test/security_1778418710299.txt",
+      "size": 22,
+      "truncated": false
+    },
+    "contentTraversal": {
+      "ok": false,
+      "code": "-1",
+      "msg": "path包含非法路径穿越片段",
+      "data": null
+    },
+    "contentOutside": {
+      "ok": false,
+      "code": "-1",
+      "msg": "路径[/etc/passwd]超出项目目录[/data/project/test]限制",
+      "data": null
+    },
+    "batchOutside": {
+      "ok": false,
+      "code": "-1",
+      "msg": "路径[/etc/passwd]超出项目目录[/data/project/test]限制",
+      "data": null
+    },
+    "saveTraversal": {
+      "ok": false,
+      "code": "-1",
+      "msg": "path包含非法路径穿越片段",
+      "data": null
+    },
+    "saveOutside": {
+      "ok": false,
+      "code": "-1",
+      "msg": "路径[/tmp/workspace_security_write_1778418710299.txt]超出项目目录[/data/project/test]限制",
+      "data": null
+    },
+    "addTraversal": {
+      "ok": false,
+      "code": "-1",
+      "msg": "path包含非法路径穿越片段",
+      "data": null
+    },
+    "addOutside": {
+      "ok": false,
+      "code": "-1",
+      "msg": "路径[/tmp/workspace_security_dir_1778418710299]超出项目目录[/data/project/test]限制",
+      "data": null
+    },
+    "renameOutside": {
+      "ok": false,
+      "code": "-1",
+      "msg": "路径[/tmp/workspace_security_1778418710299.txt]超出项目目录[/data/project/test]限制",
+      "data": null
+    },
+    "deleteTraversal": {
+      "ok": false,
+      "code": "-1",
+      "msg": "path包含非法路径穿越片段",
+      "data": null
+    },
+    "deleteOutside": {
+      "ok": false,
+      "code": "-1",
+      "msg": "路径[/etc/passwd]超出项目目录[/data/project/test]限制",
+      "data": null
+    },
+    "safeReadAgain": {
+      "content_base64": "",
+      "content_text": "security-1778418710299",
+      "create_time": "",
+      "ext": "txt",
+      "kind": "text",
+      "mime": "text/plain; charset=utf-8",
+      "modify_time": "2026-05-10 21:11:50",
+      "name": "security_1778418710299.txt",
+      "path": "/data/project/test/test/security_1778418710299.txt",
+      "size": 22,
+      "truncated": false
+    }
+  },
+  "pass": true
+}

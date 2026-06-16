@@ -1,0 +1,31 @@
+service:
+  - key: video_list
+    http: true
+    module: sql
+    params:
+      course_id:
+        default: ""
+    data_file: video_list.sql
+
+
+  - key: course_video_save
+    module: model_save
+    table: course_video
+    params:
+      course_video_id:
+        template: "{{uuid}}"
+      create_time:
+        template: "{{current_date_time}}"
+
+  - key: course_video_delete
+    module: model_delete
+    http: true
+    table: course_video
+    params:
+      course_video_id_list:
+        check:
+          template: "{{must .course_video_id_list}}"
+          err_msg: 视频不能为空
+    filter:
+      course_video_id__in: "[course_video_id_list]"
+

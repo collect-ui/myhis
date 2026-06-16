@@ -1,0 +1,16 @@
+{
+  "target": {
+    "i": 2,
+    "text": "新会话 A\nactive\n15:46"
+  },
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-human-readable.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "status": "19 次调用",
+  "toolCount": 19,
+  "firstItem": "1. 查找文件 (codexcli_glob)\n完成\n动作: 查找文件\n匹配: collect/frontend/page_data/data/server/webshell*.json\n范围: 项目根目录\n最多: 20 条\n找到 14 个文件\n- collect/frontend/page_data/data/server/webshell.json · file · 18 KB\n- collect/frontend/page_data/data/server/webshell_editor_fragment.json · file · 3 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_file_dialog_fragment.json · file · 21 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_dialog_fragment.json · file · 40 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_style_fragment.json · file · 2 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_http_fragment.json · file · 47 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_http_group_dialog_fragment.json · file · 3 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_panel_fragment.json · file · 24 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_project_dialog_fragment.json · file · 11 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_project_manage_dialog_fragment.json · file · 21 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_route.json · file · 12 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_source_fragment.json · file · 80 KB\n- collect/frontend/page_data/data/server/webshell_editor_pool_workspace_fragment.json · file · 204 KB\n- collect/frontend/page_data/data/server/webshell_ssh_fragment.json · file · 94 KB",
+  "hasHumanGlobSummary": true,
+  "hasRawJsonArgs": false,
+  "bodyHasTraceLog": false
+}

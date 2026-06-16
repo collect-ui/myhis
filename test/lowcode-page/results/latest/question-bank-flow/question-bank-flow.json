@@ -1,0 +1,88 @@
+{
+  "baseUrl": "http://127.0.0.1:8015",
+  "pageUrl": "http://127.0.0.1:8015/collect-ui/#/collect-ui/framework/question-bank",
+  "routePath": "/collect-ui/#/collect-ui/framework/question-bank",
+  "started_at": "2026-05-24T04:27:06.178Z",
+  "total_ms": 3810,
+  "steps": [
+    {
+      "name": "login_api",
+      "url": "http://127.0.0.1:8015/template_data/data?service=system.login",
+      "status": 200,
+      "elapsed_ms": 15,
+      "success": false,
+      "msg": "【admin】用户名不存在",
+      "data": null
+    },
+    {
+      "name": "open_question_bank_route",
+      "url": "http://127.0.0.1:8015/collect-ui/#/collect-ui/framework/question-bank",
+      "elapsed_ms": 3587,
+      "final_url": "http://127.0.0.1:8015/collect-ui/#/collect-ui/framework/mail_account",
+      "title": "智投标书"
+    }
+  ],
+  "api": [
+    {
+      "url": "http://127.0.0.1:8015/template_data/data?service=system.menu_query",
+      "method": "POST",
+      "status": 200,
+      "elapsed_ms": 5,
+      "post_data": "{\"service\":\"system.menu_query\",\"to_tree\":true,\"with_role\":true}",
+      "success": true,
+      "code": "0",
+      "msg": "执行成功",
+      "data_type": "array",
+      "data_summary": "array length 8",
+      "body_text": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"api\":\"post:/template_data/data?service=frontend.home\",\"belong_project\":\"base\",\"create_time\":\"2025-01-20 16:24:22\",\"create_user\":\"\",\"data\":\"\",\"description\":\"首页，描述框架服务\",\"group_api\":\"post:/template_data/data?service=frontend.framework\",\"group_path\":\"/framework\",\"icon\":\"FaHome\",\"in_menu\":\"1\",\"is_common\":\"1\",\"is_index\":\"0\",\"menu_code\":\"first\",\"menu_name\":\"首页\",\"menu_type\":\"2\",\"menu_type_name\":\"\",\"order_index\":0,\"parent_id\":\"\",\"parent_menu_name\":\"\",\"router_group\":\"framework\",\"sys_menu_id\":\"9f477739-34e3-4fdb-acbc-9dcb0ad42ab3\",\"type\":\"\",\"url\":\"/framework\"},{\"api\":\"\",\"belong_project\":\"base\",\"children\":[{\"api\":\"\",\"belong_project\":\"base\",\"children\":[{\"api\":\"post:/template_data/data?service=frontend.framework\",\"belong_project\":\"base\",\"create_time\":\"2025-02-03 10:42:15\",\"create_user\":\"\",\"data\":\"\",\"description\":\"\",\"group_api\":\"\",\"group_path\":\"\",\"icon\":\"\",\"in_menu\":\"1\",\"is_common\":\"1\",\"is_index\":\"0\",\"menu_code\":\"framework\",\"menu_name\":\"框架\",\"menu_type\":\"framework\",\"menu_type_name\":\"\",\"order_index\":10,\"parent_id\":\"eeb2fcd8-9e03-484f-8b89-d06f4ca41b81\",\"parent_menu_name\":\"框架路由\",\"router_group\":\"\",\"sys_menu_id\":\"f87666f7-7032-4c9a-b5ee-fff9b2ca6824\",\"type\":\"\",\"url\":\"/framework\"},{\"api\":\"post:/template_data/data?service=frontend.framework_full\",\"belong_project\":\"base\",\"create_time\":\"2025-02-03 10:46:35\",\"create_user\":\"\",\"data\":\"\",\"description\":\"\",\"group_api\":\"\",\"group_path\":\"\",\"icon\":\"\",\"in_menu\":\"1\",\"is_common\":\"1\",\"is_index\":\"0\",\"menu_code\":\"full\",\"menu_name\":\"无框架\",\"menu_type\":\"framework\",\"menu_type_name\":\"\",\"order_index\":20,\"parent...(truncated)"
+    },
+    {
+      "url": "http://127.0.0.1:8015/template_data/data?service=frontend.framework",
+      "method": "POST",
+      "status": 200,
+      "elapsed_ms": 0,
+      "post_data": "{\"service\":\"frontend.framework\"}",
+      "success": true,
+      "code": "0",
+      "msg": "成功",
+      "data_type": "object",
+      "data_summary": "children, tag",
+      "body_text": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"children\":[{\"src\":\"/data/index.css\",\"tag\":\"css\"},{\"children\":[{\"children\":[{\"children\":\"collect\",\"style\":{\"color\":\"#fff\",\"fontSize\":\"20px\",\"fontWeight\":\"bold\",\"paddingRight\":\"20px\"},\"tag\":\"label\"},{\"changeRouter\":true,\"items\":\"${menu_list.filter((item)=\\u003eitem.in_menu!=='0')}\",\"mode\":\"horizontal\",\"rule\":{\"icon_field\":\"icon\",\"key_field\":\"menu_code\",\"label_field\":\"menu_name\",\"to_field\":\"url\"},\"style\":{\"backgroundColor\":\"inherit\",\"flex\":1},\"tag\":\"menu\",\"theme\":\"dark\",\"visible\":\"${menuShow==='top'}\"}],\"style\":{\"backgroundColor\":\"#4096ff\",\"color\":\"#fff\",\"display\":\"flex\",\"height\":44,\"lineHeight\":\"44px\",\"padding\":\"0 20px\",\"paddingInline\":48},\"tag\":\"header\"},{\"children\":[{\"children\":[{\"children\":[{\"children\":[{\"changeRouter\":true,\"defaultOpenKeys\":[\"home\",\"dashboard\",\"sub1\"],\"items\":\"${menu_list.filter((item)=\\u003eitem.in_menu!==false)}\",\"mode\":\"inline\",\"rule\":{\"icon_field\":\"icon\",\"key_field\":\"menu_code\",\"label_field\":\"menu_name\",\"to_field\":\"url\"},\"tag\":\"menu\",\"theme\":\"dark\"}],\"name\":\"menu\",\"tag\":\"form-item\"}],\"name\":\"framework-form\",\"tag\":\"form\"}],\"collapsedWidth\":\"40\",\"collapsible\":true,\"tag\":\"sider\",\"visible\":\"${menuShow==='left'}\",\"width\":\"240px\"},{\"children\":[{\"className\":\"dark-theme-tabs\",\"tag\":\"router-tab\",\"theme\":\"dark\"},{\"style\":{\"flex\":1,\"overflow\":\"hidden\"},\"tag\":\"outlet\"}],\"style\":{\"display\":\"flex\",\"flexDirection\":\"column\",\"overflow\":\"hidden\"},\"tag\":\"content\"}],\"tag\":\"layout\"}],\"tag\":\"layout\"}],\"tag\":\"app\"}}"
+    },
+    {
+      "url": "http://127.0.0.1:8015/template_data/data?service=frontend.mail_account",
+      "method": "POST",
+      "status": 200,
+      "elapsed_ms": 4,
+      "post_data": "{\"service\":\"frontend.mail_account\"}",
+      "success": true,
+      "code": "0",
+      "msg": "成功",
+      "data_type": "object",
+      "data_summary": "bottomToolBar, children, className, initAction, initStore, searchBarRight, searchToolBar, tag, timer, title, topRight",
+      "body_text": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"bottomToolBar\":[{\"action\":[{\"tag\":\"update-store\",\"value\":{\"searchForm.page\":\"${pageSize===searchForm.size?current:1}\",\"searchForm.size\":\"${pageSize}\"}},{\"description\":\"切换分页-页面初始化请求\",\"group\":\"dataList\",\"tag\":\"reload-init-action\"}],\"align\":\"end\",\"current\":\"${searchForm.page}\",\"pageSize\":\"${searchForm.size}\",\"pageSizeOptions\":[\"10\",\"20\",\"50\",\"100\"],\"showQuickJumper\":true,\"showSizeChanger\":true,\"showTotal\":true,\"tag\":\"pagination\",\"total\":\"${count}\"}],\"children\":[{\"css\":\".mail-account-grid-card{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;backdrop-filter:blur(10px);}.mail-account-grid-card:hover{transform:translateY(-2px);}.mail-account-grid-card-running:hover{box-shadow:0 22px 40px rgba(245,158,11,.2)!important;}.mail-account-value{font-family:Menlo,Monaco,Consolas,'Liberation Mono',monospace;letter-spacing:.01em;}.mail-account-ellipsis{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}\",\"tag\":\"css\"},{\"action\":[{\"tag\":\"update-store\",\"value\":{\"importDialogVisible\":false}}],\"children\":[{\"action\":[{\"tag\":\"update-store\",\"value\":{\"importSummary\":{\"create_count\":0,\"create_list\":[],\"exist_list\":[],\"skip_count\":0,\"skip_list\":[],\"total_count\":0},\"parseResult\":\"${(()=\\u003e{const raw=String(getFormValue('mail-account-import-form','raw_input')||'').replace(/\\\\r/g,'');const lines=raw.split('\\\\n').map(item=\\u003eString(item||'').trim()).filter(Boolean);const valid_list=[];const error_list=[];const duplicate_in_batch_list=[];const seen=new Set();const quoteSql=(va...(truncated)"
+    },
+    {
+      "url": "http://127.0.0.1:8015/template_data/data?service=system.mail_account_query",
+      "method": "POST",
+      "status": 200,
+      "elapsed_ms": 64,
+      "post_data": "{\"page\":1,\"search\":\"\",\"size\":400,\"service\":\"system.mail_account_query\"}",
+      "success": true,
+      "code": "0",
+      "msg": "执行成功",
+      "data_type": "array",
+      "data_summary": "array length 400",
+      "body_text": "{\"count\":1013,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"codex_access_token\":\"eyJhbGciOiJSUzI1NiIsImtpZCI6IjE5MzQ0ZTY1LWJiYzktNDRkMS1hOWQwLWY5NTdiMDc5YmQwZSIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MSJdLCJjbGllbnRfaWQiOiJhcHBfRU1vYW1FRVo3M2YwQ2tYYVhwN2hyYW5uIiwiZXhwIjoxNzc5OTcwMzExLCJodHRwczovL2FwaS5vcGVuYWkuY29tL2F1dGgiOnsiY2hhdGdwdF9hY2NvdW50X2lkIjoiOWUxODQwZGItM2EwMi00NDI4LWE3MDgtNTU1YzVkOTdiYjE0IiwiY2hhdGdwdF9hY2NvdW50X3VzZXJfaWQiOiJ1c2VyLXpxMGRRWlFsR2JjWkhleDJFcGFJR2dCV19fOWUxODQwZGItM2EwMi00NDI4LWE3MDgtNTU1YzVkOTdiYjE0IiwiY2hhdGdwdF9jb21wdXRlX3Jlc2lkZW5jeSI6Im5vX2NvbnN0cmFpbnQiLCJjaGF0Z3B0X3BsYW5fdHlwZSI6ImZyZWUiLCJjaGF0Z3B0X3VzZXJfaWQiOiJ1c2VyLXpxMGRRWlFsR2JjWkhleDJFcGFJR2dCVyIsInVzZXJfaWQiOiJ1c2VyLXpxMGRRWlFsR2JjWkhleDJFcGFJR2dCVyJ9LCJodHRwczovL2FwaS5vcGVuYWkuY29tL3Byb2ZpbGUiOnsiZW1haWwiOiJ6ejc1MTg3N0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZX0sImlhdCI6MTc3OTEwNjMxMCwiaXNzIjoiaHR0cHM6Ly9hdXRoLm9wZW5haS5jb20iLCJqdGkiOiJmODRhNGU2YS0xMzAzLTRlMWEtYjllYi1lZjMyYzIzOTVmMGEiLCJuYmYiOjE3NzkxMDYzMTAsInB3ZF9hdXRoX3RpbWUiOjE3Nzc4OTE3OTgzODMsInNjcCI6WyJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJvZmZsaW5lX2FjY2VzcyJdLCJzZXNzaW9uX2lkIjoiYXV0aHNlc3NfQ1I4NzM5ME9SOUJkSXVLRWdyNEFFb3FhIiwic2wiOnRydWUsInN1YiI6Imdvb2dsZS1vYXV0aDJ8MTEzODU0NDcxNTc3NjcwNDQ4OTI0In0.mCvUoV4PJ8DI1xSJ2m7WqGc8jttIwy1mabyCpI_Vn8Hr-MnjvrChcYXv6xZ_OMIpdflnnf0I-QNypO90ylrmbIGE-_oCjM3lnLAI0oYdI-4UcK5pRjUgPAygobz8n2ri2mCzSw1SHkM-wTSaimJ6uSKrcBRQmfW0xbuuLYBHaHl6RQ3i4GB8YvBHMr-ZANrUeSbBRpxZbbXk0Yspt06T777xOIcJ8r1ImNCQrZZRCOhhWqL-m2DRxDbg9UycccIbHO07kBwyHUxxh1vAJ3km3EG_1O1trqU3-u2gCggvO-PFoIJkGzZm1J5...(truncated)"
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "request_failed": [],
+  "bad_responses": [],
+  "visible_text": "collect\n首页\n大屏管理\n课程管理\n招投标\n运维管理\n文档\n系统管理\n邮箱登记\n邮箱登记\n精简\n完整\n批量导入\n用量↑\n用量↓\n批量刷新用量\n批量删除\n邮箱搜索\n搜索\n重置\n#234\nrashanehtay0607\nfree 93%\n下一个：\nsaiborzasaq0416\nfree 3%\n切换\n可用 69\n即将恢复 12\n5.24~5.31 264个\n已过期 0\n已禁用 76\n#1\nzz75877@gmail.com\nfree\n100%\n05-25 19:33\n#1\nabetarenor1992@outlook.com\nfree\n100%\n05-27 15:36\n#2\nobagananzh1993@outlook.com\nfree\n100%\n05-25 20:20\n#3\nbrockseiner1997@outlook.com\nfree\n100%\n05-25 21:00\n#4\nritskezawin1993@outlook.com\nfree\n99%\n05-25 21:33\n#5\nniguabuhadi1110@outlook.com\nfree\n100%\n05-26 06:33\n#6\ngajakwizzi0529@outlook.com\nfree\n100%\n05-27 16:09\n#7\nkamitbencib1106@outlook.com\nfree\n100%\n05-27 16:21\n#8\ntoncooriya0711@outlook.com\nfree\n98%\n05-27 16:35\n#9\ngranwillpoh2000@outlook.com\nfree\n98%\n05-27 16:45\n#10\ntalpasmagan1988@outlook.com\nfree\n100%\n05-27 17:02\n#11\nhivdarfogas1988@outlook.com\nfree\n100%\n05-27 17:17\n#12\njhosdemisse1995@outlook.com\nfree\n100%\n05-27 17:39\n#13\nfaeghvetema0126@outlook.com\nfree\n98%\n05-27 17:57\n#14\ndabasambaka2000@outlook.com\nfree\n100%\n05-27 18:19\n#15\nbilordahwa2001@outlook.com\nfree\n100%\n05-27 19:28\n#16\narielodraks1989@outlook.com\nfree\n100%\n05-27 20:26\n#17\nfotikapacah1989@outlook.com\nfree\n100%\n05-27 20:57\n#18\nrifaauohme0508@outlook.com\nfree\n100%\n05-27 21:10\n#19\ngastonikel0528@outlook.com\nfree\n99%\n05-27 21:29\n#20\njoziovalid1994@outlook.com\nfree\n98%\n05-27 22:49\n#21\ngiacomoarfa1997@outlook.com\nfree\n100%\n05-28 09:54\n#21\ndhdoorschot0420@outlook.com\nfree\n3%\n05-30 15:14\n#22\nalfadjouri1214@outlook.com\nfree\n100%\n05-28 10:08\n#23\nxtinalambat1994@outlook.com\nfree\n100%\n05-28 10:22\n#24\nkriszburuca1991@outlook.com\nfree\n94%\n05-28 10:34\n#25\nqiaskierzk0508@outlook.com\nfree\n98%\n05-28 10:50\n#26\nsurmelimpqt1230@outlook.com\nfree\n100%\n05-28 11:08\n#27\nnangezuari2000@outlook.com\nfree\n100%\n05-28 11:23\n#28\nfijojhgffjk0805@outlook.com\nfree\n100%\n05-28 11:33\n#29\nrizuhohlov0730@outlook.com\nfree\n100%\n05-28 11:54\n#30\nwandickskt1997@outlook.com\nfree\n100%\n05-28 12:06\n共 1013 条\n1\n2\n3\n400 条/页\n跳至页",
+  "visible_text_length": 1905,
+  "screenshot_path": "/data/project/sport/test/lowcode-page/results/latest/question-bank-flow/question-bank-flow.png",
+  "finding": "页面没有渲染题库/Question Bank 相关文本，路由可能没有注册到当前项目。",
+  "finished_at": "2026-05-24T04:27:09.988Z"
+}

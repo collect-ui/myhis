@@ -1,0 +1,37 @@
+{
+  "projectCode": "test",
+  "first": {
+    "ok": true,
+    "parsed": {
+      "count": 0,
+      "success": true,
+      "code": "0",
+      "msg": "成功",
+      "data": {
+        "add_change_list": null,
+        "change_list": [],
+        "current_dir": "/data/project/test",
+        "elapsed_ms": 16,
+        "exclude_dirs_effective": "node_modules,.git,dist,.next",
+        "project_code": "test",
+        "remove_change_list": null,
+        "remove_file_id_list": null
+      }
+    },
+    "error": ""
+  },
+  "second": {
+    "ok": false,
+    "parsed": {
+      "count": 0,
+      "success": false,
+      "code": "-1",
+      "msg": "同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=12000）",
+      "data": null
+    },
+    "error": "同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=12000）"
+  },
+  "locked": true,
+  "msg": "同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=12000） | 成功 | 同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=12000）",
+  "pass": true
+}

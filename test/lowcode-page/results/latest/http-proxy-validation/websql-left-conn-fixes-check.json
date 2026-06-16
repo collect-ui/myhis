@@ -1,0 +1,22 @@
+{
+  "ok": false,
+  "errors": [
+    "new connection not added",
+    "added row label not found"
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "rowCountBefore": 2,
+  "formVisible": true,
+  "formHasTestBtn": 1,
+  "formHasCloseBtn": 1,
+  "formHasSaveBtn": 1,
+  "formHiddenAfterClose": true,
+  "rowCountAfterSave": 2,
+  "hasAddedRow": 0,
+  "treeTitleCount": 4,
+  "treeFirstTitleText": "main",
+  "treeFirstTitleWhiteSpace": "nowrap",
+  "treeNodeFlexWrap": "nowrap"
+}

@@ -1,0 +1,13 @@
+service:
+  - key: price_doc_project_save
+    http: true
+    module: model_save
+    params:
+      create_time:
+        template: "{{current_date_time}}"
+    table: price_doc_project
+
+  - key: price_doc_project_query
+    http: true
+    module: sql
+    data_file: price_doc_project_query.sql

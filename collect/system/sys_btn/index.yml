@@ -1,0 +1,89 @@
+service:
+  - key: sys_btn_query
+    http: true
+    module: sql
+    data_file: sys_btn_query.sql
+  - key: btn_role_id_list_remove
+    http: true
+    module: model_delete
+    params:
+      menu_code:
+        check:
+          template: "{{must .menu_code}}"
+          err_msg: 菜单编码不能为空
+      role_code:
+        check:
+          template: "{{must .role_code}}"
+          err_msg: 角色编码不能为空
+    table: btn_role_id_list
+    filter:
+      menu_code: "[menu_code]"
+      role_code: "[role_code]"
+  - key: btn_role_id_list_save
+    http: true
+    module: bulk_create
+    table: btn_role_id_list
+    params:
+      data_list:
+        check:
+          template: "{{must .data_list}}"
+          err_msg: 数据不能为空
+    model_field: data_list
+  - key: btn_role_id_list_query
+    http: true
+    module: sql
+    data_file: btn_role_id_list_query.sql
+    result_handler:
+      - key: result2params
+        fields:
+          - to: "[list]"
+      - key: prop_arr
+        enable: "{{gt (len .list) 0}}"
+        foreach: "[list]"
+        value: "[btn_code]"
+        save_field: btn_code_list
+      - key: param2result
+        enable: "{{gt (len .list) 0}}"
+        field: "[btn_code_list]"
+  - key: btn_role_id_list_save_all
+    http: true
+    module: empty
+    params:
+      menu_code:
+        check:
+          template: "{{must .menu_code}}"
+          err_msg:  菜单编码不能为空
+      role_code:
+        check:
+          template: "{{must .role_code}}"
+          err_msg: 角色编码不能为空
+      btn_code_list:
+        default: []
+    handler_params:
+      - key: service2field
+        name: 删除角色按钮
+        service:
+          service: system.btn_role_id_list_remove
+          menu_code: "[menu_code]"
+          role_code: "[role_code]"
+      - key: arr2arrayObj
+        name: 转对象
+        enable: "{{gt (len .btn_code_list) 0}}"
+        foreach: "[btn_code_list]"
+        item: item
+        fields:
+          - field: "btn_code"
+            template: "{{.item}}"
+          - field: role_code
+            template: "[role_code]"
+          - field: menu_code
+            template: "[menu_code]"
+          - field: btn_role_id
+            template: "{{uuid}}"
+        save_field: btn_code_obj_list
+      - key: service2field
+        name: 保存数据
+        enable: "{{must .btn_code_obj_list}}"
+        service:
+          service: system.btn_role_id_list_save
+          data_list: "[btn_code_obj_list]"

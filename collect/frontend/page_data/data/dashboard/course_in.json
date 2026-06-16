@@ -1,0 +1,386 @@
+{
+  "tag": "layout-fit",
+  "className": "overflow-auto",
+  "initStore": {
+    "phone_group": null,
+    "course_in_grade": null,
+    "student_list": []
+  },
+  "initAction": [
+    {
+      "tag": "ajax",
+      "group": "reload-data",
+      "api": "post:/template_data/data?service=chart.course_in_analyst",
+      "data": {
+      },
+      "adapt": {
+        "phone_group": "${data.phone_group}",
+        "course_in_grade": "${data.course_in_grade}",
+        "student_list": "${data.student_list}"
+      }
+    }
+  ],
+  "style": {
+    "backgroundImage": "url(/data/img/page_bg.png)",
+    "fontFamily": "'Microsoft YaHei' !important",
+    "margin": "0px 0px",
+    "padding": "0px, 0px",
+    "color": "#20DFE2",
+    "overflowX": "hidden",
+    "backgroundRepeat": "no-repeat",
+    "backgroundSize": "100% 100%",
+    "display": "flex",
+    "flexDirection": "column"
+  },
+  "children": [
+    {
+      "tag": "div",
+      "style": {
+        "backgroundImage": "url(/data/img/top_bg1.png)",
+        "backgroundPosition": "center bottom",
+        "backgroundRepeat": "no-repeat",
+        "backgroundSize": "auto 100%",
+        "height": "60px",
+        "textAlign": "center",
+        "lineHeight": "60px"
+      },
+      "children": [
+        {
+          "tag": "span",
+          "style": {
+            "fontSize": "26px",
+            "letterSpacing": "0.2rem",
+            "fontWeight": "bold",
+            "fontFamily": "Microsoft YaHei",
+            "backgroundImage": "-webkit-gradient(linear, 0 0, 0 bottom, from(rgba(46, 233, 216, 1)), to(rgba(47, 129, 237, 1)))",
+            "WebkitBackgroundClip": "text",
+            "WebkitTextFillColor": "transparent"
+          },
+          "children": [
+            "2024级汽车服务与营销专业比亚迪订单班课堂评分"
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "row",
+      "style": {
+        "flex": 1,
+        "overflow": "hidden"
+      },
+      "children": [
+        {
+          "tag": "col",
+          "span": 8,
+          "style": {
+            "padding": "10px 10px 10px 10px"
+          },
+          "children": [
+            {
+              "style": {
+                "height": "100%",
+                "backgroundImage": "url(/data/img/6.png)",
+                "backgroundPosition": "center, center",
+                "backgroundRepeat": "no-repeat",
+                "backgroundSize": "100% 100%",
+                "padding": "20px 10px",
+                "boxSizing": "border-box",
+                "display": "flex",
+                "flexDirection": "column"
+              },
+              "tag": "div",
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "backgroundImage": "url(/data/img/title2.png)",
+                    "backgroundRepeat": "no-repeat",
+                    "backgroundPosition": "center left",
+                    "backgroundSize": "auto 100%",
+                    "fontSize": "16px",
+                    "fontWeight": "bold",
+                    "textAlign": "left",
+                    "height": "40px",
+                    "lineHeight": "40px",
+                    "paddingLeft": "65px"
+                  },
+                  "children": "小组评分"
+                },
+                {
+                  "tag": "row",
+                  "style": {
+                    "flex": 1
+                  },
+                  "children": [
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "height":"50%"
+                      },
+                      "children": [
+                        {
+                          "tag": "chart",
+                          "visible": "${phone_group}",
+                          "option": "${phone_group}",
+                          "style": {
+                            "flex": 1,
+                            "overflow": "hidden"
+                          }
+
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "backgroundImage": "url(/data/img/title_bg0.png)",
+                            "backgroundPosition": "center center",
+                            "backgroundRepeat": "no-repeat",
+                            "backgroundSize": "100% 100%",
+                            "textAlign": "center",
+                            "padding": "5px",
+                            "alignContent": "center",
+                            "height": "40px",
+                            "lineHeight": 1,
+                            "fontSize": "18px",
+                            "width": "120px",
+                            "cursor": "pointer",
+                            "letterSpacing": "2px",
+                            "margin": "auto"
+                          },
+                          "children": "电话组"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "height":"50%"
+                      },
+                      "children": [
+                        {
+                          "tag": "chart",
+                          "visible": "${phone_group}",
+                          "option": "${phone_group}",
+                          "style": {
+                            "flex": 1,
+                            "overflow": "hidden"
+                          }
+
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "backgroundImage": "url(/data/img/title_bg0.png)",
+                            "backgroundPosition": "center center",
+                            "backgroundRepeat": "no-repeat",
+                            "backgroundSize": "100% 100%",
+                            "textAlign": "center",
+                            "padding": "5px",
+                            "alignContent": "center",
+                            "height": "40px",
+                            "lineHeight": 1,
+                            "fontSize": "18px",
+                            "width": "120px",
+                            "cursor": "pointer",
+                            "letterSpacing": "2px",
+                            "margin": "auto"
+                          },
+                          "children": "展厅组"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "height":"50%"
+                      },
+                      "children": [
+                        {
+                          "tag": "chart",
+                          "visible": "${phone_group}",
+                          "option": "${phone_group}",
+                          "style": {
+                            "flex": 1,
+                            "overflow": "hidden"
+                          }
+
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "backgroundImage": "url(/data/img/title_bg0.png)",
+                            "backgroundPosition": "center center",
+                            "backgroundRepeat": "no-repeat",
+                            "backgroundSize": "100% 100%",
+                            "textAlign": "center",
+                            "padding": "5px",
+                            "alignContent": "center",
+                            "height": "40px",
+                            "lineHeight": 1,
+                            "fontSize": "18px",
+                            "width": "120px",
+                            "cursor": "pointer",
+                            "letterSpacing": "2px",
+                            "margin": "auto"
+                          },
+                          "children": "问卷组"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "col",
+                      "span": 12,
+                      "style": {
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "height":"50%"
+                      },
+                      "children": [
+                        {
+                          "tag": "chart",
+                          "visible": "${phone_group}",
+                          "option": "${phone_group}",
+                          "style": {
+                            "flex": 1,
+                            "overflow": "hidden"
+                          }
+
+                        },
+                        {
+                          "tag": "div",
+                          "style": {
+                            "backgroundImage": "url(/data/img/title_bg0.png)",
+                            "backgroundPosition": "center center",
+                            "backgroundRepeat": "no-repeat",
+                            "backgroundSize": "100% 100%",
+                            "textAlign": "center",
+                            "padding": "5px",
+                            "alignContent": "center",
+                            "height": "40px",
+                            "lineHeight": 1,
+                            "fontSize": "18px",
+                            "width": "120px",
+                            "cursor": "pointer",
+                            "letterSpacing": "2px",
+                            "margin": "auto"
+                          },
+                          "children": "访谈组"
+                        }
+                      ]
+                    }
+
+                  ]
+                }
+
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "col",
+          "span": 16,
+          "style": {
+            "padding": "10px 10px 10px 0px",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "children": [
+            {
+              "style": {
+                "height": "50%",
+                "backgroundImage": "url(/data/img/bg4.png)",
+                "backgroundPosition": "center, center",
+                "backgroundRepeat": "no-repeat",
+                "backgroundSize": "100% 100%",
+                "padding": "10px",
+                "boxSizing": "border-box",
+                "display": "flex",
+                "flexDirection": "column"
+              },
+              "tag": "div",
+              "children": [
+                {
+                  "tag": "div",
+                  "style": {
+                    "backgroundImage": "url(/data/img/line2.png)",
+                    "backgroundRepeat": "no-repeat",
+                    "backgroundPosition": "center bottom",
+                    "backgroundSize": "40% auto",
+                    "fontSize": "18px",
+                    "fontWeight": "bold",
+                    "textAlign": "center",
+                    "marginTop": "25px",
+                    "height": "45px",
+                    "lineHeight": "35px"
+                  },
+                  "children": "学生评分"
+                },
+                {
+                  "tag": "chart",
+                  "visible": "${course_in_grade}",
+                  "option": "${course_in_grade}",
+                  "style": {
+                    "flex": 1
+                  }
+                }
+
+
+              ]
+            },
+            {
+              "tag": "row",
+              "style": {
+                "marginTop": 10,
+                "flex": 1
+              },
+              "children": [
+                {
+                  "tag": "span",
+                  "children": [
+                    {
+                      "tag": "listview",
+                      "keyField": "id",
+                      "itemData": "${student_list}",
+                      "itemAttr": {
+                        "tag": "div",
+                        "style": {
+                          "cursor": "pointer",
+                          "color": "#00FCFC",
+                          "backgroundImage": "url(/data/img/topbg2.png)",
+                          "backgroundPosition": "center center",
+                          "backgroundRepeat": "no-repeat",
+                          "backgroundSize": "100% 100%",
+                          "display": "inline-block",
+                          "margin": "10px",
+                          "textAlign": "center",
+                          "padding": "5px",
+                          "width": "150px",
+                          "height": "40px",
+                          "lineHeight": "30px",
+                          "fontSize": "16px",
+                          "fontWeight": "bold",
+                          "alignContent": "center",
+                          "boxSizing": "border-box"
+                        },
+                        "children": "${row.tname}"
+                      }
+                    }
+                  ]
+                }
+
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

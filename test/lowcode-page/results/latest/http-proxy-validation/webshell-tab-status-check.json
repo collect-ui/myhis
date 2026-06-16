@@ -1,0 +1,56 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "targetHost": "192.168.232.130",
+  "marker": "TAB_STATUS_1779175666991",
+  "checks": {
+    "pageOpened": true,
+    "statusScriptInstalled": true,
+    "targetLoginOpened": true,
+    "loginConfirmed": true,
+    "terminalVisible": true,
+    "statusDotRendered": true,
+    "statusActiveAfterOutput": true,
+    "statusGrayAfterIdle": true
+  },
+  "details": {
+    "httpStatus": "200",
+    "openMethod": "tree-dblclick-after-search",
+    "dotAfterLogin": {
+      "tabText": "192.168.232.130（linux）",
+      "exists": true,
+      "className": "webshell-tab-status-dot is-active",
+      "title": "运行中，有输出",
+      "active": true,
+      "stopped": false
+    },
+    "dotAfterOutput": {
+      "tabText": "192.168.232.130（linux）",
+      "exists": true,
+      "className": "webshell-tab-status-dot is-active",
+      "title": "运行中，有输出",
+      "active": true,
+      "stopped": false
+    },
+    "dotAfterIdle": {
+      "tabText": "192.168.232.130（linux）",
+      "exists": true,
+      "className": "webshell-tab-status-dot is-stopped",
+      "title": "已停止或暂无输出",
+      "active": false,
+      "stopped": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshots": {
+    "open": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-open.png",
+    "afterLogin": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-after-login.png",
+    "active": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-active.png",
+    "idle": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-idle.png",
+    "fail": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-fail.png"
+  },
+  "reportPath": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-tab-status-check.json",
+  "pass": true,
+  "error": ""
+}

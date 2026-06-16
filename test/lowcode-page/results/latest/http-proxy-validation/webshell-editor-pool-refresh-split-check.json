@@ -1,0 +1,97 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "fileName": "refresh_case_1778505981265.md",
+  "filePath": "/data/project/test/test/refresh_case_1778505981265.md",
+  "checks": {
+    "filePrepared": true,
+    "fileOpened": true,
+    "splitCreated": true,
+    "repeatedRefresh": true
+  },
+  "iterations": [
+    {
+      "index": 1,
+      "marker": "refresh-marker-1778505981265-1",
+      "setOk": true,
+      "saveOk": true,
+      "refreshOk": true,
+      "serverHasMarker": true,
+      "rightBeforeHasMarker": false,
+      "rightAfterHasMarker": true,
+      "rightToken": "e589784e-1c04-40a7-89ec-881c1e07462e",
+      "rightPath": "/data/project/test/test/refresh_case_1778505981265.md"
+    },
+    {
+      "index": 2,
+      "marker": "refresh-marker-1778505981265-2",
+      "setOk": true,
+      "saveOk": true,
+      "refreshOk": true,
+      "serverHasMarker": true,
+      "rightBeforeHasMarker": false,
+      "rightAfterHasMarker": true,
+      "rightToken": "e589784e-1c04-40a7-89ec-881c1e07462e",
+      "rightPath": "/data/project/test/test/refresh_case_1778505981265.md"
+    },
+    {
+      "index": 3,
+      "marker": "refresh-marker-1778505981265-3",
+      "setOk": true,
+      "saveOk": true,
+      "refreshOk": true,
+      "serverHasMarker": true,
+      "rightBeforeHasMarker": false,
+      "rightAfterHasMarker": true,
+      "rightToken": "e589784e-1c04-40a7-89ec-881c1e07462e",
+      "rightPath": "/data/project/test/test/refresh_case_1778505981265.md"
+    }
+  ],
+  "trace": {
+    "contentRequestPaths": [
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md"
+    ],
+    "saveRequestPaths": [
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md",
+      "/data/project/test/test/refresh_case_1778505981265.md"
+    ],
+    "rootSnapshots": [
+      {
+        "viewerId": "workspace-editor-pool-vmojz61z",
+        "subgroupId": "fd098977-8447-4754-9821-0e1608d43619",
+        "activeToken": "9575b2eb-f5ad-4926-8f68-79a31b6cb5fd",
+        "currentFilePath": "/data/project/test/test/refresh_case_1778505981265.md",
+        "rect": {
+          "left": 201.234375,
+          "top": 162,
+          "width": 558,
+          "height": 818
+        }
+      },
+      {
+        "viewerId": "workspace-editor-pool-f6v8tnai",
+        "subgroupId": "79b9eee1-1550-4a57-bd99-5568f620f089",
+        "activeToken": "e589784e-1c04-40a7-89ec-881c1e07462e",
+        "currentFilePath": "/data/project/test/test/refresh_case_1778505981265.md",
+        "rect": {
+          "left": 761.234375,
+          "top": 163,
+          "width": 556,
+          "height": 816
+        }
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-refresh-split-check.png",
+  "pass": true
+}

@@ -1,0 +1,5 @@
+service:
+  - key: work_task_project_query
+    http: true
+    module: sql
+    data_file: work_task_project_query.sql

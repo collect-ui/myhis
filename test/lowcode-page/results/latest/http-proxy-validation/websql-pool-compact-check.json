@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "metrics": {
+    "sidebarWidth": 236,
+    "tabsHeight": 30,
+    "toolbarHeight": 32,
+    "panelHeadHeight": 24,
+    "rowGridTemplate": "15px 162px 36px",
+    "bodyHasMysqlIp": true,
+    "bodyHasRows": true,
+    "connectionText": "MySQL202.140.140.117:3306"
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-pool-compact-check.png"
+}

@@ -1,0 +1,90 @@
+{
+  "ok": true,
+  "active_tab_text": "update_array_from_array",
+  "title": "update_array_from_array(更新数组)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [
+    "数组更新数组"
+  ],
+  "textarea_count": 2,
+  "textarea_values": [
+    "- key: update_array_from_array\n        name: \"根据group+name 更新操作，有修改，没有就新增\"\n        foreach: \"[change_list]\"\n        item: item\n        field: \"[group_id&name_copy]\"\n        right: \"[local_detail_list]\"\n        right_field: \"[group_id&name]\"\n        fields:\n          - field: operation\n            name: 如果操作是删除，还是原来的删除，如果是新增操作，存在这改为修改\n            template: \"{{ if eq .item.operation \\\"add\\\"}}modify{{else}}{{.item.operation}}{{end}}\"\n          - field: config_detail_id\n            template: \"[right.config_detail_id]\"",
+    "从另外一个数组，找到相同的记录，本更新字段。\na数组从b数组里面更新字段,治取交集部分更新"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "update_array_from_array"
+        ],
+        [
+          "foreach",
+          "array",
+          "是",
+          "左边循环的数组，待更新的数组"
+        ],
+        [
+          "item",
+          "string",
+          "是",
+          "左边对象名称取值"
+        ],
+        [
+          "field",
+          "string",
+          "是",
+          "左边匹配关键字段[你的item变量] 支持& 取2个字段"
+        ],
+        [
+          "right",
+          "string",
+          "是",
+          "右边数组"
+        ],
+        [
+          "right_field",
+          "string",
+          "是",
+          "右边匹配关键字段[你的item变量] 支持& 取2个字段"
+        ],
+        [
+          "fields",
+          "array",
+          "是",
+          "更新字段的内容"
+        ],
+        [
+          "fields[field]",
+          "template",
+          "是",
+          "字段名称"
+        ],
+        [
+          "fields[template]",
+          "template",
+          "是",
+          "支持[你的变量]，左边的用item,右边的用right"
+        ]
+      ]
+    }
+  ],
+  "body_text": "update_array_from_array(更新数组)  \n示例\n数组更新数组\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\nupdate_array_from_array\n\n\nforeach\n\t\narray\n\t\n是\n\t\n左边循环的数组，待更新的数组\n\n\nitem\n\t\nstring\n\t\n是\n\t\n左边对象名称取值\n\n\nfield\n\t\nstring\n\t\n是\n\t\n左边匹配关键字段[你的item变量] 支持& 取2个字段\n\n\nright\n\t\nstring\n\t\n是\n\t\n右边数组\n\n\nright_field\n\t\nstring\n\t\n是\n\t\n右边匹配关键字段[你的item变量] 支持& 取2个字段\n\n\nfields\n\t\narray\n\t\n是\n\t\n更新字段的内容\n\n\nfields[field]\n\t\ntemplate\n\t\n是\n\t\n字段名称\n\n\nfields[template]\n\t\ntemplate\n\t\n是\n\t\n支持[你的变量]，左边的用item,右边的用right\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-016",
+  "source_group": "参数处理",
+  "source_title": "update_array_from_array",
+  "source_doc_text": "28.update_array_from_array\n更新数组",
+  "read_at": "2026-05-07T08:21:52.447Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-016-source.png"
+}

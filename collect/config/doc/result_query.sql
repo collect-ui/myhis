@@ -1,0 +1,11 @@
+SELECT a.*
+FROM collect_doc_result a
+left join collect_doc b on a.collect_doc_id = b.collect_doc_id
+where 1=1
+{{ if .collect_doc_id }}
+and a.collect_doc_id ={{.collect_doc_id}}
+{{ end }}
+{{ if .project_code }}
+and ifnull(b.project_code, '') = {{.project_code}}
+{{ end }}
+order by a.order_index asc

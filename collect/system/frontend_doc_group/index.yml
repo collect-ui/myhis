@@ -1,0 +1,142 @@
+service:
+  - key: frontend_doc_group_save
+    http: true
+    module: model_save
+    params:
+      frontend_doc_group_id:
+        template: "{{uuid}}"
+      create_time:
+        template: "{{current_date_time}}"
+      belong_project:
+        template: "{{get_key `project`}}"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.frontend_doc_group_query
+          code: "[code]"
+        save_field: group
+        template: "{{ if eq (len .group) 0}}true{{else}}false{{ end}}"
+        err_msg: "[{{.code}}] 菜单编码已经存在"
+    table: frontend_doc_group
+
+  - key: frontend_doc_group_delete
+    http: true
+    module: model_delete
+    params:
+      frontend_doc_group_id_list:
+        check:
+          template: "{{must .frontend_doc_group_id_list}}"
+          err_msg: "frontend_doc_group_id_list不能为空"
+    table: frontend_doc_group
+    filter:
+      frontend_doc_group_id__in: "[frontend_doc_group_id_list]"
+  - key: frontend_doc_group_update
+    http: true
+    module: model_update
+    params:
+      frontend_doc_group_id:
+        check:
+          template: "{{must .frontend_doc_group_id}}"
+          err_msg: "frontend_doc_group_id不能为空"
+    table: "frontend_doc_group"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.frontend_doc_group_query
+          code: "[code]"
+          exclude: "[frontend_doc_group_id]"
+        save_field: group
+        template: "{{ if eq (len .group) 0}}true{{else}}false{{ end}}"
+        err_msg: "[{{.code}}] 菜单编码已经存在"
+    filter:
+      frontend_doc_group_id: "[frontend_doc_group_id]"
+
+
+  - key: frontend_doc_group_detail
+    http: true
+    module: empty
+    params:
+      frontend_doc_group_id:
+        check:
+          template: "{{must .frontend_doc_group_id}}"
+          err_msg: "frontend_doc_group_id不能为空"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.frontend_doc_group_query
+          frontend_doc_group_id: "[frontend_doc_group_id]"
+        save_field: frontend_doc_group
+      - key: param2result
+        field: frontend_doc_group
+      - key: arr2obj
+
+  - key: handler_frontend_doc_group_order
+    http: true
+    module: empty
+    params:
+      change_parent:
+        default: false
+      parent:
+        default: {"parent_id":"0","frontend_doc_group_id":"0"}
+      frontend_doc_group:
+        check:
+          template: "{{must .frontend_doc_group}}"
+          err_msg: "frontend_doc_group不能为空"
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    handler_params:
+      - key: service2field
+        enable: "[change_parent]"
+        service:
+          service: system.frontend_doc_group_update
+          frontend_doc_group_id: "[frontend_doc_group.frontend_doc_group_id]"
+          parent_id: "[parent.frontend_doc_group_id]"
+      - key: service2field
+        service:
+          service: system.update_frontend_doc_group_order
+          rows: "[rows]"
+
+  - key: update_frontend_doc_group_order
+    http: true
+    module: bulk_upsert
+    params:
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    table: frontend_doc_group
+    update_fields:
+      - order_index
+    model_field: "[rows]"
+  - key: frontend_doc_group_query
+    http: true
+    module: sql
+    params:
+      search:
+        template: "{{ if .search}}%{{.search}}%{{ end }}"
+      to_tree:
+        default: false
+      to_obj:
+        default: false
+      belong_project:
+        template: "{{get_key `project`}}"
+    data_file: frontend_doc_group_query.sql
+    result_handler:
+      - key: result2params
+        enable: "[to_tree]"
+        fields:
+          - to: "[frontend_doc_group_list]"
+      - key: to_tree
+        enable: "[to_tree]"
+        foreach: "[frontend_doc_group_list]"
+        id: frontend_doc_group_id
+        pid: parent_id
+        children: children
+        save_field: frontend_doc_group_tree
+      - key: param2result
+        enable: "[to_tree]"
+        field: "[frontend_doc_group_tree]"
+      - key: arr2obj
+        enable: "[to_obj]"

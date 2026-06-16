@@ -1,0 +1,105 @@
+{
+  "ok": true,
+  "active_tab_text": "service_flow",
+  "title": "service_flow(服务流程化)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "服务流程化"
+  ],
+  "textarea_count": 4,
+  "textarea_values": [
+    "- key: system_login\n    module: service_flow\n    params:\n      username:\n        check:\n          template: \"{{must .username}}\"\n          err_msg: 用户名不能为空\n      password_md5:\n        check:\n          template: \"{{must .password}}\"\n          err_msg: 密码不能为空\n        template: \"{{md5 .password}}\"\n      has_user:\n        default: true\n    data_json: system_login.json\n    result_handler:\n      - key: param2result\n        field: \"[session_user]\"",
+    "像工作流一样的运行多个服务，运行一个节点服务，通过计算，运行下一个服务节点。\n    服务流程化思想来源于工作流。接触到loonflow工作流，我一直试想着，我写的代码能不能像一个工作流一样流转，我们只写一小部分节点，通过工作流流转，运行到下个服务。比如我写个新建用户，然后流转到新建角色，如果中途失败，流转到删除用户、删除角色然后返回。",
+    "{\n  \"finish\": {\n    \"key\": \"service2field\",\n    \"append_param\": true,\n    \"service\": {\n      \"service\": \"hrm.system_login_finish\"\n    }\n  },\n  \"services\": [\n    {\n      \"node_key\": \"start\",\n      \"node_type\": \"start\",\n      \"name\": \"开始\",\n      \"node_next\": \"get_user\"\n    },\n    {\n      \"node_key\": \"get_user\",\n      \"name\": \"获取用户信息\",\n      \"node_type\": \"node\",\n      \"key\": \"service2field\",\n      \"service\": {\n        \"service\": \"hrm.user_list\",\n        \"username\": \"[username]\",\n        \"to_obj\": true\n      },\n      \"save_field\": \"user_info\",\n      \"node_next\": \"{{ if .user_info }}system_login_check{{ else }}ldap_login{{ end }}\"\n    },\n    {\n      \"node_key\": \"system_login_check\",\n      \"key\": \"check_field\",\n      \"name\": \"检查名称\",\n      \"node_type\": \"node\",\n      \"fields\": [\n        {\n          \"field\": \"password\",\n          \"template\": \"{{eq .password_md5 .user_info.password}}\",\n          \"err_msg\": \"用户名【{{.username}}】 密码错误！！！\"\n        }\n      ],\n      \"node_next\": \"system_login\",\n      \"node_fail\": \"end\"\n    },\n    {\n      \"node_key\": \"ldap_login\",\n      \"node_type\": \"node\",\n      \"name\": \"ldap 登陆\",\n      \"key\": \"service2field\",\n      \"append_param\": true,\n      \"service\": {\n        \"service\": \"hrm.ldap_login\"\n      },\n      \"node_fail\": \"end\",\n      \"node_next\": \"get_user_info\"\n    },\n    {\n      \"node_key\": \"get_user_info\",\n      \"node_type\": \"node\",\n      \"name\": \"获取ldap的用户信息\",\n      \"key\": \"service2field\",\n      \"service\": {\n        \"service\": \"hrm.ldap_search\",\n        \"search_username\": \"[username]\",\n        \"to_obj\": true\n      },\n      \"save_field\": \"userInfo\",\n      \"node_fail\": \"end\",\n      \"node_next\": \"create_user\"\n    },\n    {\n      \"node_key\": \"create_user\",\n      \"node_type\": \"node\",\n      \"name\": \"创建用户\",\n      \"key\": \"service2field\",\n      \"service\": {\n        \"service\": \"hrm.create_user\",\n        \"password\": \"[password]\",\n        \"username\": \"[username]\",\n        \"email\": \"[userInfo.mail]\",\n        \"nick\": \"[userInfo.sn]\",\n        \"phone\": \"[userInfo.mobile]\"\n      },\n      \"node_fail\": \"end\",\n      \"node_next\": \"system_login\"\n    },\n    {\n      \"node_key\": \"system_login\",\n      \"node_type\": \"node\",\n      \"name\": \"系统登陆\",\n      \"key\": \"service2field\",\n      \"service\": {\n        \"service\": \"system.login\",\n        \"password\": \"[password]\",\n        \"username\": \"[username]\"\n      },\n      \"save_field\": \"session_user\",\n      \"node_fail\": \"end\",\n      \"node_next\": \"end\"\n    },\n    {\n      \"node_key\": \"end\",\n      \"node_type\": \"end\",\n      \"name\": \"结束\"\n    }\n  ]\n}",
+    "{\n  \"services\": [\n    {\n      \"node_key\": \"start\",\n      \"node_type\": \"start\",\n      \"name\": \"开始\",\n      \"node_next\": \"create_user\"\n    },\n    {\n      \"node_key\": \"create_user\",\n      \"name\": \"创建用户信息\",\n      \"node_type\": \"node\",\n      \"key\": \"service2field\",\n      \"append_param\": true,\n      \"service\": {\n        \"service\": \"hrm.create_user\"\n      },\n      \"node_fail\": \"end\",\n      \"node_next\": \"{{ if .roles }}create_roles{{ else if eq .create_ldap \\\"1\\\"}}create_ldap{{ else }}end{{ end }}\"\n    },\n    {\n      \"node_key\": \"create_roles\",\n      \"key\": \"service2field\",\n      \"name\": \"创建角色\",\n      \"service\": {\n        \"service\": \"hrm.user_role_add\",\n        \"roles\": \"[roles]\",\n        \"user_id\": \"[user_id]\"\n      },\n      \"node_type\": \"node\",\n      \"node_next\": \"{{ if eq .create_ldap \\\"1\\\" }} create_ldap {{ else }} end {{ end }}\",\n      \"node_fail\": \"end\"\n    },\n    {\n      \"node_key\": \"create_ldap\",\n      \"node_type\": \"node\",\n      \"name\": \"ldap 登陆\",\n      \"key\": \"service2field\",\n      \"service\": {\n        \"service\": \"hrm.create_ldap_with_group\",\n        \"add_username\": \"[username]\",\n        \"add_password\": \"[password]\"\n      },\n      \"append_param\": true,\n      \"node_fail\": \"end\",\n      \"node_next\": \"end\"\n    },\n    {\n      \"node_key\": \"end\",\n      \"node_type\": \"end\",\n      \"name\": \"结束\"\n    }\n  ]\n}"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "module",
+          "string",
+          "是",
+          "service_flow ,服务流程化"
+        ],
+        [
+          "data_json",
+          "string",
+          "是",
+          "服务配置地址"
+        ],
+        [
+          "data_json.finish",
+          "json",
+          "",
+          "和handler_params 通样配置，无论流程成功与失败都会运行"
+        ],
+        [
+          "data_json.services",
+          "array",
+          "是",
+          "服务流程的节点，"
+        ],
+        [
+          "data_json.services[node_key]",
+          "string",
+          "是",
+          "流程的关键字，流程必须包含start,end"
+        ],
+        [
+          "data_json.services[node_type]",
+          "string",
+          "是",
+          "start 开始，node节点，end结束"
+        ],
+        [
+          "data_json.services[name]",
+          "string",
+          "是",
+          "节点名称"
+        ],
+        [
+          "data_json.services[key]",
+          "string",
+          "是",
+          "剩下的字段和handler_params一致，字段取决与具体【参数处理】，开始和结束不需要中间都要key"
+        ],
+        [
+          "data_json.services[node_next]",
+          "template",
+          "是",
+          "运行完成后，下个节点的状态"
+        ],
+        [
+          "data_json.services[ignore_error]",
+          "boolean",
+          "",
+          "是否忽略错误"
+        ],
+        [
+          "data_json.services[node_fail]",
+          "template",
+          "",
+          "失败后运行的下个状态"
+        ]
+      ]
+    }
+  ],
+  "body_text": "service_flow(服务流程化)  \n示例\n服务流程化\n参数\n参数\t类型\t必须\t说明\nmodule\n\t\nstring\n\t\n是\n\t\nservice_flow ,服务流程化\n\n\ndata_json\n\t\nstring\n\t\n是\n\t\n服务配置地址\n\n\ndata_json.finish\n\t\njson\n\t\n\t\n和handler_params 通样配置，无论流程成功与失败都会运行\n\n\ndata_json.services\n\t\narray\n\t\n是\n\t\n服务流程的节点，\n\n\ndata_json.services[node_key]\n\t\nstring\n\t\n是\n\t\n流程的关键字，流程必须包含start,end\n\n\ndata_json.services[node_type]\n\t\nstring\n\t\n是\n\t\nstart 开始，node节点，end结束\n\n\ndata_json.services[name]\n\t\nstring\n\t\n是\n\t\n节点名称\n\n\ndata_json.services[key]\n\t\nstring\n\t\n是\n\t\n剩下的字段和handler_params一致，字段取决与具体【参数处理】，开始和结束不需要中间都要key\n\n\ndata_json.services[node_next]\n\t\ntemplate\n\t\n是\n\t\n运行完成后，下个节点的状态\n\n\ndata_json.services[ignore_error]\n\t\nboolean\n\t\n\t\n是否忽略错误\n\n\ndata_json.services[node_fail]\n\t\ntemplate\n\t\n\t\n失败后运行的下个状态\n示例\n1. system_login.json 登陆的流程\n2. 创建用户的流程\n菜单导航\n示例\n参数\n示例\n1.system_login.json 登陆的流程\n2.创建用户的流程",
+  "task_id": "M-011",
+  "source_group": "模块处理",
+  "source_title": "service_flow",
+  "source_doc_text": "11.service_flow\n服务流程化",
+  "read_at": "2026-05-07T08:20:12.518Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/M-011-source.png"
+}

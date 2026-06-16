@@ -1,0 +1,103 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "results": [
+    {
+      "name": "internal-frontend",
+      "mode": "frontend",
+      "method": "POST",
+      "url": "/template_data/data",
+      "changed": true,
+      "responsePreview": "{\n  \"count\": 0,\n  \"success\": false,\n  \"code\": \"-1\",\n  \"msg\": \"请求参数【service】不存在，请检查传入参数\",\n  \"data\": null\n}",
+      "responseLength": 105,
+      "isError": false,
+      "pageMessage": "请求成功 · 状态 200 · 耗时 17ms"
+    },
+    {
+      "name": "internal-backend",
+      "mode": "backend",
+      "method": "POST",
+      "url": "/template_data/data",
+      "changed": true,
+      "responsePreview": "{\n  \"request\": {\n    \"mode\": \"后端代发\",\n    \"method\": \"POST\",\n    \"url\": \"/template_data/data\"\n  },\n  \"result\": {\n    \"ok\": false,\n    \"status_code\": null,\n    \"status_text\": \"\",\n    \"duration_ms\": 12,\n    \"at\": \"2026-05-03T05:34:36.372Z\"\n  },\n  \"error\": \"请求失败: request_data 不是合法 JSON 对象\"\n}",
+      "responseLength": 287,
+      "isError": true,
+      "pageMessage": "请求失败: request_data 不是合法 JSON 对象 · 耗时 12ms"
+    },
+    {
+      "name": "internal-backend-absolute",
+      "mode": "backend",
+      "method": "POST",
+      "url": "http://192.168.232.130:8015/template_data/data",
+      "changed": true,
+      "responsePreview": "{\n  \"request\": {\n    \"mode\": \"后端代发\",\n    \"method\": \"POST\",\n    \"url\": \"http://192.168.232.130:8015/template_data/data\"\n  },\n  \"result\": {\n    \"ok\": false,\n    \"status_code\": null,\n    \"status_text\": \"\",\n    \"duration_ms\": 15,\n    \"at\": \"2026-05-03T05:34:37.503Z\"\n  },\n  \"error\": \"请求失败: request_data 不是合法 JSON 对象\"\n}",
+      "responseLength": 314,
+      "isError": true,
+      "pageMessage": "请求失败: request_data 不是合法 JSON 对象 · 耗时 15ms"
+    },
+    {
+      "name": "external-frontend",
+      "mode": "frontend",
+      "method": "GET",
+      "url": "https://postman-echo.com/get",
+      "changed": true,
+      "responsePreview": "{\n  \"request\": {\n    \"mode\": \"前台直发\",\n    \"method\": \"GET\",\n    \"url\": \"https://postman-echo.com/get\"\n  },\n  \"result\": {\n    \"ok\": false,\n    \"status_code\": null,\n    \"status_text\": \"\",\n    \"duration_ms\": 703,\n    \"at\": \"2026-05-03T05:34:39.277Z\"\n  },\n  \"error\": \"请求失败: Failed to fetch\"\n}",
+      "responseLength": 286,
+      "isError": true,
+      "pageMessage": "请求失败: Failed to fetch · 耗时 703ms"
+    },
+    {
+      "name": "external-frontend-cors",
+      "mode": "frontend",
+      "method": "GET",
+      "url": "https://jsonplaceholder.typicode.com/todos/1",
+      "changed": true,
+      "responsePreview": "{\n  \"userId\": 1,\n  \"id\": 1,\n  \"title\": \"delectus aut autem\",\n  \"completed\": false\n}",
+      "responseLength": 83,
+      "isError": false,
+      "pageMessage": "请求成功 · 状态 200 · 耗时 613ms"
+    },
+    {
+      "name": "external-frontend-post-todos1",
+      "mode": "frontend",
+      "method": "POST",
+      "url": "https://jsonplaceholder.typicode.com/todos/1",
+      "changed": true,
+      "responsePreview": "{\n  \"request\": {\n    \"mode\": \"前台直发\",\n    \"method\": \"POST\",\n    \"url\": \"https://jsonplaceholder.typicode.com/todos/1\"\n  },\n  \"result\": {\n    \"ok\": false,\n    \"status_code\": 404,\n    \"status_text\": \"\",\n    \"duration_ms\": 1136,\n    \"at\": \"2026-05-03T05:34:42.928Z\"\n  },\n  \"error\": \"请求失败 (404)\",\n  \"response\": {}\n}",
+      "responseLength": 310,
+      "isError": true,
+      "pageMessage": "请求失败 · 状态 404 · 耗时 1136ms"
+    },
+    {
+      "name": "external-backend",
+      "mode": "backend",
+      "method": "GET",
+      "url": "https://postman-echo.com/get",
+      "changed": true,
+      "responsePreview": "{\n  \"args\": {},\n  \"headers\": {\n    \"host\": \"postman-echo.com\",\n    \"accept-encoding\": \"gzip, br\",\n    \"user-agent\": \"Go-http-client/2.0\",\n    \"x-forwarded-proto\": \"https\"\n  },\n  \"url\": \"https://postman-echo.com/get\"\n}",
+      "responseLength": 217,
+      "isError": false,
+      "pageMessage": "请求成功 · 状态 200 · 耗时 437ms"
+    },
+    {
+      "name": "external-backend-post-todos1",
+      "mode": "backend",
+      "method": "POST",
+      "url": "https://jsonplaceholder.typicode.com/todos/1",
+      "changed": true,
+      "responsePreview": "{\n  \"request\": {\n    \"mode\": \"后端代发\",\n    \"method\": \"POST\",\n    \"url\": \"https://jsonplaceholder.typicode.com/todos/1\"\n  },\n  \"result\": {\n    \"ok\": false,\n    \"status_code\": null,\n    \"status_text\": \"\",\n    \"duration_ms\": 13,\n    \"at\": \"2026-05-03T05:34:45.286Z\"\n  },\n  \"error\": \"请求失败: request_data 不是合法 JSON 对象\"\n}",
+      "responseLength": 312,
+      "isError": true,
+      "pageMessage": "请求失败: request_data 不是合法 JSON 对象 · 耗时 13ms"
+    }
+  ],
+  "consoleErrors": [
+    "Access to fetch at 'https://postman-echo.com/get' from origin 'http://192.168.232.130:8015' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+    "Failed to load resource: net::ERR_FAILED",
+    "Failed to load resource: the server responded with a status of 404 ()"
+  ],
+  "pageErrors": [],
+  "failedRequests": [
+    "GET https://postman-echo.com/get => net::ERR_FAILED"
+  ],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-console-request-matrix-v2.png"
+}

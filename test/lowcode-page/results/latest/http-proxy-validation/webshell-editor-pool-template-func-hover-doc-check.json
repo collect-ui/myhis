@@ -1,0 +1,14 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "startedAt": "2026-05-07T13:10:32.939Z",
+  "pass": true,
+  "error": "",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-template-func-hover-doc-check.png",
+  "targetPath": "/data/project/sport/collect/webshell/token/index.yml",
+  "openedPath": "/data/project/sport/collect/webshell/token/index.yml",
+  "mustHoverFound": true,
+  "unixHoverFound": true,
+  "mustHoverText": "template function=must\n\n来源： - Go 模板函数注册：/data/project/collect/src/collect/filters/all_register.go - 实现函数：func Must(value interface{}) - 实现文件：/data/project/collect/src/collect/filters/must.go\n\n文档内容预览：\n\n# template function=must\n\n来源：\n- Go 模板函数注册：`/data/project/collect/src/collect/filters/all_register.go`\n- 实现函数：`func Must(value interface{})`\n- 实现文件：`/data/project/collect/src/collect/filters/must.go`\n\n## 作用\n- 判断值是否为“必须存在”（非空返回 true）。\n- 可用于 `params[*].template`、`check.template`、`enable`、`if_template` 等模板表达式位置。\n\n## 参数\n- 调用签名：`func Must(value interface{})`\n- 参数值来自当前服务上下文（例如 `.field`、`.item.field`、`.session_user_id`）。\n\n## 示例\n```yml\nparams:\n  demo:\n    template: \"{{must .important_list}}\"\n定位\n悬停命中文档路径：tooltip-docs/go/key/template/value/must.md\n如需改行为，优先改实现文件，再更新本说明。\n\n标签：`key:template` `value:{{must .important_list}}` `token:must` `project:go`\n\n文档路径：`/data/project/sport/tooltip-docs/go/key/template/value/must.md`",
+  "unixHoverText": "template function=unix_time2datetime\n\n来源： - Go 模板函数注册：/data/project/collect/src/collect/filters/all_register.go - 实现函数：func UnixTime2Datetime(unit int64) - 实现文件：/data/project/collect/src/collect/filters/unix_time2datetime.go\n\n文档内容预览：\n\n# template function=unix_time2datetime\n\n来源：\n- Go 模板函数注册：`/data/project/collect/src/collect/filters/all_register.go`\n- 实现函数：`func UnixTime2Datetime(unit int64)`\n- 实现文件：`/data/project/collect/src/collect/filters/unix_time2datetime.go`\n\n## 作用\n- Unix 时间戳转标准日期时间字符串。\n- 可用于 `params[*].template`、`check.template`、`enable`、`if_template` 等模板表达式位置。\n\n## 参数\n- 调用签名：`func UnixTime2Datetime(unit int64)`\n- 参数值来自当前服务上下文（例如 `.field`、`.item.field`、`.session_user_id`）。\n\n## 示例\n```yml\nparams:\n  demo:\n    template: \"{{unix_time2datetime .item.checkin_time}}\"\n定位\n悬停命中文档路径：tooltip-docs/go/key/template/value/unix_time2datetime.md\n如需改行为，优先改实现文件，再更新本说明。\n\n标签：`key:template` `value:{{unix_time2datetime .item.checkin_time}}` `token:unix_time2datetime` `project:go`\n\n文档路径：`/data/project/sport/tooltip-docs/go/key/template/value/unix_time2datetime.md`",
+  "endedAt": "2026-05-07T13:10:44.180Z"
+}

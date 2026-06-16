@@ -1,0 +1,42 @@
+{
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectCode": "backend",
+  "proxyUrl": "http://127.0.0.1:8015/template_data/data?service=config.doc_group_http_service_tree_query",
+  "created": {
+    "groupName": "full_flow_group_1777988819262",
+    "groupNameEdited": "full_flow_group_edited_1777988819262",
+    "docName": "full_flow_doc_1777988819262",
+    "docNameEdited": "full_flow_doc_edited_1777988819262",
+    "groupId": "fb46e4f2-8692-4076-b5b3-5211e5b45a21",
+    "docId": "56fc5b40-09ce-4c30-b10e-2d79eb6652d9"
+  },
+  "steps": {
+    "groupCreate": true,
+    "groupQuery": true,
+    "groupUpdate": true,
+    "groupQueryAfterUpdate": true,
+    "docCreate": true,
+    "docQuery": true,
+    "docDetail": true,
+    "docEdit": true,
+    "docDetailAfterEdit": true,
+    "directSend": true,
+    "proxySend": false,
+    "docDelete": false,
+    "groupDelete": false
+  },
+  "checks": {
+    "docProjectCodeOk": true,
+    "docModeUpdated": true,
+    "docMethodUpdated": true,
+    "docUrlUpdated": true,
+    "directSendHasData": true,
+    "proxySendHasStatusCode": false
+  },
+  "cleanup": {
+    "docDeleted": true,
+    "groupDeleted": true
+  },
+  "error": "webshell.http_proxy_request failed: unknown error",
+  "pass": false
+}

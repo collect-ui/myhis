@@ -1,0 +1,137 @@
+service:
+  - key: price_doc_qing_tree_query
+    http: true
+    module: sql
+    params:
+      to_true:
+        default: false
+      project_id:
+        default: ""
+      search:
+        template: "{{ if .search}}%{{.search}}%{{ end}}"
+    data_file: price_doc_qing_tree_query.sql
+    result_handler:
+      - key: result2params
+        enable: "[to_tree]"
+        fields:
+          - to: "[data_list]"
+      - key: to_tree
+        enable: "[to_tree]"
+        foreach: "[data_list]"
+        id: price_doc_qing_tree_id
+        pid: parent_id
+        children: children
+        save_field: data_tree
+      - key: param2result
+        enable: "[to_tree]"
+        field: data_tree
+  - key: priceDocQingTreeBulkCreate
+    http: true
+    module: bulk_create
+    table: price_doc_qing_tree
+    params:
+      price_tree_list:
+        check:
+          template: "{{must .price_tree_list}}"
+          err_msg: 目录不能为空
+    model_field: price_tree_list
+  - key: doc_tree_qing_save_all
+    http: true
+    module: empty
+    params:
+      tree:
+        default: []
+      tree_list:
+        default: []
+      local_tree_list:
+        default: []
+      change_list:
+        default: []
+    modify_config: doc_tree_qing_modify.json
+    handler_params:
+      - key: file2json
+        save_field: tree
+      - key: to_list
+        foreach: "[tree]"
+        children: children
+        ancestors: "name"
+        with_id: true
+        id: price_doc_qing_tree_id
+        pid: parent_id
+        save_field: tree_list
+
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: project
+            template: "[tree_list[0]]"
+          - field: project_id
+            template: "project_{{.project.price_doc_qing_tree_id}}"
+      - key: service2field
+        service:
+          service: autodesk.price_doc_project_qing_query
+          price_doc_qing_project_id: "[project_id]"
+        save_field: current_project
+      - key: service2field
+        enable: "{{ if .current_project }}false{{ else }}true{{ end }}"
+        service:
+          service: autodesk.price_doc_project_qing_save
+          price_doc_qing_project_id: "[project_id]"
+          name: "[project.name]"
+          order_index: "[project.order_index]"
+          project_name: "[project.project_name]"
+      - key: update_array
+        name: 更新字段
+        foreach: "[tree_list]"
+        item: item
+        fields:
+          - field: project_id
+            template: "[project_id]"
+          - field: order_index
+            template: "[loop_index]"
+          - field: create_time
+            template: "{{current_date_time}}"
+      - key: service2field
+        name: 根据项目ID获取目录树
+        service:
+          service: autodesk.price_doc_tree_query
+          project_id: "[project_id]"
+        save_field: local_tree_list
+
+      - key: get_modify_data
+        name: 获取修改数据
+        save_field: change_list
+      - key: filter_arr
+        name: 过滤新增数组
+        foreach: "[change_list]"
+        item: item
+        if_template: "{{eq .item.operation `add`}}"
+        save_field: add_list
+      - key: service2field
+        enable: "{{ if .add_list }}true{{end}}"
+        service:
+          service: autodesk.priceDocQingTreeBulkCreate
+          price_tree_list: "[add_list]"
+      #      - key: filter_arr
+      #        name: 过滤新增数组
+      #        foreach: "[change_list]"
+      #        item: item
+      #        if_template: "{{eq .item.operation `modify`}}"
+      #        save_field: modify_list
+      #      - key: service2field
+      #        enable: "{{ if .modify_list }}true{{end}}"
+      #        service:
+      #          service: autodesk.priceDocTreeBulkUpdate
+      #          price_tree_list: "[modify_list]"
+      - key: params2result
+        fields:
+          - from: "[tree_list]"
+            to: tree_list
+          - from: "[local_tree_list]"
+            to: local_tree_list
+          - from: "[project]"
+            to: project
+          - from: "[project_id]"
+            to: project_id
+          - from: "[change_list]"
+            to: change_list

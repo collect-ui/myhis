@@ -1,0 +1,155 @@
+service:
+  - key: user_role_id_list_remove
+    module: model_delete
+    http: true
+    params:
+      role_id:
+        check:
+          template: "{{must .role_id}}"
+          err_msg: 角色不能为空
+      user_id_list:
+        check:
+          template: "{{must .user_id_list}}"
+          err_msg: 用户不能为空
+    table: user_role_id_list
+    filter:
+      user_id__in: "[user_id_list]"
+      role_id: "[role_id]"
+  - key: user_role_ldap_group_remove
+    module: model_delete
+    http: true
+    params:
+      role_id:
+        check:
+          template: "{{must .role_id}}"
+          err_msg: 角色不能为空
+      ldap_group_id_list:
+        check:
+          template: "{{must .ldap_group_id_list}}"
+          err_msg: ldap不能为空
+    table: role_ldap_group
+    filter:
+      ldap_group_id__in: "[ldap_group_id_list]"
+      role_id: "[role_id]"
+  - key: user_role_remove
+    module: model_delete
+    params:
+      user_id:
+        check:
+          template: "{{must .user_id}}"
+          err_msg: 用户不能为空
+      role_list:
+        check:
+          template: "{{must .role_list}}"
+          err_msg: 角色不能为空
+    table: "user_role_id_list"
+    filter:
+      user_id: "[user_id]"
+      role_id__in: "[role_list]"
+  - key: role_add_user
+    module: empty
+    http: true
+    name: 角色添加多个用户
+    params:
+      username_list:
+        check:
+          template: "{{must .username_list}}"
+          err_msg: 用户名不能为空
+      role_id:
+        check:
+          template: "{{must .role_id}}"
+          err_msg: 角色不能为空
+    handler_params:
+      - key: service2field
+        service:
+          service: hrm.user_list
+          username_list: "[username_list]"
+        save_field: user_list
+        template: "{{must .user_list}}"
+        err_msg: 用户不能为空
+      - key: prop_arr
+        foreach: "[user_list]"
+        value: "[user_id]"
+        save_field: user_id_list
+      - key: arr2arrayObj
+        enable: "{{must .user_id_list}}"
+        foreach: "[user_id_list]"
+        item: item
+        fields:
+          - field: "user_id"
+            template: "{{.item}}"
+          - field: role_id
+            template: "[role_id]"
+          - field: role_list_id
+            template: "{{uuid}}"
+        save_field: user_role_list
+      - key: service2field
+        service:
+          service: hrm.user_role_bulk_create
+          user_role_list: "[user_role_list]"
+  - key: role_add_ldap
+    module: empty
+    http: true
+    name: 角色添加多个ldap分组
+    log: true
+    params:
+      ldap_list:
+        check:
+          template: "{{must .ldap_list}}"
+          err_msg: ldap分组不能为空
+      role_id:
+        check:
+          template: "{{must .role_id}}"
+          err_msg: 角色不能为空
+    handler_params:
+      - key: service2field
+        name: 保存ldap 分组信息
+        service:
+          service: hrm.role_ldap_group_save
+          role_id: "[role_id]"
+          ldap_group_ids: "[ldap_list]"
+
+  - key: user_role_add
+    name: 用户添加多个角色
+    log: true
+    module: empty
+    params:
+      user_id:
+        check:
+          template: "{{must .user_id}}"
+          err_msg: 用户不能为空
+      roles:
+        default: ""
+      role_id_list:
+        check:
+          template: "{{must .role_id_list}}"
+          err_msg: 角色不能为空
+    handler_params:
+      - key: arr2arrayObj
+        enable: "{{must .role_id_list}}"
+        foreach: "[role_id_list]"
+        item: item
+        fields:
+          - field: "role_id"
+            template: "{{.item}}"
+          - field: user_id
+            template: "[user_id]"
+          - field: role_list_id
+            template: "{{uuid}}"
+        save_field: user_role_list
+      - key: service2field
+        service:
+          service: hrm.user_role_bulk_create
+          user_role_list: "[user_role_list]"
+
+  - key: user_role_bulk_create
+    log: true
+    module: bulk_create
+    http: true
+    params:
+      user_role_list:
+        check:
+          template: "{{must .user_role_list}}"
+          err_msg: 用户角色不能为空
+    model_field: "[user_role_list]"
+    table: "user_role_id_list"

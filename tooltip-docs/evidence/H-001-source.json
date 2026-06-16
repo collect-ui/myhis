@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "active_tab_text": "service2field",
+  "title": "service2field(服务转字段)",
+  "sub_titles": [
+    "示例",
+    "参数",
+    "示例"
+  ],
+  "list_items": [
+    "可以调用其他服务，作为本服务的入参",
+    "可以结合template 来校验，校验服务是否正常"
+  ],
+  "textarea_count": 6,
+  "textarea_values": [
+    "handler_params:\n      - key: service2field\n        service:\n          service: hrm.ldap_add\n        append_param: true",
+    "将另外一个服务执行结果作为本服务的一个参数。具体服务运行的什么没有任何限制，可以是增删除改查。\n    比如校验这个编码是否唯一，我们需要查询数据库表来判断，对比行记录，需要将之前的记录查询出来\n    处理有参数处理的公共字段，还有额外字段，service，append_param,append_item_param",
+    "- key: service2field\n        name: 保存修改列\n        service:\n          service: config.config_detail_change_history_bulk_save\n          change_list: \"[change_list]\"",
+    "- key: service2field\n        name: 保存文档\n        enable: \"{{must .base_modify_list}}\"\n        service:\n          service: config.collect_doc_update\n        item: \"[doc]\"\n        append_item_param: true",
+    "handler_params:\n      - key: service2field\n        service:\n          service: hrm.ldap_add\n        append_param: true",
+    "- key: service2field\n        service:\n          service: hrm.user_list\n          username: \"[username]\"\n        save_field: user_info\n        template: \"{{eq (len .user_info) 0}}\"\n        err_msg: \"用户名【{{.username}}】已经存在\""
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "service",
+          "json",
+          "是",
+          "json下面service 调用目标服务，如何需要引入参数变量,[你的变量]"
+        ],
+        [
+          "append_param",
+          "boolean",
+          "",
+          "是否拼接全部参数,默认不拼接"
+        ],
+        [
+          "append_item_param",
+          "boolean",
+          "",
+          "默认拼接某个字段的参数"
+        ],
+        [
+          "item",
+          "string",
+          "",
+          "如果拼接某个字段的参数，字段的取值，[你的变量]"
+        ]
+      ]
+    }
+  ],
+  "body_text": "service2field(服务转字段)  \n示例\n可以调用其他服务，作为本服务的入参\n可以结合template 来校验，校验服务是否正常\n参数\n参数\t类型\t必须\t说明\nservice\n\t\njson\n\t\n是\n\t\njson下面service 调用目标服务，如何需要引入参数变量,[你的变量]\n\n\nappend_param\n\t\nboolean\n\t\n\t\n是否拼接全部参数,默认不拼接\n\n\nappend_item_param\n\t\nboolean\n\t\n\t\n默认拼接某个字段的参数\n\n\nitem\n\t\nstring\n\t\n\t\n如果拼接某个字段的参数，字段的取值，[你的变量]\n示例\n1. 保存服务，拼接参数中字段\n2. 拼接某个字段参数，所有字段\n3. 拼接参数所有字段\n4. 运行判断结果是否正常\n菜单导航\n示例\n参数\n示例\n1.保存服务，拼接参数中字段\n2.拼接某个字段参数，所有字段\n3.拼接参数所有字段\n4.运行判断结果是否正常",
+  "task_id": "H-001",
+  "source_group": "参数处理",
+  "source_title": "service2field",
+  "source_doc_text": "2.service2field\n服务转字段",
+  "read_at": "2026-05-07T08:20:44.081Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-001-source.png"
+}

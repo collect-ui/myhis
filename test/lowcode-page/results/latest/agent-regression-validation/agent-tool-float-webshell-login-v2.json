@@ -1,0 +1,8 @@
+{
+  "ok": true,
+  "traceVisible": false,
+  "floatText": "工具调用\n2 次调用\n1. codexcli_grep\nok\n{\"pattern\":\"webshell.*login\",\"path\":\"collect/frontend/page_data/data/server\"}\n{\"success\":true,\"count\":1,\"results\":[{\"relative_path\":\"collect/frontend/page_data/data/server/webshell_ssh_fragment.json\",\"line\":752,\"text\":\"webshell.gen_token\"}]}\n2. read_project_file\nok\n{\"path\":\"collect/frontend/page_data/data/server/webshell_ssh_fragment.json\",\"start_line\":740,\"end_line\":760}\n{\"success\":true,\"content\":\"submit-form webshell-login-form\\najax webshell.gen_token\"}",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-webshell-login-v2.png"
+}

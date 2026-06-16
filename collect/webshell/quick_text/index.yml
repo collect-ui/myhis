@@ -1,0 +1,158 @@
+service:
+  - key: quick_text_query
+    module: sql
+    http: true
+    params:
+      keyword:
+        template: "{{ if .keyword }}%{{.keyword}}%{{ end }}"
+      role_type:
+        default: ""
+      effect_ext:
+        default: ""
+      favorite_only:
+        default: false
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 200
+      start:
+        template: "({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+    data_file: quick_text_query.sql
+    count_file: quick_text_count.sql
+    pagination: pagination
+
+  - key: quick_text_add
+    module: model_save
+    http: true
+    table: webshell_quick_text
+    params:
+      quick_text_id:
+        template: "{{uuid}}"
+      title:
+        check:
+          template: "{{must .title}}"
+          err_msg: 标题不能为空
+      description:
+        default: ""
+      content:
+        check:
+          template: "{{must .content}}"
+          err_msg: 快捷文本不能为空
+      role_type:
+        default: "通用"
+      effect_exts:
+        default: "md,markdown,txt,readme"
+      use_count:
+        type: int
+        default: 0
+      is_favorite:
+        default: "0"
+      is_delete:
+        default: "0"
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+
+  - key: quick_text_update
+    module: model_update
+    http: true
+    table: webshell_quick_text
+    params:
+      quick_text_id:
+        check:
+          template: "{{must .quick_text_id}}"
+          err_msg: 主键不能为空
+      title:
+        check:
+          template: "{{must .title}}"
+          err_msg: 标题不能为空
+      content:
+        check:
+          template: "{{must .content}}"
+          err_msg: 快捷文本不能为空
+      description:
+        default: ""
+      role_type:
+        default: "通用"
+      effect_exts:
+        default: "md,markdown,txt,readme"
+      use_count:
+        type: int
+        default: 0
+      is_favorite:
+        default: "0"
+      is_delete:
+        default: "0"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    filter:
+      quick_text_id: "[quick_text_id]"
+
+  - key: quick_text_favorite
+    module: model_update
+    http: true
+    table: webshell_quick_text
+    params:
+      quick_text_id:
+        check:
+          template: "{{must .quick_text_id}}"
+          err_msg: 主键不能为空
+      is_favorite:
+        default: "0"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    update_fields:
+      - is_favorite
+      - modify_time
+      - modify_user
+    filter:
+      quick_text_id: "[quick_text_id]"
+
+  - key: quick_text_delete
+    module: model_update
+    http: true
+    table: webshell_quick_text
+    params:
+      quick_text_id:
+        check:
+          template: "{{must .quick_text_id}}"
+          err_msg: 主键不能为空
+      is_delete:
+        default: "1"
+      modify_time:
+        template: "{{current_date_time}}"
+      modify_user:
+        template: "{{.session_user_id}}"
+    update_fields:
+      - is_delete
+      - modify_time
+      - modify_user
+    filter:
+      quick_text_id: "[quick_text_id]"
+
+  - key: quick_text_use
+    module: sql
+    http: true
+    params:
+      quick_text_id:
+        check:
+          template: "{{must .quick_text_id}}"
+          err_msg: 主键不能为空
+      now_time:
+        template: "{{current_date_time}}"
+    data_file: quick_text_use.sql

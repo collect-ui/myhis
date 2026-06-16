@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "active_tab_text": "count2map",
+  "title": "count2map(count 转字段)",
+  "sub_titles": [
+    "示例",
+    "参数"
+  ],
+  "list_items": [],
+  "textarea_count": 1,
+  "textarea_values": [
+    "一般是sql查询的count转字段。\n这个用比较少，基本用不着count"
+  ],
+  "tables": [
+    {
+      "headers": [
+        "参数",
+        "类型",
+        "必须",
+        "说明"
+      ],
+      "rows": [
+        [
+          "key",
+          "string",
+          "是",
+          "count2map"
+        ],
+        [
+          "field",
+          "template",
+          "是",
+          "结果里面的字段"
+        ]
+      ]
+    }
+  ],
+  "body_text": "count2map(count 转字段)  \n示例\n参数\n参数\t类型\t必须\t说明\nkey\n\t\nstring\n\t\n是\n\t\ncount2map\n\n\nfield\n\t\ntemplate\n\t\n是\n\t\n结果里面的字段\n菜单导航\n示例\n参数\n示例",
+  "task_id": "H-014",
+  "source_group": "参数处理",
+  "source_title": "count2map",
+  "source_doc_text": "18.count2map\ncount 转字段",
+  "read_at": "2026-05-07T08:21:43.959Z",
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/H-014-source.png"
+}

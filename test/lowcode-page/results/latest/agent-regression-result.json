@@ -1,0 +1,17 @@
+{
+  "baseUrl": "http://192.168.232.130:8015",
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/agent_regression",
+  "sessionKey": "agent-regression-browser-20260423080724",
+  "sessionId": "agent_session_a552c14a-9c18-4d13-89d8-0d5562654780",
+  "runId": "agent_run_94a3d7af-5623-4798-9ee0-8c2876847f3b",
+  "expectedReply": "页面浏览器自测通过-20260423080724",
+  "latestReply": "Agent\n2026-04-23 16:07:28\n\n页面浏览器自测通过-20260423080724",
+  "textareaCount": 1,
+  "userMessageCount": 1,
+  "assistantMessageCount": 1,
+  "sessionItemCount": 26,
+  "activeSessionCount": 1,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": []
+}

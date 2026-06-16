@@ -1,0 +1,18 @@
+{
+  "generated_at": "2026-05-07 17:21:13 +0800",
+  "all_pass": true,
+  "files": [
+    {
+      "file": "/data/project/sport/tooltip-docs/key/http.md",
+      "yaml_blocks": 2,
+      "yaml_ok": true,
+      "errors": []
+    },
+    {
+      "file": "/data/project/sport/tooltip-docs/key/log.md",
+      "yaml_blocks": 2,
+      "yaml_ok": true,
+      "errors": []
+    }
+  ]
+}

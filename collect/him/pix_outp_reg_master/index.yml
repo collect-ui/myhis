@@ -1,0 +1,358 @@
+service:
+  - key: pix_outp_reg_master_query
+    http: true
+    must_login: false
+    module: sql
+    params:
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 20
+      start:
+        template: " ({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      end:
+        template: " {{.page}} * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+    data_file: query.sql
+    count_file: count.sql
+    pagination: pagination
+
+  - key: pix_outp_reg_master_area_options
+    http: true
+    must_login: false
+    module: sql
+    data_file: area_options.sql
+
+  - key: pix_outp_reg_master_reg_fee_options
+    http: true
+    must_login: false
+    module: sql
+    data_file: reg_fee_options.sql
+    result_handler:
+      - key: translate
+        type: "code"
+        fields:
+          - from: "PIX0018"
+            field: "[item.outp_type_code]"
+            to: "outp_type_code_str"
+
+  - key: pix_outp_reg_master_dept_options
+    http: true
+    must_login: false
+    module: sql
+    data_file: dept_options.sql
+
+  - key: pix_outp_reg_master_special_clinic_options
+    http: true
+    must_login: false
+    module: sql
+    data_file: special_clinic_options.sql
+
+  - key: pix_outp_reg_master_doctor_options
+    http: true
+    must_login: false
+    module: sql
+    params:
+      page:
+        type: int
+        default: 1
+      size:
+        type: int
+        default: 20
+      start:
+        template: " ({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      end:
+        template: " {{.page}} * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+    data_file: doctor_options_query.sql
+    count_file: doctor_options_count.sql
+    pagination: pagination
+
+  - key: pix_outp_reg_master_outp_type_options
+    http: true
+    must_login: false
+    module: sql
+    data_file: outp_type_options.sql
+    result_handler:
+      - key: translate
+        type: "code"
+        fields:
+          - from: "PIX0018"
+            field: "[item.value]"
+            to: "label"
+
+  - key: pix_outp_reg_master_save
+    http: true
+    must_login: false
+    module: model_save
+    table: pix_outp_reg_master
+    params:
+      master_id:
+        template: "{{snow_id_mini}}"
+        type: int64
+
+  - key: pix_outp_reg_master_update
+    http: true
+    must_login: false
+    module: model_update
+    table: pix_outp_reg_master
+    params:
+      master_id:
+        type: int64
+    filter:
+      master_id: "[master_id]"
+
+  - key: pix_outp_reg_master_delete
+    http: true
+    must_login: false
+    module: model_delete
+    table: pix_outp_reg_master
+    params:
+      master_id_list:
+        check:
+          template: "{{must .master_id_list}}"
+          err_msg: 请选择要删除的记录
+    filter:
+      master_id__in: "[master_id_list]"
+
+  - key: pix_outp_reg_pool_query
+    must_login: false
+    module: sql
+    params:
+      master_id:
+        type: int64
+    data_file: pool_query.sql
+
+  - key: pix_outp_reg_schedule_query
+    must_login: false
+    module: sql
+    params:
+      master_id:
+        type: int64
+    data_file: schedule_query.sql
+
+  - key: pix_outp_reg_master_log_query
+    must_login: false
+    module: sql
+    params:
+      master_id:
+        type: int64
+    data_file: log_query.sql
+
+  - key: pix_outp_reg_master_gen_pool_rows
+    must_login: false
+    module: sql
+    params:
+      master_id:
+        type: int64
+        default: 0
+      outp_duration_code:
+        default: ""
+      appointment_limits:
+        type: int64
+        default: 0
+      no_appointment_count:
+        type: int64
+        default: 0
+      internet_limits:
+        type: int64
+        default: 0
+    data_file: gen_pool_rows.sql
+
+  - key: pix_outp_reg_pool_batch_save
+    must_login: false
+    module: bulk_create
+    table: pix_outp_reg_pool
+    model_field: _pool_rows
+
+  - key: pix_outp_reg_schedule_save
+    must_login: false
+    module: model_save
+    table: pix_outp_reg_schedule
+
+  - key: pix_outp_reg_master_log_save
+    must_login: false
+    module: model_save
+    table: pix_outp_reg_master_log
+
+  - key: pix_outp_reg_master_create
+    http: true
+    must_login: false
+    module: empty
+    params:
+      area_code:
+        default: ""
+      outp_date:
+        default: ""
+      registration_limits:
+        type: int64
+        default: 5
+      appointment_limits:
+        type: int64
+        default: 3
+      internet_limits:
+        type: int64
+        default: 0
+      outp_duration_code:
+        default: ""
+      atime_flag:
+        default: "0"
+      reg_fee_id:
+        type: int64
+        default: 0
+      special_clinic_code:
+        default: ""
+      doctor_code:
+        default: ""
+      reside_dept_code:
+        default: ""
+      operator:
+        default: ""
+      average_time:
+        type: int64
+        default: 10
+      outp_type_code:
+        default: ""
+      outp_special_id:
+        type: int64
+        default: 0
+      registration_type:
+        default: "0"
+    handler_params:
+      - key: update_field
+        name: ids
+        fields:
+          - field: master_id
+            template: "{{snow_id_mini}}"
+            type: int64
+          - field: schedule_id
+            template: "{{snow_id_mini}}"
+            type: int64
+          - field: master_log_id
+            template: "{{snow_id_mini}}"
+            type: int64
+          - field: log_date
+            template: "{{current_date_time}}"
+
+      - key: update_field
+        name: defaults
+        fields:
+          - field: is_enable
+            template: "1"
+          - field: master_status
+            template: "0"
+
+      - key: service2field
+        name: save master
+        service:
+          service: "him.pix_outp_reg_master_save"
+          master_id: "[master_id]"
+          area_code: "[area_code]"
+          outp_date: "[outp_date]"
+          registration_limits: "[registration_limits]"
+          appointment_limits: "[appointment_limits]"
+          internet_limits: "[internet_limits]"
+          is_enable: "[is_enable]"
+          master_status: "[master_status]"
+          atime_flag: "[atime_flag]"
+          reg_fee_id: "[reg_fee_id]"
+          special_clinic_code: "[special_clinic_code]"
+          doctor_code: "[doctor_code]"
+          reside_dept_code: "[reside_dept_code]"
+          outp_duration_code: "[outp_duration_code]"
+          outp_type_code: "[outp_type_code]"
+          outp_special_id: "[outp_special_id]"
+          registration_type: "[registration_type]"
+          average_time: "[average_time]"
+
+      - key: update_field
+        name: calc diff
+        fields:
+          - field: _no_appt
+            exec: true
+            type: int64
+            template: "{{sub .registration_limits .appointment_limits}}"
+
+      - key: service2field
+        name: gen pool rows (non-timed)
+        enable: '{{eq .atime_flag "0"}}'
+        service:
+          service: "him.pix_outp_reg_master_gen_pool_rows"
+          master_id: "[master_id]"
+          outp_duration_code: "[outp_duration_code]"
+          appointment_limits: "[appointment_limits]"
+          no_appointment_count: "[_no_appt]"
+          internet_limits: "[internet_limits]"
+        save_field: _pool_rows
+
+      - key: update_array
+        name: fill pool ids (non-timed)
+        enable: '{{eq .atime_flag "0"}}'
+        foreach: "[_pool_rows]"
+        item: item
+        fields:
+          - field: reg_pool_id
+            template: "{{snow_id_mini}}"
+            type: int64
+
+      - key: service2field
+        name: save pool rows (non-timed)
+        enable: '{{eq .atime_flag "0"}}'
+        service:
+          service: "him.pix_outp_reg_pool_batch_save"
+          _pool_rows: "[_pool_rows]"
+
+      - key: service2field
+        name: save schedule
+        service:
+          service: "him.pix_outp_reg_schedule_save"
+          schedule_id: "[schedule_id]"
+          master_id: "[master_id]"
+          area_code: "[area_code]"
+          schedule_date: "[outp_date]"
+          begin_date: "[outp_date]"
+          end_date: "[outp_date]"
+          day_of_week: "1"
+          registration_limits: "[registration_limits]"
+          appointment_limits: "[appointment_limits]"
+          internet_limits: "[internet_limits]"
+          atime_flag: "[atime_flag]"
+          registration_type: "[registration_type]"
+          average_time: "[average_time]"
+          reg_fee_id: "[reg_fee_id]"
+          outp_type_code: "[outp_type_code]"
+          special_clinic_code: "[special_clinic_code]"
+          doctor_code: "[doctor_code]"
+          reside_dept_code: "[reside_dept_code]"
+          outp_duration_code: "[outp_duration_code]"
+          delete_flag: "1"
+          is_enable: "1"
+          schedule_status: "2"
+          reserve_limits: "[appointment_limits]"
+          title_code: "[outp_type_code]"
+          outp_special_id: "[outp_special_id]"
+
+      - key: service2field
+        name: save log
+        service:
+          service: "him.pix_outp_reg_master_log_save"
+          master_log_id: "[master_log_id]"
+          master_id: "[master_id]"
+          log_date: "[log_date]"
+          operator: "[operator]"
+          log_text: "新增号源"
+    result_handler:
+      - key: param2result
+        field: master_id

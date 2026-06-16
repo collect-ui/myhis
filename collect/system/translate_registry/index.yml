@@ -1,0 +1,16 @@
+service:
+  - key: get_translate_registry
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: get_translate_registry.json
+    cache:
+      key: "handler_cache"
+      room: translate_registry
+      second: 86400
+      fields:
+        - field: "[service]"

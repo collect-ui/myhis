@@ -1,0 +1,129 @@
+service:
+  - key: tb_project_manager_config_query
+    http: true
+    module: sql
+    params:
+      project_manager:
+        default: ""
+      with_detail:
+        default: false
+      to_obj:
+        default: false
+      schema_page_code:
+        default: "tb_project_manager_config"
+    data_file: "tb_project_manager_config_query.sql"
+    result_handler:
+      - key: result2params
+        enable: "[with_detail]"
+        fields:
+          - to: "[data_list]"
+      - key: prop_arr
+        name: "获取id"
+        enable: "{{and .with_detail (gt (len .data_list) 0)}}"
+        foreach: "[data_list]"
+        value: "[tb_project_manager_config_id]"
+        save_field: belong_id_list
+      - key: service2field
+        name: "获取属性数据"
+        enable: "{{and .with_detail (gt (len .data_list) 0)}}"
+        service:
+          service: system.get_page_data_dict_list
+          schema_page_code: "[schema_page_code]"
+          belong_id_list: "[belong_id_list]"
+        save_field: attr_list
+      - key: update_array_from_array
+        enable: "{{and .with_detail (gt (len .data_list) 0)}}"
+        name: "更新属性"
+        foreach: "[data_list]"
+        item: item
+        field: "[tb_project_manager_config_id]"
+        right: "[attr_list]"
+        right_field: "[belong_id]"
+        right_value_field: "*"
+        none_fill_right: true
+      - key: param2result
+        enable: "[with_detail]"
+        field: "[data_list]"
+      - key: arr2obj
+        enable: "[to_obj]"
+
+  - key: tb_project_manager_config_update
+    http: true
+    module: model_update
+    table: tb_project_manager_config
+    params:
+      tb_project_manager_config_id:
+        check:
+          template: "{{must .tb_project_manager_config_id}}"
+          err_msg: "ID不能为空"
+      schema_page_code:
+        template: "tb_project_manager_config"
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.tb_project_manager_config_query
+          project_manager: "[project_manager]"
+          exclude: "[tb_project_manager_config_id]"
+        save_field: l
+        template: "{{ eq (len .l) 0}}"
+        err_msg: "{{.project_manager}}已经存在"
+      - key: service2field
+        service:
+          service: system.save_page_data
+          belong_id: "[tb_project_manager_config_id]"
+        append_param: true
+    filter:
+      tb_project_manager_config_id: "[tb_project_manager_config_id]"
+
+  - key: tb_project_manager_config_save
+    http: true
+    params:
+      tb_project_manager_config_id:
+        template: "{{uuid}}"
+      create_time:
+        template: "{{ current_date_time }}"
+      create_user:
+        template: "{{.session_user_id}}"
+      project_manager:
+        check:
+          template: "{{must .project_manager}}"
+          err_msg: "项目经理不能为空"
+      schema_page_code:
+        default: "tb_project_manager_config"
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.tb_project_manager_config_query
+          project_manager: "[project_manager]"
+        save_field: l
+        template: "{{ eq (len .l) 0}}"
+        err_msg: "{{.project_manager}}已经存在"
+    table: tb_project_manager_config
+    module: model_save
+    result_handler:
+      - key: service2field
+        service:
+          service: system.save_page_data
+          belong_id: "[tb_project_manager_config_id]"
+        append_param: true
+
+
+  - key: tb_project_manager_config_delete
+    http: true
+    module: model_delete
+    table: tb_project_manager_config
+    params:
+      tb_project_manager_config_id_list:
+        check:
+          template: "{{must .tb_project_manager_config_id_list}}"
+          err_msg: "ID不能为空"
+      schema_page_code:
+        default: "tb_project_manager_config"
+    filter:
+      tb_project_manager_config_id__in: "[tb_project_manager_config_id_list]"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.delete_schema_page_data
+          belong_id_list: "[tb_project_manager_config_id_list]"
+          schema_page_code: "[schema_page_code]"

@@ -1,0 +1,368 @@
+{
+  "tag": "layout-fit",
+  "initStoreType": {
+    "panelList": "panelList",
+    "lastRightSsh": "contentReference"
+  },
+  "initStore": {
+    "searchForm": {
+      "search": ""
+    },
+    "panelList": [],
+    "lastGroupId": "",
+    "lastSubGroupId": "",
+    "lastWebshellToken": "",
+    "lastWebshellTitle": "",
+    "panelKeyList": [],
+    "subMap": {},
+    "lastNewKey": "",
+    "addNodeForm": {
+      "type": "1",
+      "server_env_id": null,
+      "parent_id": null,
+      "server_env_code": "",
+      "server_env_name": "",
+      "order_id": 0,
+      "server_busi_name": "",
+      "server_ip": "",
+      "root_username": "",
+      "root_password": "",
+      "normal_username": "",
+      "normal_password": ""
+    },
+    "updateNodeForm": {},
+    "treeSelected": {
+      "server_id": null,
+      "server_env_id": null
+    },
+    "addNodeVisible": false,
+    "nodeOp": "add",
+    "server_env_data": [],
+    "env_data": [],
+    "loginVisible": false,
+    "userList": [],
+    "lastDblData": {},
+    "last_webshell_token": "",
+    "last_webshell_x": 0,
+    "last_webshell_y": 0,
+    "fileManageShow": false,
+    "last_webshell_title": "",
+    "fileInfoList": [],
+    "current_dir": "",
+    "lastRightSsh": [],
+    "lastDownloadRowName": "",
+    "downloadingPercent": 0,
+    "historyShow": false,
+    "historyDialogTitle": "操作记录",
+    "historySearchForm": {
+      "size": 20,
+      "page": 1
+    },
+    "historyCount": 0,
+    "historyList": [],
+    "lastRightServer": {},
+    "playShow": false,
+    "playTitle": "回放",
+    "historyLogList": [],
+    "last_group_id": "",
+    "tmp": -1,
+    "last_shell_id": "",
+    "tmp2": -1,
+    "isCopy": 0,
+    "siderOpen": "1",
+    "recently_server_list": [],
+    "workspaceVisible": false,
+    "workspaceCurrent": "frontend",
+    "workspaceDrawerMode": "middle",
+    "workspaceDrawerWidth": "68%",
+    "workspaceDrawerHeight": "100%",
+    "workspaceOptions": [],
+    "workspaceTreeMap": {},
+    "workspaceTreeLoadedMap": {},
+    "workspaceLoadedMap": {
+      "frontend": true
+    },
+    "workspaceManageVisible": false,
+    "workspaceProjectDialogVisible": false,
+    "workspaceProjectOp": "add",
+    "workspaceProjectEditCode": "",
+    "workspaceProjectSearchForm": {
+      "page": 1,
+      "size": 20,
+      "project_name": "",
+      "project_code": "",
+      "server_id": null,
+      "git_keyword": ""
+    },
+    "workspaceLastServerId": null,
+    "workspaceProjectList": [],
+    "workspaceProjectTotal": 0,
+    "workspaceServerList": [],
+    "workspaceUserList": [],
+    "workspaceProjectForm": {
+      "project_name": "",
+      "project_code": "",
+      "order_id": 1,
+      "show_home": "1",
+      "server_id": null,
+      "server_os_users_id": null,
+      "project_dir": "",
+      "git_repo_url": "",
+      "exclude_dirs": "node_modules,.git,dist,.next"
+    },
+    "workspaceFileManageVisible": false,
+    "workspaceFileDialogVisible": false,
+    "workspaceFileOp": "add",
+    "workspaceFileList": [],
+    "workspaceFileTotal": 0,
+    "workspaceFileSearchForm": {
+      "page": 1,
+      "size": 20,
+      "project_code": "",
+      "name": ""
+    },
+    "workspaceFileCurrentProject": {},
+    "workspaceFileCurrentRow": {},
+    "activeStore": null,
+    "workspaceFileTreeKeyword": "",
+    "workspaceFileParentTree": [],
+    "workspaceFileForm": {
+      "file_id": "",
+      "project_code": "",
+      "name": "",
+      "path": "",
+      "parent_id": "",
+      "is_dir": "1"
+    },
+    "workspaceHttpDocDialogVisible": false,
+    "workspaceHttpDocOp": "add",
+    "workspaceHttpDocFormType": "2",
+    "workspaceHttpDocForm": {
+      "collect_doc_id": "",
+      "doc_group_id": "",
+      "type": "2",
+      "title": "",
+      "sub_title": "",
+      "parent_dir": "",
+      "order_index": 1,
+      "code": "{}",
+      "code_desc": "",
+      "code_result": "",
+      "important_list": [],
+      "params": [],
+      "result": [],
+      "demo": []
+    }
+  },
+  "actionGroupDefine": {
+    "reload-sftp-file": [
+      {
+        "tag": "ajax",
+        "enable": "${lastRightSsh.length>0}",
+        "group": "reload-sftp-file",
+        "api": "post:/template_data/data?service=webshell.get_dir_info_by_token",
+        "appendFormFields": "webshell-file-manage",
+        "data": {
+          "token": "${lastRightSsh[0]?.token}"
+        },
+        "adapt": {
+          "fileInfoList": "${data.dir}",
+          "current_dir": "${data.current_dir}"
+        }
+      },
+      {
+        "tag": "handlerPath",
+        "enable": "${lastRightSsh.length>0}",
+        "path": "current_dir",
+        "group": "reload-sftp-file"
+      },
+      {
+        "tag": "arr-push",
+        "description": "添加根路径",
+        "enable": "${lastRightSsh.length>0 && current_dir!='/'}",
+        "group": "reload-sftp-file",
+        "from": "fileInfoList",
+        "first": true,
+        "value": {
+          "name": "..",
+          "is_dir": true
+        }
+      },
+      {
+        "tag": "update-form",
+        "enable": "${lastRightSsh.length>0}",
+        "group": "reload-sftp-file",
+        "description": "根据结果设置表单路径",
+        "formName": "webshell-file-manage",
+        "value": {
+          "path": "${current_dir}"
+        }
+      },
+      {
+        "tag": "method",
+        "enable": "${lastRightSsh.length>0}",
+        "group": "reload-sftp-file",
+        "description": "设置右键对象路径",
+        "method": "${lastRightSsh[0]?.setPath(current_dir)}"
+      }
+    ],
+    "reload-history": [
+      {
+        "tag": "ajax",
+        "enable": "${lastRightServer.server_id!==undefined}",
+        "group": "reload-history",
+        "api": "post:/template_data/data?service=webshell.webshell_token_query",
+        "appendFormFields": "webshell-history",
+        "appendFields": "${historySearchForm}",
+        "data": {
+          "server_id": "${lastRightServer.server_id}"
+        },
+        "adapt": {
+          "historyList": "${data}",
+          "historyCount": "${count}"
+        }
+      }
+    ],
+    "reload-workspace-project-manage": [
+      {
+        "tag": "ajax",
+        "group": "reload-workspace-project-manage",
+        "appendFormFields": "workspace-project-search-form",
+        "api": "post:/template_data/data?service=webshell.workspace_project_query",
+        "adapt": {
+          "workspaceProjectList": "${data}",
+          "workspaceProjectTotal": "${count}"
+        }
+      }
+    ],
+    "reload-workspace-project": [
+      {
+        "tag": "ajax",
+        "description": "不带条件查询",
+        "group": "reload-workspace-project",
+        "api": "post:/template_data/data?service=webshell.workspace_project_query",
+        "adapt": {
+          "workspaceOptions": "${data.sort((a,b)=>(a.order_id||0)-(b.order_id||0))}",
+          "workspaceCurrent": "${(()=>{const list=data.sort((a,b)=>(a.order_id||0)-(b.order_id||0));const has=list.some(item=>item.project_code===workspaceCurrent);if(has){return workspaceCurrent;}return list[0]?.project_code||'';})()}",
+          "workspaceLoadedMap": "${(()=>{const list=data||[];const map={};list.forEach(item=>{map[item.project_code]=true;});return map;})()}"
+        }
+      }
+    ],
+    "reload-workspace-file-manage": [
+      {
+        "tag": "ajax",
+        "group": "reload-workspace-file-manage",
+        "api": "post:/template_data/data?service=webshell.workspace_file_query",
+        "data": {
+          "project_code": "${workspaceFileCurrentProject.project_code || workspaceCurrent}",
+          "name": "${workspaceFileSearchForm.name || ''}",
+          "page": "${workspaceFileSearchForm.page || 1}",
+          "size": "${workspaceFileSearchForm.size || 20}"
+        },
+        "adapt": {
+          "workspaceFileList": "${data}",
+          "workspaceFileTotal": "${count}"
+        }
+      }
+    ]
+  },
+  "initAction": [
+    {
+      "tag": "reload-init-action",
+      "group": "reload-workspace-project"
+    },
+    {
+      "tag": "ajax",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=project.my_env_tree",
+      "appendFormFields": "server-search-form",
+      "adapt": {
+        "server_env_data": "${data}"
+      }
+    },
+    {
+      "tag": "ajax",
+      "group": "server-env-tree",
+      "api": "post:/template_data/data?service=project.recently_server_list",
+      "adapt": {
+        "recently_server_list": "${data}"
+      }
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "sider-open",
+      "defaultValue": "1",
+      "storeField": "siderOpen"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-drawer-mode",
+      "defaultValue": "middle",
+      "storeField": "workspaceDrawerMode"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-drawer-width",
+      "defaultValue": "68%",
+      "storeField": "workspaceDrawerWidth"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-drawer-height",
+      "defaultValue": "100%",
+      "storeField": "workspaceDrawerHeight"
+    },
+    {
+      "tag": "localstore",
+      "method": "read",
+      "key": "workspace-visible",
+      "defaultValue": false,
+      "storeField": "workspaceVisible"
+    }
+  ],
+  "children": [
+    {
+      "tag": "css",
+      "src": "/data/webshell.css"
+    },
+    {
+      "tag": "layout",
+      "children": [
+        "{{to_json .webshell_ssh_fragment}}",
+        "{{to_json .webshell_editor_fragment}}"
+      ]
+    }
+  ],
+  "bottomToolBar": [
+    {
+      "tag": "form",
+      "name": "shell-form",
+      "submitOnEnter": true,
+      "action": [
+        {
+          "tag": "batch-shell"
+        }
+      ],
+      "children": [
+        {
+          "tag": "form-item",
+          "label": "批量执行",
+          "name": "shell",
+          "style": {
+            "marginBottom": "0px"
+          },
+          "children": [
+            {
+              "tag": "input",
+              "placeholder": "激活窗口批量执行"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

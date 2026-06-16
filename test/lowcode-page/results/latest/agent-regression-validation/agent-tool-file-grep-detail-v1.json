@@ -1,0 +1,30 @@
+{
+  "itemCount": 15,
+  "hasRead": true,
+  "hasGrep": true,
+  "hasGlob": true,
+  "summaryText": "结果: 找到 14 个候选文件，后续会 grep 或读取其中最相关的文件。",
+  "detailText": "候选文件列表:\n1. collect/frontend/page_data/data/server/webshell.json [file] 18 KB\n2. collect/frontend/page_data/data/server/webshell_editor_fragment.json [file] 3 KB\n3. collect/frontend/page_data/data/server/webshell_editor_pool_file_dialog_fragment.json [file] 21 KB\n4. collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_dialog_fragment.json [file] 40 KB\n5. collect/frontend/page_data/data/server/webshell_editor_pool_http_doc_style_fragment.json [file] 2 KB\n6. collect/frontend/page_data/data/server/webshell_editor_pool_http_fragment.json [file] 47 KB\n7. collect/frontend/page_data/data/server/webshell_editor_pool_http_group_dialog_fragment.json [file] 3 KB\n8. collect/frontend/page_data/data/server/webshell_editor_pool_panel_fragment.json [file] 24 KB\n9. collect/frontend/page_data/data/server/webshell_editor_pool_project_dialog_fragment.json [file] 11 KB\n10. collect/frontend/page_data/data/server/webshell_editor_pool_project_manage_dialog_fragment.json [file] 21 KB\n11. collect/frontend/page_data/data/server/webshell_editor_pool_route.json [file] 12 KB\n12. collect/frontend/page_data/data/server/webshell_editor_pool_source_fragment.json [file] 80 KB\n还有 2 条，展开或滚动查看后续结果",
+  "collapsed": {
+    "className": "co-ui-div agent-tool-float agent-tool-float-collapsed",
+    "height": 42,
+    "bodyVisible": false
+  },
+  "before": {
+    "x": 583,
+    "y": 195,
+    "width": 760,
+    "height": 496
+  },
+  "after": {
+    "x": 595,
+    "y": 255,
+    "width": 760,
+    "height": 496
+  },
+  "moved": true,
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-file-grep-detail-v1.png"
+}

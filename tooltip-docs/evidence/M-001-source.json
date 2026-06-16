@@ -1,0 +1,22 @@
+{
+  "task_id": "M-001",
+  "source_group": "模块处理",
+  "source_doc_text": "1.sql\nsql查询",
+  "read_at": "2026-05-07T08:04:29.422Z",
+  "title": "sql(sql查询)",
+  "textarea_count": 11,
+  "textarea_values": [
+    "module: sql",
+    "   用于数据库表查询,将sql查询出来的数据作为结果。虽然sql能运行任何增删改查，但是新增、修改、删除，尽量用模型修改model_update,模型删除model_delete，模型新增用model_save。\n   用渲染html的引擎，来渲染生成sql。基本上99%的场景都能渲染出来，剩下1%场景，是我没有遇到的，遇到了我会解决它。\n\n",
+    "  - key: user_list\n    module: sql\n    http: true\n    params:\n      search:\n        template: \"{{ if .search }}%{{.search}}%{{ end }}\"\n      page:\n        type: int\n        default: 1\n      size:\n        default: 20\n        type: int\n      start:\n        template: \" ({{.page}}-1) * {{.size}}\"\n        exec: true\n        type: int\n      pagination:\n        default: true\n      count:\n        default: true\n    data_file: user_list.sql\n    count_file: user_list_count.sql\n    pagination: \"[pagination]\"\n    count: \"[count]\"\n",
+    "select a.*,\n(\n   select GROUP_CONCAT(name )\n   from ldap_group lg\n   join role_ldap_group rlg on rlg.ldap_group_id =lg.ldap_group_id\n   where rlg.role_id =a.role_id\n) as ldap_names,\n(\n    select GROUP_CONCAT(lg.ldap_group_id)\n    from ldap_group lg\n    join role_ldap_group rlg   on rlg.ldap_group_id =lg.ldap_group_id\n    where rlg.role_id =a.role_id\n) as ldap_group_ids\nfrom (require(base.sql)) as a",
+    "select count(1) as count\nfrom (require('./base.sql')) a",
+    "select a.*\nfrom role a\nwhere 1=1\n{{ if .search }}\nand (\na.role_name like {{.search}}\nor a.role_code like {{.search}}\n)\n{{ end }}\norder by a.order_index desc\n{{ if  .pagination  }}\nlimit {{.start}} , {{.size}}\n{{ end }}",
+    "{{ if .ldap_group_id_list }}\nand ldap_group_id in ({{.ldap_group_id_list}})\n{{ end }}",
+    "{{ if .config_detail_list}}\nand (g.group_id,g.name) in({{ range $index,$item := .config_detail_list }} {{if $index}},{{end}} ({{$item.group_id}},{{$item.name_copy}}){{ end}})\n{{end}}",
+    "  - key: role_query\n    http: true\n    module: sql\n    params:\n      page:\n        type: int\n        default: 1\n      size:\n        default: 20\n        type: int\n      start:\n        template: \" ({{.page}}-1) * {{.size}}\"\n        type: int\n      pagination:\n        default: true\n      count:\n        default: true\n    data_file: role_query.sql\n    count: \"[count]\"\n    count_file: role_query_count.sql\n    pagination: pagination",
+    "  - key: jira_issue_slice\n    name: 获取jira信息\n    module: \"sql\"\n    data_source: 'jira'\n    http: true\n    data_file: jira_issue_slice.sql",
+    "# 以逗号分割\notherDataSource=jira\n#数据源\njiraDriverName=mysql\n# jira 数据源,otherDataSource的名称+DataSourceName\njiraDataSourceName=用户:密码@tcp(ip:3306)/jira?charset=utf8&loc=Local"
+  ],
+  "screenshot": "/data/project/sport/tooltip-docs/evidence/M-001-source.png"
+}

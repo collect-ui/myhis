@@ -1,0 +1,189 @@
+{
+  "tooltip": {
+    "show": false,
+    "trigger": "item"
+  },
+  "color": [
+    "#0001F7",
+    "#00B8FE",
+    "#00FFFF",
+    "#00FF68",
+    "#BEFE00",
+    "#FFFF00",
+    "#FFA800",
+    "#E10100"
+  ],
+  "angleAxis": {
+    "type": "category",
+    "data": [
+      "任家乐",
+      "张文曙",
+      "林敏",
+      "陈梓豪",
+      "刘思阳",
+      "周皓",
+      "谭剑飞",
+      "王同地",
+      "朱雯萱",
+      "王静怡",
+      "吴凯",
+      "欧阳玲玉",
+      "莫鑫宇",
+      "周定",
+      "陈瑜婷",
+      "周士杰",
+      "熊鑫卓",
+      "刘子明",
+      "彭成霖",
+      "王浩",
+      "李杨",
+      "盛繁莹",
+      "周施旋",
+      "谷佳乐",
+      "李云映",
+      "邓慧婷"
+    ],
+    "boundaryGap": true,
+    "axisTick": {
+      "show": false
+    },
+    "splitLine": {
+      "show": false,
+      "lineStyle": {
+        "color": "rgba(255,255,255,0.2)"
+      }
+    },
+    "axisLabel": {
+      "show": true,
+      "textStyle": {
+        "color": "#FFFFFF"
+      }
+    },
+    "axisLine": {
+      "show": false
+    }
+  },
+  "radiusAxis": {
+    "min": 0,
+    "max": 36,
+    "axisLabel": {
+      "show": false
+    },
+    "axisTick": {
+      "show": false
+    },
+    "axisLine": {
+      "show": false
+    },
+    "splitLine": {
+      "show": false
+    }
+  },
+  "legend": {
+    "orient": "horizontal",
+    "show": true,
+    "data": [
+      "前测",
+      "后测"
+    ],
+    "right": "8",
+    "bottom": "2",
+    "icon": "roundRect",
+    "itemGap": 10,
+    "itemHeight": 14,
+    "itemWidth": 14,
+    "inactiveColor": "#789",
+    "textStyle": {
+      "color": "#FFFFFF"
+    }
+  },
+  "polar": {
+    "radius": [
+      "20%",
+      "70%"
+    ],
+    "center": [
+      "50%",
+      "54%"
+    ]
+  },
+  "series": [
+    {
+      "type": "bar",
+      "data": [
+        22,
+        22,
+        22,
+        22,
+        23,
+        20,
+        21,
+        22,
+        23,
+        23,
+        25,
+        22,
+        20,
+        20,
+        25,
+        22,
+        24,
+        21,
+        20,
+        23,
+        23,
+        20,
+        24,
+        22,
+        25,
+        23
+      ],
+      "coordinateSystem": "polar",
+      "showBackground": true,
+      "backgroundStyle": {
+        "color": "rgba(180, 180, 180, 0.2)"
+      },
+      "name": "前测",
+      "stack": "a"
+    },
+    {
+      "type": "bar",
+      "data": [
+        6,
+        10,
+        6,
+        8,
+        10,
+        9,
+        6,
+        9,
+        6,
+        6,
+        15,
+        10,
+        8,
+        7,
+        7,
+        10,
+        11,
+        13,
+        8,
+        6,
+        12,
+        5,
+        10,
+        7,
+        9,
+        8
+      ],
+      "coordinateSystem": "polar",
+      "name": "后测",
+      "stack": "a",
+      "label": {
+        "show": true,
+        "position": "inside",
+        "color": "white"
+      }
+    }
+  ]
+}

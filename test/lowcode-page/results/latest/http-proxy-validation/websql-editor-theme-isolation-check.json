@@ -1,0 +1,351 @@
+{
+  "websqlUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "editorUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "fileName": "theme_isolation_1779093763009.txt",
+  "filePath": "/data/project/test/theme_isolation_1779093763009.txt",
+  "checks": {
+    "websqlInitialLight": true,
+    "websqlTyped": true,
+    "websqlSyntaxHighlighted": true,
+    "editorOpened": true,
+    "editorDark": true,
+    "editorSavedReadback": true,
+    "websqlAfterEditorLight": true,
+    "websqlTextUnaffected": true,
+    "editorAfterWebsqlDark": true,
+    "editorTextUnaffected": true,
+    "noConsoleErrors": true,
+    "noPageErrors": true,
+    "noFailedRequests": true
+  },
+  "theme": {
+    "websqlInitial": {
+      "scope": "websql",
+      "found": true,
+      "bodyBg": "rgb(255, 255, 255)",
+      "editorBg": "rgb(255, 255, 255)",
+      "marginBg": "rgb(255, 255, 255)",
+      "lineColor": "rgb(17, 24, 39)",
+      "tokenSamples": [
+        {
+          "text": "S",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "S",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(17, 24, 39)"
+      ],
+      "distinctTokenColorCount": 1,
+      "bodyBrightness": 255,
+      "editorBrightness": 255,
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "localTheme": "light",
+      "value": "SELECT name, type FROM sqlite_master WHERE type IN ('table','view') ORDER BY type, name;"
+    },
+    "websqlAfterTyping": {
+      "scope": "websql",
+      "found": true,
+      "bodyBg": "rgb(255, 255, 255)",
+      "editorBg": "rgb(255, 255, 255)",
+      "marginBg": "rgb(255, 255, 255)",
+      "lineColor": "rgb(17, 24, 39)",
+      "tokenSamples": [
+        {
+          "text": "SELECT COUNT(*) AS total FROM sqlite_master WHERE type = 'table' AND name LIKE 'theme_websql_1779093763009%'; -- theme_websql_1779093763009",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "SELECT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "COUNT",
+          "className": "mtk18",
+          "color": "rgb(126, 34, 206)"
+        },
+        {
+          "text": "(",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "*",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": ")",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "AS",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " total ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "FROM",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " sqlite_master ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "WHERE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " type ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "=",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": "'table'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": "AND",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " name ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(17, 24, 39)",
+        "rgb(29, 78, 216)",
+        "rgb(126, 34, 206)",
+        "rgb(71, 85, 105)",
+        "rgb(100, 116, 139)",
+        "rgb(180, 83, 9)",
+        "rgb(21, 128, 61)"
+      ],
+      "distinctTokenColorCount": 7,
+      "bodyBrightness": 255,
+      "editorBrightness": 255,
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "localTheme": "light",
+      "value": "SELECT COUNT(*) AS total FROM sqlite_master WHERE type = 'table' AND name LIKE 'theme_websql_1779093763009%'; -- theme_websql_1779093763009"
+    },
+    "editorBeforeTyping": {
+      "scope": "editor",
+      "found": true,
+      "bodyBg": "rgba(0, 0, 0, 0)",
+      "editorBg": "rgb(30, 30, 30)",
+      "marginBg": "rgb(30, 30, 30)",
+      "lineColor": "rgb(212, 212, 212)",
+      "tokenSamples": [],
+      "tokenColors": [],
+      "distinctTokenColorCount": 0,
+      "bodyBrightness": 0,
+      "editorBrightness": 30,
+      "monacoClass": "",
+      "localTheme": "",
+      "value": ""
+    },
+    "websqlAfterEditor": {
+      "scope": "websql",
+      "found": true,
+      "bodyBg": "rgb(255, 255, 255)",
+      "editorBg": "rgb(255, 255, 255)",
+      "marginBg": "rgb(255, 255, 255)",
+      "lineColor": "rgb(17, 24, 39)",
+      "tokenSamples": [
+        {
+          "text": "SELECT COUNT(*) AS total FROM sqlite_master WHERE type = 'table' AND name LIKE 'theme_websql_1779093763009%'; -- theme_websql_1779093763009",
+          "className": "",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "SELECT",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": "COUNT",
+          "className": "mtk18",
+          "color": "rgb(126, 34, 206)"
+        },
+        {
+          "text": "(",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "*",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": ")",
+          "className": "mtk9 bracket-highlighting-0",
+          "color": "rgb(71, 85, 105)"
+        },
+        {
+          "text": "AS",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " total ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "FROM",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " sqlite_master ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "WHERE",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " type ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        },
+        {
+          "text": "=",
+          "className": "mtk17",
+          "color": "rgb(100, 116, 139)"
+        },
+        {
+          "text": "'table'",
+          "className": "mtk20",
+          "color": "rgb(180, 83, 9)"
+        },
+        {
+          "text": "AND",
+          "className": "mtk8",
+          "color": "rgb(29, 78, 216)"
+        },
+        {
+          "text": " name ",
+          "className": "mtk1",
+          "color": "rgb(17, 24, 39)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(17, 24, 39)",
+        "rgb(29, 78, 216)",
+        "rgb(126, 34, 206)",
+        "rgb(71, 85, 105)",
+        "rgb(100, 116, 139)",
+        "rgb(180, 83, 9)",
+        "rgb(21, 128, 61)"
+      ],
+      "distinctTokenColorCount": 7,
+      "bodyBrightness": 255,
+      "editorBrightness": 255,
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "localTheme": "light",
+      "value": "SELECT COUNT(*) AS total FROM sqlite_master WHERE type = 'table' AND name LIKE 'theme_websql_1779093763009%'; -- theme_websql_1779093763009"
+    },
+    "editorAfterWebsql": {
+      "scope": "editor",
+      "found": true,
+      "bodyBg": "rgba(0, 0, 0, 0)",
+      "editorBg": "rgb(30, 30, 30)",
+      "marginBg": "rgb(30, 30, 30)",
+      "lineColor": "rgb(212, 212, 212)",
+      "tokenSamples": [
+        {
+          "text": "editor text theme_editor_1779093763009",
+          "className": "",
+          "color": "rgb(212, 212, 212)"
+        },
+        {
+          "text": "editor text theme_editor_1779093763009",
+          "className": "mtk1",
+          "color": "rgb(212, 212, 212)"
+        }
+      ],
+      "tokenColors": [
+        "rgb(212, 212, 212)"
+      ],
+      "distinctTokenColorCount": 1,
+      "bodyBrightness": 0,
+      "editorBrightness": 30,
+      "monacoClass": "",
+      "localTheme": "",
+      "value": "editor text theme_editor_1779093763009\n"
+    }
+  },
+  "screenshots": {
+    "websqlInitial": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-editor-theme-isolation-websql-initial.png",
+    "editorDark": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-editor-theme-isolation-editor-dark.png",
+    "websqlAfterEditor": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-editor-theme-isolation-websql-after-editor.png",
+    "editorAfterWebsql": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-editor-theme-isolation-editor-after-websql.png"
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "saveResponse": {
+    "count": 0,
+    "success": true,
+    "code": "0",
+    "msg": "保存文件成功",
+    "data": {
+      "path": "/data/project/test/theme_isolation_1779093763009.txt",
+      "size": 39,
+      "success": true
+    }
+  },
+  "readback": "editor text theme_editor_1779093763009\n",
+  "pass": true,
+  "cleanup": {
+    "ok": true,
+    "value": {
+      "count": 0,
+      "success": true,
+      "code": "0",
+      "msg": "成功",
+      "data": {
+        "project_code": "test",
+        "remote_result": {
+          "count": 1,
+          "operation": "delete",
+          "project_code": "test",
+          "removed": true,
+          "removed_count": 1,
+          "skipped_count": 0
+        }
+      }
+    },
+    "error": ""
+  }
+}

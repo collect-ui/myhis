@@ -1,0 +1,163 @@
+{
+  "tag": "layout-fit",
+  "className": "border",
+  "title": "大模型查询",
+  "initStore": {
+    "loading": false,
+    "dataList": [
+
+    ],
+    "searchForm": {
+      "search": "",
+      "page": 1,
+      "size": 20
+    }
+
+  },
+  "initAction": [
+
+  ],
+  "searchToolBar": [
+    {
+      "tag": "form",
+      "name": "search-form",
+      "initialValues": "${searchForm}",
+      "labelCol": {
+        "span": 4
+      },
+      "wrapperCol": {
+        "span": 19
+      },
+      "children": [
+        {
+          "tag": "row",
+          "children": [
+            {
+              "tag": "col",
+              "span": 10,
+              "children": [
+                {
+                  "tag": "form-item",
+                  "name": "name",
+                  "label": "名称",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "名称不能为空"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "placeholder": "名称",
+                      "allowClear": true
+                    }
+                  ]
+                },
+                {
+                  "tag": "form-item",
+                  "name": "feature",
+                  "label": "特征值",
+                  "rules": [
+                    {
+                      "required": true,
+                      "message": "特征值不能为空"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "input",
+                      "isTextarea": true,
+                      "placeholder": "特征值",
+                      "allowClear": true
+                    }
+                  ]
+                },
+
+                {
+                  "tag": "form-item",
+                  "label": "搜索",
+                  "children": [
+                    {
+                      "tag": "button",
+                      "type": "primary",
+                      "children": "${loading?'搜索中...':'搜索'}",
+                      "icon": "FaSearch",
+                      "loading": "${loading}",
+                      "action": [
+                        {
+                          "tag": "submit-form",
+                          "formName": "search-form"
+                        },
+                        {
+                          "tag": "ajax",
+                          "start": {
+                            "loading": true
+                          },
+                          "end": {
+                            "loading": false
+                          },
+                          "api": "post:/template_data/data?service=autodesk.chart",
+                          "appendFormFields": "search-form",
+                          "adapt": {
+                            "dataList": "${data}"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "children": [
+    {
+      "tag": "table",
+      "rowData": "${dataList}",
+      "columnDefs": [
+        {
+          "headerName": "#",
+          "width": 60,
+          "suppressSizeToFit": true,
+          "valueGetter": "node.rowIndex + 1",
+          "sortable": false,
+          "pinned": "left"
+        },
+        {
+
+          "headerName": "主材料",
+          "field": "name"
+        },
+        {
+          "width": 200,
+          "suppressSizeToFit": true,
+          "headerName": "主材料编码",
+          "field": "code"
+        },
+
+        {
+          "headerName": "关联材料",
+          "field": "link_name"
+        },
+        {
+
+          "width": 200,
+          "suppressSizeToFit": true,
+          "headerName": "关联材料编码",
+          "field": "link_code"
+        },
+        {
+          "width": 200,
+          "suppressSizeToFit": true,
+          "headerName": "关联材料系数",
+          "field": "coefficient"
+        }
+      ]
+    }
+  ]
+
+}

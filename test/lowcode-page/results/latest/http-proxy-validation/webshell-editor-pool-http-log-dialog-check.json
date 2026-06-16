@@ -1,0 +1,22 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "groupTitle": "test2",
+  "docTitle": "登录",
+  "interfacePanel": {
+    "clicked": true,
+    "dialogVisible": true,
+    "rowCount": 17,
+    "emptyStateVisible": false,
+    "errorVisible": false
+  },
+  "consolePanel": {
+    "clicked": true,
+    "dialogVisible": true,
+    "rowCount": 17,
+    "emptyStateVisible": false,
+    "errorVisible": false
+  },
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-http-log-dialog-check.png",
+  "pass": true,
+  "error": ""
+}

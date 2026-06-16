@@ -1,0 +1,6 @@
+{
+  "tag": "layout-fit",
+  "children": [
+    "{{to_json .feedback}}"
+  ]
+}

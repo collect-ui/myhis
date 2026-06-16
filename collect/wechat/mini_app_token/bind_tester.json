@@ -1,0 +1,9 @@
+{
+  "url": "https://api.weixin.qq.com/wxa/bind_tester?access_token={{.access_token}}",
+  "method": "post",
+  "header": {},
+  "result_json": true,
+  "data": {
+    "wechatid": "{{.wechat_id}}"
+  }
+}

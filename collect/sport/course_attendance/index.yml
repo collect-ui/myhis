@@ -1,0 +1,75 @@
+service:
+  - key: course_attendance_save
+    http: true
+    module: model_save
+    table: course_attendance
+    params:
+      course_attendance_id:
+        template: "{{uuid}}"
+      student_id:
+        check:
+          template: "{{must .student_id}}"
+          err_msg: "学生不能为空"
+      training_project_id:
+        check:
+          template: "{{must .training_project_id}}"
+          err_msg: "训练项目不能为空"
+      course_type:
+        check:
+          template: "{{must .course_type}}"
+          err_msg: "课程类型不能为空"
+      create_time:
+        template: "{{current_date_time}}"
+  - key: course_attendance_query
+    http: true
+    module: sql
+    params:
+      search:
+        template: "{{ if .search }}%{{.search}}%{{ end }}"
+      page:
+        type: int
+        default: 1
+      size:
+        default: 20
+        type: int
+      day:
+        default: ""
+      start_time:
+        default: ""
+      end_time:
+        default: ""
+      start:
+        template: " ({{.page}}-1) * {{.size}}"
+        exec: true
+        type: int
+      pagination:
+        default: true
+    data_file: course_attendance_query.sql
+    count_file: course_attendance_count.sql
+    pagination: pagination
+
+
+  - key: course_attendance_delete
+    http: true
+    module: model_delete
+    table: course_attendance
+    params:
+      course_attendance_id_list:
+        check:
+          template: "{{must .course_attendance_id_list}}"
+          err_msg: "课程签到不能为空"
+    filter:
+      course_attendance_id__in: "[course_attendance_id_list]"
+
+
+  - key: course_attendance_update
+    http: true
+    module: model_update
+    table: course_attendance
+    params:
+      course_attendance_id:
+        check:
+          template: "{{must .course_attendance_id}}"
+          err_msg: "签到不能为空"
+    filter:
+      course_attendance_id: "[course_attendance_id]"

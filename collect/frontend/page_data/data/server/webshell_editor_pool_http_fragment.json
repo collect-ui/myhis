@@ -1,0 +1,556 @@
+{
+  "key": "http",
+  "label": "HTTP目录",
+  "children": [
+    {
+      "tag": "layout-fit",
+      "searchToolBar": [
+        {
+          "tag": "form",
+          "name": "workspace-http-filter-form",
+          "layout": "inline",
+          "style": {
+            "display": "flex",
+            "alignItems": "center",
+            "width": "100%",
+            "minWidth": 0,
+            "marginBottom": 0
+          },
+          "initialValues": {
+            "keyword": ""
+          },
+          "submitOnEnter": true,
+          "action": [
+            {
+              "tag": "update-store",
+              "value": {
+                "workspaceHttpSearchKeyword": "${(()=>{const fn='workspace-http-filter-form';return (getFormValue(fn,'keyword')||'').trim();})()}"
+              }
+            },
+            {
+              "tag": "reload-init-action",
+              "group": "reload-workspace-http-tree"
+            }
+          ],
+          "children": [
+            {
+              "tag": "form-item",
+              "style": {
+                "marginInlineEnd": "6px",
+                "marginBottom": 0
+              },
+              "children": [
+                {
+                  "tag": "space",
+                  "isCompact": true,
+                  "children": [
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "type": "primary",
+                      "icon": "PlusOutlined",
+                      "title": "新增HTTP",
+                      "style": {
+                        "width": "28px",
+                        "padding": 0
+                      },
+                      "action": [
+                        {
+                          "tag": "update-store",
+                          "targetStore": "__parent__",
+                          "value": {
+                            "activeStore": "${__this__}",
+                            "workspaceHttpGroupTree": "${(()=>{const isDir=(n)=>n&&(n.is_dir==='1'||n.is_dir===1||n.is_dir===true);const walk=(arr)=>{if(!Array.isArray(arr)){return [];}return arr.filter(n=>isDir(n)).map(n=>Object.assign({},n,{children:walk(n.children||[])}));};return walk(workspaceHttpTree||[]);})()}",
+                            "workspaceHttpDocOp": "add",
+                            "workspaceHttpDocDialogVisible": true,
+                            "workspaceHttpDocFormType": "${(()=>{const selected=workspaceHttpTreeSelected||{};const isDir=selected&&(selected.is_dir==='1'||selected.is_dir===1||selected.is_dir===true);return String(isDir?'2':'service');})()}",
+                            "workspaceHttpDocForm": "${(()=>{const selected=workspaceHttpTreeSelected||{};const isDir=selected&&(selected.is_dir==='1'||selected.is_dir===1||selected.is_dir===true);const parentDir=isDir?(selected.id||selected.doc_group_id||''):(selected.parent_id||selected.doc_group_id||'');const type=isDir?'2':'service';return {collect_doc_id:'',doc_group_id:'',type:String(type),title:'',sub_title:'',parent_dir:String(parentDir||''),order_index:1,request_mode:'frontend',request_method:'post',request_url:'/template_data/data',request_headers:'{}',code:'{}',code_desc:'',code_result:'',important_list:[],params:[],result:[],demo:[]};})()}"
+                          }
+                        },
+                        {
+                          "tag": "reset-form",
+                          "targetStore": "__parent__",
+                          "formName": "workspace-http-doc-form"
+                        },
+                        {
+                          "tag": "update-form",
+                          "targetStore": "__parent__",
+                          "formName": "workspace-http-doc-form",
+                          "useStore": true,
+                          "value": "${(()=>{const selected=workspaceHttpTreeSelected||{};const isDir=selected&&(selected.is_dir==='1'||selected.is_dir===1||selected.is_dir===true);const parentDir=isDir?(selected.id||selected.doc_group_id||''):(selected.parent_id||selected.doc_group_id||'');const type=isDir?'2':'service';return {collect_doc_id:'',doc_group_id:'',type:String(type),title:'',sub_title:'',parent_dir:String(parentDir||''),order_index:1,request_mode:'frontend',request_method:'post',request_url:'/template_data/data',request_headers:'{}',code:'{}',code_desc:'',code_result:'',important_list:[],params:[],result:[],demo:[]};})()}"
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "button",
+                      "size": "small",
+                      "type": "default",
+                      "icon": "ApiOutlined",
+                      "title": "新开HTTP控制台",
+                      "style": {
+                        "width": "28px",
+                        "padding": 0
+                      },
+                      "action": [
+                        {
+                          "tag": "update-store",
+                          "value": {
+                            "workspaceHttpWorkbenchTabs": "${(()=>{const list=Array.isArray(workspaceHttpWorkbenchTabs)?workspaceHttpWorkbenchTabs:[];const maxSeq=list.reduce((max,item)=>{const key=String((item&&item.key)||'');if(!key.startsWith('console:standalone:')){return max;}const seq=parseInt(key.split(':').pop()||'0',10);return Number.isFinite(seq)&&seq>max?seq:max;},0);const nextSeq=maxSeq+1;const key='console:standalone:'+String(nextSeq);const label='接口控制台 '+String(nextSeq);return [...list,{key:key,label:label,tabType:'console',docId:'',docTitle:'',isStandalone:true}];})()}",
+                            "workspaceHttpWorkbenchActiveKey": "${(()=>{const list=Array.isArray(workspaceHttpWorkbenchTabs)?workspaceHttpWorkbenchTabs:[];const maxSeq=list.reduce((max,item)=>{const key=String((item&&item.key)||'');if(!key.startsWith('console:standalone:')){return max;}const seq=parseInt(key.split(':').pop()||'0',10);return Number.isFinite(seq)&&seq>max?seq:max;},0);return 'console:standalone:'+String(maxSeq+1);})()}",
+                            "workspaceHttpWorkbenchDocActiveKey": "",
+                            "workspaceHttpConsoleDocId": "",
+                            "workspaceHttpSelectedDoc": {},
+                            "workspaceHttpConsoleForm": {
+                              "request_method": "post",
+                              "request_mode": "frontend",
+                              "request_url": "/template_data/data",
+                              "request_headers": "{}",
+                              "request_body": "{}"
+                            },
+                            "workspaceHttpConsoleResponse": "",
+                            "workspaceHttpConsoleStatus": "已新开空白接口控制台",
+                            "workspaceHttpConsoleUpdatedAt": "${new Date().toISOString()}",
+                            "workspaceHttpDemoOpenKey": "0"
+                          }
+                        },
+                        {
+                          "tag": "update-form",
+                          "formName": "workspace-http-console-form",
+                          "value": {
+                            "request_method": "post",
+                            "request_mode": "frontend",
+                            "request_url": "/template_data/data",
+                            "request_headers": "{}",
+                            "request_body": "{}"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "form-item",
+              "name": "keyword",
+              "className": "flex1",
+              "style": {
+                "marginInlineEnd": "0",
+                "minWidth": 0,
+                "marginBottom": 0
+              },
+              "children": [
+                {
+                  "tag": "input",
+                  "size": "small",
+                  "allowClear": true,
+                  "placeholder": "搜索 HTTP 请求",
+                  "addonAfterIcon": "SearchOutlined",
+                  "addonAfterTitle": "搜索",
+                  "style": {
+                    "width": "100%"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "children": [
+        {
+          "tag": "tree",
+          "showLine": true,
+          "showIcon": true,
+          "className": "h100 workspace-http-tree",
+          "treeSelected": "${workspaceHttpTreeSelected}",
+          "treeData": "${[...workspaceHttpTree]}",
+          "treeKey": "${item.key}",
+          "treeTitle": "${item.display_title}",
+          "treeIcon": "${(item.is_dir==='1'||item.is_dir===1||item.is_dir===true)?'FolderOutlined':'ApiOutlined'}",
+          "selectAction": [
+            {
+              "tag": "update-store",
+              "value": {
+                "workspaceHttpTreeSelected": "${Object.assign({}, row, { title: row.title||row.display_title||row.name||'HTTP请求', display_title: row.display_title||row.title||row.name||'HTTP请求', is_dir: row.is_dir, doc_group_id: row.doc_group_id||'', collect_doc_id: row.collect_doc_id||'', parent_id: row.parent_id||'' })}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "value": {
+                "workspaceHttpConsoleDocId": "${String(row.collect_doc_id||row.id||'')}",
+                "workspaceHttpConsoleStatus": "${'正在加载 '+String(row.title||row.display_title||'HTTP请求')}",
+                "workspaceHttpConsoleUpdatedAt": "${new Date().toISOString()}",
+                "workspaceHttpConsoleResponse": "${(()=>{const id=String(row.collect_doc_id||row.id||'');const cache=(workspaceHttpDocCacheMap||{})[String(id)]||{};return String(cache.response||'');})()}",
+                "workspaceHttpWorkbenchDocActiveKey": "${String(row.collect_doc_id||row.id||'')}",
+                "workspaceHttpWorkbenchTabs": "${(()=>{const id=String(row.collect_doc_id||row.id||'');const title=String(row.title||row.display_title||'HTTP请求');const key='detail:'+id;const label=title+' · 接口详情';const list=Array.isArray(workspaceHttpWorkbenchTabs)?workspaceHttpWorkbenchTabs:[];if(!id){return list;}const idx=list.findIndex(item=>String(item.key||'')===key);if(idx>=0){return list.map((item,i)=>i===idx?Object.assign({},item,{label:label,tabType:'detail',docId:id,docTitle:title}):item);}return [...list,{key:key,label:label,tabType:'detail',docId:id,docTitle:title}];})()}",
+                "workspaceHttpSelectedDoc": "${(()=>{const id=String(row.collect_doc_id||row.id||'');const cache=(workspaceHttpDocCacheMap||{})[String(id)]||{};return cache.selectedDoc||workspaceHttpSelectedDoc||{};})()}",
+                "workspaceHttpConsoleForm": "${(()=>{const id=String(row.collect_doc_id||row.id||'');const cache=(workspaceHttpDocCacheMap||{})[String(id)]||{};return cache.consoleForm||workspaceHttpConsoleForm||{request_method:'post',request_mode:'frontend',request_url:'/template_data/data',request_headers:'{}',request_body:'{}'};})()}",
+                "workspaceHttpDemoOpenKey": "0",
+                "workspaceHttpWorkbenchActiveKey": "${(()=>{const id=String(row.collect_doc_id||row.id||'');return id?('detail:'+id):'';})()}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "group": "workspace-http-select-detail",
+              "api": "post:/template_data/data?service=config.doc_detail",
+              "data": {
+                "collect_doc_id": "${String(row.collect_doc_id||row.id||'')}",
+                "project_code": "${project_code||workspaceCurrent}"
+              },
+              "adapt": {
+                "workspaceHttpSelectedDoc": "${(()=>{const selected=row||{};const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return Object.assign({}, doc, { collect_doc_id:String(doc.collect_doc_id||selected.collect_doc_id||selected.id||''), title:doc.title||selected.title||selected.display_title||'', sub_title:doc.sub_title||selected.sub_title||'', request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend', request_method:method, request_url:url, request_headers:headersText, request_body:body, code_desc:doc.code_desc||'', code_result:(()=>{const rawResult=doc.code_result;if(rawResult===undefined||rawResult===null){return '';}if(typeof rawResult==='string'){return rawResult;}try{return JSON.stringify(rawResult,null,2);}catch(err){return String(rawResult);}})(), important_list:Array.isArray(data&&data.important_list)?data.important_list:[], params:Array.isArray(data&&data.params)?data.params:[], result:Array.isArray(data&&data.result)?data.result:[], demo:Array.isArray(data&&data.demo)?data.demo:[] });})()}",
+                "workspaceHttpConsoleForm": "${(()=>{const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return {request_method:method,request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend',request_url:url,request_headers:headersText,request_body:body};})()}",
+                "workspaceHttpConsoleStatus": "${'已加载 '+String(((data&&data.doc)||{}).title||row.title||row.display_title||'HTTP请求')}",
+                "workspaceHttpConsoleUpdatedAt": "${new Date().toISOString()}",
+                "workspaceHttpDocCacheMap": "${(()=>{const id=String(row.collect_doc_id||row.id||'');const selected=(()=>{const selected=row||{};const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return Object.assign({}, doc, { collect_doc_id:String(doc.collect_doc_id||selected.collect_doc_id||selected.id||''), title:doc.title||selected.title||selected.display_title||'', sub_title:doc.sub_title||selected.sub_title||'', request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend', request_method:method, request_url:url, request_headers:headersText, request_body:body, code_desc:doc.code_desc||'', code_result:(()=>{const rawResult=doc.code_result;if(rawResult===undefined||rawResult===null){return '';}if(typeof rawResult==='string'){return rawResult;}try{return JSON.stringify(rawResult,null,2);}catch(err){return String(rawResult);}})(), important_list:Array.isArray(data&&data.important_list)?data.important_list:[], params:Array.isArray(data&&data.params)?data.params:[], result:Array.isArray(data&&data.result)?data.result:[], demo:Array.isArray(data&&data.demo)?data.demo:[] });})();const form=(()=>{const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return {request_method:method,request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend',request_url:url,request_headers:headersText,request_body:body};})();const prev=workspaceHttpDocCacheMap||{};const next=Object.assign({},prev);const old=next[String(id)]||{};next[String(id)]={selectedDoc:selected,consoleForm:form,response:String(old.response||(()=>{const raw=((data&&data.doc)||{}).code_result;if(raw===undefined||raw===null){return '';}if(typeof raw==='string'){return raw;}try{return JSON.stringify(raw,null,2);}catch(err){return String(raw);}})()||workspaceHttpConsoleResponse||'')};return next;})()}",
+                "workspaceHttpDemoOpenKey": "0",
+                "workspaceHttpConsoleResponse": "${(()=>{const raw=((data&&data.doc)||{}).code_result;if(raw===undefined||raw===null){return '';}if(typeof raw==='string'){return raw;}try{return JSON.stringify(raw,null,2);}catch(err){return String(raw);}})()}"
+              },
+              "onSuccess": [
+                {
+                  "tag": "update-form",
+                  "formName": "workspace-http-console-form",
+                  "value": "${workspaceHttpConsoleForm}"
+                }
+              ]
+            },
+            {
+              "tag": "update-store",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "value": {
+                "workspaceHttpRecentList": "${(()=>{const id=String(row.id||'');const list=Array.isArray(workspaceHttpRecentList)?workspaceHttpRecentList:[];const idx=list.findIndex(item=>String(item.id)===id);const current={id,title:row.title||'HTTP请求',sub_title:row.sub_title||'',display_title:row.display_title||row.title||'HTTP请求',open_count:idx>=0?((list[idx].open_count||0)+1):1};return [current,...list.filter(item=>String(item.id)!==id)].slice(0,30);})()}"
+              }
+            },
+            {
+              "tag": "localstore",
+              "enable": "${!(row.is_dir==='1'||row.is_dir===1||row.is_dir===true)}",
+              "method": "write",
+              "key": "${'workspace-http-recent-'+(project_code||workspaceCurrent||'')}",
+              "value": "${(()=>{const id=String(row.id||'');const list=Array.isArray(workspaceHttpRecentList)?workspaceHttpRecentList:[];const idx=list.findIndex(item=>String(item.id)===id);const current={id,title:row.title||'HTTP请求',sub_title:row.sub_title||'',display_title:row.display_title||row.title||'HTTP请求',open_count:idx>=0?((list[idx].open_count||0)+1):1};return {list:[current,...list.filter(item=>String(item.id)!==id)].slice(0,30)};})()}"
+            }
+          ],
+          "rightMenu": [
+            {
+              "type": "item",
+              "icon": "PlusOutlined",
+              "code": "add-http",
+              "label": "新增接口",
+              "visible": "${node && (node.is_dir==='1'||node.is_dir===1||node.is_dir===true)}"
+            },
+            {
+              "type": "item",
+              "icon": "EditOutlined",
+              "code": "edit-group",
+              "label": "编辑分组",
+              "visible": "${node && (node.is_dir==='1'||node.is_dir===1||node.is_dir===true)}"
+            },
+            {
+              "type": "item",
+              "icon": "DeleteOutlined",
+              "code": "delete-group",
+              "label": "删除分组",
+              "visible": "${node && (node.is_dir==='1'||node.is_dir===1||node.is_dir===true)}"
+            },
+            {
+              "type": "item",
+              "icon": "EditOutlined",
+              "code": "edit-http",
+              "label": "编辑接口",
+              "visible": "${node && !(node.is_dir==='1'||node.is_dir===1||node.is_dir===true)}"
+            },
+            {
+              "type": "item",
+              "icon": "DeleteOutlined",
+              "code": "delete-http",
+              "label": "删除接口",
+              "visible": "${node && !(node.is_dir==='1'||node.is_dir===1||node.is_dir===true)}"
+            }
+          ],
+          "rightMenuAction": [
+            {
+              "tag": "reset-form",
+              "enable": "${['add-http','edit-http'].indexOf(item.code)>=0}",
+              "targetStore": "__parent__",
+              "formName": "workspace-http-doc-form"
+            },
+            {
+              "tag": "update-store",
+              "enable": "${['add-http','edit-http'].indexOf(item.code)>=0}",
+              "targetStore": "__parent__",
+              "value": {
+                "activeStore": "${__this__}",
+                "workspaceHttpGroupTree": "${(()=>{const isDir=(n)=>n&&(n.is_dir==='1'||n.is_dir===1||n.is_dir===true);const walk=(arr)=>{if(!Array.isArray(arr)){return [];}return arr.filter(n=>isDir(n)).map(n=>Object.assign({},n,{children:walk(n.children||[])}));};return walk(workspaceHttpTree||[]);})()}"
+              }
+            },
+            {
+              "tag": "reset-form",
+              "enable": "${item.code==='edit-group'}",
+              "targetStore": "__parent__",
+              "formName": "workspace-http-group-form"
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='edit-group'}",
+              "targetStore": "__parent__",
+              "value": {
+                "activeStore": "${__this__}"
+              }
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='add-http'}",
+              "targetStore": "__parent__",
+              "value": {
+                "workspaceHttpDocOp": "add",
+                "workspaceHttpDocDialogVisible": true,
+                "workspaceHttpDocFormType": "2",
+                "workspaceHttpDocForm": "${(()=>{const selected=node||row||workspaceHttpTreeSelected||{};const parentDir=(selected&&selected.is_dir)?(selected.id||selected.doc_group_id||''):(selected.parent_id||selected.doc_group_id||'');const projectCode=String(project_code||workspaceCurrent||'');return {collect_doc_id:'',doc_group_id:'',type:'2',project_code:projectCode,title:'',sub_title:'',parent_dir:String(parentDir||''),order_index:1,request_mode:'frontend',request_method:'post',request_url:'/template_data/data',request_headers:'{}',code:'{}',code_desc:'',code_result:'',important_list:[],params:[],result:[],demo:[]};})()}"
+              }
+            },
+            {
+              "tag": "update-form",
+              "enable": "${item.code==='add-http'}",
+              "targetStore": "__parent__",
+              "formName": "workspace-http-doc-form",
+              "value": "${(()=>{const selected=node||row||workspaceHttpTreeSelected||{};const parentDir=(selected&&selected.is_dir)?(selected.id||selected.doc_group_id||''):(selected.parent_id||selected.doc_group_id||'');const projectCode=String(project_code||workspaceCurrent||'');return {collect_doc_id:'',doc_group_id:'',type:'2',project_code:projectCode,title:'',sub_title:'',parent_dir:String(parentDir||''),order_index:1,request_mode:'frontend',request_method:'post',request_url:'/template_data/data',request_headers:'{}',code:'{}',code_desc:'',code_result:'',important_list:[],params:[],result:[],demo:[]};})()}"
+            },
+            {
+              "tag": "update-store",
+              "enable": "${item.code==='edit-group'}",
+              "targetStore": "__parent__",
+              "value": {
+                "workspaceHttpGroupOp": "edit",
+                "workspaceHttpGroupDialogVisible": true,
+                "workspaceHttpGroupForm": "${(()=>{const selected=node||row||{};const projectCode=String(selected.project_code||project_code||workspaceCurrent||'');return {doc_group_id:String(selected.doc_group_id||selected.id||''),project_code:projectCode,name:selected.title||selected.name||'',desc:selected.cn_title||selected.desc||'',order_index:Number(selected.order_index||1),type:String(selected.node_type||selected.type||'service')};})()}"
+              }
+            },
+            {
+              "tag": "update-form",
+              "enable": "${item.code==='edit-group'}",
+              "targetStore": "__parent__",
+              "formName": "workspace-http-group-form",
+              "value": "${(()=>{const selected=node||row||{};const projectCode=String(selected.project_code||project_code||workspaceCurrent||'');return {doc_group_id:String(selected.doc_group_id||selected.id||''),project_code:projectCode,name:selected.title||selected.name||'',desc:selected.cn_title||selected.desc||'',order_index:Number(selected.order_index||1),type:String(selected.node_type||selected.type||'service')};})()}"
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='edit-http'}",
+              "group": "load-http-detail",
+              "api": "post:/template_data/data?service=config.doc_detail",
+              "data": {
+                "collect_doc_id": "${(node||row||{}).collect_doc_id||(node||row||{}).id||''}",
+                "project_code": "${project_code||workspaceCurrent}"
+              },
+              "adapt": {
+                "workspaceHttpDocFormType": "${(()=>{const selected=node||row||{};const doc=(data&&data.doc)||{};return String(doc.type||selected.node_type||selected.type||'2');})()}",
+                "workspaceHttpDocForm": "${(()=>{const selected=node||row||{};const doc=(data&&data.doc)||{};const cloneList=(list)=>Array.isArray(list)?list.map(item=>Object.assign({},item)):[];const type=String(doc.type||selected.node_type||selected.type||'2');const raw=doc.code;const parsed=(()=>{try{return {ok:true,val:typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{})};}catch(err){return {ok:false,val:{}};}})();const codeObj=parsed.val||{};const body=(()=>{if(!parsed.ok){const txt=String(raw===undefined||raw===null?'':raw).trim();return txt||'{}';}const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;if(Object.keys(next).length>0){try{return JSON.stringify(next,null,2);}catch(err){}}const legacy=(codeObj&&typeof codeObj==='object'&&!Array.isArray(codeObj))?(codeObj.request_body!==undefined?codeObj.request_body:(codeObj.request_data!==undefined?codeObj.request_data:codeObj.body)):undefined;if(legacy!==undefined){if(typeof legacy==='string'){return legacy||'{}';}try{return JSON.stringify(legacy,null,2);}catch(err){return String(legacy);}}try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();const projectCode=String(doc.project_code||selected.project_code||project_code||workspaceCurrent||'');return {collect_doc_id:String(doc.collect_doc_id||selected.collect_doc_id||selected.id||''),doc_group_id:String(doc.parent_dir||selected.parent_id||selected.doc_group_id||''),type:type,project_code:projectCode,title:doc.title||selected.title||'',sub_title:doc.sub_title||selected.sub_title||'',parent_dir:String(doc.parent_dir||selected.parent_id||selected.doc_group_id||''),order_index:Number(doc.order_index||selected.order_index||1),request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend',request_method:String(doc.request_method||codeObj.method||'post').toLowerCase(),request_url:String(doc.request_url||codeObj.url||'/template_data/data'),request_headers:(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})(),code:body,code_desc:doc.code_desc||'',code_result:(()=>{const rawResult=doc.code_result;if(rawResult===undefined||rawResult===null){return '';}if(typeof rawResult==='string'){return rawResult;}return JSON.stringify(rawResult,null,2);})(),important_list:cloneList(data&&data.important_list),params:cloneList(data&&data.params),result:cloneList(data&&data.result),demo:cloneList(data&&data.demo)};})()}"
+              },
+              "onSuccess": [
+                {
+                  "tag": "update-store",
+                  "targetStore": "__parent__",
+                  "value": {
+                    "workspaceHttpDocDialogVisible": true,
+                    "workspaceHttpDocOp": "edit",
+                    "workspaceHttpDocFormType": "${workspaceHttpDocFormType}",
+                    "workspaceHttpDocForm": "${workspaceHttpDocForm}"
+                  }
+                },
+                {
+                  "tag": "reset-form",
+                  "targetStore": "__parent__",
+                  "formName": "workspace-http-doc-form"
+                },
+                {
+                  "tag": "update-form",
+                  "targetStore": "__parent__",
+                  "formName": "workspace-http-doc-form",
+                  "value": "${workspaceHttpDocForm}"
+                }
+              ]
+            },
+            {
+              "tag": "confirm",
+              "enable": "${item.code==='delete-group'}",
+              "title": "确认提示",
+              "content": "${(()=>{const current=node||row||{};return '确认删除分组【'+(current.title||current.display_title||current.name||'未命名')+'】吗？删除后该分组下的接口也会一并失效。';})()}"
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='delete-group'}",
+              "showResultMsg": true,
+              "api": "post:/template_data/data?service=config.doc_group_delete",
+              "data": {
+                "project_code": "${project_code||workspaceCurrent}",
+                "doc_group_list": "${(()=>{const current=node||row||{};const projectCode=String(current.project_code||project_code||workspaceCurrent||'');return [{doc_group_id:String(current.doc_group_id||current.id||''),name:current.title||current.display_title||current.name||'',desc:current.sub_title||current.cn_title||current.desc||'',type:current.node_type||current.type||'service',project_code:projectCode,order_index:Number(current.order_index||1)}];})()}"
+              }
+            },
+            {
+              "tag": "confirm",
+              "enable": "${item.code==='delete-http'}",
+              "title": "确认提示",
+              "content": "${(()=>{const current=node||row||{};return '确认删除接口【'+(current.title||current.display_title||current.name||'未命名')+'】吗？';})()}"
+            },
+            {
+              "tag": "ajax",
+              "enable": "${item.code==='delete-http'}",
+              "showResultMsg": true,
+              "api": "post:/template_data/data?service=config.doc_delete",
+              "data": {
+                "project_code": "${project_code||workspaceCurrent}",
+                "collect_doc_id_list": "${[String((node||row||{}).collect_doc_id||(node||row||{}).id||'')]}"
+              }
+            },
+            {
+              "tag": "reload-init-action",
+              "enable": "${['delete-group','delete-http'].indexOf(item.code)>=0}",
+              "group": "reload-workspace-http-tree"
+            }
+          ]
+        }
+      ],
+      "bottomToolBar": [
+        {
+          "tag": "layout-fit",
+          "title": "常用HTTP请求",
+          "style": {
+            "minHeight": "120px",
+            "maxHeight": "260px",
+            "overflow": "auto"
+          },
+          "children": [
+            {
+              "tag": "listview",
+              "itemData": "${[...workspaceHttpRecentList]}",
+              "keyField": "id",
+              "rowClickAction": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "workspaceHttpConsoleDocId": "${String(row.id||'')}",
+                    "workspaceHttpTreeSelected": "${Object.assign({}, workspaceHttpTreeSelected||{}, { id: String(row.id||''), collect_doc_id: String(row.id||''), title: row.title||row.display_title||'HTTP请求', display_title: row.display_title||row.title||'HTTP请求', sub_title: row.sub_title||'' })}",
+                    "workspaceHttpConsoleStatus": "${'正在加载 '+String(row.title||row.display_title||'HTTP请求')}",
+                    "workspaceHttpConsoleUpdatedAt": "${new Date().toISOString()}",
+                    "workspaceHttpConsoleResponse": "${(()=>{const id=String(row.id||'');const cache=(workspaceHttpDocCacheMap||{})[String(id)]||{};return String(cache.response||'');})()}",
+                    "workspaceHttpWorkbenchDocActiveKey": "${String(row.id||'')}",
+                    "workspaceHttpWorkbenchTabs": "${(()=>{const id=String(row.id||'');const title=String(row.title||row.display_title||'HTTP请求');const key='detail:'+id;const label=title+' · 接口详情';const list=Array.isArray(workspaceHttpWorkbenchTabs)?workspaceHttpWorkbenchTabs:[];if(!id){return list;}const idx=list.findIndex(item=>String(item.key||'')===key);if(idx>=0){return list.map((item,i)=>i===idx?Object.assign({},item,{label:label,tabType:'detail',docId:id,docTitle:title}):item);}return [...list,{key:key,label:label,tabType:'detail',docId:id,docTitle:title}];})()}",
+                    "workspaceHttpSelectedDoc": "${(()=>{const id=String(row.id||'');const cache=(workspaceHttpDocCacheMap||{})[String(id)]||{};return cache.selectedDoc||workspaceHttpSelectedDoc||{};})()}",
+                    "workspaceHttpConsoleForm": "${(()=>{const id=String(row.id||'');const cache=(workspaceHttpDocCacheMap||{})[String(id)]||{};return cache.consoleForm||workspaceHttpConsoleForm||{request_method:'post',request_mode:'frontend',request_url:'/template_data/data',request_headers:'{}',request_body:'{}'};})()}",
+                    "workspaceHttpDemoOpenKey": "0",
+                    "workspaceHttpWorkbenchActiveKey": "${(()=>{const id=String(row.id||'');return id?('detail:'+id):'';})()}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "group": "workspace-http-recent-select-detail",
+                  "api": "post:/template_data/data?service=config.doc_detail",
+                  "data": {
+                    "collect_doc_id": "${String(row.id||'')}",
+                    "project_code": "${project_code||workspaceCurrent}"
+                  },
+                  "adapt": {
+                    "workspaceHttpSelectedDoc": "${(()=>{const selected=row||{};const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return Object.assign({}, doc, { collect_doc_id:String(doc.collect_doc_id||selected.id||''), title:doc.title||selected.title||selected.display_title||'', sub_title:doc.sub_title||selected.sub_title||'', request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend', request_method:method, request_url:url, request_headers:headersText, request_body:body, code_desc:doc.code_desc||'', code_result:(()=>{const rawResult=doc.code_result;if(rawResult===undefined||rawResult===null){return '';}if(typeof rawResult==='string'){return rawResult;}try{return JSON.stringify(rawResult,null,2);}catch(err){return String(rawResult);}})(), important_list:Array.isArray(data&&data.important_list)?data.important_list:[], params:Array.isArray(data&&data.params)?data.params:[], result:Array.isArray(data&&data.result)?data.result:[], demo:Array.isArray(data&&data.demo)?data.demo:[] });})()}",
+                    "workspaceHttpConsoleForm": "${(()=>{const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return {request_method:method,request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend',request_url:url,request_headers:headersText,request_body:body};})()}",
+                    "workspaceHttpConsoleStatus": "${'已加载 '+String(((data&&data.doc)||{}).title||row.title||row.display_title||'HTTP请求')}",
+                    "workspaceHttpConsoleUpdatedAt": "${new Date().toISOString()}",
+                    "workspaceHttpDocCacheMap": "${(()=>{const id=String(row.id||'');const selected=(()=>{const selected=row||{};const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return Object.assign({}, doc, { collect_doc_id:String(doc.collect_doc_id||selected.id||''), title:doc.title||selected.title||selected.display_title||'', sub_title:doc.sub_title||selected.sub_title||'', request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend', request_method:method, request_url:url, request_headers:headersText, request_body:body, code_desc:doc.code_desc||'', code_result:(()=>{const rawResult=doc.code_result;if(rawResult===undefined||rawResult===null){return '';}if(typeof rawResult==='string'){return rawResult;}try{return JSON.stringify(rawResult,null,2);}catch(err){return String(rawResult);}})(), important_list:Array.isArray(data&&data.important_list)?data.important_list:[], params:Array.isArray(data&&data.params)?data.params:[], result:Array.isArray(data&&data.result)?data.result:[], demo:Array.isArray(data&&data.demo)?data.demo:[] });})();const form=(()=>{const doc=(data&&data.doc)||{};const raw=doc.code;const codeObj=(()=>{try{return typeof raw==='string'?JSON.parse(raw||'{}'):(raw||{});}catch(err){return {};}})();const method=String(doc.request_method||codeObj.method||'post').toLowerCase();const url=String(doc.request_url||codeObj.url||'/template_data/data');const headersText=(()=>{const rawHeaders=doc.request_headers;if(rawHeaders!==undefined&&rawHeaders!==null&&String(rawHeaders).trim()!==''){try{return typeof rawHeaders==='string'?JSON.stringify(JSON.parse(rawHeaders||'{}'),null,2):JSON.stringify(rawHeaders||{},null,2);}catch(err){return String(rawHeaders);}}try{return JSON.stringify(codeObj._request_headers||{},null,2);}catch(err){return '{}';}})();const body=(()=>{const next=Object.assign({},codeObj||{});delete next.method;delete next.url;delete next._request_mode;delete next._request_headers;try{return JSON.stringify(next,null,2);}catch(err){return '{}';}})();return {request_method:method,request_mode:String(doc.request_mode||codeObj._request_mode||'frontend')==='backend'?'backend':'frontend',request_url:url,request_headers:headersText,request_body:body};})();const prev=workspaceHttpDocCacheMap||{};const next=Object.assign({},prev);const old=next[String(id)]||{};next[String(id)]={selectedDoc:selected,consoleForm:form,response:String(old.response||(()=>{const raw=((data&&data.doc)||{}).code_result;if(raw===undefined||raw===null){return '';}if(typeof raw==='string'){return raw;}try{return JSON.stringify(raw,null,2);}catch(err){return String(raw);}})()||workspaceHttpConsoleResponse||'')};return next;})()}",
+                    "workspaceHttpDemoOpenKey": "0",
+                    "workspaceHttpConsoleResponse": "${(()=>{const raw=((data&&data.doc)||{}).code_result;if(raw===undefined||raw===null){return '';}if(typeof raw==='string'){return raw;}try{return JSON.stringify(raw,null,2);}catch(err){return String(raw);}})()}"
+                  },
+                  "onSuccess": [
+                    {
+                      "tag": "update-form",
+                      "formName": "workspace-http-console-form",
+                      "value": "${workspaceHttpConsoleForm}"
+                    }
+                  ]
+                },
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "workspaceHttpRecentList": "${(()=>{const id=String(row.id||'');const list=Array.isArray(workspaceHttpRecentList)?workspaceHttpRecentList:[];const idx=list.findIndex(item=>String(item.id)===id);const current={id,title:row.title||'HTTP请求',sub_title:row.sub_title||'',display_title:row.display_title||row.title||'HTTP请求',open_count:idx>=0?((list[idx].open_count||0)+1):((row.open_count||0)+1||1)};return [current,...list.filter(item=>String(item.id)!==id)].slice(0,30);})()}"
+                  }
+                },
+                {
+                  "tag": "localstore",
+                  "method": "write",
+                  "key": "${'workspace-http-recent-'+(project_code||workspaceCurrent||'')}",
+                  "value": "${(()=>{const id=String(row.id||'');const list=Array.isArray(workspaceHttpRecentList)?workspaceHttpRecentList:[];const idx=list.findIndex(item=>String(item.id)===id);const current={id,title:row.title||'HTTP请求',sub_title:row.sub_title||'',display_title:row.display_title||row.title||'HTTP请求',open_count:idx>=0?((list[idx].open_count||0)+1):((row.open_count||0)+1||1)};return {list:[current,...list.filter(item=>String(item.id)!==id)].slice(0,30)};})()}"
+                }
+              ],
+              "itemAttr": {
+                "tag": "div",
+                "visible": "${!!row.id}",
+                "style": {
+                  "padding": "4px 8px",
+                  "borderBottom": "1px solid #f3f4f6",
+                  "cursor": "pointer"
+                },
+                "children": [
+                  {
+                    "tag": "div",
+                    "style": {
+                      "display": "flex",
+                      "alignItems": "center",
+                      "justifyContent": "space-between",
+                      "fontSize": "12px",
+                      "fontWeight": 500,
+                      "whiteSpace": "nowrap",
+                      "overflow": "hidden",
+                      "textOverflow": "ellipsis"
+                    },
+                    "children": [
+                      {
+                        "tag": "span",
+                        "style": {
+                          "whiteSpace": "nowrap",
+                          "overflow": "hidden",
+                          "textOverflow": "ellipsis",
+                          "paddingRight": "8px"
+                        },
+                        "children": "${row.title||'HTTP请求'}"
+                      },
+                      {
+                        "tag": "span",
+                        "style": {
+                          "fontSize": "10px",
+                          "fontWeight": 400,
+                          "color": "#475569",
+                          "background": "#e2e8f0",
+                          "padding": "0 6px",
+                          "borderRadius": "10px",
+                          "lineHeight": "16px",
+                          "flexShrink": 0
+                        },
+                        "children": "${'打开'+(row.open_count||0)+'次'}"
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "div",
+                    "style": {
+                      "fontSize": "11px",
+                      "color": "#6b7280",
+                      "whiteSpace": "nowrap",
+                      "overflow": "hidden",
+                      "textOverflow": "ellipsis"
+                    },
+                    "children": "${row.sub_title||''}"
+                  }
+                ]
+              },
+              "joinAttr": {
+                "tag": "div",
+                "style": {
+                  "height": "1px",
+                  "background": "#f8fafc"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+{
+  "baseUrl": "http://127.0.0.1:8015",
+  "standaloneUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "webshellUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "checks": {
+    "apiCursor": true,
+    "apiManualRollback": true,
+    "apiDirectEvent": true,
+    "apiEventList": true,
+    "standaloneOpened": true,
+    "standaloneDark": true,
+    "webshellOpenedNoLogin": true,
+    "webshellDark": true,
+    "builtinMySQLDefaultHost": true,
+    "mysqlOptionInNewConnection": true,
+    "mysqlFieldsVisible": true,
+    "queryFirstPage": true,
+    "queryNextPage": true,
+    "queryLoadMore": true,
+    "queryEmptyGrid": true,
+    "favoriteSaved": true,
+    "favoriteNamed": true,
+    "favoriteTree": true,
+    "quickImportDialog": true,
+    "favoriteMultilevelTree": true,
+    "favoriteNoNestedModal": true,
+    "favoriteInlineEdit": true,
+    "favoriteFolderCreate": true,
+    "favoriteExistingFolderNestedCreate": true,
+    "favoriteExistingFolderNestedRetained": true,
+    "favoriteDatabasePersisted": true,
+    "favoriteFolderUpdate": true,
+    "favoriteFolderDelete": true,
+    "favoriteFolderCascadeUpdate": true,
+    "favoriteEdit": true,
+    "favoriteDelete": true,
+    "favoriteCopy": true,
+    "recentCopy": true,
+    "recentDatabasePersisted": true,
+    "manualPendingUi": true,
+    "manualRollbackUi": true
+  },
+  "themeChecks": [
+    {
+      "label": "standalone",
+      "bodyBg": "rgb(255, 255, 255)",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "localTheme": "light",
+      "ok": true
+    },
+    {
+      "label": "standalone:after-add-tab",
+      "bodyBg": "rgb(255, 255, 255)",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "localTheme": "light",
+      "ok": true
+    },
+    {
+      "label": "webshell",
+      "bodyBg": "rgb(255, 255, 255)",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "localTheme": "light",
+      "ok": true
+    },
+    {
+      "label": "webshell:after-add-tab",
+      "bodyBg": "rgb(255, 255, 255)",
+      "editorBg": "rgb(255, 255, 255)",
+      "monacoClass": "sport-ui-local-monaco-theme-light",
+      "localTheme": "light",
+      "ok": true
+    }
+  ],
+  "api": {
+    "cursorFirst": {
+      "rowCount": 50,
+      "hasNext": true,
+      "nextCursor": 50
+    },
+    "cursorSecond": {
+      "rowCount": 10,
+      "hasPrev": true,
+      "hasNext": false,
+      "prevCursor": 0
+    },
+    "manual": {
+      "eventId": "websql_event_0bd72570-eb91-4a55-a972-d62daa6c42b9",
+      "pendingCommit": true,
+      "commitStatus": "pending"
+    },
+    "rollback": {
+      "commit_status": "rolled_back",
+      "event_id": "websql_event_0bd72570-eb91-4a55-a972-d62daa6c42b9",
+      "finished_at": "2026-05-18T16:46:01.074854249+08:00"
+    },
+    "direct": {
+      "eventId": "websql_event_14201230-abe5-4999-a4cc-a683c54f1d6f",
+      "commitStatus": "direct_committed"
+    },
+    "events": {
+      "count": 5,
+      "pendingCount": 0,
+      "latestStatuses": [
+        "direct_committed",
+        "rolled_back",
+        "rolled_back",
+        "direct_committed",
+        "rolled_back"
+      ]
+    },
+    "recent": {
+      "count": 11,
+      "topIds": [
+        "websql_recent_576063677",
+        "websql_recent_1548872918",
+        "websql_recent_3272088482",
+        "websql_recent_1010612123",
+        "websql_recent_1983672119"
+      ]
+    }
+  },
+  "uiResponses": {
+    "builtinConnections": [
+      "本地 SQLite./database/price.db",
+      "MySQL202.140.140.117:3306"
+    ],
+    "builtinMySQLConnection": "MySQL202.140.140.117:3306",
+    "loadMore": {
+      "columns": [
+        {
+          "field": "n",
+          "filter": true,
+          "header": "n",
+          "nullable": true,
+          "resizable": true,
+          "sortable": true,
+          "type": ""
+        }
+      ],
+      "cursor_offset": 50,
+      "driver": "sqlite",
+      "duration_ms": 0,
+      "executed_at": "2026-05-18T16:46:25.514335197+08:00",
+      "has_next": false,
+      "has_prev": true,
+      "max_rows": 500,
+      "next_cursor": -1,
+      "page_size": 50,
+      "prev_cursor": 0,
+      "row_count": 10,
+      "rows": [
+        {
+          "n": "51"
+        },
+        {
+          "n": "52"
+        },
+        {
+          "n": "53"
+        },
+        {
+          "n": "54"
+        },
+        {
+          "n": "55"
+        },
+        {
+          "n": "56"
+        },
+        {
+          "n": "57"
+        },
+        {
+          "n": "58"
+        },
+        {
+          "n": "59"
+        },
+        {
+          "n": "60"
+        }
+      ],
+      "skipped_rows": 50,
+      "statement_type": "with",
+      "truncated": false
+    },
+    "nextPage": {
+      "columns": [
+        {
+          "field": "n",
+          "filter": true,
+          "header": "n",
+          "nullable": true,
+          "resizable": true,
+          "sortable": true,
+          "type": ""
+        }
+      ],
+      "cursor_offset": 50,
+      "driver": "sqlite",
+      "duration_ms": 0,
+      "executed_at": "2026-05-18T16:46:26.694512882+08:00",
+      "has_next": false,
+      "has_prev": true,
+      "max_rows": 500,
+      "next_cursor": -1,
+      "page_size": 50,
+      "prev_cursor": 0,
+      "row_count": 10,
+      "rows": [
+        {
+          "n": "51"
+        },
+        {
+          "n": "52"
+        },
+        {
+          "n": "53"
+        },
+        {
+          "n": "54"
+        },
+        {
+          "n": "55"
+        },
+        {
+          "n": "56"
+        },
+        {
+          "n": "57"
+        },
+        {
+          "n": "58"
+        },
+        {
+          "n": "59"
+        },
+        {
+          "n": "60"
+        }
+      ],
+      "skipped_rows": 50,
+      "statement_type": "with",
+      "truncated": false
+    },
+    "emptyQuery": {
+      "row_count": 0,
+      "column_count": 1,
+      "statement_type": "select"
+    },
+    "emptyQueryRender": {
+      "gridVisible": false,
+      "emptyVisible": true,
+      "execInfoVisible": false,
+      "text": "连接\n本地 SQLite\n./database/price.db\nMySQL\n202.140.140.117:3306\nmain\nTables (82)\nViews (0)\nIndexes (32)\n执行\n收藏\n快捷引入\n手动\n直提\nPing\nDDL\n左右\n上下\n查询完成 · 0 行 · 0ms\nSQL 1\n本地 SQLite\nsqlite\n1\nSELECT 1 AS n WHERE 1=0;\n0 行 · 16:46:27\n50 行 · 16:46:26\n50 行 · 16:46:25\n查询结果为空"
+    },
+    "recentReloadQuery": {
+      "code": "0",
+      "count": 11,
+      "sample": [
+        "WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x+1 FROM cnt WHERE x<60) SELECT x AS n FROM cnt ORDER BY x;",
+        "CREATE TEMP TABLE websql_ui_tmp(id INTEGER);",
+        "SELECT a.project_code, a.project_name FROM sys_projects a WHERE IFNULL(a.flag_del, '0') = '0';",
+        "select \r\nattachment_id\r\n\r\nfrom attachment",
+        "SELECT \r\n    a.project_code, \r\n    a.project_name\r\nFROM sys_projects a \r\nWHERE IFNULL(a.flag_del, '0') = '0'"
+      ]
+    },
+    "rollback": {
+      "commit_status": "rolled_back",
+      "event_id": "websql_event_27eda5ec-6260-483d-ba7f-3eb6130a0470",
+      "finished_at": "2026-05-18T16:46:51.055982217+08:00"
+    },
+    "rollbackRequest": {
+      "service": "webshell.websql_execute",
+      "event_id": "websql_event_27eda5ec-6260-483d-ba7f-3eb6130a0470",
+      "operation": "rollback"
+    }
+  },
+  "clipboard": {
+    "favorite": "WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x+1 FROM cnt WHERE x<60) SELECT x AS n FROM cnt ORDER BY x;",
+    "recent": "WITH RECURSIVE cnt(x) AS (SELECT 1 UNION ALL SELECT x+1 FROM cnt WHERE x<60) SELECT x AS n FROM cnt ORDER BY x;"
+  },
+  "screenshots": {
+    "standalone": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-pool-regression-standalone.png",
+    "webshell": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-pool-regression-webshell.png",
+    "final": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-pool-regression-final.png"
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true,
+  "error": "",
+  "favoriteCleanupCount": 1
+}

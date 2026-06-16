@@ -1,0 +1,10 @@
+{
+  "url": "https://api.weixin.qq.com/cgi-bin/token",
+  "method": "GET",
+  "result_json": true,
+  "data": {
+    "grant_type": "client_credential",
+    "appid": "{{get_key `appid`}}",
+    "secret": "{{get_key `secret`}}"
+  }
+}

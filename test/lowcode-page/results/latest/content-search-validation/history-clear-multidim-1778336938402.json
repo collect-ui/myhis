@@ -1,0 +1,69 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "scenario_with_clear": [
+    {
+      "round": 1,
+      "afterClear": 0,
+      "afterOpen": 1
+    },
+    {
+      "round": 2,
+      "afterClear": 0,
+      "afterOpen": 1
+    },
+    {
+      "round": 3,
+      "afterClear": 0,
+      "afterOpen": 1
+    },
+    {
+      "round": 4,
+      "afterClear": 0,
+      "afterOpen": 1
+    },
+    {
+      "round": 5,
+      "afterClear": 0,
+      "afterOpen": 1
+    },
+    {
+      "round": 6,
+      "afterClear": 0,
+      "afterOpen": 1
+    }
+  ],
+  "scenario_without_clear": [
+    {
+      "round": 1,
+      "count": 1
+    },
+    {
+      "round": 2,
+      "count": 2
+    },
+    {
+      "round": 3,
+      "count": 3
+    },
+    {
+      "round": 4,
+      "count": 4
+    },
+    {
+      "round": 5,
+      "count": 5
+    },
+    {
+      "round": 6,
+      "count": 6
+    }
+  ],
+  "scenario_clear_then_refresh": [
+    {
+      "afterClear": 0,
+      "afterRefresh": 0,
+      "afterOpen": 1
+    }
+  ],
+  "pass": true
+}

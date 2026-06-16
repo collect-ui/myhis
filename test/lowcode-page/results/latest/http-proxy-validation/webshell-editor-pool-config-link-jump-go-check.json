@@ -1,0 +1,46 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectCode": "autodesk",
+  "projectName": "后端客户端",
+  "startedAt": "2026-05-07T09:03:52.659Z",
+  "expected": {
+    "syncIndexPath": "/data/project/sport/windows/moon-windows-amd64/collect/config/sync/index.yml",
+    "tableFilePath": "/data/project/sport/model/base/collect_doc_important.gen.go",
+    "tableLine": 7,
+    "modifyConfigPath": "/data/project/sport/windows/moon-windows-amd64/collect/config/sync/doc_modify.json",
+    "moduleImplPath": "/data/project/collect/src/collect/service_imp/module_empty.go",
+    "moduleImplLine": 8,
+    "handlerImplPaths": {
+      "service2field": "/data/project/collect/src/collect/service_imp/handler_params_service2field.go",
+      "get_modify_data": "/data/project/collect/src/collect/service_imp/handler_params_get_modify_data.go",
+      "filter_arr": "/data/project/collect/src/collect/service_imp/handler_params_filter_arr.go",
+      "params2result": "/data/project/collect/src/collect/service_imp/handler_params_params2result.go"
+    },
+    "docIndexPath": "/data/project/sport/windows/moon-windows-amd64/collect/config/doc/index.yml",
+    "docQueryLine": 377
+  },
+  "steps": {
+    "openProject": true,
+    "openSyncIndex": false,
+    "jumpTable": false,
+    "jumpModifyConfig": false,
+    "jumpModuleImpl": false,
+    "jumpHandlerImpl": false,
+    "jumpServiceRef": false
+  },
+  "details": {
+    "tableJump": {},
+    "modifyConfigJump": {},
+    "moduleJump": {},
+    "handlerJump": {},
+    "serviceJump": {}
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-config-link-jump-go-check.fail.png",
+  "error": "Error: 未成功打开 collect/config/sync/index.yml\n    at /data/project/sport/test/lowcode-page/scripts/frontend/webshell_editor_pool_config_link_jump_go_check.js:536:13",
+  "pass": false,
+  "finishedAt": "2026-05-07T09:04:26.628Z"
+}

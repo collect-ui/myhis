@@ -1,0 +1,106 @@
+{
+  "pageUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "finalUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "loadedWebSQLAssets": [
+    "http://127.0.0.1:8015/collect-ui/assets/workspace-websql-CBVYWgEB.css",
+    "http://127.0.0.1:8015/collect-ui/assets/workspace-websql-C5sncdC9.js"
+  ],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-error-toolbar-check.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "toolbarText": "执行失败",
+  "toolbarTitle": "执行失败",
+  "errorText": "执行SQL失败: Error 1045 (28000): Access denied for user 'root'@'example' (using password: YES). 这是一条用于验证布局的很长错误信息，不能进入 WebSQL 执行工具栏，否则按钮区域会被挤压、换行或重叠；完整错误应只展示在下方 Results 错误面板中。",
+  "toolbarRect": {
+    "left": 236,
+    "top": 103,
+    "right": 1280,
+    "bottom": 135,
+    "width": 1044,
+    "height": 32
+  },
+  "leftRect": {
+    "left": 242,
+    "top": 106.5,
+    "right": 546.390625,
+    "bottom": 130.5,
+    "width": 304.390625,
+    "height": 24
+  },
+  "rightRect": {
+    "left": 552.390625,
+    "top": 110.5,
+    "right": 1274,
+    "bottom": 126.5,
+    "width": 721.609375,
+    "height": 16
+  },
+  "statusRect": {
+    "left": 1230,
+    "top": 110.5,
+    "right": 1274,
+    "bottom": 126.5,
+    "width": 44,
+    "height": 16
+  },
+  "buttonRects": [
+    {
+      "text": "执行",
+      "left": 242,
+      "top": 106.5,
+      "right": 300,
+      "bottom": 130.5,
+      "width": 58,
+      "height": 24
+    },
+    {
+      "text": "Ping",
+      "left": 304,
+      "top": 106.5,
+      "right": 357.03125,
+      "bottom": 130.5,
+      "width": 53.03125,
+      "height": 24
+    },
+    {
+      "text": "Schema",
+      "left": 361.03125,
+      "top": 106.5,
+      "right": 432.390625,
+      "bottom": 130.5,
+      "width": 71.359375,
+      "height": 24
+    },
+    {
+      "text": "左右",
+      "left": 436.390625,
+      "top": 106.5,
+      "right": 489.390625,
+      "bottom": 130.5,
+      "width": 53,
+      "height": 24
+    },
+    {
+      "text": "上下",
+      "left": 493.390625,
+      "top": 106.5,
+      "right": 546.390625,
+      "bottom": 130.5,
+      "width": 53,
+      "height": 24
+    }
+  ],
+  "uniqueButtonTops": [
+    107
+  ],
+  "hasOverlap": false,
+  "checks": {
+    "fullErrorInResultPanel": true,
+    "toolbarDoesNotContainFullError": true,
+    "buttonsStayOnOneLine": true,
+    "buttonsDoNotOverlap": true,
+    "statusStaysInsideToolbar": true,
+    "toolbarHeightStable": true
+  }
+}

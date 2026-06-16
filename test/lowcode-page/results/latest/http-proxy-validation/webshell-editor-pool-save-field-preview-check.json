@@ -1,0 +1,7 @@
+{
+  "pass": true,
+  "error": "",
+  "hoverText": "save_field\n\n文档内容预览：\n\n## 作用\n\n- 把当前处理器产出的结果，保存到“参数上下文”里的某个字段。\n- 这个字段可在后续处理器、模块执行、结果处理中继续引用。\n\n## 常见用途\n\n- 调内部服务取补充数据，保存为中间变量（如 `user_info`、`project_list`）。\n- 先做转换/过滤，再把结果供后续处理器继续消费。\n- 把模板渲染结果保存为消息体、文件路径、导出结果等。\n\n## 执行阶段（低代码视角）\n\n- 参数/处理器执行阶段：在参数计算、条件判断或处理器运行时生效。\n\n## 怎么用\n\n### 配置位置\n- `handler_params` 的处理器项中（最常见）\n- `result_handler` 的处理器项中（按处理器能力）\n- 常见于 `service2field`、`filter_arr`、`render_template`、`combine_service` 等\n\n## 示例\n\n```yml\nhandler_params:\n  - key: service2field\n    service:\n      service: jira.issue_commit_count\n      project_code: \"[project_code]\"\n    save_field: issue_commit_list\n\nresult_handler:\n  - key: add_param\n    params:\n      from_field: issue_commit_list\n\n标签：key:save_field token:save_field section:handler_params project:go\n\n文档路径：/data/project/sport/tooltip-docs/key/save_field.md",
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-save-field-preview-check.png",
+  "outFile": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-save-field-preview-check.json"
+}

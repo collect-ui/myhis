@@ -1,0 +1,871 @@
+{
+  "tag": "div",
+  "style": {
+    "flex": 1,
+    "minHeight": 0,
+    "background": "#ffffff",
+    "display": "flex",
+    "flexDirection": "column",
+    "overflow": "hidden",
+    "height": "100%"
+  },
+  "children": [
+    {
+      "tag": "tabs",
+      "hideTabBar": true,
+      "size": "small",
+      "type": "card",
+      "activeKey": "${workspaceCurrent}",
+      "keyField": "project_code",
+      "withHistory": true,
+      "itemData": "${workspaceOptions.filter(item=>workspaceLoadedMap[item.project_code])}",
+      "itemAttr": {
+        "label": "${row.project_name}",
+        "children": [
+          {
+            "tag": "layout-fit",
+            "initStoreType": {
+              "workspacePanelList": "panelList"
+            },
+            "initStore": {
+              "project_code": "",
+              "workspaceLeftTab": "http",
+              "workspaceBottomTab": "http",
+              "workspaceHttpPanelVisible": true,
+              "workspaceOpenFilesCache": {
+                "files": []
+              },
+              "workspaceFileTreeKeyword": "",
+              "workspaceFileTreeCount": 0,
+              "workspaceHttpSearchKeyword": "",
+              "workspaceHttpTree": [],
+              "workspaceHttpTreeSelected": {},
+              "workspaceHttpRecentCache": {
+                "list": []
+              },
+              "workspaceHttpRecentList": [],
+              "workspaceDataMap": {
+                "frontend": {
+                  "tree": [],
+                  "fileMap": {}
+                },
+                "backend": {
+                  "tree": [],
+                  "fileMap": {}
+                }
+              },
+              "workspaceTree": [],
+              "workspaceFileMap": {},
+              "workspaceTreeSelected": {},
+              "workspacePanelList": [],
+              "workspaceRecentFileList": [],
+              "workspaceLastGroupId": "",
+              "workspaceLastShellId": "",
+              "workspaceTmp": -1,
+              "workspaceTmp2": -1,
+              "workspaceLastX": 0,
+              "workspaceLastY": 0,
+              "workspaceToken": "",
+              "workspaceActivePath": "",
+              "workspaceActiveName": "",
+              "workspaceHasOpenToken": "",
+              "workspaceHttpDocRefreshVersion": "",
+              "workspaceHttpConsoleForm": {
+                "request_method": "post",
+                "request_url": "/template_data/data",
+                "request_headers": "{}",
+                "request_body": "{}"
+              },
+              "workspaceHttpWorkbenchActiveTab": "detail",
+              "workspaceHttpSelectedDoc": {},
+              "workspaceHttpConsoleDocId": "",
+              "workspaceHttpConsoleResponse": "",
+              "workspaceHttpConsoleStatus": "",
+              "workspaceHttpConsoleUpdatedAt": "",
+              "workspaceHttpWorkbenchTabs": [],
+              "workspaceHttpWorkbenchDocActiveKey": "",
+              "workspaceHttpDocCacheMap": {},
+              "workspaceHttpDemoOpenKey": "0"
+            },
+            "initAction": [
+              {
+                "tag": "update-store",
+                "value": {
+                  "project_code": "${row && row.project_code ? row.project_code : ''}"
+                }
+              },
+              {
+                "tag": "localstore",
+                "method": "read",
+                "key": "${'workspace-http-recent-'+project_code}",
+                "defaultValue": {
+                  "list": []
+                },
+                "storeField": "workspaceHttpRecentCache"
+              },
+              {
+                "tag": "update-store",
+                "value": {
+                  "workspaceHttpRecentList": "${Array.isArray(workspaceHttpRecentCache&&workspaceHttpRecentCache.list)?workspaceHttpRecentCache.list:[]}"
+                }
+              },
+              {
+                "tag": "ajax",
+                "enable": "${!!project_code}",
+                "group": "reload-workspace-file-tree",
+                "api": "post:/template_data/data?service=webshell.workspace_file_query",
+                "data": {
+                  "project_code": "${project_code}",
+                  "root_only": "${(()=>{const fn='workspace-tree-filter-form';const v=(getFormValue(fn,'keyword')||workspaceFileTreeKeyword||'').trim();return !v || v.length<2;})()}",
+                  "keyword": "${(()=>{const fn='workspace-tree-filter-form';const v=(getFormValue(fn,'keyword')||workspaceFileTreeKeyword||'').trim();return v.length>=2?v:'';})()}",
+                  "pagination": false
+                },
+                "adapt": {
+                  "workspaceFileTreeKeyword": "${(()=>{const fn='workspace-tree-filter-form';const v=(getFormValue(fn,'keyword')||workspaceFileTreeKeyword||'').trim();return v.length>=2?v:'';})()}",
+                  "workspaceFileTreeCount": "${Number(count||0.0)}",
+                  "workspaceTree": "${(()=>{const src=Array.isArray(data)?data:[];const seen={};const list=src.filter(item=>{const k=String((item&&item.path)||'');if(!k){return false;}if(seen[k]){return false;}seen[k]=true;return true;});const fn='workspace-tree-filter-form';const keyword=((getFormValue(fn,'keyword')||workspaceFileTreeKeyword||'')+'').trim();const isDir=(item)=>item&&(item.is_dir==='1'||item.is_dir===1||item.is_dir===true);const normalizeRoot=(item)=>Object.assign({}, item, { children: undefined, isLeaf: !isDir(item), key: item.file_id||item.path||item.name, title: item.name, __lazy_loaded: false });if(!keyword){return list.map(normalizeRoot);}const roots=[];const nodeMap={};const getOrCreate=(keyPath, title, realPath, dir)=>{if(!nodeMap[keyPath]){nodeMap[keyPath]={key:keyPath,title,path:realPath,is_dir:dir?1:0,children:[],__lazy_loaded:true,isLeaf:!dir};}return nodeMap[keyPath];};const fileList=list.filter(item=>!isDir(item));for(const item of fileList){const fullPath=(item&&item.path)?String(item.path):'';if(!fullPath){continue;}const displayPath=(item&&item.path_display)?String(item.path_display):fullPath;const parts=displayPath.split('/').filter(Boolean);if(parts.length===0){continue;}let parentList=roots;let curDisplay='';for(let i=0;i<parts.length;i++){const seg=parts[i];curDisplay+='/'+seg;const last=i===parts.length-1;const node=getOrCreate(curDisplay, seg, last?fullPath:curDisplay, last?isDir(item):true);if(parentList.indexOf(node)<0){parentList.push(node);}if(last){Object.assign(node, item, { key: item.file_id||curDisplay, title: item.name||seg, path: fullPath, path_display: displayPath, __lazy_loaded:true, children: isDir(item)?(Array.isArray(node.children)?node.children:[]):undefined, isLeaf: !isDir(item) });}if(!Array.isArray(node.children)){node.children=[];}parentList=node.children;}}const prune=(nodes)=>{if(!Array.isArray(nodes)){return [];}return nodes.filter(n=>{if(Array.isArray(n.children)&&n.children.length>0){n.children=prune(n.children);}const dir=(n.is_dir==='1'||n.is_dir===1||n.is_dir===true);return !dir || (Array.isArray(n.children)&&n.children.length>0);});};const sortTree=(nodes)=>{if(!Array.isArray(nodes)){return [];}nodes.sort((a,b)=>{const aDir=(a.is_dir==='1'||a.is_dir===1||a.is_dir===true);const bDir=(b.is_dir==='1'||b.is_dir===1||b.is_dir===true);if(aDir!==bDir){return aDir?-1:1;}return String(a.title||a.name||'').localeCompare(String(b.title||b.name||''));});nodes.forEach(n=>{if(Array.isArray(n.children)&&n.children.length>0){sortTree(n.children);}});return nodes;};return sortTree(prune(roots));})()}",
+                  "workspaceFileParentTree": "${Array.isArray(data)?[...data]:[]}",
+                  "workspaceTreeSelected": {}
+                }
+              },
+              {
+                "tag": "update-store",
+                "value": {
+                  "workspaceOpenFilesCache": "${workspaceOpenFilesCache||{files:[]}}"
+                }
+              },
+              {
+                "tag": "ajax",
+                "enable": "${!!project_code}",
+                "group": "reload-workspace-recent-files",
+                "api": "post:/template_data/data?service=webshell.workspace_file_recent_query",
+                "data": {
+                  "project_code": "${project_code}"
+                },
+                "adapt": {
+                  "workspaceRecentFileList": "${(()=>{const src=Array.isArray(data)?data:[];const isDir=(n)=>n&&(n.is_dir==='1'||n.is_dir===1||n.is_dir===true);const fmt=(n)=>{const l1=n.title||n.name||'未命名';const l2=n.sub_title||n.cn_title||n.name_zh||n.title_zh||'';return (!isDir(n)&&l2)?(l1+'('+l2+')'):l1;};const walk=(arr)=>{if(!Array.isArray(arr)){return [];}return arr.map(n=>{const children=Array.isArray(n&&n.children)?walk(n.children):undefined;const out=Object.assign({},n,{title:fmt(n),display_title:fmt(n)});if(children){out.children=children;}return out;});};return walk(src);})()}"
+                }
+              },
+              {
+                "tag": "ajax",
+                "enable": "${!!project_code}",
+                "group": "reload-workspace-http-tree",
+                "api": "post:/template_data/data?service=config.doc_group_http_service_tree_query",
+                "data": {
+                  "to_tree": true
+                },
+                "adapt": {
+                  "workspaceHttpTree": "${(()=>{const src=Array.isArray(data)?data:[];const isDir=(n)=>n&&(n.is_dir==='1'||n.is_dir===1||n.is_dir===true);const fmt=(n)=>{const l1=n.title||n.name||'未命名';const l2=n.sub_title||n.cn_title||n.name_zh||n.title_zh||'';return (!isDir(n)&&l2)?(l1+'('+l2+')'):l1;};const walk=(arr)=>{if(!Array.isArray(arr)){return [];}return arr.map(n=>{const children=Array.isArray(n&&n.children)?walk(n.children):undefined;const dir=isDir(n);const rawId=String(n.id||'');const bizId=String(dir?(n.doc_group_id||(rawId.startsWith('g_')?rawId.replace(/^g_/,''):rawId)||''):(n.collect_doc_id||(rawId.startsWith('d_')?rawId.replace(/^d_/,''):rawId)||''));const key=String(n.key||rawId||(dir?('g_'+bizId):('d_'+bizId)));const out=Object.assign({},n,{key,id:bizId,type:dir?'dir':'http',title:fmt(n),display_title:fmt(n)});if(children){out.children=children;}return out;});};return walk(src);})()}",
+                  "workspaceHttpTreeSelected": {}
+                }
+              }
+            ],
+            "children": [
+              {
+                "tag": "panel-group",
+                "direction": "horizontal",
+                "children": [
+                  {
+                    "tag": "panel",
+                    "id": "${'workspace-tree-panel-'+project_code}",
+                    "order": 1,
+                    "defaultSize": 22,
+                    "minSize": 16,
+                    "children": [
+                      {
+                        "tag": "layout-fit",
+                        "style": {
+                          "height": "100%",
+                          "background": "#fafafa",
+                          "borderRight": "1px solid #f0f0f0"
+                        },
+                        "children": [
+                          {
+                            "tag": "tabs",
+                            "size": "small",
+                            "type": "card",
+                            "hideTabBar": true,
+                            "activeKey": "source",
+                            "items": [
+                              "{{to_json .webshell_editor_pool_source_fragment}}"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "tag": "panel-resize"
+                  },
+                  "{{to_json .webshell_editor_pool_panel_fragment}}",
+                  {
+                    "tag": "panel-resize"
+                  },
+                  {
+                    "tag": "panel",
+                    "id": "${'workspace-http-workbench-panel-'+project_code}",
+                    "order": 3,
+                    "defaultSize": 34,
+                    "minSize": 22,
+                    "children": [
+                      {
+                        "tag": "panel-group",
+                        "direction": "horizontal",
+                        "children": [
+                          {
+                            "tag": "panel",
+                            "id": "${'workspace-http-tree-panel-'+project_code}",
+                            "order": 1,
+                            "defaultSize": 38,
+                            "minSize": 24,
+                            "children": [
+                              {
+                                "tag": "layout-fit",
+                                "style": {
+                                  "height": "100%",
+                                  "background": "#fafafa",
+                                  "overflow": "hidden",
+                                  "borderLeft": "1px solid #e5e7eb",
+                                  "borderRight": "1px solid #e5e7eb"
+                                },
+                                "children": [
+                                  {
+                                    "tag": "tabs",
+                                    "size": "small",
+                                    "type": "card",
+                                    "hideTabBar": true,
+                                    "activeKey": "http",
+                                    "items": [
+                                      "{{to_json .webshell_editor_pool_http_fragment}}"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "tag": "panel-resize"
+                          },
+                          {
+                            "tag": "panel",
+                            "id": "${'workspace-http-detail-panel-'+project_code}",
+                            "order": 2,
+                            "defaultSize": 62,
+                            "minSize": 30,
+                            "children": [
+                              {
+                                "tag": "layout-fit",
+                                "style": {
+                                  "height": "100%",
+                                  "background": "#ffffff"
+                                },
+                                "children": [
+                                  {
+                                    "tag": "css",
+                                    "css": ".workspace-http-doc{height:100%;background:linear-gradient(180deg,#fbfefc 0%,#ffffff 100%);overflow:auto;padding:8px;}.workspace-http-hero{border:1px solid rgba(16,24,40,0.08);border-radius:12px;padding:10px 12px;margin-bottom:8px;background:linear-gradient(180deg,rgba(24,226,153,0.08),rgba(24,226,153,0) 56%),#ffffff;box-shadow:0 1px 2px rgba(16,24,40,0.03);}.workspace-http-hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;flex-wrap:nowrap;}.workspace-http-hero-main{min-width:0;flex:1 1 auto;}.workspace-http-headline{display:flex;align-items:center;gap:8px;min-width:0;}.workspace-http-method{display:inline-flex;align-items:center;justify-content:center;height:20px;padding:0 7px;border-radius:999px;background:#d4fae8;color:#0fa76e;font-size:10px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;flex:0 0 auto;}.workspace-http-path{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:11px;line-height:16px;color:#0d0d0d;}.workspace-http-title-row{display:flex;align-items:center;gap:6px;min-width:0;margin-top:5px;}.workspace-http-title{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px;line-height:20px;font-weight:600;letter-spacing:-0.2px;color:#0d0d0d;font-family:Inter,'Helvetica Neue',Arial,sans-serif;}.workspace-http-subtitle{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;line-height:16px;color:#6b7280;}.workspace-http-title-dot{flex:0 0 auto;color:#c7ccd4;font-size:10px;line-height:16px;}.workspace-http-meta{display:grid;grid-template-columns:repeat(3,minmax(70px,1fr));gap:6px;flex:0 0 216px;}.workspace-http-meta-card{border:1px solid rgba(16,24,40,0.08);border-radius:8px;padding:7px 8px;background:#fff;}.workspace-http-meta-label{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:12px;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;}.workspace-http-meta-value{margin-top:3px;font-size:13px;line-height:16px;font-weight:600;color:#0d0d0d;}.workspace-http-section{margin-top:8px;border:1px solid rgba(16,24,40,0.08);border-radius:10px;background:#ffffff;box-shadow:0 1px 2px rgba(16,24,40,0.02);overflow:hidden;}.workspace-http-section-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(16,24,40,0.06);background:linear-gradient(180deg,#fcfdfc 0%,#f6faf8 100%);}.workspace-http-section-title{font-size:12px;line-height:16px;font-weight:600;color:#0d0d0d;font-family:Inter,'Helvetica Neue',Arial,sans-serif;}.workspace-http-section-caption{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:12px;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;}.workspace-http-info-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;}.workspace-http-callout{padding:10px 12px;font-size:12px;line-height:18px;color:#374151;white-space:pre-wrap;background:linear-gradient(180deg,#ffffff 0%,#fbfcfc 100%);}.workspace-http-callout-muted{color:#475467;}.workspace-http-note-list{padding:6px 10px 8px 10px;display:block;}.workspace-http-note-item{font-size:11px;line-height:16px;color:#1f2937;padding:6px 0 6px 8px;border-bottom:1px dashed rgba(16,24,40,0.1);background:transparent;}.workspace-http-note-item:last-child{border-bottom:none;}.workspace-http-code-panel{height:260px;padding:0;overflow:hidden;background:#0b1020;}.workspace-http-code-shell{display:flex;align-items:center;justify-content:space-between;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,0.08);background:#11182d;}.workspace-http-code-shell-title{font-size:11px;line-height:16px;font-weight:600;color:#f3f4f6;font-family:Inter,'Helvetica Neue',Arial,sans-serif;}.workspace-http-code-shell-badge{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:14px;letter-spacing:0.3px;text-transform:uppercase;color:#a7f3d0;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.2);border-radius:999px;padding:0 6px;}.workspace-http-code-editor{height:calc(100% - 34px);}.workspace-http-table-wrap{padding:6px 8px 8px 8px;background:#ffffff;}.workspace-http-demo-wrap{padding:8px;background:#ffffff;}.workspace-http-demo-card{border:1px solid rgba(16,24,40,0.08);border-radius:8px;background:#ffffff;overflow:hidden;margin-bottom:6px;}.workspace-http-demo-trigger{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;font-size:12px;line-height:16px;font-weight:600;color:#0d0d0d;cursor:pointer;background:linear-gradient(180deg,#fcfdfc 0%,#f7f9f8 100%);}.workspace-http-demo-state{font-family:'Geist Mono','SFMono-Regular',Consolas,monospace;font-size:9px;line-height:12px;letter-spacing:0.3px;text-transform:uppercase;color:#6b7280;}.workspace-http-demo-body{padding:8px 10px;border-top:1px solid rgba(16,24,40,0.06);font-size:12px;line-height:18px;white-space:pre-wrap;color:#374151;background:#ffffff;}.workspace-http-empty{padding:16px;color:#98a2b3;font-size:12px;line-height:18px;}@media (max-width:1200px){.workspace-http-hero-top{flex-wrap:wrap;}.workspace-http-meta{grid-template-columns:repeat(3,minmax(0,1fr));flex-basis:100%;}.workspace-http-info-grid{grid-template-columns:minmax(0,1fr);}}@media (max-width:768px){.workspace-http-doc{padding:6px;}.workspace-http-hero{padding:8px 10px;}.workspace-http-title-row,.workspace-http-headline{display:block;}.workspace-http-title-dot{display:none;}.workspace-http-title,.workspace-http-subtitle,.workspace-http-path{white-space:normal;overflow:visible;text-overflow:clip;}.workspace-http-meta{grid-template-columns:minmax(0,1fr);}}"
+                                  },
+                                  {
+                                    "tag": "div",
+                                    "style": {
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "height": "100%",
+                                      "background": "#ffffff"
+                                    },
+                                    "children": [
+                                      {
+                                        "tag": "div",
+                                        "style": {
+                                          "display": "flex",
+                                          "justifyContent": "space-between",
+                                          "alignItems": "center",
+                                          "gap": "8px",
+                                          "padding": "8px 10px",
+                                          "borderBottom": "1px solid #eef2f7"
+                                        },
+                                        "children": [
+                                          {
+                                            "tag": "div",
+                                            "style": {
+                                              "fontSize": "12px",
+                                              "color": "#64748b"
+                                            },
+                                            "children": "${workspaceHttpConsoleStatus || '请选择左侧 HTTP 节点'}"
+                                          },
+                                          {
+                                            "tag": "button",
+                                            "type": "primary",
+                                            "size": "small",
+                                            "children": "发送接口",
+                                            "action": [
+                                              {
+                                                "tag": "check",
+                                                "check": "${!!String((workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.collect_doc_id)||workspaceHttpConsoleDocId||'')}",
+                                                "title": "请先选择 HTTP 接口"
+                                              },
+                                              {
+                                                "tag": "ajax",
+                                                "showResultMsg": true,
+                                                "api": "post:/template_data/data?service=webshell.http_proxy_request",
+                                                "data": {
+                                                  "request_method": "${String((workspaceHttpConsoleForm&&workspaceHttpConsoleForm.request_method)||'post').toLowerCase()}",
+                                                  "request_url": "${String((workspaceHttpConsoleForm&&workspaceHttpConsoleForm.request_url)||'/template_data/data')}",
+                                                  "request_header": "${(()=>{try{const raw=String((workspaceHttpConsoleForm&&workspaceHttpConsoleForm.request_headers)||'{}').trim();const obj=raw?JSON.parse(raw):{};return obj&&typeof obj==='object'&&!Array.isArray(obj)?obj:{};}catch(err){return {};}})()}",
+                                                  "request_data": "${(()=>{try{const raw=String((workspaceHttpConsoleForm&&workspaceHttpConsoleForm.request_body)||'{}').trim();const obj=raw?JSON.parse(raw):{};return obj&&typeof obj==='object'&&!Array.isArray(obj)?obj:{};}catch(err){return {};}})()}"
+                                                },
+                                                "adapt": {
+                                                  "workspaceHttpConsoleResponse": "${String((data&&data.response_text)||'')}",
+                                                  "workspaceHttpConsoleStatus": "${'状态 '+String((data&&data.status_code)||'N/A')+' '+String((data&&data.status_text)||'')}",
+                                                  "workspaceHttpConsoleUpdatedAt": "${new Date().toISOString()}",
+                                                  "workspaceHttpConsoleForm": "${(()=>{const form=workspaceHttpConsoleForm||{};const method=String(form.request_method||'post').toLowerCase();const url=String(form.request_url||'/template_data/data');let headers={};let body={};try{const rawHeaders=String(form.request_headers||'{}').trim();headers=rawHeaders?JSON.parse(rawHeaders):{};}catch(err){headers={};}try{const rawBody=String(form.request_body||'{}').trim();body=rawBody?JSON.parse(rawBody):{};}catch(err){body={};}return {request_method:method||'post',request_url:url||'/template_data/data',request_headers:JSON.stringify(headers&&typeof headers==='object'&&!Array.isArray(headers)?headers:{},null,2),request_body:JSON.stringify(body&&typeof body==='object'&&!Array.isArray(body)?body:{},null,2)};})()}",
+                                                  "workspaceHttpDocCacheMap": "${(()=>{const id=String(workspaceHttpWorkbenchDocActiveKey||workspaceHttpConsoleDocId||'');if(!id){return workspaceHttpDocCacheMap||{};}const next=Object.assign({},workspaceHttpDocCacheMap||{});next[id]={selectedDoc:workspaceHttpSelectedDoc||{},consoleForm:workspaceHttpConsoleForm||{request_method:'post',request_url:'/template_data/data',request_headers:'{}',request_body:'{}'},response:String((data&&data.response_text)||'')};return next;})()}"
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "tag": "div",
+                                        "visible": "${!!String((workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.collect_doc_id)||workspaceHttpConsoleDocId||'')}",
+                                        "className": "workspace-http-doc",
+                                        "children": [
+                                          {
+                                            "tag": "div",
+                                            "className": "workspace-http-hero",
+                                            "children": [
+                                              {
+                                                "tag": "div",
+                                                "className": "workspace-http-hero-top",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "className": "workspace-http-hero-main",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-headline",
+                                                        "children": [
+                                                          {
+                                                            "tag": "span",
+                                                            "className": "workspace-http-method",
+                                                            "children": "${String((workspaceHttpConsoleForm&&workspaceHttpConsoleForm.request_method)||(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.request_method)||'post').toUpperCase()}"
+                                                          },
+                                                          {
+                                                            "tag": "span",
+                                                            "className": "workspace-http-path",
+                                                            "children": "${String((workspaceHttpConsoleForm&&workspaceHttpConsoleForm.request_url)||(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.request_url)||'/template_data/data')}"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-title-row",
+                                                        "children": [
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-title",
+                                                            "children": "${workspaceHttpSelectedDoc.title||workspaceHttpTreeSelected.title||'HTTP 文档'}"
+                                                          },
+                                                          {
+                                                            "tag": "span",
+                                                            "visible": "${!!String((workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.sub_title)||'').trim()}",
+                                                            "className": "workspace-http-title-dot",
+                                                            "children": "/"
+                                                          },
+                                                          {
+                                                            "tag": "div",
+                                                            "visible": "${!!String((workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.sub_title)||'').trim()}",
+                                                            "className": "workspace-http-subtitle",
+                                                            "children": "${workspaceHttpSelectedDoc.sub_title||''}"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "tag": "div",
+                                                    "className": "workspace-http-meta",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-meta-card",
+                                                        "children": [
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-meta-label",
+                                                            "children": "请求参数"
+                                                          },
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-meta-value",
+                                                            "children": "${Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.params)?workspaceHttpSelectedDoc.params.length:0}"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-meta-card",
+                                                        "children": [
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-meta-label",
+                                                            "children": "返回字段"
+                                                          },
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-meta-value",
+                                                            "children": "${Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.result)?workspaceHttpSelectedDoc.result.length:0}"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-meta-card",
+                                                        "children": [
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-meta-label",
+                                                            "children": "示例数"
+                                                          },
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-meta-value",
+                                                            "children": "${Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.demo)?workspaceHttpSelectedDoc.demo.length:0}"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "tag": "panel-group",
+                                            "direction": "horizontal",
+                                            "style": {
+                                              "height": "260px",
+                                              "padding": "0"
+                                            },
+                                            "children": [
+                                              {
+                                                "tag": "panel",
+                                                "id": "${'workspace-http-request-panel-'+project_code}",
+                                                "order": 1,
+                                                "defaultSize": 50,
+                                                "minSize": 25,
+                                                "className": "workspace-http-section workspace-http-code-panel",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "className": "workspace-http-code-shell",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-code-shell-title",
+                                                        "children": "请求体示例"
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-code-shell-badge",
+                                                        "children": "editable"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "tag": "editor",
+                                                    "language": "json",
+                                                    "theme": "vs-dark",
+                                                    "className": "workspace-http-code-editor",
+                                                    "height": "calc(100% - 34px)",
+                                                    "value": "${(()=>{const form=workspaceHttpConsoleForm||{};const method=String(form.request_method||'post').toLowerCase();const url=String(form.request_url||'/template_data/data');let headers={};let body={};try{const rawHeaders=String(form.request_headers||'{}').trim();headers=rawHeaders?JSON.parse(rawHeaders):{};}catch(err){headers={};}try{const rawBody=String(form.request_body||'{}').trim();body=rawBody?JSON.parse(rawBody):{};}catch(err){body={};}const payload=Object.assign({},body&&typeof body==='object'&&!Array.isArray(body)?body:{},{method:method,url:url,_request_headers:headers&&typeof headers==='object'&&!Array.isArray(headers)?headers:{},_request_mode:String((workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.request_mode)||'frontend')==='backend'?'backend':'frontend'});try{return JSON.stringify(payload,null,2);}catch(err){return '{}';}})()}",
+                                                    "path": "${'workspace-http-request-'+String(workspaceHttpWorkbenchDocActiveKey||workspaceHttpConsoleDocId||'default')+'.json'}",
+                                                    "options": {
+                                                      "readOnly": false,
+                                                      "minimap": {
+                                                        "enabled": false
+                                                      },
+                                                      "fontSize": 13,
+                                                      "wordWrap": "on"
+                                                    }
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "tag": "panel-resize"
+                                              },
+                                              {
+                                                "tag": "panel",
+                                                "id": "${'workspace-http-response-panel-'+project_code}",
+                                                "order": 2,
+                                                "defaultSize": 50,
+                                                "minSize": 25,
+                                                "className": "workspace-http-section workspace-http-code-panel",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "className": "workspace-http-code-shell",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-code-shell-title",
+                                                        "children": "返回体示例"
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-code-shell-badge",
+                                                        "children": "readonly"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "tag": "editor",
+                                                    "language": "json",
+                                                    "theme": "vs-dark",
+                                                    "className": "workspace-http-code-editor",
+                                                    "height": "calc(100% - 34px)",
+                                                    "value": "${workspaceHttpConsoleResponse||''}",
+                                                    "path": "${'workspace-http-response-'+String(workspaceHttpWorkbenchDocActiveKey||workspaceHttpConsoleDocId||'default')+'.json'}",
+                                                    "options": {
+                                                      "readOnly": true,
+                                                      "minimap": {
+                                                        "enabled": false
+                                                      },
+                                                      "fontSize": 13,
+                                                      "wordWrap": "on"
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "tag": "div",
+                                            "style": {
+                                              "overflow": "visible",
+                                              "padding": "0"
+                                            },
+                                            "children": [
+                                              {
+                                                "tag": "div",
+                                                "className": "workspace-http-info-grid",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "visible": "${!!String((workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.code_desc)||'').trim()}",
+                                                    "className": "workspace-http-section",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-head",
+                                                        "children": [
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-section-title",
+                                                            "children": "接口说明"
+                                                          },
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-section-caption",
+                                                            "children": "Description"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-callout workspace-http-callout-muted",
+                                                        "children": "${workspaceHttpSelectedDoc.code_desc||''}"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "tag": "div",
+                                                    "visible": "${Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.important_list)&&workspaceHttpSelectedDoc.important_list.length>0}",
+                                                    "className": "workspace-http-section",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-head",
+                                                        "children": [
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-section-title",
+                                                            "children": "重点提示"
+                                                          },
+                                                          {
+                                                            "tag": "div",
+                                                            "className": "workspace-http-section-caption",
+                                                            "children": "Important Notes"
+                                                          }
+                                                        ]
+                                                      },
+                                                      {
+                                                        "tag": "listview",
+                                                        "className": "workspace-http-note-list",
+                                                        "itemData": "${(Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.important_list)?workspaceHttpSelectedDoc.important_list:[]).map((item,idx)=>Object.assign({},item,{__idx:idx+1}))}",
+                                                        "keyField": "__idx",
+                                                        "itemAttr": {
+                                                          "tag": "div",
+                                                          "className": "workspace-http-note-item",
+                                                          "children": "${String(row.__idx||'')+'. '+(row.name||'')}"
+                                                        }
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "tag": "div",
+                                                "visible": "${Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.params)&&workspaceHttpSelectedDoc.params.length>0}",
+                                                "className": "workspace-http-section",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "className": "workspace-http-section-head",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-title",
+                                                        "children": "请求参数"
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-caption",
+                                                        "children": "Parameters"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "tag": "table",
+                                                    "className": "workspace-http-table-wrap",
+                                                    "domLayout": "autoHeight",
+                                                    "headerHeight": 28,
+                                                    "rowHeight": 28,
+                                                    "style": {
+                                                      "--ag-odd-row-background-color": "#fbfcfc",
+                                                      "--ag-header-background-color": "#f3f7f4",
+                                                      "--ag-border-color": "#e4ebe6",
+                                                      "--ag-row-border-color": "#edf2ee",
+                                                      "fontSize": "12px"
+                                                    },
+                                                    "rowData": "${(Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.params)?workspaceHttpSelectedDoc.params:[]).map((item,idx)=>({__idx:idx+1,name:item.name||'',type:item.type||'',must:(item.must===1||item.must==='1'||item.must===true||String(item.must||'').toLowerCase()==='true')?'是':'否',desc:item.desc||item.description||'',example:item.example||item.demo||item.default_value||''}))}",
+                                                    "columnDefs": [
+                                                      {
+                                                        "headerName": "#",
+                                                        "field": "__idx",
+                                                        "width": 52
+                                                      },
+                                                      {
+                                                        "headerName": "参数名",
+                                                        "field": "name",
+                                                        "minWidth": 150,
+                                                        "flex": 2
+                                                      },
+                                                      {
+                                                        "headerName": "类型",
+                                                        "field": "type",
+                                                        "minWidth": 110,
+                                                        "flex": 1
+                                                      },
+                                                      {
+                                                        "headerName": "必填",
+                                                        "field": "must",
+                                                        "width": 80
+                                                      },
+                                                      {
+                                                        "headerName": "说明",
+                                                        "field": "desc",
+                                                        "minWidth": 220,
+                                                        "flex": 3
+                                                      },
+                                                      {
+                                                        "headerName": "示例",
+                                                        "field": "example",
+                                                        "minWidth": 180,
+                                                        "flex": 2
+                                                      }
+                                                    ],
+                                                    "defaultColDef": {
+                                                      "resizable": true,
+                                                      "sortable": false,
+                                                      "filter": false
+                                                    }
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "tag": "div",
+                                                "visible": "${Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.result)&&workspaceHttpSelectedDoc.result.length>0}",
+                                                "className": "workspace-http-section",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "className": "workspace-http-section-head",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-title",
+                                                        "children": "返回结构"
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-caption",
+                                                        "children": "Response Schema"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "tag": "table",
+                                                    "className": "workspace-http-table-wrap",
+                                                    "domLayout": "autoHeight",
+                                                    "headerHeight": 28,
+                                                    "rowHeight": 28,
+                                                    "style": {
+                                                      "--ag-odd-row-background-color": "#fbfcfc",
+                                                      "--ag-header-background-color": "#f3f7f4",
+                                                      "--ag-border-color": "#e4ebe6",
+                                                      "--ag-row-border-color": "#edf2ee",
+                                                      "fontSize": "12px"
+                                                    },
+                                                    "rowData": "${(Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.result)?workspaceHttpSelectedDoc.result:[]).map((item,idx)=>({__idx:idx+1,name:item.name||'',type:item.type||'',must:(item.must===1||item.must==='1'||item.must===true||String(item.must||'').toLowerCase()==='true')?'是':'否',desc:item.desc||item.description||'',example:item.example||item.demo||''}))}",
+                                                    "columnDefs": [
+                                                      {
+                                                        "headerName": "#",
+                                                        "field": "__idx",
+                                                        "width": 52
+                                                      },
+                                                      {
+                                                        "headerName": "字段名",
+                                                        "field": "name",
+                                                        "minWidth": 150,
+                                                        "flex": 2
+                                                      },
+                                                      {
+                                                        "headerName": "类型",
+                                                        "field": "type",
+                                                        "minWidth": 110,
+                                                        "flex": 1
+                                                      },
+                                                      {
+                                                        "headerName": "必返",
+                                                        "field": "must",
+                                                        "width": 80
+                                                      },
+                                                      {
+                                                        "headerName": "说明",
+                                                        "field": "desc",
+                                                        "minWidth": 220,
+                                                        "flex": 3
+                                                      },
+                                                      {
+                                                        "headerName": "示例",
+                                                        "field": "example",
+                                                        "minWidth": 180,
+                                                        "flex": 2
+                                                      }
+                                                    ],
+                                                    "defaultColDef": {
+                                                      "resizable": true,
+                                                      "sortable": false,
+                                                      "filter": false
+                                                    }
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "tag": "div",
+                                                "visible": "${Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.demo)&&workspaceHttpSelectedDoc.demo.length>0}",
+                                                "className": "workspace-http-section",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "className": "workspace-http-section-head",
+                                                    "children": [
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-title",
+                                                        "children": "调用示例"
+                                                      },
+                                                      {
+                                                        "tag": "div",
+                                                        "className": "workspace-http-section-caption",
+                                                        "children": "Examples"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "tag": "listview",
+                                                    "className": "workspace-http-demo-wrap",
+                                                    "itemData": "${(Array.isArray(workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.demo)?workspaceHttpSelectedDoc.demo:[]).map((item,idx)=>Object.assign({},item,{__key:String(idx)}))}",
+                                                    "keyField": "__key",
+                                                    "itemAttr": {
+                                                      "tag": "div",
+                                                      "className": "workspace-http-demo-card",
+                                                      "children": [
+                                                        {
+                                                          "tag": "div",
+                                                          "className": "workspace-http-demo-trigger",
+                                                          "action": [
+                                                            {
+                                                              "tag": "update-store",
+                                                              "value": {
+                                                                "workspaceHttpDemoOpenKey": "${workspaceHttpDemoOpenKey===row.__key?'':row.__key}"
+                                                              }
+                                                            }
+                                                          ],
+                                                          "children": [
+                                                            {
+                                                              "tag": "span",
+                                                              "children": "${row.name||('示例'+(Number(row.__key||0)+1))}"
+                                                            },
+                                                            {
+                                                              "tag": "span",
+                                                              "className": "workspace-http-demo-state",
+                                                              "children": "${workspaceHttpDemoOpenKey===row.__key?'收起':'展开'}"
+                                                            }
+                                                          ]
+                                                        },
+                                                        {
+                                                          "tag": "div",
+                                                          "visible": "${workspaceHttpDemoOpenKey===row.__key || (!workspaceHttpDemoOpenKey && row.__key==='0')}",
+                                                          "className": "workspace-http-demo-body",
+                                                          "children": "${(row.desc||'') + (((row.code||row.content||row.result||''))?('\\n\\n'+(row.code||row.content||row.result||'')):'')}"
+                                                        }
+                                                      ]
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "tag": "div",
+                                        "visible": "${!String((workspaceHttpSelectedDoc&&workspaceHttpSelectedDoc.collect_doc_id)||workspaceHttpConsoleDocId||'')}",
+                                        "className": "workspace-http-empty",
+                                        "children": "请选择左侧 HTTP 节点"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "style": {
+        "height": "100%"
+      }
+    }
+  ]
+}

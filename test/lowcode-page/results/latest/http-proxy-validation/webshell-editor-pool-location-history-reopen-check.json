@@ -1,0 +1,39 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "fileName": "history_case_1778420370301.md",
+  "filePath": "/data/project/test/test/history_case_1778420370301.md",
+  "switchFileName": "test.md",
+  "switchFilePath": "/data/project/test/test/test.md",
+  "checks": {
+    "fileAddedByUi": true,
+    "fileOpenedAfterAdd": true,
+    "historyRecordedBeforeRefresh": true,
+    "historyReopenedAfterRefresh": true,
+    "historyCleared": true,
+    "historyRecordedAgainBeforeDelete": true,
+    "deletedFileGracefulHandled": true,
+    "deletedHistoryRemoved": true
+  },
+  "trace": {
+    "contentRequestPaths": [
+      "/data/project/test/test/history_case_1778420370301.md",
+      "/data/project/test/test/history_case_1778420370301.md",
+      "/data/project/test/test/history_case_1778420370301.md",
+      "/data/project/test/test/test.md"
+    ],
+    "notices": [
+      "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"读取文件成功\",\"data\":{\"content_base64\":\"\",\"content_text\":\"test\\r\\n现在有个bug，位置导航 历史，bug请修复一下\\r\\n# 路径\\r\\nhttp://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool\\r\\n# 复现步骤\\r\\n我在test项目 \\r\\n- test文件夹下新建test.md\\r\\n- 里面里面出现1 ，对应test.md 的文件记录\\r\\"
+    ],
+    "historyCountBeforeRefresh": 1,
+    "historyCountAfterRefresh": 1,
+    "historyCountAfterClear": 0,
+    "historyCountBeforeDeleteClick": 2,
+    "historyCountAfterDeleteClick": 1
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-location-history-reopen-check.png",
+  "pass": true
+}

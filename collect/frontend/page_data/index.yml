@@ -1,0 +1,493 @@
+service:
+  - key: menu
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/menu/menu.json
+  - key: framework
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/framework.json
+  - key: framework_full
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/framework_full.json
+  - key: home
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/framework/home.json
+  - key: his_home
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/his/home.json
+  - key: his_pix_outp_reg_master
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/his/pix_outp_reg_master.json
+  - key: his_patient_crud_demo
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/his/patient_crud_demo.json
+  - key: training_dashboard
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/dashboard/training_dashboard.json
+  - key: learn_before
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/dashboard/learn_before.json
+  - key: speak
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/dashboard/speak.json
+  - key: course_in
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/dashboard/course_in.json
+  - key: course
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/course/course.json
+  - key: training_type
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/course/training_type.json
+  - key: training_level
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/dashboard/training_level.json
+  - key: price
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/price/price.json
+  - key: doc_manage
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/technical/doc_manage.json
+  - key: attachment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/attachment.json
+  - key: mail_account
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/mail_account.json
+  - key: role
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/role.json
+  - key: sys_code
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/sys_code.json
+  - key: user
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/user.json
+
+  - key: menu_manage
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/menu_manage.json
+  - key: agent_regression
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/agent_regression.json
+
+  - key: webshell
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: frontend.webshell_ssh_fragment
+        save_field: webshell_ssh_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_fragment
+        save_field: webshell_editor_fragment
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell.json
+  - key: webshell_ssh_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_ssh_fragment.json
+  - key: webshell_editor_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool
+        save_field: webshell_editor_pool_route
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_fragment.json
+  - key: webshell_editor_pool
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_workspace_fragment
+        save_field: webshell_editor_pool_workspace_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_http_doc_style_fragment
+        save_field: webshell_editor_pool_http_doc_style_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_http_group_dialog_fragment
+        save_field: webshell_editor_pool_http_group_dialog_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_http_doc_dialog_fragment
+        save_field: webshell_editor_pool_http_doc_dialog_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_project_manage_dialog_fragment
+        save_field: webshell_editor_pool_project_manage_dialog_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_project_dialog_fragment
+        save_field: webshell_editor_pool_project_dialog_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_file_dialog_fragment
+        save_field: webshell_editor_pool_file_dialog_fragment
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_route.json
+  - key: webshell_editor_pool_workspace_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_source_fragment
+        save_field: webshell_editor_pool_source_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_http_fragment
+        save_field: webshell_editor_pool_http_fragment
+      - key: service2field
+        service:
+          service: frontend.webshell_editor_pool_panel_fragment
+        save_field: webshell_editor_pool_panel_fragment
+      - key: service2field
+        service:
+          service: frontend.websql_pool
+        save_field: websql_pool
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_workspace_fragment.json
+  - key: webshell_editor_pool_source_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_source_fragment.json
+  - key: webshell_editor_pool_http_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_http_fragment.json
+  - key: webshell_editor_pool_panel_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_panel_fragment.json
+  - key: webshell_editor_pool_http_doc_style_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_http_doc_style_fragment.json
+  - key: webshell_editor_pool_http_group_dialog_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_http_group_dialog_fragment.json
+  - key: webshell_editor_pool_http_doc_dialog_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_http_doc_dialog_fragment.json
+  - key: webshell_editor_pool_project_manage_dialog_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_project_manage_dialog_fragment.json
+  - key: webshell_editor_pool_project_dialog_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_project_dialog_fragment.json
+  - key: webshell_editor_pool_file_dialog_fragment
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/webshell_editor_pool_file_dialog_fragment.json
+
+  - key: websql_pool
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: frontend.websql_config
+        save_field: websql_config
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/websql_pool.json
+
+  - key: websql_config
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/server/websql_config.json
+
+  - key: frontend_doc_manage
+    http: true
+    module: empty
+    params:
+      frontend_doc_detail_code:
+        default: "frontend_doc_detail"
+      frontend_doc_schema_page_code:
+        default: "frontend_doc"
+    handler_params:
+      - key: service2field
+        service:
+          service: "system.restoreConfig"
+          schema_page_code: "[frontend_doc_detail_code]"
+        save_field: "frontend_doc_detail"
+      - key: service2field
+        service:
+          service: frontend.img_design_manage
+        save_field: design_content
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/doc/frontend_doc_manage.json
+
+
+
+
+  - key: schema_field_manage
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: page_table_config
+        save_field: tableConfig
+      - key: service2field
+        service:
+          service: frontend.img_design_manage
+        save_field: design_content
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/system/schema_field_manage.json
+
+
+  - key: img_design_manage
+    http: true
+    module: empty
+    handler_params:
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/doc/img_design_manage.json
+
+  - key: next_version
+    http: true
+    module: empty
+    handler_params:
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: next_version
+        save_field: next_version
+      - key: service2field
+        service:
+          service: system.restoreConfig
+          schema_page_code: task_detail
+        save_field: task_detail
+      - key: file2datajson
+        save_field: data
+      - key: param2result
+        field: data
+    data_file: data/price/next_version.json

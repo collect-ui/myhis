@@ -1,0 +1,90 @@
+/*.webshell-container{*/
+.webshell-container .ant-tabs-nav-list{
+    padding-top: 4px;
+    padding-left: 12px;
+  }
+.webshell-container  .ant-tabs-top >.ant-tabs-nav{
+    margin: 0px;
+    z-index: 2;
+  }
+.webshell-container   .ant-tabs-card.ant-tabs-small.ant-tabs-top >.ant-tabs-nav .ant-tabs-tab {
+    border-radius: 2px 2px 0 0;
+  }
+.webshell-container   .ant-tabs-card.ant-tabs-small >.ant-tabs-nav .ant-tabs-tab {
+    padding: 1px 10px 0px 10px;
+  }
+.webshell-container   .ant-tabs-top >.ant-tabs-nav::before {
+    position: absolute;
+    right: 0;
+    left: 0;
+    border-bottom: 4px solid #008ae1;
+    content: '';
+    margin-bottom: -2px;
+  }
+.webshell-container .ant-tabs-card.ant-tabs-top >.ant-tabs-nav .ant-tabs-tab-active{
+    color: white;
+    background: #008ae1 !important;
+
+  }
+.webshell-container .ant-tabs-card.ant-tabs-top >.ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-remove{
+  color: white;
+}
+.webshell-container  .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: white;
+    line-height: 1.5;
+  }
+.webshell-container .ant-tabs-tab-btn{
+    line-height: 1.5;
+}
+
+.webshell-container  .ant-tabs-card >.ant-tabs-nav .ant-tabs-tab{
+    border: 1px solid #bbbbbb;
+    border-bottom: none;
+    background: white;
+  }
+.webshell-container  .ant-tabs-nav-wrap{
+    background: #e5e5e5;
+  }
+.webshell-container  .ant-tabs .ant-tabs-content {
+    height: 100%;
+  }
+.webshell-container  .ant-tabs .ant-tabs-tabpane {
+    height: 100%;
+  }
+.webshell-container  .ant-tabs-tab-remove{
+    padding: 2px 4px;
+  }
+
+.webshell-container  .ant-tabs >.ant-tabs-nav .ant-tabs-nav-more{
+    padding: 6px 16px;
+    background: revert;
+  }
+
+.workspace-source-tree-layout {
+  height: 100%;
+}
+
+.workspace-source-tree-layout > .layout-content {
+  height: 100%;
+  overflow: hidden !important;
+}
+
+.workspace-source-tree {
+  height: 100%;
+}
+
+/*}*/
+
+.sftp-folder{
+  padding: 2px 6px;
+  text-decoration:underline;
+  cursor:pointer;
+}
+.sftp-folder:hover{
+  background: #00000022;
+}
+.shell-group-active{
+    border: 1px solid #00BFFF;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    background-color: black;
+}

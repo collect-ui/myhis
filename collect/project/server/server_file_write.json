@@ -1,0 +1,38 @@
+{
+  "connect": {
+    "server_ip": "[ip]",
+    "user": "[username]",
+    "password": "[password]",
+    "port": "[port]"
+  },
+  "services": [
+    {
+      "node_key": "start",
+      "node_type": "start",
+      "name": "开始",
+      "node_next": "info"
+    },
+    {
+      "node_key": "info",
+      "node_type": "node",
+      "name": "保存文本文件",
+      "key": "sftp",
+      "fields": [
+        {
+          "name": "写入文件",
+          "type": "write_text",
+          "save_field": "file_info",
+          "field": "{{.path}}"
+        }
+      ],
+      "node_next": "end",
+      "node_fail": "end",
+      "save_field": "result"
+    },
+    {
+      "node_key": "end",
+      "node_type": "end",
+      "name": "结束"
+    }
+  ]
+}

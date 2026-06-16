@@ -1,0 +1,205 @@
+service:
+
+  - key: doc_project_content_query
+    http: true
+    module: sql
+    data_file: doc_project_content_query.sql
+    params:
+      to_obj:
+        default: false
+      to_tree:
+        default: false
+      with_content:
+        default: false
+      tb_project_id:
+        default: ""
+    result_handler:
+      - key: result2params
+        enable: "[to_tree]"
+        fields:
+          - to: "[data_list]"
+      - key: to_tree
+        enable: "[to_tree]"
+        foreach: "[data_list]"
+        id: doc_project_content_id
+        pid: parent_id
+        children: children
+        save_field: data_tree
+      - key: handler_tree_level_order
+        enable: "[to_tree]"
+        foreach: "[data_tree]"
+
+      - key: param2result
+        enable: "[to_tree]"
+        field: data_tree
+      - key: arr2obj
+        enable: "[to_obj]"
+
+  - key: doc_project_content_create
+    http: true
+    module: model_save
+    params:
+      create_time:
+        template: "{{current_date_time}}"
+      create_user:
+        template: "{{.session_user_id}}"
+      doc_project_content_id:
+        template: "{{uuid}}"
+    table: doc_project_content
+
+  - key: doc_project_content_bulk_create
+    http: true
+    module: bulk_create
+    params:
+      data_list:
+        check:
+          template: "{{must .data_list}}"
+          err_msg: "数据不能为空"
+    model_field: "[data_list]"
+    table: doc_project_content
+
+
+  - key: doc_project_content_update
+    http: true
+    module: model_update
+    params:
+      doc_project_content_id:
+        check:
+          template: "{{must .doc_project_content_id}}"
+          err_msg: "内容不能为空"
+      fields:
+        default: ["*"]
+    options: "[fields]"
+    table: doc_project_content
+    filter:
+      doc_project_content_id: "[doc_project_content_id]"
+  - key: doc_project_content_delete_by_doc_project_id
+    http: true
+    module: model_delete
+    params:
+      doc_project_id_list:
+        check:
+          template: "{{must .doc_project_id_list}}"
+          err_msg: "项目不能为空"
+    table: doc_project_content
+    filter:
+      doc_project_id__in: "[doc_project_id_list]"
+  - key: doc_project_content_delete
+    http: true
+    module: model_delete
+    params:
+      doc_project_id:
+        check:
+          template: "{{must .doc_project_id}}"
+          err_msg: "项目不能为空"
+    table: doc_project_content
+    filter:
+      doc_project_id: "[doc_project_id]"
+  - key: doc_project_content_delete_by_id
+    http: true
+    module: model_delete
+    params:
+      doc_project_content_id:
+        check:
+          template: "{{must .doc_project_content_id}}"
+          err_msg: "内容不能为空"
+    table: doc_project_content
+    filter:
+      doc_project_content_id: "[doc_project_content_id]"
+  - key: doc_project_content_update_by_id
+    http: true
+    module: model_update
+    params:
+      doc_project_content_id:
+        check:
+          template: "{{must .doc_project_content_id}}"
+          err_msg: "内容不能为空"
+    table: doc_project_content
+    filter:
+      doc_project_content_id: "[doc_project_content_id]"
+  - key: doc_project_content_save
+    http: true
+    module: model_save
+    params:
+      doc_project_content_id:
+        template: "{{uuid}}"
+      topic:
+        check:
+          template: "{{must .topic}}"
+          err_msg: "主题不能为空"
+      tb_project_id:
+        check:
+          template: "{{must .tb_project_id}}"
+          err_msg: 项目不能空
+    handler_params:
+      - key: service2field
+        service:
+          service: autodesk.doc_project_query
+          tb_project_id: "[tb_project_id]"
+          to_obj: true
+        save_field: doc_project
+        template: "{{must .doc_project}}"
+        err_msg: "项目没有找到"
+      - key: update_field
+        name: 更新字段
+        fields:
+          - field: doc_project_id
+            template: "[doc_project.doc_project_id]"
+    table: doc_project_content
+    filter:
+      doc_project_content_id: "[doc_project_content_id]"
+
+
+  - key: doc_project_content_bulk_update
+    http: true
+    module: bulk_upsert
+    params:
+      data_list:
+        check:
+          template: "{{must .data_list}}"
+          err_msg: "数据不能为空"
+    model_field: "[data_list]"
+    update_fields:
+      - doc_content
+    table: doc_project_content
+
+  - key: update_doc_order
+    http: true
+    module: bulk_upsert
+    params:
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    table: doc_project_content
+    update_fields:
+      - order_index
+    model_field: "[rows]"
+  - key: handler_doc_content_order
+    http: true
+    module: empty
+    params:
+      change_parent:
+        default: false
+      parent:
+        default: { "parent_id": "0","doc_project_content_id": "0" }
+      doc:
+        check:
+          template: "{{must .doc}}"
+          err_msg: "doc不能为空"
+      rows:
+        check:
+          template: "{{must .rows}}"
+          err_msg: "rows不能为空"
+    handler_params:
+      - key: service2field
+        enable: "[change_parent]"
+        service:
+          service: autodesk.doc_project_content_update_by_id
+          doc_project_content_id: "[doc.doc_project_content_id]"
+          parent_id: "[parent.doc_project_content_id]"
+      - key: service2field
+        service:
+          service: autodesk.update_doc_order
+          rows: "[rows]"
+

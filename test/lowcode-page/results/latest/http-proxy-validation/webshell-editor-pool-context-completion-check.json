@@ -1,0 +1,235 @@
+{
+  "pass": true,
+  "error": "",
+  "startedAt": "2026-05-07T05:10:41.709Z",
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "details": {
+    "pythonServiceList": {
+      "lineNumber": 2,
+      "lineText": "  - ",
+      "suggestions": [
+        "key",
+        "after_plugin",
+        "append_param",
+        "batch",
+        "before_plugin",
+        "cache",
+        "class_name",
+        "count_params",
+        "count_sql",
+        "data_file",
+        "data_json",
+        "data_source",
+        "enable"
+      ]
+    },
+    "pythonServiceListPrefixS": {
+      "lineNumber": 2,
+      "lineText": "  - s",
+      "suggestions": [
+        "save_field",
+        "schedule",
+        "service",
+        "sql_file",
+        "success"
+      ]
+    },
+    "pythonHandlerList": {
+      "lineNumber": 52,
+      "lineText": "      - ",
+      "suggestions": [
+        "key",
+        "append_param",
+        "data_json",
+        "enable",
+        "fields",
+        "foreach",
+        "foreach_key_fields",
+        "from_item",
+        "from_list",
+        "from_list_fields",
+        "if_template",
+        "ifTemplate",
+        "item"
+      ]
+    },
+    "pythonHandlerListPrefixS": {
+      "lineNumber": 52,
+      "lineText": "      - s",
+      "suggestions": [
+        "save_field",
+        "service"
+      ]
+    },
+    "pythonResultList": {
+      "lineNumber": 98,
+      "lineText": "      - ",
+      "suggestions": [
+        "key",
+        "append_param",
+        "data_json",
+        "enable",
+        "fields",
+        "foreach",
+        "foreach_key_fields",
+        "from_item",
+        "from_list",
+        "from_list_fields",
+        "if_template",
+        "ifTemplate",
+        "item"
+      ]
+    },
+    "pythonResultListPrefixS": {
+      "lineNumber": 98,
+      "lineText": "      - s",
+      "suggestions": [
+        "save_field",
+        "service"
+      ]
+    },
+    "pythonModuleValue": {
+      "lineNumber": 5,
+      "lineText": "    module: ",
+      "suggestions": [
+        "bulk_create",
+        "bulk_delete",
+        "bulk_service",
+        "bulk_update",
+        "empty",
+        "ftp",
+        "http",
+        "jenkins",
+        "ldap",
+        "model_delete",
+        "model_save",
+        "model_update",
+        "mysql"
+      ]
+    },
+    "pythonServiceValue": {
+      "lineNumber": 56,
+      "lineText": "          service: jira.issue_",
+      "suggestions": [
+        "jira.issue_change_log",
+        "jira.issue_commit_count",
+        "jira.issue_commit_detail",
+        "jira.issue_commit_download",
+        "jira.issue_commit_save",
+        "jira.issue_cross_count",
+        "jira.issue_priority_all",
+        "jira.issue_priority_query",
+        "jira.issue_status",
+        "jira.issue_status_all",
+        "jira.issue_type_all",
+        "jira.issue_type_query"
+      ]
+    },
+    "goServiceList": {
+      "lineNumber": 2,
+      "lineText": "  - ",
+      "suggestions": [
+        "key",
+        "append_param",
+        "batch",
+        "cache",
+        "class_name",
+        "count_sql",
+        "data_file",
+        "data_json",
+        "data_source",
+        "enable",
+        "err_msg",
+        "field_options",
+        "filter"
+      ]
+    },
+    "goServiceListPrefixT": {
+      "lineNumber": 2,
+      "lineText": "  - t",
+      "suggestions": [
+        "table",
+        "type"
+      ]
+    },
+    "goHandlerList": {
+      "lineNumber": 46,
+      "lineText": "      - ",
+      "suggestions": [
+        "key",
+        "append_param",
+        "data_json",
+        "enable",
+        "fields",
+        "foreach",
+        "from",
+        "if_template",
+        "ifTemplate",
+        "item",
+        "model_field",
+        "name",
+        "params"
+      ]
+    },
+    "goHandlerListPrefixS": {
+      "lineNumber": 46,
+      "lineText": "      - s",
+      "suggestions": [
+        "save_field",
+        "service"
+      ]
+    },
+    "goModuleValue": {
+      "lineNumber": 5,
+      "lineText": "    module: ",
+      "suggestions": [
+        "agent_message_query",
+        "agent_run",
+        "agent_run_query",
+        "agent_session",
+        "agent_session_query",
+        "bulk_create",
+        "bulk_service",
+        "bulk_upsert",
+        "empty",
+        "http",
+        "http_proxy",
+        "ldap",
+        "mail_account_auth_json_import"
+      ]
+    },
+    "goTableValue": {
+      "lineNumber": 15,
+      "lineText": "    table: collect_",
+      "suggestions": [
+        "collect_doc",
+        "collect_doc_demo",
+        "collect_doc_id",
+        "collect_doc_important",
+        "collect_doc_params",
+        "collect_doc_result",
+        "collect_source_root"
+      ]
+    },
+    "goServiceValue": {
+      "lineNumber": 50,
+      "lineText": "          service: config.doc_",
+      "suggestions": [
+        "config.doc_create",
+        "config.doc_delete",
+        "config.doc_detail",
+        "config.doc_edit",
+        "config.doc_group_bulk_save",
+        "config.doc_group_delete",
+        "config.doc_group_http_service_tree_query",
+        "config.doc_group_query",
+        "config.doc_group_save",
+        "config.doc_group_update",
+        "config.doc_query",
+        "config.doc_save"
+      ]
+    }
+  },
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-context-completion-check.png",
+  "endedAt": "2026-05-07T05:11:01.212Z"
+}

@@ -1,0 +1,10 @@
+service:
+  - key: test
+    http: true
+    module: empty
+    params:
+      data:
+        default: [{"name":"test"}]
+    handler_params:
+      - key: jmespath
+        jmespath: "data[0].name"

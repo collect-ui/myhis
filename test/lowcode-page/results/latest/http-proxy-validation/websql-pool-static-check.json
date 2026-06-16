@@ -1,0 +1,46 @@
+{
+  "pageFile": "/data/project/sport/collect/frontend/page_data/data/server/websql_pool.json",
+  "checks": {
+    "defaultSinglePaneStore": true,
+    "splitContainers": true,
+    "eachPaneIsFullWorkbench": true,
+    "recursiveSplitActions": true,
+    "noPingOrDdlToolbarButtons": true,
+    "noSharedToolbarContract": true
+  },
+  "panes": [
+    {
+      "index": 1,
+      "className": "websql-primary-pane",
+      "sqlTabsKey": "websqlSqlTabs",
+      "activeTabKey": "websqlActiveSqlTabKey",
+      "sqlTextKey": "websqlSqlText",
+      "resultRowsKey": "websqlResultRows"
+    },
+    {
+      "index": 2,
+      "className": "websql-pane-2",
+      "sqlTabsKey": "websqlPane2SqlTabs",
+      "activeTabKey": "websqlPane2ActiveSqlTabKey",
+      "sqlTextKey": "websqlPane2SqlText",
+      "resultRowsKey": "websqlPane2ResultRows"
+    },
+    {
+      "index": 3,
+      "className": "websql-pane-3",
+      "sqlTabsKey": "websqlPane3SqlTabs",
+      "activeTabKey": "websqlPane3ActiveSqlTabKey",
+      "sqlTextKey": "websqlPane3SqlText",
+      "resultRowsKey": "websqlPane3ResultRows"
+    },
+    {
+      "index": 4,
+      "className": "websql-pane-4",
+      "sqlTabsKey": "websqlPane4SqlTabs",
+      "activeTabKey": "websqlPane4ActiveSqlTabKey",
+      "sqlTextKey": "websqlPane4SqlText",
+      "resultRowsKey": "websqlPane4ResultRows"
+    }
+  ],
+  "ok": true
+}

@@ -1,0 +1,196 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "paths": {
+    "rootDirPath": "/data/project/test/test",
+    "level1Path": "/data/project/test/test/lvl1_1778501750387",
+    "level2Path": "/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387",
+    "filePath": "/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387.txt",
+    "renamedFilePath": "/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387_renamed.txt"
+  },
+  "checks": {
+    "addRootDir": true,
+    "addNestedDir": true,
+    "addNestedFile": true,
+    "editDialogPrefill": true,
+    "editParentShown": true,
+    "parentDropdownSelectable": true,
+    "renameFile": true,
+    "deleteFile": true,
+    "treeHasMultiLevel": true,
+    "syncLocked": true,
+    "serverFileCreated": true,
+    "serverFileRenamed": true,
+    "serverFileDeleted": true
+  },
+  "api": {
+    "syncLockSecondCallMsg": "同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=11999） | 成功 | 同步任务正在执行中，请稍后重试（lock=webshell:workspace_sync:37f0ab54-1d5a-48d8-b0ad-2d44a659e544, owner=webshell.workspace_project_sync_files, left_ms=11999）",
+    "calls": [
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":71,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"c24b0587-3fa6-52b8-9671-9a010d0cd625\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"PyMySQL\",\"parent_id\":\"\",\"path\":\"/data/project/test/PyMySQL\",\"path_display\":\"/PyMySQL\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0487c4d8-b703-533e-9493-8a19f85ecda9\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"__pycache__\",\"parent_id\":\"\",\"path\":\"/data/project/test/__p"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_recent_query",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"file_name\":\"test.md\",\"file_path\":\"/data/project/test/test/test.md\",\"last_open_time\":\"2026-05-10 21:39:49\",\"open_count\":10,\"project_code\":\"test\",\"recent_id\":\"6003bfd6-6204-434b-8736-0ad01be8ab82\"},{\"file_name\":\"history_case_1778420370301.md\",\"file_path\":\"/data/project/test/test/history_case_1778420370301.md\",\"last_open_time\":\"2026-05-10 21:39:49\",\"open_count\":4,\"project_code\":\"test\",\"recent_id\":\"0165bb2d-b990-4370-9150-63b5e9fb9552\"},{\"file_name\":\"history_case_1778420324236.md\",\"file_path\":\"/data/project/test/test/history_case_1778420324236.md\",\"last_open_time\":\"2026-05-10 21:39:03\",\"open_count\":4,\"project_code\":\"test\",\"recent_id\":\"b73968ab-aaa5-4fcd-8467-f650b0618620\"},{\"file_name\":\"history_case_1778420208182.md\",\"file_path\":\"/dat"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":281,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"8fb3e439-409c-50d5-86a1-a200436646fc\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"+Fusion\",\"parent_id\":\"2083c089-1ff5-54c2-9671-4eda22af3d10\",\"path\":\"/data/project/test/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"path_display\":\"/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0af378b0-4eba-528"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_add_with_sync",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"project_code\":\"test\",\"remote_result\":{\"file_id\":\"4ff6c4ca-dd67-56b3-9e4f-2025c44e948c\",\"is_dir\":\"1\",\"name\":\"test\",\"operation\":\"add\",\"parent_id\":\"\",\"path\":\"/data/project/test/test\",\"project_code\":\"test\"}}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":121,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"c24b0587-3fa6-52b8-9671-9a010d0cd625\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"PyMySQL\",\"parent_id\":\"\",\"path\":\"/data/project/test/PyMySQL\",\"path_display\":\"/PyMySQL\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0487c4d8-b703-533e-9493-8a19f85ecda9\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"__pycache__\",\"parent_id\":\"\",\"path\":\"/data/project/test/__"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":331,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"8fb3e439-409c-50d5-86a1-a200436646fc\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"+Fusion\",\"parent_id\":\"2083c089-1ff5-54c2-9671-4eda22af3d10\",\"path\":\"/data/project/test/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"path_display\":\"/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0af378b0-4eba-528"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_add_with_sync",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"project_code\":\"test\",\"remote_result\":{\"file_id\":\"ac4af2ce-2dc2-5a57-b9bd-9d94a98463af\",\"is_dir\":\"1\",\"name\":\"lvl1_1778501750387\",\"operation\":\"add\",\"parent_id\":\"4ff6c4ca-dd67-56b3-9e4f-2025c44e948c\",\"path\":\"/data/project/test/test/lvl1_1778501750387\",\"project_code\":\"test\"}}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":50,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-10 21:14:13\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"4ff6c4ca-dd67-56b3-9e4f-2025c44e948c\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-11 20:15:57\",\"modify_user\":\"\",\"name\":\"test\",\"parent_id\":\"\",\"path\":\"/data/project/test/test\",\"path_display\":\"/test\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-10 21:12:18\",\"create_user\":\"\",\"file_id\":\"4ff6c4ca-dd67-56b3-9e4f-2025c44e948c\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-11 20:15:57\",\"modify_user\":\"\",\"name\":\"test\",\"parent_id\":\"\",\"path\":\"/data/project/test/test\",\"path_display\":\"/test\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-10 21:12:05\",\"create_user\":\"\",\"file_id\":\"4ff6c4ca-d"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":1,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-11 20:16:02\",\"create_user\":\"\",\"file_id\":\"ac4af2ce-2dc2-5a57-b9bd-9d94a98463af\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-11 20:16:02\",\"modify_user\":\"\",\"name\":\"lvl1_1778501750387\",\"parent_id\":\"4ff6c4ca-dd67-56b3-9e4f-2025c44e948c\",\"path\":\"/data/project/test/test/lvl1_1778501750387\",\"path_display\":\"/test/lvl1_1778501750387\",\"project_code\":\"test\"}]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":332,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"8fb3e439-409c-50d5-86a1-a200436646fc\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"+Fusion\",\"parent_id\":\"2083c089-1ff5-54c2-9671-4eda22af3d10\",\"path\":\"/data/project/test/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"path_display\":\"/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0af378b0-4eba-528"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_add_with_sync",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"project_code\":\"test\",\"remote_result\":{\"file_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"is_dir\":\"1\",\"name\":\"lvl2_1778501750387\",\"operation\":\"add\",\"parent_id\":\"ac4af2ce-2dc2-5a57-b9bd-9d94a98463af\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387\",\"project_code\":\"test\"}}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":1,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-11 20:16:02\",\"create_user\":\"\",\"file_id\":\"ac4af2ce-2dc2-5a57-b9bd-9d94a98463af\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-11 20:16:02\",\"modify_user\":\"\",\"name\":\"lvl1_1778501750387\",\"parent_id\":\"4ff6c4ca-dd67-56b3-9e4f-2025c44e948c\",\"path\":\"/data/project/test/test/lvl1_1778501750387\",\"path_display\":\"/test/lvl1_1778501750387\",\"project_code\":\"test\"}]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":1,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-11 20:16:06\",\"create_user\":\"\",\"file_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-11 20:16:06\",\"modify_user\":\"\",\"name\":\"lvl2_1778501750387\",\"parent_id\":\"ac4af2ce-2dc2-5a57-b9bd-9d94a98463af\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387\",\"path_display\":\"/test/lvl1_1778501750387/lvl2_1778501750387\",\"project_code\":\"test\"}]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":333,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"8fb3e439-409c-50d5-86a1-a200436646fc\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"+Fusion\",\"parent_id\":\"2083c089-1ff5-54c2-9671-4eda22af3d10\",\"path\":\"/data/project/test/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"path_display\":\"/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0af378b0-4eba-528"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_add_with_sync",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"project_code\":\"test\",\"remote_result\":{\"file_id\":\"8cdc2f0a-4db0-5aab-953f-02d88996143a\",\"is_dir\":\"0\",\"name\":\"case_1778501750387.txt\",\"operation\":\"add\",\"parent_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387.txt\",\"project_code\":\"test\"}}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":1,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-11 20:16:06\",\"create_user\":\"\",\"file_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-11 20:16:06\",\"modify_user\":\"\",\"name\":\"lvl2_1778501750387\",\"parent_id\":\"ac4af2ce-2dc2-5a57-b9bd-9d94a98463af\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387\",\"path_display\":\"/test/lvl1_1778501750387/lvl2_1778501750387\",\"project_code\":\"test\"}]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":1,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-11 20:16:10\",\"create_user\":\"\",\"file_id\":\"8cdc2f0a-4db0-5aab-953f-02d88996143a\",\"file_type_name\":\"文件\",\"is_delete\":\"0\",\"is_dir\":\"0\",\"modify_time\":\"2026-05-11 20:16:10\",\"modify_user\":\"\",\"name\":\"case_1778501750387.txt\",\"parent_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387.txt\",\"path_display\":\"/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387.txt\",\"project_code\":\"test\"}]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_recent_open",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_recent_open",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_recent_open",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_recent_query",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"file_name\":\"test.md\",\"file_path\":\"/data/project/test/test/test.md\",\"last_open_time\":\"2026-05-10 21:39:49\",\"open_count\":10,\"project_code\":\"test\",\"recent_id\":\"6003bfd6-6204-434b-8736-0ad01be8ab82\"},{\"file_name\":\"history_case_1778420370301.md\",\"file_path\":\"/data/project/test/test/history_case_1778420370301.md\",\"last_open_time\":\"2026-05-10 21:39:49\",\"open_count\":4,\"project_code\":\"test\",\"recent_id\":\"0165bb2d-b990-4370-9150-63b5e9fb9552\"},{\"file_name\":\"history_case_1778420324236.md\",\"file_path\":\"/data/project/test/test/history_case_1778420324236.md\",\"last_open_time\":\"2026-05-10 21:39:03\",\"open_count\":4,\"project_code\":\"test\",\"recent_id\":\"b73968ab-aaa5-4fcd-8467-f650b0618620\"},{\"file_name\":\"history_case_1778420208182.md\",\"file_path\":\"/dat"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_recent_query",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"file_name\":\"test.md\",\"file_path\":\"/data/project/test/test/test.md\",\"last_open_time\":\"2026-05-10 21:39:49\",\"open_count\":10,\"project_code\":\"test\",\"recent_id\":\"6003bfd6-6204-434b-8736-0ad01be8ab82\"},{\"file_name\":\"history_case_1778420370301.md\",\"file_path\":\"/data/project/test/test/history_case_1778420370301.md\",\"last_open_time\":\"2026-05-10 21:39:49\",\"open_count\":4,\"project_code\":\"test\",\"recent_id\":\"0165bb2d-b990-4370-9150-63b5e9fb9552\"},{\"file_name\":\"history_case_1778420324236.md\",\"file_path\":\"/data/project/test/test/history_case_1778420324236.md\",\"last_open_time\":\"2026-05-10 21:39:03\",\"open_count\":4,\"project_code\":\"test\",\"recent_id\":\"b73968ab-aaa5-4fcd-8467-f650b0618620\"},{\"file_name\":\"history_case_1778420208182.md\",\"file_path\":\"/dat"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_content",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"读取文件成功\",\"data\":{\"content_base64\":\"\",\"content_text\":\"\",\"create_time\":\"\",\"ext\":\"txt\",\"kind\":\"text\",\"mime\":\"application/octet-stream\",\"modify_time\":\"2026-05-11 20:16:10\",\"name\":\"case_1778501750387.txt\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387.txt\",\"size\":0,\"truncated\":false}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":333,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"8fb3e439-409c-50d5-86a1-a200436646fc\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"+Fusion\",\"parent_id\":\"2083c089-1ff5-54c2-9671-4eda22af3d10\",\"path\":\"/data/project/test/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"path_display\":\"/bridge-home/.local/share/protonmail/bridge-v3/updates/3.18.0/qml/QtQuick/Dialogs/quickimpl/qml/+Fusion\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0af378b0-4eba-528"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_update_with_sync",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"project_code\":\"test\",\"remote_result\":{\"file_id\":\"e71744eb-520a-5977-bf61-f480ede7fdef\",\"name\":\"case_1778501750387_renamed.txt\",\"new_path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387_renamed.txt\",\"old_path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387.txt\",\"operation\":\"update\",\"parent_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387_renamed.txt\",\"project_code\":\"test\"}}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":1,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-11 20:16:06\",\"create_user\":\"\",\"file_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-11 20:16:06\",\"modify_user\":\"\",\"name\":\"lvl2_1778501750387\",\"parent_id\":\"ac4af2ce-2dc2-5a57-b9bd-9d94a98463af\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387\",\"path_display\":\"/test/lvl1_1778501750387/lvl2_1778501750387\",\"project_code\":\"test\"}]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":1,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-11 20:16:10\",\"create_user\":\"\",\"file_id\":\"e71744eb-520a-5977-bf61-f480ede7fdef\",\"file_type_name\":\"文件\",\"is_delete\":\"0\",\"is_dir\":\"0\",\"modify_time\":\"2026-05-11 20:16:17\",\"modify_user\":\"\",\"name\":\"case_1778501750387_renamed.txt\",\"parent_id\":\"37633eed-b3f3-5365-8801-6b8070247814\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387_renamed.txt\",\"path_display\":\"/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387_renamed.txt\",\"project_code\":\"test\"}]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_delete_with_sync",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"project_code\":\"test\",\"remote_result\":{\"operation\":\"delete\",\"path\":\"/data/project/test/test/lvl1_1778501750387/lvl2_1778501750387/case_1778501750387_renamed.txt\",\"project_code\":\"test\",\"removed\":true}}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[]}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_project_sync_files",
+        "status": 200,
+        "body": "{\"count\":0,\"success\":true,\"code\":\"0\",\"msg\":\"成功\",\"data\":{\"add_change_list\":null,\"change_list\":[],\"current_dir\":\"/data/project/test\",\"elapsed_ms\":18,\"exclude_dirs_effective\":\"node_modules,.git,dist,.next\",\"project_code\":\"test\",\"remove_change_list\":null,\"remove_file_id_list\":null}}"
+      },
+      {
+        "url": "http://192.168.232.130:8015/template_data/data?service=webshell.workspace_file_query",
+        "status": 200,
+        "body": "{\"count\":121,\"success\":true,\"code\":\"0\",\"msg\":\"执行成功\",\"data\":[{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"c24b0587-3fa6-52b8-9671-9a010d0cd625\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"PyMySQL\",\"parent_id\":\"\",\"path\":\"/data/project/test/PyMySQL\",\"path_display\":\"/PyMySQL\",\"project_code\":\"test\"},{\"create_time\":\"2026-05-09 21:56:53\",\"create_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"file_id\":\"0487c4d8-b703-533e-9493-8a19f85ecda9\",\"file_type_name\":\"目录\",\"is_delete\":\"0\",\"is_dir\":\"1\",\"modify_time\":\"2026-05-09 21:56:53\",\"modify_user\":\"ac3e111c-026b-4883-b91a-8ce67c907013\",\"name\":\"__pycache__\",\"parent_id\":\"\",\"path\":\"/data/project/test/__"
+      }
+    ]
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-workspace-file-crud-sync-check.png",
+  "pass": true
+}

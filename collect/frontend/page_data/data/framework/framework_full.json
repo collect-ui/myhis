@@ -1,0 +1,23 @@
+{
+  "tag": "app",
+  "style": {
+    "height": "100%",
+    "display": "flex",
+    "flexDirection": "column"
+
+  },
+
+  "children": [
+    {
+      "tag": "css",
+      "src": "/data/index.css"
+    },
+    {
+      "tag": "outlet",
+      "style": {
+        "flex": 1,
+        "overflow": "hidden"
+      }
+    }
+  ]
+}

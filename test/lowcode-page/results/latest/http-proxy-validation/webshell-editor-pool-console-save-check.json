@@ -1,0 +1,30 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "serviceName": "get_env_detail_service(获取服务)",
+  "expected": {
+    "method": "GET",
+    "mode": "backend",
+    "url": "https://jsonplaceholder.typicode.com/todos/1"
+  },
+  "step": {
+    "afterSendNotice": "请求成功 · 状态 200 · 耗时 121ms",
+    "sendSuccess": true,
+    "saveToast": "",
+    "afterSaveScreenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-console-save-after-save.png",
+    "reloadHero": {
+      "method": "GET",
+      "url": "https://jsonplaceholder.typicode.com/todos/1"
+    },
+    "reloadConsole": {
+      "mode": "backend",
+      "method": "get",
+      "url": "https://jsonplaceholder.typicode.com/todos/1"
+    },
+    "reloadNotice": "请求成功 · 状态 200 · 耗时 145ms",
+    "afterReloadScreenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-console-save-after-reload.png"
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "pass": true
+}

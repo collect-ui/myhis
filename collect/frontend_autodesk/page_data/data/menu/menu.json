@@ -1,0 +1,96 @@
+[
+  {
+    "menu_code": "first",
+    "menu_name": "首页",
+    "icon": "FaHome",
+    "is_index": "1",
+    "router_group": "/framework",
+    "group_path": "/framework",
+    "group_data": "framework.json",
+    "group_api": "post:/template_data/data?service=frontend_autodesk.framework",
+    "api": "post:/template_data/data?service=frontend_autodesk.home",
+    "data": "framework/home.json",
+    "url": "/framework/"
+  },
+  {
+    "menu_code": "price-management",
+    "menu_name": "价格库",
+    "icon": "FaWarehouse",
+    "children": [
+      {
+        "menu_code": "xin-dian",
+        "menu_name": "新点价格库",
+        "type": "group",
+        "children": [
+          {
+            "menu_code": "qing_price",
+            "menu_name": "清单",
+            "router_group": "/framework",
+            "url": "/framework/qing_price_manage",
+            "api": "post:/template_data/data?service=frontend_autodesk.qing_price"
+          },
+          {
+            "menu_code": "ding_price",
+            "menu_name": "定额",
+            "router_group": "/framework",
+            "url": "/framework/ding_price_manage",
+            "api": "post:/template_data/data?service=frontend_autodesk.home"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "menu_code": "technical-management",
+    "menu_name": "技术部分",
+    "icon": "FaWarehouse",
+    "children": [
+      {
+        "menu_code": "documentation",
+        "menu_name": "文档管理",
+        "type": "group",
+        "children": [
+          {
+            "menu_code": "doc",
+            "menu_name": "招标文档管理",
+            "router_group": "/framework",
+            "url": "/framework/doc_manage",
+            "data": "technical/doc_manage.json",
+            "api": "post:/template_data/data?service=frontend_autodesk.doc_manage"
+          },
+          {
+            "menu_code": "model",
+            "menu_name": "大模型查询",
+            "router_group": "/framework",
+            "url": "/framework/model",
+            "data": "technical/model.json",
+            "api": "post:/template_data/data?service=frontend_autodesk.model"
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "menu_code": "system-manager",
+    "menu_name": "系统管理",
+    "icon": "FaHouseUser",
+    "in_menu": false,
+    "children": [
+      {
+        "menu_code": "g2",
+        "menu_name": "系统设置",
+        "type": "group",
+        "children": [
+          {
+            "menu_code": "menu_manage",
+            "menu_name": "菜单管理",
+            "api": "post:/template_data/data?service=frontend_autodesk.menu_manage",
+            "router_group": "/framework",
+            "url": "/framework/menu_manage"
+          }
+        ]
+      }
+    ]
+  }
+]

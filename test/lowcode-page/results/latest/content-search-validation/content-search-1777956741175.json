@@ -1,0 +1,74 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "apiUrl": "http://127.0.0.1:8015/template_data/data",
+  "projectCode": "backend",
+  "projectName": "月神后端",
+  "startedAt": "2026-05-05T04:52:21.175Z",
+  "apiChecks": {
+    "baseline": {
+      "code": "0",
+      "success": true,
+      "msg": "搜索完成",
+      "itemCount": 1,
+      "summary": {
+        "engine": "sftp_scan",
+        "duration_ms": 669,
+        "scanned_files": 96,
+        "matched_files": 1,
+        "hit_count": 1,
+        "failed_files": 0,
+        "truncated": true,
+        "scan_stopped": true
+      }
+    },
+    "invalidKeyword": {
+      "code": "-1",
+      "success": false,
+      "msg": "关键字至少2个字符"
+    },
+    "notFoundProject": {
+      "code": "-1",
+      "success": false,
+      "msg": "项目[not_exists]不存在"
+    }
+  },
+  "uiChecks": {
+    "contentSearchButtonVisible": true,
+    "panelInputVisible": true,
+    "roundA": {
+      "keyword": "import",
+      "include_glob": "",
+      "lineCount": 100,
+      "hasSummary": true,
+      "hasKeywordError": false,
+      "bodyHasResult": true
+    },
+    "roundB": {
+      "keyword": "import",
+      "include_glob": "*.py",
+      "lineCount": 100,
+      "hasSummary": true,
+      "hasKeywordError": false,
+      "bodyHasResult": true
+    },
+    "roundInvalid": {
+      "keyword": "a",
+      "include_glob": "",
+      "lineCount": 100,
+      "hasSummary": true,
+      "hasKeywordError": true,
+      "bodyHasResult": true
+    },
+    "clickOpen": {
+      "expectedPath": "/data/project/moongod-backend/assets_operations/area_organization_info_tree/gm_dao.py",
+      "monacoHasExpectedPath": false,
+      "openRequestHit": true,
+      "openRequestContainsPath": true
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/content-search-validation/content-search-1777956741175.png",
+  "pass": true
+}

@@ -1,0 +1,289 @@
+{
+  "ok": true,
+  "steps": [
+    {
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-path-01-open.png"
+    },
+    {
+      "action": "login",
+      "terminalCount": 1,
+      "shellTabCount": 1
+    },
+    {
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-path-02-login.png"
+    },
+    {
+      "action": "cmd",
+      "index": 0,
+      "cmd": "cd /data"
+    },
+    {
+      "action": "context",
+      "tabIndex": 0,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 0,
+      "expectedPath": "/data",
+      "value": "/data",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492703642587136\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 0,
+      "label": "水平分割"
+    },
+    {
+      "action": "split-done",
+      "label": "水平分割",
+      "expectedTermCount": 2,
+      "actualTermCount": 2
+    },
+    {
+      "action": "context",
+      "tabIndex": 1,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 1,
+      "expectedPath": "/data",
+      "value": "/data",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492745774370816\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 0,
+      "label": "垂直分割"
+    },
+    {
+      "action": "split-done",
+      "label": "垂直分割",
+      "expectedTermCount": 3,
+      "actualTermCount": 3
+    },
+    {
+      "action": "context",
+      "tabIndex": 2,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 2,
+      "expectedPath": "/data",
+      "value": "/data",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492745774370816\"}"
+        }
+      ]
+    },
+    {
+      "action": "cmd",
+      "index": 0,
+      "cmd": "cd /data"
+    },
+    {
+      "action": "cmd",
+      "index": 1,
+      "cmd": "cd /home"
+    },
+    {
+      "action": "cmd",
+      "index": 2,
+      "cmd": "cd /data/project"
+    },
+    {
+      "action": "context",
+      "tabIndex": 0,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 0,
+      "expectedPath": "/data",
+      "value": "/data",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492703642587136\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 1,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 1,
+      "expectedPath": "/home",
+      "value": "/home",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/home\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492784215166976\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 2,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 2,
+      "expectedPath": "/data/project",
+      "value": "/data/project",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data/project\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492745774370816\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 0,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 0,
+      "expectedPath": "/data",
+      "value": "/data",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492703642587136\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 1,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 1,
+      "expectedPath": "/home",
+      "value": "/home",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/home\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492784215166976\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 2,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 2,
+      "expectedPath": "/data/project",
+      "value": "/data/project",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data/project\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492745774370816\"}"
+        }
+      ]
+    },
+    {
+      "action": "repeat-round",
+      "round": 1
+    },
+    {
+      "action": "context",
+      "tabIndex": 0,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 0,
+      "expectedPath": "/data",
+      "value": "/data",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492703642587136\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 1,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 1,
+      "expectedPath": "/home",
+      "value": "/home",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/home\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492784215166976\"}"
+        }
+      ]
+    },
+    {
+      "action": "context",
+      "tabIndex": 2,
+      "label": "文件管理"
+    },
+    {
+      "action": "file-manager-path",
+      "tabIndex": 2,
+      "expectedPath": "/data/project",
+      "value": "/data/project",
+      "pass": true,
+      "requests": [
+        {
+          "url": "http://192.168.232.130:8015/template_data/data?service=webshell.get_dir_info_by_token",
+          "postData": "{\"path\":\"/data/project\",\"service\":\"webshell.get_dir_info_by_token\",\"token\":\"587492745774370816\"}"
+        }
+      ]
+    },
+    {
+      "action": "repeat-round",
+      "round": 2
+    },
+    {
+      "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-path-03-final.png"
+    }
+  ],
+  "errors": [],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": []
+}

@@ -1,0 +1,76 @@
+{
+  "pass": true,
+  "editorStyles": {
+    "active": {
+      "text": "b_1778508888005_4.txt",
+      "h": 23,
+      "padding": "1px 10px 0px",
+      "margin": "0px 0px 0px 2px",
+      "borderBottom": "0px none rgb(255, 255, 255)",
+      "borderRadius": "2px 2px 0px 0px",
+      "background": "rgb(0, 138, 225)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "14px",
+      "lineHeight": "22px",
+      "svgCount": 1
+    },
+    "inactive": {
+      "text": "e_1778508888005_4.txt",
+      "h": 23,
+      "padding": "1px 10px 0px",
+      "margin": "0px",
+      "borderBottom": "0px none rgba(0, 0, 0, 0.88)",
+      "borderRadius": "2px 2px 0px 0px",
+      "background": "rgb(255, 255, 255)",
+      "color": "rgba(0, 0, 0, 0.88)",
+      "fontSize": "14px",
+      "lineHeight": "22px",
+      "svgCount": 1
+    }
+  },
+  "websqlStyles": {
+    "sqlActive": {
+      "text": "本地 SQLite",
+      "h": 23,
+      "padding": "1px 10px 0px",
+      "margin": "0px 0px 0px 2px",
+      "borderBottom": "0px none rgb(255, 255, 255)",
+      "borderRadius": "2px 2px 0px 0px",
+      "background": "rgb(0, 138, 225)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "14px",
+      "lineHeight": "22px",
+      "svgCount": 1
+    },
+    "sqlInactive": {
+      "text": "MySQL",
+      "h": 23,
+      "padding": "1px 10px 0px",
+      "margin": "0px 0px 0px 2px",
+      "borderBottom": "0px none rgba(0, 0, 0, 0.88)",
+      "borderRadius": "2px 2px 0px 0px",
+      "background": "rgb(255, 255, 255)",
+      "color": "rgba(0, 0, 0, 0.88)",
+      "fontSize": "14px",
+      "lineHeight": "22px",
+      "svgCount": 1
+    },
+    "resultActive": {
+      "text": "75 行 09:24:10",
+      "h": 23,
+      "padding": "1px 10px 0px",
+      "margin": "0px 0px 0px 2px",
+      "borderBottom": "0px none rgb(255, 255, 255)",
+      "borderRadius": "2px 2px 0px 0px",
+      "background": "rgb(0, 138, 225)",
+      "color": "rgb(255, 255, 255)",
+      "fontSize": "14px",
+      "lineHeight": "22px",
+      "svgCount": 1
+    }
+  },
+  "screenshots": {
+    "editor": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/editor-pool-tabs-style-match.png",
+    "websql": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-tabs-style-match.png"
+  }
+}

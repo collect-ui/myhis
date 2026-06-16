@@ -1,0 +1,8 @@
+service:
+  - key: work_task_label_query
+    http: true
+    module: sql
+    params:
+      label:
+        template: "{{ if .search }}%{{.search}}%{{ end}}"
+    data_file: work_task_label_query.sql

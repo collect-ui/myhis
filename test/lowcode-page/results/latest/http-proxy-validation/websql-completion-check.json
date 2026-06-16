@@ -1,0 +1,171 @@
+{
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/websql-pool",
+  "tableName": "websql_completion_demo_1779099055887",
+  "otherTableName": "websql_completion_side_1779099055887",
+  "checks": {
+    "pageOpened": true,
+    "editorVisible": true,
+    "keywordSuggest": true,
+    "fromTableSuggest": true,
+    "joinTableSuggest": true,
+    "postTableKeyword": true,
+    "joinOnKeyword": true,
+    "whereFieldSuggest": true,
+    "whereLikeKeywordPrefix": true,
+    "qualifiedFieldSuggest": true,
+    "insertFieldSuggest": true,
+    "valueLiteralSuggest": true,
+    "insertValuesLiteralSuggest": true,
+    "updateSetKeyword": true,
+    "whereConditionKeyword": true,
+    "groupByKeyword": true,
+    "insertIntoKeyword": true,
+    "deleteFromKeyword": true,
+    "deletePostTableKeyword": true,
+    "multiStatementIsolation": true,
+    "commentSilent": true,
+    "createTableSilent": true
+  },
+  "suggestions": {
+    "keyword": [
+      "SELECT",
+      "SHOW TABLES"
+    ],
+    "fromTable": [
+      "websql_completion_demo_1779099055887Table · 3 fields"
+    ],
+    "joinTable": [
+      "websql_completion_side_1779099055887Table · 3 fields"
+    ],
+    "postTableKeyword": [
+      "WHERE",
+      "JOIN",
+      "LEFT JOIN",
+      "RIGHT JOIN",
+      "INNER JOIN",
+      "GROUP BY",
+      "ORDER BY",
+      "LIMIT",
+      "OFFSET"
+    ],
+    "joinOnKeyword": [
+      "ON"
+    ],
+    "whereField": [
+      "completion_notewebsql_completion_demo_1779099055887 · TEXT"
+    ],
+    "whereLikeKeywordPrefix": [
+      "LIKE",
+      "NOT LIKE"
+    ],
+    "qualifiedField": [
+      "completion_notewebsql_completion_demo_1779099055887 · TEXT"
+    ],
+    "insertField": [
+      "completion_notewebsql_completion_demo_1779099055887 · TEXT",
+      "idwebsql_completion_demo_1779099055887 · INTEGER · PK",
+      "namewebsql_completion_demo_1779099055887 · TEXT",
+      "SELECT",
+      "FROM",
+      "WHERE",
+      "LIKE",
+      "NOT LIKE",
+      "IN",
+      "BETWEEN",
+      "IS",
+      "IS NOT",
+      "JOIN"
+    ],
+    "valueLiteral": [
+      "NULL",
+      "TRUE",
+      "FALSE",
+      "CURRENT_DATE",
+      "CURRENT_TIME",
+      "CURRENT_TIMESTAMP",
+      "AND",
+      "OR",
+      "LIKE",
+      "NOT LIKE",
+      "IN",
+      "BETWEEN",
+      "IS"
+    ],
+    "insertValuesLiteral": [
+      "NULL",
+      "TRUE",
+      "FALSE",
+      "CURRENT_DATE",
+      "CURRENT_TIME",
+      "CURRENT_TIMESTAMP",
+      "COUNT",
+      "SUM",
+      "AVG",
+      "MIN",
+      "MAX",
+      "COALESCE",
+      "IFNULL"
+    ],
+    "updateSetKeyword": [
+      "WHERE",
+      "ORDER BY",
+      "LIMIT"
+    ],
+    "whereConditionKeyword": [
+      "AND",
+      "OR",
+      "LIKE",
+      "NOT LIKE",
+      "IN",
+      "BETWEEN",
+      "IS",
+      "IS NOT",
+      "GROUP BY",
+      "ORDER BY",
+      "LIMIT",
+      "OFFSET"
+    ],
+    "groupByKeyword": [
+      "GROUP BY"
+    ],
+    "insertIntoKeyword": [
+      "INTO"
+    ],
+    "deleteFromKeyword": [
+      "FROM"
+    ],
+    "deletePostTableKeyword": [
+      "WHERE",
+      "ORDER BY",
+      "LIMIT"
+    ],
+    "multiStatementIsolation": [
+      "completion_notewebsql_completion_demo_1779099055887 · TEXT",
+      "idwebsql_completion_demo_1779099055887 · INTEGER · PK",
+      "namewebsql_completion_demo_1779099055887 · TEXT",
+      "SELECT",
+      "FROM",
+      "WHERE",
+      "LIKE",
+      "NOT LIKE",
+      "IN",
+      "BETWEEN",
+      "IS",
+      "IS NOT",
+      "JOIN"
+    ],
+    "commentSilent": [],
+    "createTableSilent": []
+  },
+  "completionResponse": {
+    "code": "0",
+    "tableCount": 84,
+    "viewCount": 0
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-completion-check.png",
+  "report": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-completion-check.json",
+  "ok": true
+}

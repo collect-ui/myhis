@@ -1,0 +1,27 @@
+{
+  "url": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "drawerRect": {
+    "x": 550.40625,
+    "y": 76,
+    "w": 1169.59375,
+    "h": 866
+  },
+  "closeRect": {
+    "x": 1678,
+    "y": 84,
+    "w": 30,
+    "h": 30
+  },
+  "closeNotTooHigh": true,
+  "dividerOpacity": {
+    "before": 1,
+    "pm": 0,
+    "cs": 0
+  },
+  "pmOpen": true,
+  "csOpen": true,
+  "drawerDisplayAfterClose": "none/visible/1",
+  "localWorkspaceVisible": "false",
+  "pass": true,
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-drawer-user-issue-recheck-2026-05-05T13-13-10-525Z.png"
+}

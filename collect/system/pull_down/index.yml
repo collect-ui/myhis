@@ -1,0 +1,87 @@
+service:
+  - key: pull_down_query
+    http: true
+    module: sql
+    data_file: pull_down_query.sql
+    result_handler:
+      - key: result2params
+        fields:
+          - to: "[data]"
+      - key: update_array
+        enable: "{{must .data}}"
+        foreach: data
+        item: item
+        fields:
+          - field: config
+            type: "json"
+            template: "[item.config]"
+  - key: pull_down_delete
+    http: true
+    module: model_delete
+    table: pull_down
+    params:
+      pull_down_id_list:
+        check:
+          template: "{{must .pull_down_id_list}}"
+          err_msg: "下拉选项ID不能为空"
+    filter:
+      pull_down_id__in: "[pull_down_id_list]"
+
+  - key: pull_down_update
+    http: true
+    module: model_update
+    table: pull_down
+    params:
+      pull_down_id:
+        check:
+          template: "{{must .pull_down_id}}"
+          err_msg: "记录不能为空"
+      code:
+        check:
+          template: "{{must .code}}"
+          err_msg: "编码不能为空"
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: "名称不能为空"
+    handler_params:
+      - key: service2field
+        service:
+          service: system.pull_down_query
+          code: "[code]"
+          exclude: "[pull_down_id]"
+        save_field: current_data
+        template: "{{eq (len .current_data) 0}}"
+        err_msg: "【{{.code}}】已经存在"
+    filter:
+      pull_down_id: "[pull_down_id]"
+
+  - key: pull_down_save
+    http: true
+    module: model_save
+    table: pull_down
+    params:
+      pull_down_id:
+        template: "{{uuid}}"
+      code:
+        check:
+          template: "{{must .code}}"
+          err_msg: "编码不能为空"
+      name:
+        check:
+          template: "{{must .name}}"
+          err_msg: "名称不能为空"
+      config:
+        check:
+          template: "{{must .config}}"
+          err_msg: 配置不能为空
+      status:
+        default: 1
+    handler_params:
+      - key: service2field
+        service:
+          service: system.pull_down_query
+          code: "[code]"
+        save_field: current_data
+        template: "{{eq (len .current_data) 0}}"
+        err_msg: "【{{.code}}】已经存在"

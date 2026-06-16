@@ -1,0 +1,39 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "projectCode": "test",
+  "parentPath": "/data/project/test/test",
+  "fileName": "enter_save_1778504221230.md",
+  "filePath": "/data/project/test/test/enter_save_1778504221230.md",
+  "checks": {
+    "parentReady": true,
+    "dialogOpened": true,
+    "enterTriggeredAddRequest": true,
+    "modalClosedAfterEnter": true,
+    "serverFileCreated": true,
+    "fileVisibleInTree": true,
+    "fileSelectedInTree": true,
+    "fileOpened": true
+  },
+  "trace": {
+    "addRequestPayloads": [
+      {
+        "name": "enter_save_1778504221230.md",
+        "path": "/data/project/test/test/enter_save_1778504221230.md",
+        "is_dir": "0",
+        "parent_id": "4ff6c4ca-dd67-56b3-9e4f-2025c44e948c"
+      }
+    ],
+    "contentRequestPaths": [
+      "/data/project/test/test/enter_save_1778504221230.md"
+    ],
+    "tabTitles": [
+      "Editor工作台",
+      "enter_save_1778504221230.md"
+    ]
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-editor-pool-file-dialog-enter-save-check.png",
+  "pass": true
+}

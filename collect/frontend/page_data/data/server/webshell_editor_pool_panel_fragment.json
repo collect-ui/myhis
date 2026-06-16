@@ -1,0 +1,312 @@
+{
+  "tag": "panel",
+  "id": "${'workspace-editor-panel-'+project_code}",
+  "order": 2,
+  "defaultSize": 78,
+  "minSize": 30,
+  "children": [
+    {
+      "tag": "layout-fit",
+      "style": {
+        "height": "100%"
+      },
+      "children": [
+        {
+          "tag": "panel-group",
+          "direction": "horizontal",
+          "children": [
+            {
+              "tag": "panel",
+              "id": "${'workspace-source-editor-panel-'+project_code}",
+              "defaultSize": 62,
+              "minSize": 30,
+              "children": [
+                {
+                  "tag": "layout-fit",
+                  "style": {
+                    "height": "100%"
+                  },
+                  "children": [
+                    {
+                      "tag": "panel-group",
+                      "visible": "${workspacePanelList.length>0}",
+                      "direction": "horizontal",
+                      "children": [
+                        {
+                          "tag": "listview",
+                          "itemData": "${[...workspacePanelList]}",
+                          "keyField": "id",
+                          "rowClickAction": [
+                            {
+                              "tag": "update-store",
+                              "value": {
+                                "workspaceLastGroupId": "${row.id}"
+                              }
+                            }
+                          ],
+                          "itemAttr": {
+                            "tag": "panel",
+                            "id": "${row.id}",
+                            "defaultSize": "${workspacePanelList.length>0?Math.floor(100/workspacePanelList.length):100}",
+                            "minSize": 10,
+                            "order": "${row.order}",
+                            "className": "border-right",
+                            "children": [
+                              {
+                                "tag": "panel-group",
+                                "direction": "vertical",
+                                "children": [
+                                  {
+                                    "tag": "listview",
+                                    "itemData": "${[...row.children]}",
+                                    "keyField": "id",
+                                    "rowClickAction": [
+                                      {
+                                        "tag": "update-store",
+                                        "value": {
+                                          "workspaceLastShellId": "${row.id}"
+                                        }
+                                      }
+                                    ],
+                                    "itemAttr": {
+                                      "tag": "panel",
+                                      "id": "${row.id}",
+                                      "defaultSize": "${row.parent?.children?.length>0?Math.floor(100/row.parent.children.length):100}",
+                                      "minSize": 10,
+                                      "order": "${row.order}",
+                                      "className": "${row.id==workspaceLastShellId?'shell-group-active':''}",
+                                      "children": [
+                                        {
+                                          "tag": "div",
+                                          "style": {
+                                            "height": "100%",
+                                            "display": "flex",
+                                            "flexDirection": "column",
+                                            "minHeight": 0,
+                                            "background": "#ffffff"
+                                          },
+                                          "children": [
+                                            {
+                                              "tag": "tabs",
+                                              "size": "small",
+                                              "withHistory": false,
+                                              "type": "editable-card",
+                                              "hideAdd": true,
+                                              "headerOnly": true,
+                                              "keyField": "token",
+                                              "activeKey": "${row.activeKey}",
+                                              "itemData": "${(row.content||[]).filter(item=>['http','console','console-result'].indexOf(String(item.type||'file'))<0)}",
+                                              "style": {
+                                                "flex": "0 0 auto"
+                                              },
+                                              "itemAttr": {
+                                                "label": "${(()=>{const normalize=(v)=>String(v||'').replace(/\\\\/g,'/');const fullPath=normalize(row&&row.path);const fallback=String((row&&row.title)||(row&&row.name)||((fullPath&&fullPath.split('/').pop())||'未命名'));if(!fullPath){return fallback;}const shell=(row&&row.parent&&Array.isArray(row.parent.content))?row.parent:null;const list=(shell&&Array.isArray(shell.content)?shell.content:[]).filter(item=>['http','console','console-result'].indexOf(String(item&&item.type||'file'))<0).map(item=>normalize(item&&item.path)).filter(Boolean);const all=Array.from(new Set(list));if(all.length<=1){return fallback;}const currentSeg=fullPath.split('/').filter(Boolean);if(currentSeg.length<=0){return fallback;}const others=all.filter(p=>p!==fullPath);for(let take=1;take<=currentSeg.length;take++){const suffix=currentSeg.slice(-take).join('/');const conflict=others.some(p=>{const seg=String(p||'').split('/').filter(Boolean);if(seg.length<take){return false;}return seg.slice(-take).join('/')===suffix;});if(!conflict){return suffix;}}return fullPath;})()}",
+                                                "children": [
+                                                  {
+                                                    "tag": "div",
+                                                    "style": {
+                                                      "height": "0px",
+                                                      "overflow": "hidden"
+                                                    }
+                                                  }
+                                                ]
+                                              },
+                                              "action": [
+                                                {
+                                                  "tag": "method",
+                                                  "method": "${(()=>{const token=String(activeKey||key||(row&&row.token)||'').trim();if(!token){return;}const sid=String((row&&row.parent&&row.parent.id)||row&&row.id||workspaceLastShellId||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];let shell=null;for(const g of groups){const children=Array.isArray(g&&g.children)?g.children:[];const direct=children.find(c=>String(c&&c.id||'')===sid);if(direct){shell=direct;break;}if(!shell){const byToken=children.find(c=>Array.isArray(c&&c.content)&&c.content.some(i=>String(i&&i.token||'')===token));if(byToken){shell=byToken;}}}if(!shell&&row&&row.parent&&Array.isArray(row.parent.content)){shell=row.parent;}if(shell&&typeof shell.setActiveKey==='function'){shell.setActiveKey(token);}})()}"
+                                                },
+                                                {
+                                                  "tag": "update-store",
+                                                  "value": {
+                                                    "workspaceCurrentFilePath": "${(()=>{const token=String(activeKey||key||(row&&row.token)||'').trim();const sid=String((row&&row.parent&&row.parent.id)||row&&row.id||workspaceLastShellId||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];let shell=null;for(const g of groups){const children=Array.isArray(g&&g.children)?g.children:[];const direct=children.find(c=>String(c&&c.id||'')===sid);if(direct){shell=direct;break;}if(!shell&&token){const byToken=children.find(c=>Array.isArray(c&&c.content)&&c.content.some(i=>String(i&&i.token||'')===token));if(byToken){shell=byToken;}}}const list=Array.isArray(shell&&shell.content)?shell.content:(Array.isArray(row&&row.parent&&row.parent.content)?row.parent.content:(Array.isArray(row&&row.content)?row.content:[]));const hit=token?list.find(item=>String(item&&item.token||'')===token):null;return String(hit&&hit.path||workspaceCurrentFilePath||'');})()}",
+                                                    "workspaceActivePath": "${(()=>{const token=String(activeKey||key||(row&&row.token)||'').trim();const sid=String((row&&row.parent&&row.parent.id)||row&&row.id||workspaceLastShellId||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];let shell=null;for(const g of groups){const children=Array.isArray(g&&g.children)?g.children:[];const direct=children.find(c=>String(c&&c.id||'')===sid);if(direct){shell=direct;break;}if(!shell&&token){const byToken=children.find(c=>Array.isArray(c&&c.content)&&c.content.some(i=>String(i&&i.token||'')===token));if(byToken){shell=byToken;}}}const list=Array.isArray(shell&&shell.content)?shell.content:(Array.isArray(row&&row.parent&&row.parent.content)?row.parent.content:(Array.isArray(row&&row.content)?row.content:[]));const hit=token?list.find(item=>String(item&&item.token||'')===token):null;return String(hit&&hit.path||workspaceActivePath||'');})()}",
+                                                    "workspaceActiveName": "${(()=>{const token=String(activeKey||key||(row&&row.token)||'').trim();const sid=String((row&&row.parent&&row.parent.id)||row&&row.id||workspaceLastShellId||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];let shell=null;for(const g of groups){const children=Array.isArray(g&&g.children)?g.children:[];const direct=children.find(c=>String(c&&c.id||'')===sid);if(direct){shell=direct;break;}if(!shell&&token){const byToken=children.find(c=>Array.isArray(c&&c.content)&&c.content.some(i=>String(i&&i.token||'')===token));if(byToken){shell=byToken;}}}const list=Array.isArray(shell&&shell.content)?shell.content:(Array.isArray(row&&row.parent&&row.parent.content)?row.parent.content:(Array.isArray(row&&row.content)?row.content:[]));const hit=token?list.find(item=>String(item&&item.token||'')===token):null;return String(hit&&hit.title||workspaceActiveName||'');})()}"
+                                                  }
+                                                }
+                                              ],
+                                              "removeAction": [
+                                                {
+                                                  "tag": "method",
+                                                  "enable": "${row.activeKey==key && (row.content||[]).filter(item=>['http','console','console-result'].indexOf(String(item.type||'file'))<0 && item.token!==key).length>0}",
+                                                  "method": "${(()=>{const next=(row.content||[]).filter(item=>['http','console','console-result'].indexOf(String(item.type||'file'))<0 && item.token!==key);if(next.length>0){row.setActiveKey(next[next.length-1].token);}})()}"
+                                                },
+                                                {
+                                                  "tag": "localstore",
+                                                  "method": "write",
+                                                  "key": "${'workspace-open-files-'+(project_code||workspaceCurrent||'')}",
+                                                  "value": "${(()=>{const files=(row.content||[]).filter(i=>i.token!==key&&(i.type||'file')==='file').map(i=>({path:i.path,title:i.title}));return {files};})()}"
+                                                },
+                                                {
+                                                  "tag": "method",
+                                                  "method": "${row.removeByKey(key)}"
+                                                },
+                                                {
+                                                  "tag": "update-store",
+                                                  "value": {
+                                                    "workspacePanelList": "${workspacePanelList.map(item=>Object.assign({}, item, { children: (item.children||[]).filter(c=>(c.content||[]).length>0) })).filter(item=>(item.children||[]).length>0)}"
+                                                  }
+                                                },
+                                                {
+                                                  "tag": "method",
+                                                  "method": "${workspacePanelList.forEach(item=>item.initialize())}"
+                                                }
+                                              ],
+                                              "rightMenu": [
+                                                {
+                                                  "type": "item",
+                                                  "icon": "TbLayoutRows",
+                                                  "code": "horizontal",
+                                                  "label": "水平分割"
+                                                },
+                                                {
+                                                  "type": "item",
+                                                  "icon": "TbLayoutColumns",
+                                                  "code": "vertical",
+                                                  "label": "垂直分割"
+                                                }
+                                              ],
+                                              "rightMenuAction": [
+                                                {
+                                                  "tag": "update-store",
+                                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                                  "value": {
+                                                    "workspaceToken": "${uuid()}"
+                                                  }
+                                                },
+                                                {
+                                                  "tag": "arr-push",
+                                                  "enable": "${item && item.code && item.code==='horizontal'}",
+                                                  "from": "workspacePanelList",
+                                                  "value": {
+                                                    "id": "${uuid()}",
+                                                    "order": "${workspacePanelList.length+1}",
+                                                    "description": "横向分组",
+                                                    "children": [
+                                                      {
+                                                        "id": "${uuid()}",
+                                                        "order": 1,
+                                                        "description": "纵向分组",
+                                                        "activeKey": "${workspaceToken}",
+                                                        "content": [
+                                                          {
+                                                            "token": "${workspaceToken}",
+                                                            "title": "${row.title}",
+                                                            "path": "${row.path}",
+                                                            "project_code": "${row.project_code||workspaceCurrent}",
+                                                            "type": "${row.type||'file'}",
+                                                            "id": "${row.id||''}",
+                                                            "http_method": "${row.http_method||'post'}",
+                                                            "http_url": "${row.http_url||'/template_data/data'}",
+                                                            "http_request_text": "${row.http_request_text||'{}'}",
+                                                            "http_response_text": "${row.http_response_text||''}"
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                {
+                                                  "tag": "arr-push",
+                                                  "enable": "${item && item.code && item.code==='vertical'}",
+                                                  "method": "${(()=>{const token=String((row&&row.token)||row||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];let group=null;for(const item of groups){const children=Array.isArray(item&&item.children)?item.children:[];const hit=children.some(child=>Array.isArray(child&&child.content)&&child.content.some(tab=>String(tab&&tab.token||'')===token));if(hit){group=item;break;}}if(!group&&row&&row.parent&&row.parent.parent){group=row.parent.parent;}if(group&&typeof group.addChildren==='function'){group.addChildren(value);}})()}",
+                                                  "value": {
+                                                    "id": "${uuid()}",
+                                                    "order": 1,
+                                                    "description": "纵向分组",
+                                                    "activeKey": "${workspaceToken}",
+                                                    "content": [
+                                                      {
+                                                        "token": "${workspaceToken}",
+                                                        "title": "${row.title}",
+                                                        "path": "${row.path}",
+                                                        "project_code": "${row.project_code||workspaceCurrent}",
+                                                        "type": "${row.type||'file'}",
+                                                        "id": "${row.id||''}",
+                                                        "http_method": "${row.http_method||'post'}",
+                                                        "http_url": "${row.http_url||'/template_data/data'}",
+                                                        "http_request_text": "${row.http_request_text||'{}'}",
+                                                        "http_response_text": "${row.http_response_text||''}"
+                                                      }
+                                                    ]
+                                                  }
+                                                },
+                                                {
+                                                  "tag": "method",
+                                                  "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                                  "method": "${workspacePanelList.forEach(item=>item.initialize())}"
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              "tag": "workspace-editor-pool",
+                                              "style": {
+                                                "flex": 1,
+                                                "minHeight": 0
+                                              },
+                                              "subgroupRow": "${row}",
+                                              "subgroupId": "${row.id}",
+                                              "projectCode": "${workspaceCurrent}",
+                                              "content": "${(()=>{const sid=String(row&&row.id||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];for(const g of groups){const children=Array.isArray(g&&g.children)?g.children:[];const hit=children.find(c=>String(c&&c.id||'')===sid);if(hit){return Array.isArray(hit.content)?hit.content:[];}}return Array.isArray(row&&row.content)?row.content:[];})()}",
+                                              "contentVersion": "${(()=>{const sid=String(row&&row.id||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];let shell=row||{};for(const g of groups){const children=Array.isArray(g&&g.children)?g.children:[];const hit=children.find(c=>String(c&&c.id||'')===sid);if(hit){shell=hit;break;}}const list=Array.isArray(shell&&shell.content)?shell.content:[];return list.map(item=>String(item&&item.token||'')).join('|')+'::'+String(shell&&shell.activeKey||'')+'::'+String(workspaceCurrentFilePath||'');})()}",
+                                              "activeKey": "${(()=>{const sid=String(row&&row.id||'');const groups=Array.isArray(workspacePanelList)?workspacePanelList:[];let shell=row||{};for(const g of groups){const children=Array.isArray(g&&g.children)?g.children:[];const hit=children.find(c=>String(c&&c.id||'')===sid);if(hit){shell=hit;break;}}const list=Array.isArray(shell&&shell.content)?shell.content:[];const p=String(workspaceCurrentFilePath||'');if(p){const hit=list.find(item=>String(item&&item.path||'')===p);if(hit&&hit.token){return hit.token;}}return String(shell&&shell.activeKey||'');})()}",
+                                              "httpDocRefreshVersion": "${workspaceHttpDocRefreshVersion||''}",
+                                              "poolSize": 4,
+                                              "emptyText": "请选择左侧文件"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    "joinAttr": {
+                                      "tag": "panel-resize"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          "joinAttr": {
+                            "tag": "panel-resize"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "div",
+                      "visible": "${workspacePanelList.length<=0}",
+                      "style": {
+                        "height": "100%",
+                        "minHeight": 0,
+                        "display": "flex",
+                        "flexDirection": "column",
+                        "background": "#ffffff"
+                      },
+                      "children": [
+                        {
+                          "tag": "workspace-editor-pool",
+                          "style": {
+                            "flex": 1,
+                            "minHeight": 0
+                          },
+                          "subgroupId": "__empty_shell__",
+                          "projectCode": "${workspaceCurrent}",
+                          "content": "[]",
+                          "contentVersion": "${'empty::'+String(workspaceCurrentFilePath||'')}",
+                          "activeKey": "",
+                          "httpDocRefreshVersion": "${workspaceHttpDocRefreshVersion||''}",
+                          "poolSize": 4,
+                          "emptyText": "从左侧目录树选择一个文件后即可开始编辑"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

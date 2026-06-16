@@ -1,0 +1,18 @@
+{
+  "desc": "替换前和替换后，概念调整下，方便对比，从左往右，传过来的数据，是前段的数据，left。已有的后台数据是right",
+  "left_save_field": "after",
+  "right_save_field": "before",
+  "op_field_transfer": {
+    "name": "op_name"
+  },
+  "fields": [
+    {"rule": "array_obj_value", "left_field": "[username]", "right_field": "[username]", "field": "[username]", "name": "用户名", "left": "[user_list]", "right": "[local_user_list]", "with_add_remove": true, "left_value_field": "[username]", "right_value_field": "[username]", "operation": "modify", "append_right_fields": ["[*]"],"append_left_fields": ["[*]"]},
+    {"rule": "array_obj_value", "left_field": "[username]", "right_field": "[username]", "field": "[wechat_id]", "name": "微信ID", "left": "[user_list]", "right": "[local_user_list]",  "left_value_field": "[wechat_id]", "right_value_field": "[wechat_id]", "operation": "modify","append_right_fields": ["[user_id]"], "append_left_fields": ["[*]"]},
+    {"rule": "array_obj_value", "left_field": "[username]", "right_field": "[username]", "field": "[nick]", "name": "昵称", "left": "[user_list]", "right": "[local_user_list]",  "left_value_field": "[nick]", "right_value_field": "[nick]", "operation": "modify","append_right_fields": ["[user_id]"],"append_left_fields": ["[*]"]},
+    {"rule": "array_obj_value", "left_field": "[username]", "right_field": "[username]", "field": "[height]", "name": "身高", "left": "[user_list]", "right": "[local_user_list]",  "left_value_field": "[height]", "right_value_field": "[height]", "operation": "modify","append_right_fields": ["[user_id]"], "append_left_fields": ["[*]"]},
+    {"rule": "array_obj_value", "left_field": "[username]", "right_field": "[username]", "field": "[weight]", "name": "体重", "left": "[user_list]", "right": "[local_user_list]",  "left_value_field": "[weight]", "right_value_field": "[weight]", "operation": "modify","append_right_fields": ["[user_id]"], "append_left_fields": ["[*]"]},
+    {"rule": "array_obj_value", "left_field": "[username]", "right_field": "[username]", "field": "[phone]", "name": "联系方式", "left": "[user_list]", "right": "[local_user_list]",  "left_value_field": "[phone]", "right_value_field": "[phone]", "operation": "modify","append_right_fields": ["[user_id]"], "append_left_fields": ["[*]"]},
+    {"rule": "array_obj_value", "left_field": "[username]", "right_field": "[username]", "field": "[sport_level]", "name": "运动级别", "left": "[user_list]", "right": "[local_user_list]",  "left_value_field": "[sport_level]", "right_value_field": "[sport_level]", "operation": "modify","append_right_fields": ["[user_id]"], "append_left_fields": ["[*]"]}
+
+  ]
+}

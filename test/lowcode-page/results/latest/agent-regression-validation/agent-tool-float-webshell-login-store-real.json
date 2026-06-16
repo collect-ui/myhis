@@ -1,0 +1,24 @@
+{
+  "baseUrl": "http://127.0.0.1:8015",
+  "pageUrl": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/agent_regression",
+  "promptText": "请帮我分析webshell 登录的逻辑",
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-tool-float-webshell-login-store-real.png",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "floatVisible": true,
+  "status": "16 次调用",
+  "toolCount": 6,
+  "toolNames": [
+    "11. read_project_fileok",
+    "12. read_project_fileok",
+    "13. read_project_fileok",
+    "14. read_project_fileok",
+    "15. read_project_fileok",
+    "16. read_project_fileok"
+  ],
+  "assistantTextLength": 1252,
+  "assistantTextPreview": "已定位到 webshell“登录/取登录信息”的核心链路：\n关键文件\n\ncollect/webshell/service.yml\ncollect/webshell/token/index.yml\ncollect/webshell/token/get_info_by_token.sql\ncollect/webshell/token/base.sql\n\n登录/鉴权逻辑\n\n\n入口路由\n\ncollect/webshell/service.yml\n“验证”模块指向 token/index.yml\n\n\n\n生成 token\n\n服务：webshell.gen_token\n文件：collect/webshell/token/index.yml\n逻辑：\n\n必填 server_os_users_id\n生成 token = snow_id\n写入表 webshell_token\n记录 create_user / create_time / close_time / is_valid\n\n\n\n\n\n通过 token 获取登录信息\n\n服务：webshell.get_info_by_token\n文件：collect/we",
+  "visibleTabLabels": [],
+  "bodyHasTraceLog": false
+}

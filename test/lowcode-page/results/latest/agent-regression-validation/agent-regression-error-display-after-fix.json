@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "assistantText": "[运行日志] 模型请求失败，正在重新读取 auth.json 后重试（第 2/5 次，本次耗时 90秒，总耗时 90秒） [运行日志] auth.json 已重新读取，凭据未变化，继续重试请求（总耗时 90秒） 请求失败：模拟模型失败",
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedRequests": [],
+  "screenshotPath": "/data/project/sport/test/lowcode-page/results/latest/agent-regression-validation/agent-regression-error-display-after-fix.png"
+}

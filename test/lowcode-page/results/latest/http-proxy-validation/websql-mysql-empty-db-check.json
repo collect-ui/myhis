@@ -1,0 +1,76 @@
+{
+  "ok": true,
+  "url": "http://127.0.0.1:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "checks": {
+    "sawMysqlConnection": 2,
+    "sawDatabaseChoice": 1,
+    "sawTablesFolder": 1,
+    "sawTable": 2,
+    "sawField": 1,
+    "rootWithoutDatabase": true,
+    "rootWithDatabase": true,
+    "folderWithDatabase": true,
+    "objectWithDatabase": true
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "seenPayloads": [
+    {
+      "service": "webshell.websql_execute",
+      "database": "",
+      "driver": "mysql",
+      "dsn": "",
+      "host": "mock.mysql.local",
+      "operation": "schema",
+      "password": "secret",
+      "port": "3306",
+      "schema_scope": "root",
+      "sqlite_path": "",
+      "username": "tester"
+    },
+    {
+      "service": "webshell.websql_execute",
+      "database": "app_db",
+      "driver": "mysql",
+      "dsn": "",
+      "host": "mock.mysql.local",
+      "operation": "schema",
+      "password": "secret",
+      "port": "3306",
+      "schema_scope": "root",
+      "sqlite_path": "",
+      "username": "tester"
+    },
+    {
+      "service": "webshell.websql_execute",
+      "database": "app_db",
+      "driver": "mysql",
+      "dsn": "",
+      "folder_type": "tables",
+      "host": "mock.mysql.local",
+      "operation": "schema",
+      "password": "secret",
+      "port": "3306",
+      "schema_scope": "folder",
+      "sqlite_path": "",
+      "username": "tester"
+    },
+    {
+      "service": "webshell.websql_execute",
+      "database": "app_db",
+      "driver": "mysql",
+      "dsn": "",
+      "host": "mock.mysql.local",
+      "object_name": "customer",
+      "object_type": "table",
+      "operation": "schema",
+      "password": "secret",
+      "port": "3306",
+      "schema_scope": "object",
+      "sqlite_path": "",
+      "username": "tester"
+    }
+  ],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/websql-mysql-empty-db-check.png"
+}

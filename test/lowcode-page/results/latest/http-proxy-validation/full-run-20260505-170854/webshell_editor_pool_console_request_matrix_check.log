@@ -1,0 +1,13 @@
+node:internal/process/promises:391
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByText('HTTP目录').first()[22m
+
+    at /data/project/sport/test/lowcode-page/scripts/frontend/webshell_editor_pool_console_request_matrix_check.js:86:42 {
+  name: 'TimeoutError'
+}
+
+Node.js v20.20.0

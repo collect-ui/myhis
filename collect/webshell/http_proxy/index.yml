@@ -1,0 +1,25 @@
+service:
+  - key: http_proxy_request
+    http: true
+    module: http_proxy
+    params:
+      project_code:
+        default: ""
+      cookie_scope:
+        default: ""
+      clear_cookie:
+        default: false
+      request_method:
+        default: post
+      request_url:
+        check:
+          template: "{{must .request_url}}"
+          err_msg: request_url 不能为空
+      request_header:
+        default: "{}"
+      request_data:
+        default: {}
+  - key: http_proxy_log_query
+    http: true
+    module: sql
+    data_file: http_proxy_log_query.sql

@@ -1,0 +1,2574 @@
+{
+  "children": [
+    {
+      "src": "/data/webshell.css",
+      "tag": "css"
+    },
+    {
+      "children": [
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "allowDrop": "${(dropPosition===0 \u0026\u0026 item.type!=='1')?false:true}",
+                  "className": "h100",
+                  "dragAction": [
+                    {
+                      "api": "post:/template_data/data?service=system.handler_frontend_doc_group_order",
+                      "data": {
+                        "change_parent": "${change_parent}",
+                        "frontend_doc_group": "${item}",
+                        "parent": "${parent}",
+                        "rows": "${rows}"
+                      },
+                      "tag": "ajax"
+                    },
+                    {
+                      "description": "页面初始化请求",
+                      "group": "server-env-tree",
+                      "tag": "reload-init-action"
+                    }
+                  ],
+                  "draggable": true,
+                  "openLevel": 1,
+                  "rightMenu": [
+                    {
+                      "code": "add",
+                      "disabled_bak": "${role_btn_list.indexOf('right_add')\u003c0}",
+                      "icon": "PlusOutlined",
+                      "label": "新增数据",
+                      "type": "item"
+                    },
+                    {
+                      "code": "edit",
+                      "disabled_bak": "${role_btn_list.indexOf('right_edit')\u003c0}",
+                      "icon": "EditOutlined",
+                      "label": "修改数据",
+                      "type": "item"
+                    },
+                    {
+                      "type": "separator"
+                    },
+                    {
+                      "children": [
+                        {
+                          "code": "delete",
+                          "disabled_bak": "${role_btn_list.indexOf('right_delete')\u003c0}",
+                          "icon": "DeleteOutlined",
+                          "label": "删除数据",
+                          "type": "item"
+                        }
+                      ],
+                      "label": "其他",
+                      "type": "submenu"
+                    }
+                  ],
+                  "rightMenuAction": [
+                    {
+                      "enable": "${['add','edit'].indexOf(item.code)\u003e=0}",
+                      "formName": "add-node-form",
+                      "tag": "reset-form"
+                    },
+                    {
+                      "enable": "${item.code==='add'}",
+                      "tag": "update-store",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "add",
+                        "updateNodeForm": {}
+                      }
+                    },
+                    {
+                      "enable": "${item.code==='add'}",
+                      "formName": "add-node-form",
+                      "tag": "update-form",
+                      "value": {
+                        "parent_id": "${node.type=='1'?node.frontend_doc_group_id:node.parent_id}"
+                      }
+                    },
+                    {
+                      "adapt": {
+                        "updateNodeForm": "${data}"
+                      },
+                      "api": "post:/template_data/data?service=system.frontend_doc_group_detail",
+                      "data": {
+                        "frontend_doc_group_id": "${node.frontend_doc_group_id}"
+                      },
+                      "enable": "${item.code==='edit'}",
+                      "tag": "ajax"
+                    },
+                    {
+                      "enable": "${item.code==='edit'}",
+                      "tag": "update-store",
+                      "value": {
+                        "addNodeVisible": true,
+                        "nodeOp": "edit"
+                      }
+                    },
+                    {
+                      "adapt": {
+                        "server_env_data_dir": "${data}"
+                      },
+                      "api": "post:/template_data/data?service=system.frontend_doc_group_query",
+                      "appendFormFields": "server-search-form",
+                      "data": {
+                        "to_tree": true,
+                        "type": "1"
+                      },
+                      "description": "请求目录树",
+                      "enable": "${['add','edit'].indexOf(item.code)\u003e=0}",
+                      "tag": "ajax"
+                    },
+                    {
+                      "enable": "${item.code==='edit'}",
+                      "formName": "add-node-form",
+                      "name": " 更新表单",
+                      "tag": "update-form",
+                      "useStore": true,
+                      "value": "${updateNodeForm}"
+                    },
+                    {
+                      "check": "${!node.children || (node.children \u0026\u0026 node.children.length\u003c=0)}",
+                      "enable": "${item.code=='delete' \u0026\u0026 node?.children }",
+                      "tag": "check",
+                      "title": "${'【'+node.name+'】下存在'+node?.children.length+'个节点，请先删除节点'}"
+                    },
+                    {
+                      "content": "${'确认删除所选【'+node.name+'】节点吗'}",
+                      "enable": "${item.code==='delete'}",
+                      "tag": "confirm",
+                      "title": "确认提示"
+                    },
+                    {
+                      "api": "post:/template_data/data?service=system.frontend_doc_group_delete",
+                      "data": {
+                        "frontend_doc_group_id_list": "${[node.frontend_doc_group_id]}"
+                      },
+                      "enable": "${item.code=='delete'}",
+                      "group": "server-env-tree",
+                      "name": "删除环境",
+                      "tag": "ajax"
+                    },
+                    {
+                      "description": "页面初始化请求",
+                      "enable": "${item.code=='delete'}",
+                      "group": "server-env-tree",
+                      "tag": "reload-init-action"
+                    }
+                  ],
+                  "selectAction": [
+                    {
+                      "name": "生成token",
+                      "tag": "update-store",
+                      "value": {
+                        "last_doc_id": "${row.frontend_doc_group_id}",
+                        "last_doc_name": "${row.name}",
+                        "last_webshell_token": "${uuid()}"
+                      }
+                    },
+                    {
+                      "group": "add-tab",
+                      "tag": "reload-init-action"
+                    }
+                  ],
+                  "selectAction_bak": [
+                    {
+                      "adapt": {
+                        "treeSelected": "${data}"
+                      },
+                      "api": "post:/template_data/data?service=system.frontend_doc_group_detail",
+                      "data": {
+                        "frontend_doc_group_id": "${row.frontend_doc_group_id}"
+                      },
+                      "tag": "ajax"
+                    }
+                  ],
+                  "showIcon": true,
+                  "showLine": true,
+                  "tag": "tree",
+                  "treeData": "${server_env_data}",
+                  "treeIcon": "${item.type==='1'?'FolderOutlined':'FaFileMedicalAlt'}",
+                  "treeKey": "${item.frontend_doc_group_id}",
+                  "treeSelected": "${treeSelected}",
+                  "treeTitle": "${item.name+'('+item.code+')'}"
+                },
+                {
+                  "action": [
+                    {
+                      "formName": "add-node-form",
+                      "tag": "submit-form"
+                    },
+                    {
+                      "api": "post:/template_data/data?service=system.frontend_doc_group_save",
+                      "appendFormFields": "add-node-form",
+                      "enable": "${nodeOp==='add'}",
+                      "name": "添加环境节点",
+                      "tag": "ajax"
+                    },
+                    {
+                      "api": "post:/template_data/data?service=system.frontend_doc_group_update",
+                      "appendFields": "${updateNodeForm}",
+                      "appendFormFields": "add-node-form",
+                      "enable": "${nodeOp==='edit'}",
+                      "name": "修改环境节点",
+                      "tag": "ajax"
+                    },
+                    {
+                      "description": "重置前先保存节点类型",
+                      "enable": "${confirmAndContinue==true}",
+                      "tag": "update-store",
+                      "value": {
+                        "last_parent_id": "${getFormValue('add-node-form','parent_id')}",
+                        "last_type": "${getFormValue('add-node-form','type')}"
+                      }
+                    },
+                    {
+                      "enable": "${confirmAndContinue==true}",
+                      "formName": "add-node-form",
+                      "tag": "reset-form"
+                    },
+                    {
+                      "description": "还原节点类型和父节点",
+                      "enable": "${confirmAndContinue==true}",
+                      "formName": "add-node-form",
+                      "tag": "update-form",
+                      "value": {
+                        "parent_id": "${last_parent_id}",
+                        "type": "${last_type}"
+                      }
+                    },
+                    {
+                      "enable": "${confirmAndContinue==false}",
+                      "tag": "update-store",
+                      "value": {
+                        "addNodeVisible": false
+                      }
+                    },
+                    {
+                      "description": "页面初始化请求",
+                      "group": "server-env-tree",
+                      "tag": "reload-init-action"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": "基础信息",
+                          "orientation": "left",
+                          "tag": "divider"
+                        },
+                        {
+                          "children": [
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "options": [
+                                        {
+                                          "label": "文件夹",
+                                          "value": "1"
+                                        },
+                                        {
+                                          "label": "文档",
+                                          "value": "2"
+                                        }
+                                      ],
+                                      "tag": "select"
+                                    }
+                                  ],
+                                  "label": "类型",
+                                  "name": "type",
+                                  "tag": "form-item"
+                                }
+                              ],
+                              "span": "${col}",
+                              "tag": "col"
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "allowClear": true,
+                                      "openLevel": 1,
+                                      "placeholder": "请输入名称",
+                                      "showIcon": true,
+                                      "showSearch": true,
+                                      "tag": "tree-select",
+                                      "treeData": "${server_env_data_dir}",
+                                      "treeIcon": "FolderOutlined",
+                                      "treeLine": true,
+                                      "treeTitle": "${item.name}",
+                                      "valueKey": "${item.frontend_doc_group_id}"
+                                    }
+                                  ],
+                                  "label": "上级",
+                                  "name": "parent_id",
+                                  "tag": "form-item"
+                                }
+                              ],
+                              "span": "${col}",
+                              "tag": "col"
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "placeholder": "请输入编码",
+                                      "tag": "input"
+                                    }
+                                  ],
+                                  "label": "编码",
+                                  "name": "code",
+                                  "rules": [
+                                    {
+                                      "message": "请输入编码",
+                                      "required": true
+                                    }
+                                  ],
+                                  "tag": "form-item"
+                                }
+                              ],
+                              "span": "${col}",
+                              "tag": "col"
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "placeholder": "请输入名称",
+                                      "tag": "input"
+                                    }
+                                  ],
+                                  "label": "名称",
+                                  "name": "name",
+                                  "rules": [
+                                    {
+                                      "message": "请输入名称",
+                                      "required": true
+                                    }
+                                  ],
+                                  "tag": "form-item"
+                                }
+                              ],
+                              "span": "${col}",
+                              "tag": "col"
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "isNumber": true,
+                                      "placeholder": "请输入排序号",
+                                      "tag": "input"
+                                    }
+                                  ],
+                                  "label": "排序号",
+                                  "name": "order_index",
+                                  "tag": "form-item"
+                                }
+                              ],
+                              "span": "${col}",
+                              "tag": "col"
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "isTextarea": true,
+                                      "placeholder": "请输入描述",
+                                      "tag": "input"
+                                    }
+                                  ],
+                                  "label": "描述",
+                                  "name": "description",
+                                  "tag": "form-item"
+                                }
+                              ],
+                              "span": "${col}",
+                              "tag": "col"
+                            }
+                          ],
+                          "tag": "row"
+                        }
+                      ],
+                      "initialValues": {
+                        "type": "1"
+                      },
+                      "labelCol": {
+                        "span": 6
+                      },
+                      "name": "add-node-form",
+                      "tag": "form",
+                      "wrapperCol": {
+                        "span": 18
+                      }
+                    }
+                  ],
+                  "confirmAndContinue": "${nodeOp==='add'?true:false}",
+                  "open": "${addNodeVisible}",
+                  "tag": "dialog",
+                  "title": "${nodeOp==='add'?'新增节点':'修改节点'}"
+                }
+              ],
+              "searchToolBar": [
+                {
+                  "action": [
+                    {
+                      "description": "查询",
+                      "group": "server-env-tree",
+                      "tag": "reload-init-action"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "addNodeVisible": true,
+                                    "nodeOp": "add"
+                                  }
+                                },
+                                {
+                                  "formName": "add-node-form",
+                                  "tag": "reset-form"
+                                },
+                                {
+                                  "formName": "add-node-form",
+                                  "tag": "update-form",
+                                  "value": {
+                                    "parent_id": "${treeSelected?.type=='1'?treeSelected.frontend_doc_group_id:treeSelected?.parent_id}",
+                                    "type": "${treeSelected?.type=='1'?'1':'2'}"
+                                  }
+                                },
+                                {
+                                  "adapt": {
+                                    "server_env_data_dir": "${data}"
+                                  },
+                                  "api": "post:/template_data/data?service=system.frontend_doc_group_query",
+                                  "data": {
+                                    "to_tree": true,
+                                    "type": "1"
+                                  },
+                                  "description": "请求目录树",
+                                  "group": "server-env-tree",
+                                  "tag": "ajax"
+                                }
+                              ],
+                              "icon": "FaPlus",
+                              "tag": "button",
+                              "title": "新增节点",
+                              "type": "primary"
+                            }
+                          ],
+                          "style": {
+                            "marginInlineEnd": "8px"
+                          },
+                          "tag": "form-item"
+                        },
+                        {
+                          "children": [
+                            {
+                              "allowClear": true,
+                              "placeholder": "名称",
+                              "tag": "input"
+                            }
+                          ],
+                          "className": "flex1",
+                          "name": "search",
+                          "tag": "form-item"
+                        }
+                      ],
+                      "className": "w100",
+                      "tag": "row"
+                    }
+                  ],
+                  "initialValues": "${searchForm}",
+                  "name": "server-search-form",
+                  "submitOnChange": true,
+                  "tag": "form",
+                  "wrapperCol": {
+                    "span": 24
+                  }
+                }
+              ],
+              "tag": "layout-fit"
+            }
+          ],
+          "className": "border-right",
+          "collapsedWidth": "40",
+          "collapsible": true,
+          "style": {
+            "backgroundColor": "#fafafa"
+          },
+          "tag": "sider",
+          "width": "320px"
+        },
+        {
+          "children": [
+            {
+              "children": [
+                {
+                  "itemAttr": {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "itemAttr": {
+                              "children": [
+                                {
+                                  "activeKey": "${row.activeKey}",
+                                  "hideAdd": true,
+                                  "itemAttr": {
+                                    "children": [
+                                      {
+                                        "children": [
+                                          {
+                                            "children": [
+                                              {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "children": [
+                                                          {
+                                                            "children": "${doc.summary}",
+                                                            "style": {
+                                                              "textIndent": "2em"
+                                                            },
+                                                            "tag": "p"
+                                                          },
+                                                          {
+                                                            "children": "${doc.primary_list_name}",
+                                                            "className": "border-bottom",
+                                                            "style": {
+                                                              "margin": 0,
+                                                              "paddingLeft": 14
+                                                            },
+                                                            "tag": "h3",
+                                                            "visible": "${!!doc.primary_list_name}"
+                                                          },
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "itemAttr": {
+                                                                  "children": [
+                                                                    {
+                                                                      "children": "${row.name}",
+                                                                      "tag": "strong"
+                                                                    },
+                                                                    {
+                                                                      "children": "：",
+                                                                      "tag": "label",
+                                                                      "visible": "${!!row.description}"
+                                                                    },
+                                                                    {
+                                                                      "children": "${row.description}",
+                                                                      "tag": "label"
+                                                                    }
+                                                                  ],
+                                                                  "tag": "li"
+                                                                },
+                                                                "itemData": "${doc.primary_list}",
+                                                                "keyField": "index",
+                                                                "tag": "listview"
+                                                              }
+                                                            ],
+                                                            "tag": "ol",
+                                                            "visible": "${doc.primary_list?.length\u003e0}"
+                                                          },
+                                                          {
+                                                            "children": "${doc.first_img_name}",
+                                                            "className": "border-bottom",
+                                                            "style": {
+                                                              "margin": 0,
+                                                              "paddingLeft": 14
+                                                            },
+                                                            "tag": "h3",
+                                                            "visible": "${!!doc.first_img_name}"
+                                                          },
+                                                          {
+                                                            "height": 300,
+                                                            "src": "${doc.first_img_path}",
+                                                            "style": {
+                                                              "objectFit": "cover",
+                                                              "paddingLeft": 100,
+                                                              "width": "initial"
+                                                            },
+                                                            "tag": "image",
+                                                            "visible": "${!!doc.first_img_path}"
+                                                          },
+                                                          {
+                                                            "children": "${doc.step_name}",
+                                                            "className": "border-bottom",
+                                                            "style": {
+                                                              "margin": 0,
+                                                              "paddingLeft": 14
+                                                            },
+                                                            "tag": "h3",
+                                                            "visible": "${!!doc.step_name}"
+                                                          },
+                                                          {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "itemAttr": {
+                                                                      "children": [
+                                                                        {
+                                                                          "children": [
+                                                                            {
+                                                                              "children": [
+                                                                                {
+                                                                                  "children": "${row.description}",
+                                                                                  "tag": "strong",
+                                                                                  "visible": "${!!row.description}"
+                                                                                }
+                                                                              ],
+                                                                              "tag": "div"
+                                                                            },
+                                                                            {
+                                                                              "children": "${row.code}",
+                                                                              "customStyle": {
+                                                                                "maxHeight": 360
+                                                                              },
+                                                                              "language": "${row.language}",
+                                                                              "tag": "coder",
+                                                                              "visible": "${!!row.code \u0026\u0026 row.is_show!='1'}"
+                                                                            },
+                                                                            {
+                                                                              "className": "webshell-container",
+                                                                              "code": "${row.code}",
+                                                                              "hideAdd": true,
+                                                                              "size": "small",
+                                                                              "style": {
+                                                                                "height": 300
+                                                                              },
+                                                                              "tag": "code-preview",
+                                                                              "type": "editable-card",
+                                                                              "visible": "${!!row.code \u0026\u0026 row.is_show=='1'}"
+                                                                            },
+                                                                            {
+                                                                              "src": "${row.img_path}",
+                                                                              "style": {
+                                                                                "height": "initial",
+                                                                                "objectFit": "cover"
+                                                                              },
+                                                                              "tag": "image",
+                                                                              "visible": "${!!row.img_path}",
+                                                                              "width": "100%"
+                                                                            }
+                                                                          ],
+                                                                          "style": {
+                                                                            "marginRight": 10,
+                                                                            "padding": 10
+                                                                          },
+                                                                          "tag": "li"
+                                                                        }
+                                                                      ],
+                                                                      "span": "${doc.step_span?doc.step_span:24}",
+                                                                      "tag": "col"
+                                                                    },
+                                                                    "itemData": "${doc.step_list}",
+                                                                    "keyField": "index",
+                                                                    "tag": "listview"
+                                                                  }
+                                                                ],
+                                                                "tag": "row"
+                                                              }
+                                                            ],
+                                                            "tag": "ol",
+                                                            "visible": "${doc.step_list?.length\u003e0}"
+                                                          },
+                                                          {
+                                                            "children": "API",
+                                                            "className": "border-bottom",
+                                                            "style": {
+                                                              "margin": 0,
+                                                              "paddingLeft": 14
+                                                            },
+                                                            "tag": "h3",
+                                                            "visible": "${doc?.api_list?.length\u003e0}"
+                                                          },
+                                                          {
+                                                            "columnDefs": [
+                                                              {
+                                                                "headerName": "#",
+                                                                "pinned": "left",
+                                                                "sortable": false,
+                                                                "suppressSizeToFit": true,
+                                                                "valueGetter": "node.rowIndex + 1",
+                                                                "width": 100
+                                                              },
+                                                              {
+                                                                "editable": true,
+                                                                "field": "name",
+                                                                "headerName": "名称",
+                                                                "suppressSizeToFit": true,
+                                                                "width": 200
+                                                              },
+                                                              {
+                                                                "field": "type",
+                                                                "headerName": "类型",
+                                                                "suppressSizeToFit": true,
+                                                                "width": 200
+                                                              },
+                                                              {
+                                                                "field": "default_value",
+                                                                "headerName": "默认值",
+                                                                "suppressSizeToFit": true,
+                                                                "width": 200
+                                                              },
+                                                              {
+                                                                "autoHeight": true,
+                                                                "field": "description",
+                                                                "headerName": "描述",
+                                                                "tooltipField": "description"
+                                                              }
+                                                            ],
+                                                            "domLayout": "autoHeight",
+                                                            "rowData": "${doc?.api_list}",
+                                                            "tag": "table",
+                                                            "visible": "${doc?.api_list?.length\u003e0}"
+                                                          },
+                                                          {
+                                                            "children": "${doc.description}",
+                                                            "style": {
+                                                              "textIndent": "2em"
+                                                            },
+                                                            "tag": "p",
+                                                            "visible": "${!!doc.description}"
+                                                          }
+                                                        ],
+                                                        "tag": "layout-fit",
+                                                        "visible": "${doc.title?true:false}"
+                                                      },
+                                                      {
+                                                        "tag": "no-data",
+                                                        "visible": "${!doc.title?true:false}"
+                                                      }
+                                                    ],
+                                                    "initAction": [
+                                                      {
+                                                        "tag": "update-store",
+                                                        "value": {
+                                                          "belong_id": "${row.path}"
+                                                        }
+                                                      },
+                                                      {
+                                                        "adapt": {
+                                                          "doc": "${data}"
+                                                        },
+                                                        "api": "post:/template_data/data?service=system.get_frontend_doc_data",
+                                                        "async": true,
+                                                        "data": {
+                                                          "belong_id": "${belong_id}"
+                                                        },
+                                                        "description": "请求数据",
+                                                        "group": "dataList",
+                                                        "tag": "ajax"
+                                                      }
+                                                    ],
+                                                    "initStore": {
+                                                      "belong_id": "",
+                                                      "doc": {
+                                                        "title": ""
+                                                      },
+                                                      "docShow": false
+                                                    },
+                                                    "tag": "layout-fit",
+                                                    "title": "${doc.title||row.title}",
+                                                    "topRight": [
+                                                      {
+                                                        "action": [
+                                                          {
+                                                            "tag": "update-store",
+                                                            "targetStore": "__parent__",
+                                                            "value": {
+                                                              "activeStore": "${__this__}",
+                                                              "belong_id": "${belong_id}",
+                                                              "docShow": true
+                                                            }
+                                                          },
+                                                          {
+                                                            "formName": "doc-form-data",
+                                                            "tag": "update-form",
+                                                            "targetStore": "__parent__",
+                                                            "value": "${doc}"
+                                                          }
+                                                        ],
+                                                        "children": "修改",
+                                                        "icon": "FaPencilAlt",
+                                                        "tag": "button",
+                                                        "type": "primary"
+                                                      },
+                                                      {
+                                                        "action": [
+                                                          {
+                                                            "tag": "copy-text",
+                                                            "value": "${window.location.origin+'/collect-ui/#/framework/frontend_doc?code='+doc.frontend_doc_group_code}"
+                                                          }
+                                                        ],
+                                                        "children": "复制url",
+                                                        "icon": "FaShareSquare",
+                                                        "tag": "button"
+                                                      }
+                                                    ]
+                                                  }
+                                                ],
+                                                "className": "padding10 h100 overflow-auto",
+                                                "tag": "div"
+                                              }
+                                            ],
+                                            "demo_target_row_value": {
+                                              "row": {
+                                                "path": "de470d72-f7e3-48c9-936f-b8151f4575a4"
+                                              }
+                                            },
+                                            "tag": "layout-fit"
+                                          }
+                                        ],
+                                        "style": {
+                                          "background": "#fafafa"
+                                        },
+                                        "tag": "layout-fit"
+                                      }
+                                    ],
+                                    "label": "${row.title}"
+                                  },
+                                  "itemData": "${[...row.content]}",
+                                  "keyField": "token",
+                                  "removeAction": [
+                                    {
+                                      "description": "设置右键对象为空",
+                                      "tag": "update-store",
+                                      "value": {
+                                        "lastRightSsh": []
+                                      }
+                                    },
+                                    {
+                                      "description": "关闭标签",
+                                      "method": "${row.removeByKey(key)}",
+                                      "tag": "method"
+                                    },
+                                    {
+                                      "description": "如果关闭的标签是激活的标签，则激活标签往前移动一个",
+                                      "enable": "${row.content.length\u003e0 \u0026\u0026 row.activeKey==key}",
+                                      "method": "${row.setActiveKey(row.content[row.content.length-1].token)}",
+                                      "tag": "method"
+                                    },
+                                    {
+                                      "method": "${panelList.filter(item=\u003eitem.checkNoneTab())}",
+                                      "tag": "method"
+                                    },
+                                    {
+                                      "tag": "update-store",
+                                      "value": {
+                                        "panelList": "${panelList.filter(item=\u003eitem.children.length\u003e0)}"
+                                      }
+                                    }
+                                  ],
+                                  "rightMenu": [
+                                    {
+                                      "code": "horizontal",
+                                      "icon": "FaGripHorizontal",
+                                      "label": "水平分割",
+                                      "type": "item"
+                                    },
+                                    {
+                                      "code": "vertical",
+                                      "icon": "FaGripVertical",
+                                      "label": "垂直分割",
+                                      "type": "item"
+                                    }
+                                  ],
+                                  "rightMenuAction": [
+                                    {
+                                      "tag": "update-store",
+                                      "value": {
+                                        "last_webshell_token": "${uuid()}"
+                                      }
+                                    },
+                                    {
+                                      "description": "水平分割，添加数据",
+                                      "enable": "${item.code==='horizontal'}",
+                                      "from": "panelList",
+                                      "tag": "arr-push",
+                                      "value": {
+                                        "children": [
+                                          {
+                                            "activeKey": "${last_webshell_token}",
+                                            "content": [
+                                              {
+                                                "path": "${row.path}",
+                                                "title": "${row.title}",
+                                                "token": "${last_webshell_token}"
+                                              }
+                                            ],
+                                            "description": "纵向分组",
+                                            "id": "${uuid()}",
+                                            "order": 1
+                                          }
+                                        ],
+                                        "description": "横向分组",
+                                        "id": "${uuid()}",
+                                        "order": 1
+                                      }
+                                    },
+                                    {
+                                      "description": "垂直分割，添加数据",
+                                      "enable": "${item.code==='vertical'}",
+                                      "method": "${row.parent.parent.addChildren(value)}",
+                                      "tag": "arr-push",
+                                      "value": {
+                                        "activeKey": "${last_webshell_token}",
+                                        "content": [
+                                          {
+                                            "path": "${row.path}",
+                                            "title": "${row.title}",
+                                            "token": "${last_webshell_token}"
+                                          }
+                                        ],
+                                        "description": "纵向分组",
+                                        "id": "${uuid()}",
+                                        "order": 1
+                                      }
+                                    },
+                                    {
+                                      "enable": "${item.code==='horizontal'||item.code==='vertical'}",
+                                      "method": "${panelList.forEach(item=\u003eitem.initialize())}",
+                                      "tag": "method"
+                                    }
+                                  ],
+                                  "size": "small",
+                                  "tag": "tabs",
+                                  "type": "editable-card",
+                                  "withHistory": true
+                                }
+                              ],
+                              "className": "${row.id==last_shell_id?'shell-group-active':''}",
+                              "id": "${row.id}",
+                              "minSize": 10,
+                              "order": "${row.order}",
+                              "tag": "panel"
+                            },
+                            "itemData": "${[...row.children]}",
+                            "joinAttr": {
+                              "tag": "panel-resize"
+                            },
+                            "keyField": "id",
+                            "rowClickAction": [
+                              {
+                                "tag": "update-store",
+                                "value": {
+                                  "last_shell_id": "${row.id}"
+                                }
+                              }
+                            ],
+                            "tag": "listview"
+                          }
+                        ],
+                        "description": "里层上下分组",
+                        "direction": "vertical",
+                        "tag": "panel-group"
+                      }
+                    ],
+                    "className": "border-right",
+                    "id": "${row.id}",
+                    "minSize": 10,
+                    "order": "${row.order}",
+                    "tag": "panel"
+                  },
+                  "itemData": "${panelList}",
+                  "joinAttr": {
+                    "tag": "panel-resize"
+                  },
+                  "keyField": "id",
+                  "rowClickAction": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "last_group_id": "${row.id}"
+                      }
+                    }
+                  ],
+                  "tag": "listview"
+                }
+              ],
+              "description": "外层水平分组",
+              "direction": "horizontal",
+              "tag": "panel-group"
+            },
+            {
+              "action": [
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "docShow": false
+                  }
+                },
+                {
+                  "api": "post:/template_data/data?service=system.save_frontend_doc_file",
+                  "appendFormFields": "doc-form-data",
+                  "data": {
+                    "belong_id": "${belong_id}"
+                  },
+                  "name": "修改文档",
+                  "tag": "ajax"
+                },
+                {
+                  "description": "页面初始化请求",
+                  "group": "dataList",
+                  "tag": "reload-init-action",
+                  "targetStore": "${activeStore}"
+                },
+                {
+                  "tag": "update-store",
+                  "value": {
+                    "activeStore": null
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "items": [
+                    {
+                      "children": [
+                        {
+                          "children": [
+                            {
+                              "itemAttr": {
+                                "children": [
+                                  {
+                                    "children": "${row.business_group}",
+                                    "orientation": "left",
+                                    "tag": "divider",
+                                    "visible": "${!!row.business_group}"
+                                  },
+                                  {
+                                    "children": [
+                                      {
+                                        "itemAttr": {
+                                          "children": [
+                                            {
+                                              "children": [
+                                                {
+                                                  "placeholder": "请输入",
+                                                  "tag": "${row.tag?row.tag:'input'}"
+                                                }
+                                              ],
+                                              "label": "${row.name}",
+                                              "name": "${row.key}",
+                                              "rules": "${row?.attrs?.rules??[]}",
+                                              "tag": "form-item"
+                                            }
+                                          ],
+                                          "span": 24,
+                                          "tag": "col"
+                                        },
+                                        "itemData": "${[...row.children]}",
+                                        "keyField": "schema_page_field_id",
+                                        "tag": "listview"
+                                      }
+                                    ],
+                                    "style": {
+                                      "width": "100%"
+                                    },
+                                    "tag": "row"
+                                  }
+                                ],
+                                "tag": "row"
+                              },
+                              "itemData": "${frontendDocConfigGroup}",
+                              "keyField": "business_group",
+                              "tag": "listview"
+                            }
+                          ],
+                          "initialValues": {
+                            "step_span": 24
+                          },
+                          "labelCol": {
+                            "span": 2
+                          },
+                          "name": "doc-form-data",
+                          "tag": "form"
+                        }
+                      ],
+                      "key": "form-data",
+                      "label": "表单数据"
+                    },
+                    {
+                      "children": [
+                        {
+                          "actionGroupDefine": {
+                            "saveImg": [
+                              {
+                                "formName": "img-form",
+                                "tag": "submit-form"
+                              },
+                              {
+                                "method": "getData",
+                                "tag": "draw-data",
+                                "to_field": "content_tmp"
+                              },
+                              {
+                                "enable": true,
+                                "method": "getImg",
+                                "tag": "draw-data",
+                                "to_field": "img_tmp"
+                              },
+                              {
+                                "tag": "update-store",
+                                "value": {
+                                  "img_op": "${activeRow?.img_id?'update':'add'}"
+                                }
+                              },
+                              {
+                                "api": "post:/template_data/data?service=doc.img_update",
+                                "appendFormFields": "img-form",
+                                "async": true,
+                                "data": {
+                                  "content": "${content_tmp}",
+                                  "img": "${img_tmp}",
+                                  "img_id": "${activeRow.img_id}"
+                                },
+                                "description": "修改图片",
+                                "enable": "${img_op==='update'}",
+                                "tag": "ajax"
+                              },
+                              {
+                                "adapt": {
+                                  "activeRow": "${data}"
+                                },
+                                "api": "post:/template_data/data?service=doc.img_save",
+                                "appendFormFields": "img-form",
+                                "data": {
+                                  "content": "${content_tmp}",
+                                  "img": "${img_tmp}"
+                                },
+                                "description": "保存图片",
+                                "enable": "${img_op==='add'}",
+                                "tag": "ajax"
+                              },
+                              {
+                                "enable": "${img_op==='add'}",
+                                "group": "dataList",
+                                "tag": "reload-init-action"
+                              },
+                              {
+                                "method": "clearChangeStatus",
+                                "tag": "draw-data"
+                              }
+                            ],
+                            "update-from-remote": [
+                              {
+                                "adapt": {
+                                  "remote_content_tmp": "${data.content}"
+                                },
+                                "api": "post:/template_data/data?service=doc.img_detail",
+                                "data": {
+                                  "img_id": "${activeRow?.img_id}"
+                                },
+                                "enable": "${activeRow?.img_id?true:false}",
+                                "tag": "ajax"
+                              },
+                              {
+                                "from_field": "remote_content_tmp",
+                                "method": "updateFromRemote",
+                                "tag": "draw-data"
+                              }
+                            ]
+                          },
+                          "children": [
+                            {
+                              "src": "/data/logicflow/index.min.css",
+                              "tag": "css"
+                            },
+                            {
+                              "src": "/data/logicflow/extension_index.min.css",
+                              "tag": "css"
+                            },
+                            {
+                              "children": [
+                                {
+                                  "children": [
+                                    {
+                                      "children": [
+                                        {
+                                          "children": [
+                                            {
+                                              "children": [
+                                                {
+                                                  "children": [
+                                                    {
+                                                      "allowDrop": true,
+                                                      "className": "h100",
+                                                      "dragAction": [
+                                                        {
+                                                          "api": "post:/template_data/data?service=doc.handler_dir_order",
+                                                          "data": {
+                                                            "change_parent": "${change_parent}",
+                                                            "dir": "${item}",
+                                                            "parent": "${parent}",
+                                                            "rows": "${rows}"
+                                                          },
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "description": "页面初始化请求",
+                                                          "group": "server-env-tree|reload-dir",
+                                                          "tag": "reload-init-action"
+                                                        }
+                                                      ],
+                                                      "draggable": true,
+                                                      "openLevel": 2,
+                                                      "rightMenu": [
+                                                        {
+                                                          "code": "add",
+                                                          "icon": "PlusOutlined",
+                                                          "label": "新增数据",
+                                                          "type": "item"
+                                                        },
+                                                        {
+                                                          "code": "edit",
+                                                          "icon": "EditOutlined",
+                                                          "label": "修改数据",
+                                                          "type": "item"
+                                                        },
+                                                        {
+                                                          "type": "separator"
+                                                        },
+                                                        {
+                                                          "children": [
+                                                            {
+                                                              "code": "delete",
+                                                              "icon": "DeleteOutlined",
+                                                              "label": "删除数据",
+                                                              "type": "item"
+                                                            }
+                                                          ],
+                                                          "label": "其他",
+                                                          "type": "submenu"
+                                                        }
+                                                      ],
+                                                      "rightMenuAction": [
+                                                        {
+                                                          "enable": "${['add','edit'].indexOf(item.code)\u003e=0}",
+                                                          "formName": "add-node-form",
+                                                          "tag": "reset-form"
+                                                        },
+                                                        {
+                                                          "adapt": {
+                                                            "form_dir_list": "${data}"
+                                                          },
+                                                          "api": "post:/template_data/data?service=doc.img_dir_query",
+                                                          "data": {
+                                                            "to_tree": true
+                                                          },
+                                                          "description": "请求目录树",
+                                                          "enable": "${['add','edit'].indexOf(item.code)\u003e=0}",
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "enable": "${item.code==='add'}",
+                                                          "tag": "update-store",
+                                                          "value": {
+                                                            "addNodeVisible": true,
+                                                            "nodeOp": "add",
+                                                            "updateNodeForm": {}
+                                                          }
+                                                        },
+                                                        {
+                                                          "enable": "${item.code==='add'}",
+                                                          "formName": "add-node-form",
+                                                          "tag": "update-form",
+                                                          "value": {
+                                                            "parent_id": "${node.img_dir_id}"
+                                                          }
+                                                        },
+                                                        {
+                                                          "adapt": {
+                                                            "updateNodeForm": "${data}"
+                                                          },
+                                                          "api": "post:/template_data/data?service=doc.img_dir_detail",
+                                                          "data": {
+                                                            "img_dir_id": "${node.img_dir_id}"
+                                                          },
+                                                          "enable": "${item.code==='edit'}",
+                                                          "end": {
+                                                            "img_loading": false
+                                                          },
+                                                          "start": {
+                                                            "img_loading": true
+                                                          },
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "enable": "${item.code==='edit'}",
+                                                          "tag": "update-store",
+                                                          "value": {
+                                                            "addNodeVisible": true,
+                                                            "nodeOp": "edit"
+                                                          }
+                                                        },
+                                                        {
+                                                          "adapt": {
+                                                            "server_env_data_dir": "${data}"
+                                                          },
+                                                          "api": "post:/template_data/data?service=system.menu_query",
+                                                          "appendFormFields": "server-search-form",
+                                                          "data": {
+                                                            "menu_type": "1",
+                                                            "to_tree": true
+                                                          },
+                                                          "description": "请求目录树",
+                                                          "enable": "${['add','edit'].indexOf(item.code)\u003e=0}",
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "enable": "${item.code==='edit'}",
+                                                          "formName": "add-node-form",
+                                                          "name": " 更新表单",
+                                                          "tag": "update-form",
+                                                          "useStore": true,
+                                                          "value": "${updateNodeForm}"
+                                                        },
+                                                        {
+                                                          "check": "${!node.children || (node.children \u0026\u0026 node.children.length\u003c=0)}",
+                                                          "enable": "${item.code=='delete' \u0026\u0026 node?.children }",
+                                                          "tag": "check",
+                                                          "title": "${'【'+node.menu_name+'】下存在'+node?.children.length+'个节点，请先删除节点'}"
+                                                        },
+                                                        {
+                                                          "content": "${'确认删除所选【'+node.name+'】节点吗'}",
+                                                          "enable": "${item.code==='delete'}",
+                                                          "tag": "confirm",
+                                                          "title": "确认提示"
+                                                        },
+                                                        {
+                                                          "api": "post:/template_data/data?service=doc.img_dir_delete",
+                                                          "data": {
+                                                            "img_dir_id_list": "${[node.img_dir_id]}"
+                                                          },
+                                                          "enable": "${item.code=='delete'}",
+                                                          "group": "server-env-tree",
+                                                          "name": "删除环境",
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "description": "页面初始化请求",
+                                                          "enable": "${item.code=='delete'}",
+                                                          "group": "server-env-tree|reload-dir",
+                                                          "tag": "reload-init-action"
+                                                        }
+                                                      ],
+                                                      "selectAction": [
+                                                        {
+                                                          "group": "dataList",
+                                                          "tag": "reload-init-action"
+                                                        }
+                                                      ],
+                                                      "showIcon": true,
+                                                      "showLine": true,
+                                                      "tag": "tree",
+                                                      "treeData": "${[...server_env_data]}",
+                                                      "treeIcon": "FolderOutlined",
+                                                      "treeKey": "${item.img_dir_id}",
+                                                      "treeSelected": "${treeSelected}",
+                                                      "treeTitle": "${item.name+'('+item.code+')'}"
+                                                    },
+                                                    {
+                                                      "action": [
+                                                        {
+                                                          "formName": "add-node-form",
+                                                          "tag": "submit-form"
+                                                        },
+                                                        {
+                                                          "api": "post:/template_data/data?service=doc.img_dir_save",
+                                                          "appendFormFields": "add-node-form",
+                                                          "enable": "${nodeOp==='add'}",
+                                                          "name": "添加环境节点",
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "api": "post:/template_data/data?service=doc.img_dir_update",
+                                                          "appendFields": "${updateNodeForm}",
+                                                          "appendFormFields": "add-node-form",
+                                                          "enable": "${nodeOp==='edit'}",
+                                                          "name": "修改环境节点",
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "enable": "${confirmAndContinue==true}",
+                                                          "formName": "add-node-form",
+                                                          "tag": "reset-form"
+                                                        },
+                                                        {
+                                                          "tag": "update-store",
+                                                          "value": {
+                                                            "addNodeVisible": false
+                                                          }
+                                                        },
+                                                        {
+                                                          "description": "页面初始化请求",
+                                                          "group": "server-env-tree|reload-dir",
+                                                          "tag": "reload-init-action"
+                                                        }
+                                                      ],
+                                                      "children": [
+                                                        {
+                                                          "children": [
+                                                            {
+                                                              "itemAttr": {
+                                                                "children": [
+                                                                  {
+                                                                    "children": "${row.business_group}",
+                                                                    "orientation": "left",
+                                                                    "tag": "divider"
+                                                                  },
+                                                                  {
+                                                                    "children": [
+                                                                      {
+                                                                        "itemAttr": {
+                                                                          "children": [
+                                                                            {
+                                                                              "children": [
+                                                                                {
+                                                                                  "placeholder": "请输入",
+                                                                                  "tag": "${row.tag?row.tag:'input'}"
+                                                                                }
+                                                                              ],
+                                                                              "label": "${row.name}",
+                                                                              "name": "${row.key}",
+                                                                              "rules": "${row?.attrs?.rules??[]}",
+                                                                              "tag": "form-item"
+                                                                            }
+                                                                          ],
+                                                                          "span": 24,
+                                                                          "tag": "col"
+                                                                        },
+                                                                        "itemData": "${[...row.children]}",
+                                                                        "keyField": "schema_page_field_id",
+                                                                        "tag": "listview"
+                                                                      }
+                                                                    ],
+                                                                    "style": {
+                                                                      "width": "100%"
+                                                                    },
+                                                                    "tag": "row"
+                                                                  }
+                                                                ],
+                                                                "tag": "row"
+                                                              },
+                                                              "itemData": "${[...img_dir_group]}",
+                                                              "keyField": "business_group",
+                                                              "tag": "listview"
+                                                            }
+                                                          ],
+                                                          "labelCol": {
+                                                            "span": 6
+                                                          },
+                                                          "name": "add-node-form",
+                                                          "tag": "form",
+                                                          "wrapperCol": {
+                                                            "span": 18
+                                                          }
+                                                        }
+                                                      ],
+                                                      "open": "${addNodeVisible}",
+                                                      "tag": "dialog",
+                                                      "title": "${nodeOp==='add'?'新增节点':'修改节点'}"
+                                                    }
+                                                  ],
+                                                  "searchToolBar": [
+                                                    {
+                                                      "action": [
+                                                        {
+                                                          "description": "查询",
+                                                          "group": "server-env-tree",
+                                                          "tag": "reload-init-action"
+                                                        }
+                                                      ],
+                                                      "children": [
+                                                        {
+                                                          "children": [
+                                                            {
+                                                              "children": [
+                                                                {
+                                                                  "action": [
+                                                                    {
+                                                                      "adapt": {
+                                                                        "form_dir_list": "${data}"
+                                                                      },
+                                                                      "api": "post:/template_data/data?service=doc.img_dir_query",
+                                                                      "data": {
+                                                                        "to_tree": true
+                                                                      },
+                                                                      "description": "请求目录树",
+                                                                      "tag": "ajax"
+                                                                    },
+                                                                    {
+                                                                      "tag": "update-store",
+                                                                      "value": {
+                                                                        "addNodeVisible": true,
+                                                                        "nodeOp": "add"
+                                                                      }
+                                                                    },
+                                                                    {
+                                                                      "formName": "add-node-form",
+                                                                      "tag": "reset-form"
+                                                                    },
+                                                                    {
+                                                                      "formName": "add-node-form",
+                                                                      "tag": "update-form",
+                                                                      "value": {
+                                                                        "parent_id": "${treeSelected?.img_dir_id?treeSelected.img_dir_id:''}"
+                                                                      }
+                                                                    }
+                                                                  ],
+                                                                  "icon": "FaPlus",
+                                                                  "tag": "button",
+                                                                  "title": "新增节点",
+                                                                  "type": "primary"
+                                                                }
+                                                              ],
+                                                              "style": {
+                                                                "marginInlineEnd": "8px"
+                                                              },
+                                                              "tag": "form-item"
+                                                            },
+                                                            {
+                                                              "children": [
+                                                                {
+                                                                  "allowClear": true,
+                                                                  "placeholder": "名称",
+                                                                  "tag": "input"
+                                                                }
+                                                              ],
+                                                              "className": "flex1",
+                                                              "name": "search",
+                                                              "tag": "form-item"
+                                                            }
+                                                          ],
+                                                          "className": "w100",
+                                                          "tag": "row"
+                                                        }
+                                                      ],
+                                                      "name": "server-search-form",
+                                                      "submitOnChange": true,
+                                                      "tag": "form",
+                                                      "wrapperCol": {
+                                                        "span": 24
+                                                      }
+                                                    }
+                                                  ],
+                                                  "tag": "layout-fit",
+                                                  "title": "图片目录"
+                                                }
+                                              ],
+                                              "className": "border-right",
+                                              "collapsedWidth": "40",
+                                              "collapsible": true,
+                                              "style": {
+                                                "backgroundColor": "#fafafa"
+                                              },
+                                              "tag": "sider",
+                                              "width": "214px"
+                                            },
+                                            {
+                                              "children": [
+                                                {
+                                                  "bottomAlign": "right",
+                                                  "bottomToolBar": [
+                                                    {
+                                                      "action": [
+                                                        {
+                                                          "description": "页面初始化请求",
+                                                          "group": "dataList",
+                                                          "tag": "reload-init-action"
+                                                        }
+                                                      ],
+                                                      "align": "center",
+                                                      "current": "${searchForm.page}",
+                                                      "pageSize": "${searchForm.size}",
+                                                      "showSizeChanger": false,
+                                                      "showTotal": true,
+                                                      "simple": true,
+                                                      "tag": "pagination",
+                                                      "total": "${count}"
+                                                    }
+                                                  ],
+                                                  "children": [
+                                                    {
+                                                      "children": [
+                                                        {
+                                                          "itemAttr": {
+                                                            "children": [
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "children": [
+                                                                      {
+                                                                        "height": 68,
+                                                                        "path": "${row.path}",
+                                                                        "style": {
+                                                                          "objectFit": "cover"
+                                                                        },
+                                                                        "tag": "attachment-show",
+                                                                        "width": "auto"
+                                                                      }
+                                                                    ],
+                                                                    "stopPropagation": true,
+                                                                    "tag": "div"
+                                                                  }
+                                                                ],
+                                                                "className": "${activeRow.img_id==row.img_id?'img-active':''}",
+                                                                "hoverable": "true",
+                                                                "size": "small",
+                                                                "tag": "card",
+                                                                "title": "${row.name}"
+                                                              }
+                                                            ],
+                                                            "style": {
+                                                              "padding": "0 8px 8px 0px",
+                                                              "width": 124
+                                                            },
+                                                            "tag": "col"
+                                                          },
+                                                          "itemData": "${dataList}",
+                                                          "keyField": "img_id",
+                                                          "rowClickAction": [
+                                                            {
+                                                              "tag": "update-store",
+                                                              "value": {
+                                                                "activeRow": "${row.img_id==activeRow.img_id?{}:row}",
+                                                                "content_tmp": "",
+                                                                "img_flow_type": "${row.img_id==activeRow.img_id?'':row.type}",
+                                                                "img_tmp": "",
+                                                                "time": 0
+                                                              }
+                                                            },
+                                                            {
+                                                              "enable": "${activeRow?.img_id?true:false}",
+                                                              "formName": "img-form",
+                                                              "tag": "update-form",
+                                                              "value": "${activeRow}"
+                                                            },
+                                                            {
+                                                              "enable": "${activeRow?.img_id?false:true}",
+                                                              "formName": "img-form",
+                                                              "tag": "reset-form"
+                                                            },
+                                                            {
+                                                              "adapt": {
+                                                                "content_tmp": "${data.content}"
+                                                              },
+                                                              "api": "post:/template_data/data?service=doc.img_detail",
+                                                              "data": {
+                                                                "img_id": "${activeRow?.img_id}"
+                                                              },
+                                                              "enable": "${activeRow?.img_id?true:false}",
+                                                              "tag": "ajax"
+                                                            },
+                                                            {
+                                                              "from_field": "content_tmp",
+                                                              "method": "setData",
+                                                              "tag": "draw-data"
+                                                            }
+                                                          ],
+                                                          "tag": "listview"
+                                                        }
+                                                      ],
+                                                      "className": "padding10",
+                                                      "tag": "row"
+                                                    }
+                                                  ],
+                                                  "searchToolBar": [
+                                                    {
+                                                      "action": [
+                                                        {
+                                                          "description": "todo 这里搜索需要将page 设置为1",
+                                                          "group": "update_page_1|dataList",
+                                                          "tag": "reload-init-action"
+                                                        }
+                                                      ],
+                                                      "children": [
+                                                        {
+                                                          "children": [
+                                                            {
+                                                              "children": [
+                                                                {
+                                                                  "allowClear": true,
+                                                                  "placeholder": "名称",
+                                                                  "tag": "input"
+                                                                }
+                                                              ],
+                                                              "label": "搜索",
+                                                              "name": "search",
+                                                              "tag": "form-item"
+                                                            }
+                                                          ],
+                                                          "tag": "row"
+                                                        }
+                                                      ],
+                                                      "initialValues": "${searchForm}",
+                                                      "labelCol": {
+                                                        "span": 5
+                                                      },
+                                                      "name": "search-form",
+                                                      "submitOnChange": true,
+                                                      "tag": "form",
+                                                      "wrapperCol": {
+                                                        "span": 19
+                                                      }
+                                                    }
+                                                  ],
+                                                  "style": {
+                                                    "background": "#fafafa"
+                                                  },
+                                                  "tag": "layout-fit",
+                                                  "title": "图片管理",
+                                                  "topRight": [
+                                                    {
+                                                      "action": [
+                                                        {
+                                                          "api": "post:/template_data/data?service=doc.img_delete",
+                                                          "data": {
+                                                            "img_id_list": "${[activeRow.img_id]}"
+                                                          },
+                                                          "tag": "ajax"
+                                                        },
+                                                        {
+                                                          "group": "dataList",
+                                                          "tag": "reload-init-action"
+                                                        },
+                                                        {
+                                                          "tag": "update-store",
+                                                          "value": {
+                                                            "activeRow": {}
+                                                          }
+                                                        }
+                                                      ],
+                                                      "children": "删除",
+                                                      "confirm": {
+                                                        "description": "${'确认删除【'+activeRow?.name+'】吗？'}",
+                                                        "title": "确定删除所选数据吗？"
+                                                      },
+                                                      "danger": true,
+                                                      "disabled": "${!activeRow?.img_id}",
+                                                      "tag": "button",
+                                                      "type": "primary"
+                                                    }
+                                                  ]
+                                                }
+                                              ],
+                                              "tag": "content"
+                                            }
+                                          ],
+                                          "tag": "layout"
+                                        }
+                                      ],
+                                      "tag": "layout-fit"
+                                    }
+                                  ],
+                                  "className": "border-right",
+                                  "defaultSize": 26,
+                                  "id": "left_draw",
+                                  "minSize": 15,
+                                  "order": 1,
+                                  "tag": "panel"
+                                },
+                                {
+                                  "tag": "panel-resize"
+                                },
+                                {
+                                  "children": [
+                                    {
+                                      "children": [
+                                        {
+                                          "refName": "draw",
+                                          "tag": "draw",
+                                          "visible": "${img_flow_type==='img'}"
+                                        },
+                                        {
+                                          "children": [
+                                            {
+                                              "children": [
+                                                {
+                                                  "flowConfig": {
+                                                    "edgeType": "bezier",
+                                                    "grid": true,
+                                                    "keyboard": {
+                                                      "enabled": true
+                                                    },
+                                                    "snapline": {
+                                                      "stroke": "#1E90FF",
+                                                      "strokeWidth": 1
+                                                    },
+                                                    "style": {
+                                                      "circle": {
+                                                        "fill": "#f5f5f5",
+                                                        "stroke": "#666"
+                                                      },
+                                                      "diamond": {
+                                                        "fill": "#ffe6cc",
+                                                        "stroke": "#d79b00"
+                                                      },
+                                                      "ellipse": {
+                                                        "fill": "#dae8fc",
+                                                        "stroke": "#6c8ebf"
+                                                      },
+                                                      "polygon": {
+                                                        "fill": "#d5e8d4",
+                                                        "stroke": "#82b366"
+                                                      },
+                                                      "rect": {
+                                                        "rx": 5,
+                                                        "ry": 5,
+                                                        "strokeWidth": 2
+                                                      },
+                                                      "text": {
+                                                        "color": "#b85450",
+                                                        "fontSize": 12
+                                                      }
+                                                    }
+                                                  },
+                                                  "nodeClickAction": [
+                                                    {
+                                                      "tag": "update-store",
+                                                      "value": {
+                                                        "lastNodeData": "${id}"
+                                                      }
+                                                    },
+                                                    {
+                                                      "formName": "flow-data-form",
+                                                      "tag": "update-form",
+                                                      "value": {
+                                                        "name": "${text.value}",
+                                                        "node_key": "${id}",
+                                                        "node_type": "${['rect'].indexOf(type)\u003e=0?'node':(text.value=='开始'?'node_start':'node_end')}"
+                                                      }
+                                                    }
+                                                  ],
+                                                  "patternItems": [
+                                                    {
+                                                      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAAnBJREFUOBGdVL1rU1EcPfdGBddmaZLiEhdx1MHZQXApraCzQ7GKLgoRBxMfcRELuihWKcXFRcEWF8HBf0DdDCKYRZpnl7p0svLe9Zzbd29eQhTbC8nv+9zf130AT63jvooOGS8Vf9Nt5zxba7sXQwODfkWpkbjTQfCGUd9gIp3uuPP8bZ946g56dYQvnBg+b1HB8VIQmMFrazKcKSvFW2dQTxJnJdQ77urmXWOMBCmXM2Rke4S7UAW+/8ywwFoewmBps2tu7mbTdp8VMOkIRAkKfrVawalJTtIliclFbaOBqa0M2xImHeVIfd/nKAfVq/LGnPss5Kh00VEdSzfwnBXPUpmykNss4lUI9C1ga+8PNrBD5YeqRY2Zz8PhjooIbfJXjowvQJBqkmEkVnktWhwu2SM7SMx7Cj0N9IC0oQXRo8xwAGzQms+xrB/nNSUWVveI48ayrFGyC2+E2C+aWrZHXvOuz+CiV6iycWe1Rd1Q6+QUG07nb5SbPrL4426d+9E1axKjY3AoRrlEeSQo2Eu0T6BWAAr6COhTcWjRaYfKG5csnvytvUr/WY4rrPMB53Uo7jZRjXaG6/CFfNMaXEu75nG47X+oepU7PKJvvzGDY1YLSKHJrK7vFUwXKkaxwhCW3u+sDFMVrIju54RYYbFKpALZAo7sB6wcKyyrd+aBMryMT2gPyD6GsQoRFkGHr14TthZni9ck0z+Pnmee460mHXbRAypKNy3nuMdrWgVKj8YVV8E7PSzp1BZ9SJnJAsXdryw/h5ctboUVi4AFiCd+lQaYMw5z3LGTBKjLQOeUF35k89f58Vv/tGh+l+PE/wG0rgfIUbZK5AAAAABJRU5ErkJggg==",
+                                                      "label": "开始节点",
+                                                      "text": "开始",
+                                                      "type": "circle"
+                                                    },
+                                                    {
+                                                      "className": "import_icon",
+                                                      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAHBJREFUOE9jZKAQMFKonwFsgFjZ/wY8Bv2HysEsA/HB7FddjA0QA8r//2f4z9CIwxCYBphBEGWMDA2vOhkZ4QaAOKR4B2TpqAHDLwzwJCTsyYORoR6RDvAnZZAB8OQLZYPTIjwpk5IC0dWSlHyxWQQA85RaEdxFEioAAAAASUVORK5CYII=",
+                                                      "label": "任务",
+                                                      "type": "rect"
+                                                    },
+                                                    {
+                                                      "className": "import_icon",
+                                                      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAHBJREFUOE9jZKAQMFKonwFsgFjZ/wY8Bv2HysEsA/HB7FddjA0QA8r//2f4z9CIwxCYBphBEGWMDA2vOhkZ4QaAOKR4B2TpqAHDLwzwJCTsyYORoR6RDvAnZZAB8OQLZYPTIjwpk5IC0dWSlHyxWQQA85RaEdxFEioAAAAASUVORK5CYII=",
+                                                      "label": "自定义任务",
+                                                      "type": "custom-rect"
+                                                    },
+                                                    {
+                                                      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAAHeEJUAAAAABGdBTUEAALGPC/xhBQAAAvVJREFUOBGNVEFrE0EU/mY3bQoiFlOkaUJrQUQoWMGePLX24EH0IIoHKQiCV0G8iE1covgLiqA/QTzVm1JPogc9tIJYFaQtlhQxqYjSpunu+L7JvmUTU3AgmTfvffPNN++9WSA1DO182f6xwILzD5btfAoQmwL5KJEwiQyVbSVZ0IgRyV6PTpIJ81E5ZvqfHQR0HUOBHW4L5Et2kQ6Zf7iAOhTFAA8s0pEP7AXO1uAA52SbqGk6h/6J45LaLhO64ByfcUzM39V7ZiAdS2yCePPEIQYvTUHqM/n7dgQNfBKWPjpF4ISk8q3J4nB11qw6X8l+FsF3EhlkEMfrjIer3wJTLwS2aCNcj4DbGxXTw00JmAuO+Ni6bBxVUCvS5d9aa04+so4pHW5jLTywuXAL7jJ+D06sl82Sgl2JuVBQn498zkc2bGKxULHjCnSMadBKYDYYHAtsby1EQ5lNGrQd4Y3v4Zo0XdGEmDno46yCM9Tk+RiJmUYHS/aXHPNTcjxcbTFna000PFJHIVZ5lFRqRpJWk9/+QtlOUYJj9HG5pVFEU7zqIYDVsw2s+AJaD8wTd2umgSCCyUxgGsS1Y6TBwXQQTFuZaHcd8gAGioE90hlsY+wMcs30RduYtxanjMGal8H5dMW67dmT1JFtYUEe8LiQLRsPZ6IIc7A4J5tqco3T0pnv/4u0kyzrYUq7gASuEyI8VXKvB9Odytv6jS/PNaZBln0nioJG/AVQRZvApOdhjj3Jt8QC8Im09SafwdBdvIpztpxWxpeKCC+EsFdS8DCyuCn2munFpL7ctHKp+Xc5cMybeIyMAN33SPL3ZR9QV1XVwLyzHm6Iv0/yeUuUb7PPlZC4D4HZkeu6dpF4v9j9MreGtMbxMMRLIcjJic9yHi7WQ3yVKzZVWUr5UrViJvn1FfUlwe/KYVfYyWRLSGNu16hR01U9IacajXPei0wx/5BqgInvJN+MMNtNme7ReU9SBbgntovn0kKHpFg7UogZvaZiOue/q1SBo9ktHzQAAAAASUVORK5CYII=",
+                                                      "label": "条件判断",
+                                                      "type": "polygon"
+                                                    },
+                                                    {
+                                                      "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAABGdBTUEAALGPC/xhBQAAA1BJREFUOBFtVE1IVUEYPXOf+tq40Y3vPcmFIdSjIorWoRG0ERWUgnb5FwVhYQSl72oUoZAboxKNFtWiwKRN0M+jpfSzqJAQclHo001tKkjl3emc8V69igP3znzfnO/M9zcDcKT67azmjYWTwl9Vn7Vumeqzj1DVb6cleQY4oAVnIOPb+mKAGxQmKI5CWNJ2aLPatxWa3aB9K7/fB+/Z0jUF6TmMlFLQqrkECWQzOZxYGjTlOl8eeKaIY5yHnFn486xBustDjWT6dG7pmjHOJd+33t0iitTPkK6tEvjxq4h2MozQ6WFSX/LkDUGfFwfhEZj1Auz/U4pyAi5Sznd7uKzznXeVHlI/Aywmk6j7fsUsEuCGADrWARXXwjxWQsUbIupDHJI7kF5dRktg0eN81IbiZXiTESic50iwS+t1oJgL83jAiBupLDCQqwziaWSoAFSeIR3P5Xv5az00wyIn35QRYTwdSYbz8pH8fxUUAtxnFvYmEmgI0wYXUXcCCSpeEVpXlsRhBnCEATxWylL9+EKCAYhe1NGstUa6356kS9NVvt3DU2fd+Wtbm/+lSbylJqsqkSm9CRhvoJVlvKPvF1RKY/FcPn5j4UfIMLn8D4UYb54BNsilTDXKnF4CfTobA0FpoW/LSp306wkXM+XaOJhZaFkcNM82ASNAWMrhrUbRfmyeI1FvRBTpN06WKxa9BK0o2E4Pd3zfBBEwPsv9sQBnmLVbLEIZ/Xe9LYwJu/Er17W6HYVBc7vmuk0xUQ+pqxdom5Fnp55SiytXLPYoMXNM4u4SNSCFWnrVIzKG3EGyMXo6n/BQOe+bX3FClY4PwydVhthOZ9NnS+ntiLh0fxtlUJHAuGaFoVmttpVMeum0p3WEXbcll94l1wM/gZ0Ccczop77VvN2I7TlsZCsuXf1WHvWEhjO8DPtyOVg2/mvK9QqboEth+7pD6NUQC1HN/TwvydGBARi9MZSzLE4b8Ru3XhX2PBxf8E1er2A6516o0w4sIA+lwURhAON82Kwe2iDAC1Watq4XHaGQ7skLcFOtI5lDxuM2gZe6WFIotPAhbaeYlU4to5cuarF1QrcZ/lwrLaCJl66JBocYZnrNlvm2+MBCTmUymPrYZVbjdlr/BxlMjmNmNI3SAAAAAElFTkSuQmCC",
+                                                      "label": "结束节点",
+                                                      "text": "结束",
+                                                      "type": "circle"
+                                                    }
+                                                  ],
+                                                  "refName": "flow",
+                                                  "tag": "flow"
+                                                }
+                                              ],
+                                              "tag": "content"
+                                            },
+                                            {
+                                              "children": [
+                                                {
+                                                  "children": [
+                                                    {
+                                                      "children": [
+                                                        {
+                                                          "itemAttr": {
+                                                            "children": [
+                                                              {
+                                                                "children": "${row.business_group}",
+                                                                "orientation": "left",
+                                                                "tag": "divider"
+                                                              },
+                                                              {
+                                                                "children": [
+                                                                  {
+                                                                    "itemAttr": {
+                                                                      "children": [
+                                                                        {
+                                                                          "children": [
+                                                                            {
+                                                                              "placeholder": "请输入",
+                                                                              "tag": "${row.tag?row.tag:'input'}"
+                                                                            }
+                                                                          ],
+                                                                          "label": "${row.name}",
+                                                                          "name": "${row.key}",
+                                                                          "rules": "${row?.attrs?.rules??[]}",
+                                                                          "tag": "form-item"
+                                                                        }
+                                                                      ],
+                                                                      "span": 24,
+                                                                      "tag": "col"
+                                                                    },
+                                                                    "itemData": "${[...row.children]}",
+                                                                    "keyField": "schema_page_field_id",
+                                                                    "tag": "listview"
+                                                                  }
+                                                                ],
+                                                                "style": {
+                                                                  "width": "100%"
+                                                                },
+                                                                "tag": "row"
+                                                              }
+                                                            ],
+                                                            "tag": "row"
+                                                          },
+                                                          "itemData": "${[...flow_data_group]}",
+                                                          "keyField": "business_group",
+                                                          "tag": "listview"
+                                                        }
+                                                      ],
+                                                      "disabled": "${!lastNodeData}",
+                                                      "labelCol": {
+                                                        "span": 6
+                                                      },
+                                                      "name": "flow-data-form",
+                                                      "tag": "form"
+                                                    }
+                                                  ],
+                                                  "tag": "layout-fit",
+                                                  "title": "${!lastNodeData?'请点击节点':'流程属性'}",
+                                                  "topRight": [
+                                                    {
+                                                      "action": [
+                                                        {
+                                                          "method": "updateNode",
+                                                          "tag": "draw-data"
+                                                        }
+                                                      ],
+                                                      "children": "保存属性",
+                                                      "disabled": "${!lastNodeData}",
+                                                      "tag": "button"
+                                                    }
+                                                  ]
+                                                }
+                                              ],
+                                              "className": "border-right",
+                                              "collapsedWidth": "40",
+                                              "collapsible": true,
+                                              "style": {
+                                                "backgroundColor": "#fafafa"
+                                              },
+                                              "tag": "sider",
+                                              "theme": "light",
+                                              "width": "300px"
+                                            }
+                                          ],
+                                          "tag": "layout",
+                                          "visible": "${img_flow_type==='flow'}"
+                                        }
+                                      ],
+                                      "searchToolBar": [
+                                        {
+                                          "children": [
+                                            {
+                                              "itemAttr": {
+                                                "children": [
+                                                  {
+                                                    "children": [
+                                                      {
+                                                        "itemAttr": {
+                                                          "children": [
+                                                            {
+                                                              "children": [
+                                                                {
+                                                                  "placeholder": "请输入",
+                                                                  "tag": "${row.tag?row.tag:'input'}"
+                                                                }
+                                                              ],
+                                                              "label": "${row.name}",
+                                                              "name": "${row.key}",
+                                                              "rules": "${row?.attrs?.rules??[]}",
+                                                              "tag": "form-item"
+                                                            }
+                                                          ],
+                                                          "span": 6,
+                                                          "tag": "col"
+                                                        },
+                                                        "itemData": "${[...row.children]}",
+                                                        "keyField": "schema_page_field_id",
+                                                        "tag": "listview"
+                                                      }
+                                                    ],
+                                                    "style": {
+                                                      "width": "100%"
+                                                    },
+                                                    "tag": "row"
+                                                  }
+                                                ],
+                                                "tag": "row"
+                                              },
+                                              "itemData": "${img_group}",
+                                              "keyField": "business_group",
+                                              "tag": "listview"
+                                            }
+                                          ],
+                                          "initialValues": {
+                                            "type": "img"
+                                          },
+                                          "name": "img-form",
+                                          "tag": "form"
+                                        }
+                                      ],
+                                      "tag": "layout-fit",
+                                      "title": "${activeRow.img_id?'【'+activeRow.name+'】编辑':'图片新增'}",
+                                      "topRight": [
+                                        {
+                                          "children": "${(max_time-time)+' 秒后将自动保存，请注意修改'}",
+                                          "style": {
+                                            "color": "#999",
+                                            "fontSize": 12,
+                                            "paddingRight": 10
+                                          },
+                                          "tag": "span",
+                                          "visible": "${!!activeRow.img_id}"
+                                        },
+                                        {
+                                          "action": [
+                                            {
+                                              "tag": "copy-text",
+                                              "value": "${window.location.origin+activeRow.path}"
+                                            }
+                                          ],
+                                          "children": "复制路径",
+                                          "disabled": "${!activeRow?.img_id}",
+                                          "tag": "button"
+                                        },
+                                        {
+                                          "action": [
+                                            {
+                                              "method": "${window.open(window.location.origin+activeRow.path)}",
+                                              "tag": "method"
+                                            }
+                                          ],
+                                          "children": "打开图片",
+                                          "disabled": "${!activeRow?.img_id}",
+                                          "tag": "button"
+                                        },
+                                        {
+                                          "action": [
+                                            {
+                                              "group": "saveImg",
+                                              "tag": "reload-init-action"
+                                            }
+                                          ],
+                                          "children": "${!activeRow?.img_id?'新增':'保存'}",
+                                          "tag": "button",
+                                          "type": "primary"
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "id": "right_draw",
+                                  "minSize": 15,
+                                  "order": 2,
+                                  "tag": "panel"
+                                }
+                              ],
+                              "direction": "horizontal",
+                              "tag": "panel-group"
+                            },
+                            {
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "showSaveDialog": false
+                                  }
+                                },
+                                {
+                                  "group": "saveImg",
+                                  "tag": "reload-init-action"
+                                }
+                              ],
+                              "children": [
+                                "您长时间没有保存，是否保存该记录"
+                              ],
+                              "open": "${showSaveDialog}",
+                              "tag": "dialog",
+                              "title": "${'超过'+max_time+'秒没有保存，是否保存?'}"
+                            }
+                          ],
+                          "initAction": [
+                            {
+                              "adapt": {
+                                "count": "count",
+                                "server_env_data": "${data}"
+                              },
+                              "api": "post:/template_data/data?service=doc.img_dir_query",
+                              "appendFormFields": "server-search-form",
+                              "async": true,
+                              "data": {
+                                "to_tree": true
+                              },
+                              "description": "请求目录树",
+                              "group": "server-env-tree",
+                              "tag": "ajax"
+                            },
+                            {
+                              "adapt": {
+                                "server_env_data_copy": "${data}"
+                              },
+                              "api": "post:/template_data/data?service=doc.img_dir_query",
+                              "async": true,
+                              "data": {
+                                "to_tree": true
+                              },
+                              "description": "拷贝数据",
+                              "group": "reload-dir",
+                              "tag": "ajax"
+                            },
+                            {
+                              "description": "将分页设置为1",
+                              "group": "update_page_1",
+                              "tag": "update-store",
+                              "value": {
+                                "searchForm": {
+                                  "page": 1,
+                                  "size": 10
+                                }
+                              }
+                            },
+                            {
+                              "adapt": {
+                                "count": "${count}",
+                                "dataList": "${data}"
+                              },
+                              "api": "post:/template_data/data?service=doc.img_query",
+                              "appendFields": "${searchForm}",
+                              "appendFormFields": "search-form",
+                              "async": true,
+                              "data": {
+                                "img_dir_id": "${treeSelected?.img_dir_id}"
+                              },
+                              "description": "请求图片",
+                              "group": "dataList",
+                              "tag": "ajax"
+                            },
+                            {
+                              "adapt": {
+                                "img_dir_group": "${data}"
+                              },
+                              "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+                              "async": true,
+                              "data": {
+                                "schema_page_code": "img_dir_form"
+                              },
+                              "description": "获取表单字段分组模式",
+                              "tag": "ajax"
+                            },
+                            {
+                              "adapt": {
+                                "flow_data_group": "${data}"
+                              },
+                              "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+                              "async": true,
+                              "data": {
+                                "schema_page_code": "flow_data"
+                              },
+                              "description": "获取表单字段分组模式",
+                              "tag": "ajax"
+                            },
+                            {
+                              "adapt": {
+                                "img_group": "${data}"
+                              },
+                              "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+                              "async": true,
+                              "data": {
+                                "schema_page_code": "img_form"
+                              },
+                              "description": "获取表单字段分组模式",
+                              "tag": "ajax"
+                            }
+                          ],
+                          "initStore": {
+                            "activeRow": {},
+                            "addNodeVisible": false,
+                            "content_tmp": "",
+                            "count": 0,
+                            "dataList": [],
+                            "flow_data_group": [],
+                            "form_dir_list": [],
+                            "get_remote_time": 20,
+                            "has_changed": false,
+                            "img_dir_group": [],
+                            "img_flow_type": "img",
+                            "img_group": [],
+                            "img_loading": false,
+                            "img_op": "add",
+                            "img_tmp": "",
+                            "lastNodeData": null,
+                            "max_time": 60,
+                            "nodeOp": "add",
+                            "remote_content_tmp": "",
+                            "searchForm": {
+                              "page": 1,
+                              "size": 10
+                            },
+                            "server_env_data": [],
+                            "server_env_data_copy": [],
+                            "showSaveDialog": false,
+                            "time": 0,
+                            "treeSelected": {},
+                            "update_time": 5
+                          },
+                          "tag": "layout-fit",
+                          "timer_bak": {
+                            "action": [
+                              {
+                                "method": "hasChanged",
+                                "tag": "draw-data",
+                                "to_field": "has_changed"
+                              },
+                              {
+                                "enable": false,
+                                "method": "getData",
+                                "tag": "draw-data",
+                                "to_field": "content_tmp"
+                              },
+                              {
+                                "tag": "update-store",
+                                "value": {
+                                  "img_op": "${activeRow?.img_id?'update':'add'}"
+                                }
+                              },
+                              {
+                                "description": "新增情況下，更新计数器",
+                                "enable": "${img_op==='add' \u0026\u0026 !showSaveDialog \u0026\u0026  has_changed}",
+                                "tag": "update-store",
+                                "value": {
+                                  "showSaveDialog": "${time\u003e=update_time?true:false}",
+                                  "time": "${time\u003cmax_time?time+1:time}"
+                                }
+                              },
+                              {
+                                "description": "新增清理计数器",
+                                "enable": "${img_op==='add' \u0026\u0026 showSaveDialog}",
+                                "tag": "update-store",
+                                "value": {
+                                  "time": 0
+                                }
+                              },
+                              {
+                                "description": "修改的情況下，更新计数器",
+                                "enable": "${img_op==='update'}",
+                                "tag": "update-store",
+                                "value": {
+                                  "time": "${time\u003cmax_time?time+1:time}"
+                                }
+                              },
+                              {
+                                "enable": "${img_op==='update' \u0026\u0026 (max_time%update_time)==0 \u0026\u0026 has_changed}",
+                                "group": "saveImg",
+                                "tag": "reload-init-action"
+                              },
+                              {
+                                "enable": "${img_op==='update' \u0026\u0026 time%get_remote_time===0}",
+                                "group": "update-from-remote",
+                                "tag": "reload-init-action"
+                              },
+                              {
+                                "enable": "${img_op==='update' \u0026\u0026 time\u003e=max_time}",
+                                "tag": "update-store",
+                                "value": {
+                                  "time": 0
+                                }
+                              }
+                            ],
+                            "enable": true,
+                            "interval": 1000,
+                            "name": "剩余时间的定时器"
+                          }
+                        }
+                      ],
+                      "key": "img-design",
+                      "label": "图片设计"
+                    }
+                  ],
+                  "size": "small",
+                  "tag": "tabs",
+                  "type": "card"
+                }
+              ],
+              "open": "${docShow}",
+              "style": {
+                "top": 10
+              },
+              "styles": {
+                "body": {
+                  "height": "calc(100vh  - 160px)",
+                  "overflowY": "auto"
+                }
+              },
+              "tag": "dialog",
+              "title": "修改文档",
+              "width": "96%"
+            }
+          ],
+          "className": "webshell-container",
+          "style": {
+            "backgroundColor": "#fff",
+            "display": "flex",
+            "flexDirection": "column"
+          },
+          "tag": "content"
+        }
+      ],
+      "tag": "layout"
+    }
+  ],
+  "initAction": [
+    {
+      "adapt": {
+        "url_param_code": "${code}"
+      },
+      "description": "从url取参数",
+      "tag": "url-param"
+    },
+    {
+      "adapt": {
+        "server_env_data": "${data}"
+      },
+      "api": "post:/template_data/data?service=system.frontend_doc_group_query",
+      "appendFormFields": "server-search-form",
+      "data": {
+        "to_tree": true
+      },
+      "description": "请求目录树",
+      "group": "server-env-tree",
+      "tag": "ajax"
+    },
+    {
+      "adapt": {
+        "role_btn_list": "${data}"
+      },
+      "api": "post:/template_data/data?service=system.btn_role_id_list_query",
+      "data": {
+        "menu_code": "doc_op",
+        "show_current_user": true
+      },
+      "tag": "ajax"
+    },
+    {
+      "description": "更新值,取一个",
+      "enable": "${!url_param_code \u0026\u0026server_env_data.length \u003e 0?true:false}",
+      "tag": "update-store",
+      "value": {
+        "last_doc_id": "${server_env_data[0].frontend_doc_group_id}",
+        "last_doc_name": "${server_env_data[0].name}",
+        "last_webshell_token": "${uuid()}"
+      }
+    },
+    {
+      "description": "更新值,取一个",
+      "enable": "${!!url_param_code \u0026\u0026 server_env_data.length \u003e 0?true:false}",
+      "foreach": "${server_env_data}",
+      "if_template": "${row.code==url_param_code}",
+      "tag": "update-store-from-tree",
+      "value": {
+        "last_doc_id": "${row.frontend_doc_group_id}",
+        "last_doc_name": "${row.name}",
+        "last_webshell_token": "${uuid()}"
+      }
+    },
+    {
+      "enable": "${last_doc_id \u0026\u0026 last_group_id!==''?true:false}",
+      "group": "add-tab",
+      "tag": "update-store",
+      "value": {
+        "tmp": "${panelList.findIndex(item=\u003eitem.id===last_group_id)}"
+      }
+    },
+    {
+      "enable": "${last_doc_id \u0026\u0026tmp\u003e=0?true:false}",
+      "group": "add-tab",
+      "tag": "update-store",
+      "value": {
+        "last_webshell_x": "${tmp}",
+        "tmp2": "${panelList[tmp].children.findIndex(item=\u003eitem.id===last_shell_id)}"
+      }
+    },
+    {
+      "enable": "${last_doc_id \u0026\u0026tmp\u003c0?true:false}",
+      "group": "add-tab",
+      "tag": "update-store",
+      "value": {
+        "last_webshell_x": 0,
+        "last_webshell_y": 0
+      }
+    },
+    {
+      "enable": "${last_doc_id \u0026\u0026tmp2\u003e=0?true:false}",
+      "group": "add-tab",
+      "tag": "update-store",
+      "value": {
+        "last_webshell_y": "${tmp2}"
+      }
+    },
+    {
+      "enable": "${last_doc_id \u0026\u0026 tmp2\u003c0?true:false}",
+      "group": "add-tab",
+      "tag": "update-store",
+      "value": {
+        "last_webshell_y": 0
+      }
+    },
+    {
+      "enable": "${last_doc_id \u0026\u0026panelList.length\u003e0}",
+      "group": "add-tab",
+      "name": "计算存在打开tab",
+      "tag": "update-store",
+      "value": {
+        "has_open_doc": "${panelList[last_webshell_x].children[last_webshell_y].content.find(item=\u003eitem.path==last_doc_id)?.token}"
+      }
+    },
+    {
+      "description": "基于现有group新增webshell",
+      "enable": "${last_doc_id \u0026\u0026panelList.length\u003e0 \u0026\u0026 !has_open_doc}",
+      "from": "panelList",
+      "group": "add-tab",
+      "method": "${panelList[last_webshell_x].children[last_webshell_y].addChildren(value)} ",
+      "tag": "arr-push",
+      "value": {
+        "path": "${last_doc_id}",
+        "title": "${last_doc_name}",
+        "token": "${last_webshell_token}"
+      }
+    },
+    {
+      "description": "执行激活标签方法",
+      "enable": "${last_doc_id \u0026\u0026 panelList.length\u003e0 \u0026\u0026 !has_open_doc}",
+      "group": "add-tab",
+      "method": "${panelList[last_webshell_x].children[last_webshell_y].setActiveKey(last_webshell_token) }",
+      "tag": "method"
+    },
+    {
+      "description": "执行激活标签方法",
+      "enable": "${last_doc_id \u0026\u0026 panelList.length\u003e0 \u0026\u0026 has_open_doc}",
+      "group": "add-tab",
+      "method": "${panelList[last_webshell_x].children[last_webshell_y].setActiveKey(has_open_doc) }",
+      "tag": "method"
+    },
+    {
+      "description": "添加新的group",
+      "enable": "${last_doc_id \u0026\u0026panelList.length\u003c=0}",
+      "from": "panelList",
+      "group": "add-tab",
+      "tag": "arr-push",
+      "value": {
+        "children": [
+          {
+            "activeKey": "${last_webshell_token}",
+            "content": [
+              {
+                "path": "${last_doc_id}",
+                "title": "${last_doc_name}",
+                "token": "${last_webshell_token}"
+              }
+            ],
+            "description": "纵向分组",
+            "id": "${uuid()}",
+            "order": 1
+          }
+        ],
+        "description": "横向分组",
+        "id": "${uuid()}",
+        "order": 1
+      }
+    },
+    {
+      "enable": "${!!last_doc_id?true:false}",
+      "group": "add-tab",
+      "method": "${panelList.forEach(item=\u003eitem.initialize())}",
+      "tag": "method"
+    },
+    {
+      "adapt": {
+        "frontendDocConfigGroup": "${data}"
+      },
+      "api": "post:/template_data/data?service=system.get_page_schema_field_group",
+      "data": {
+        "schema_page_code": "${frontend_doc_schema_page_code}"
+      },
+      "description": "获取获取文档新增对话框，分组模式",
+      "tag": "ajax"
+    }
+  ],
+  "initStore": {
+    "activeStore": null,
+    "addNodeForm": {
+      "type": "1"
+    },
+    "addNodeVisible": false,
+    "belong_id": "",
+    "col": 24,
+    "docShow": false,
+    "framework_list": [],
+    "frontendDocConfigGroup": [],
+    "frontend_doc_schema_page_code": "frontend_doc",
+    "has_open_doc": "",
+    "lastDblData": {},
+    "lastRightSsh": [],
+    "last_doc_id": "",
+    "last_doc_name": "",
+    "last_group_id": "",
+    "last_parent_id": "",
+    "last_shell_id": "",
+    "last_type": "",
+    "last_webshell_token": "",
+    "last_webshell_x": 0,
+    "last_webshell_y": 0,
+    "nodeOp": "add",
+    "panelList": [],
+    "role_btn_list": [],
+    "searchForm": {
+      "search": ""
+    },
+    "server_env_data": [],
+    "server_env_data_dir": [],
+    "tmp": -1,
+    "tmp2": -1,
+    "treeSelected": {},
+    "updateNodeForm": {},
+    "url_param_code": ""
+  },
+  "initStoreType": {
+    "panelList": "panelList"
+  },
+  "tag": "layout-fit"
+}

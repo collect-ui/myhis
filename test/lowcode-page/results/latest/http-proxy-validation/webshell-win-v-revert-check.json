@@ -1,0 +1,42 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell",
+  "targetHost": "192.168.232.130",
+  "marker": "WSH_REVERT_1778636929308",
+  "checks": {
+    "pageOpened": true,
+    "targetLoginClicked": true,
+    "loginConfirmed": true,
+    "terminalVisible": true,
+    "noPasteCatcherAttr": true,
+    "noPasteDebugLog": true,
+    "xtermTextareaKeptDefault": true,
+    "markerPrintedOnce": true,
+    "blankEnterDidNotReplayPreviousInput": true
+  },
+  "details": {
+    "httpStatus": "200",
+    "pasteCatcherCount": 0,
+    "pasteDebugLogLength": 0,
+    "xtermTextarea": {
+      "style": "left: 81px; top: 476px; width: 9px; height: 17px; line-height: 17px; z-index: -5;",
+      "dataPaste": null,
+      "width": 9,
+      "height": 17
+    },
+    "markerCountAfterCommand": 2,
+    "markerCountAfterBlankEnter": 2,
+    "terminalTail": "Welcome to Ubuntu 24.04.4 LTS (GNU/Linux 6.8.0-111-generic x86_64)\n * Documentation:  https://help.ubuntu.com\n * Management:     https://landscape.canonical.com\n * Support:        https://ubuntu.com/pro\n System information as of Wed May 13 09:48:55 AM CST 2026\n  System load:  0.43               Processes:              362\n  Usage of /:   67.8% of 76.88GB   Users logged in:        1\n  Memory usage: 9%                 IPv4 address for ens33: 192.168.232.130\n  Swap usage:   0%\n * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s\n   just raised the bar for easy, resilient and secure K8s cluster deployment.\n   https://ubuntu.com/engage/secure-kubernetes-at-the-edge\nExpanded Security Maintenance for Applications is not enabled.\n39 updates can be applied immediately.\nTo see these additional updates run: apt list --upgradable\n2 additional security updates can be applied with ESM Apps.\nLearn more about enabling ESM Apps service at https://ubuntu.com/esm\nLast login: Wed May 13 09:47:20 2026 from 192.168.232.130\nzz@zz:~$ printf 'WSH_REVERT_1778636929308\\n'\nWSH_REVERT_1778636929308\nzz@zz:~$ \nzz@zz:~$  "
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestFailed": [],
+  "screenshots": {
+    "open": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-win-v-revert-open.png",
+    "terminal": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-win-v-revert-terminal.png",
+    "afterInput": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-win-v-revert-after-input.png",
+    "fail": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-win-v-revert-fail.png"
+  },
+  "reportPath": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/webshell-win-v-revert-check.json",
+  "pass": true,
+  "error": ""
+}

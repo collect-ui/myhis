@@ -1,0 +1,7 @@
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByText('HTTP目录').first()[22m
+
+    at main (/data/project/sport/test/lowcode-page/scripts/frontend/webshell_editor_pool_console_check.js:69:44) {
+  name: 'TimeoutError'
+}

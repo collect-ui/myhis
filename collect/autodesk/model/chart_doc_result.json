@@ -1,0 +1,11 @@
+{
+  "url": "{{get_key `chat_url_v2`}}/apizj/queryBiddingDocByProjectNo",
+  "method": "POST",
+  "header": {
+    "Sign": "{{.sign}}",
+    "Content-Type": "application/json"
+  },
+  "result_json": true,
+  "data_is_string": true,
+  "data": "{{.request_body}}"
+}

@@ -1,0 +1,11 @@
+{
+  "pageUrl": "http://192.168.232.130:8015/collect-ui#/collect-ui/framework/webshell-editor-pool",
+  "modalOpen": true,
+  "title": "新增接口",
+  "rowAligned": true,
+  "headersBlockVisible": true,
+  "errors": [],
+  "screenshot": "/data/project/sport/test/lowcode-page/results/latest/http-proxy-validation/full-run-20260505-170854/webshell-editor-pool-http-doc-dialog-ui-check.png",
+  "pass": true,
+  "nonCanceledErrors": []
+}

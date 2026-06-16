@@ -1,0 +1,2242 @@
+{
+  "tag": "layout-fit",
+
+  "children": [
+    {
+      "tag": "row",
+      "className": "h100",
+      "children": [
+        {
+          "tag": "col",
+          "span": 9,
+          "className": "border-right",
+          "children": [
+            {
+              "tag": "layout-fit",
+              "title": "课程管理",
+              "initStore": {
+                "dialogVisible": false,
+                "op": "add",
+                "selection": [],
+                "searchForm": {
+                  "day": "",
+                  "page": 1,
+                  "size": 20
+                },
+                "opForm": {
+                  "course_stage": "not_start"
+                },
+                "dataList": [],
+                "teacher_list": [],
+                "clickRowData": {}
+
+              },
+              "initAction": [
+
+                {
+                  "tag": "ajax",
+                  "description": "页面初始化请求",
+                  "group": "course-list",
+                  "api": "post:/template_data/data?service=sport.course_query",
+                  "appendFormFields": "course-form",
+                  "appendFields": "${searchForm}",
+                  "adapt": {
+                    "dataList": "${data}"
+                  }
+                },
+                {
+                  "tag": "ajax",
+                  "description": "老师列表",
+                  "api": "post:/template_data/data?service=hrm.user_list",
+                  "data": {
+                    "role_code": "teacher",
+                    "pagination": false
+                  },
+                  "adapt": {
+                    "teacher_list": "${data}"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "tag": "table",
+                  "className": "padding10",
+                  "selection": "${selection}",
+                  "rowSelection": "multiple",
+                  "rowClick": "${clickRowData}",
+                  "rowClickAction": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "current_course": "${clickRowData}"
+                      },
+                      "targetStore": "userCourseDetail"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "*",
+                      "description": "页面初始化请求",
+                      "targetStore": "userCourseDetail"
+                    }
+                  ],
+                  "columnDefs": [
+                    {
+                      "headerName": "#",
+                      "width": 60,
+                      "suppressSizeToFit": true,
+                      "valueGetter": "node.rowIndex + 1",
+                      "sortable": false,
+                      "pinned": "left"
+                    },
+                    {
+
+                      "checkboxSelection": true,
+                      "headerCheckboxSelection": true,
+                      "headerName": "老师",
+                      "width": 110,
+                      "suppressSizeToFit": true,
+                      "field": "teacher_name"
+                    },
+                    {
+                      "headerName": "上课时间",
+                      "field": "start_time",
+                      "width": 150,
+                      "suppressSizeToFit": true
+                    },
+                    {
+                      "headerName": "状态",
+                      "field": "course_stage_name",
+                      "width": 100,
+                      "suppressSizeToFit": true
+                    },
+                    {
+                      "headerName": "类型",
+                      "field": "training_type_name",
+                      "width": 100,
+                      "suppressSizeToFit": true,
+                      "cellRender": [
+                        {
+                          "tag": "span",
+                          "children": "${row.training_type_name+'/'+row.body_part_name}"
+                        }
+                      ]
+                    },
+                    {
+                      "headerName": "签到/次",
+                      "field": "attendance_count"
+                    }
+                  ],
+                  "rowData": "${dataList}"
+                },
+                {
+                  "tag": "dialog",
+                  "title": "${op=='add'?'新增上课':'修改上课'}",
+                  "width": "30%",
+                  "open": "${dialogVisible}",
+                  "action": [
+                    {
+                      "tag": "submit-form",
+                      "description": "提交表单",
+                      "formName": "opCourseForm"
+                    },
+                    {
+                      "tag": "ajax",
+                      "description":
+                      "新增和编辑发送请求到后端,这里role_id取表单的值,也可以利用三元表达式",
+                      "api": "${op=='add'?'post:/template_data/data?service=sport.course_save':'post:/template_data/data?service=sport.course_update'}",
+                      "appendFormFields": "opCourseForm",
+                      "data": {
+                        "course_id": "${op=='add'?'':selection[0].course_id}"
+                      }
+                    },
+                    {
+                      "tag": "update-store",
+                      "description": "关闭对话框",
+                      "value": {
+                        "dialogVisible": false
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "group": "course-list",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "children": [
+                    {
+                      "tag": "form",
+                      "name": "opCourseForm",
+                      "initialValues": "${opForm}",
+                      "labelCol": { "span": 4 },
+                      "children": [
+                        {
+                          "tag": "form-item",
+                          "name": "teacher_id",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择老师!"
+                            }
+                          ],
+                          "label": "老师",
+                          "children": [
+                            {
+                              "tag": "select",
+                              "placeholder": "请输入名称",
+                              "fieldNames": {
+                                "label": "nick",
+                                "value": "user_id"
+                              },
+                              "options": "${teacher_list}"
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "training_type",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择类型!"
+                            }
+                          ],
+                          "label": "训练类型",
+                          "children": [
+                            {
+                              "tag": "select",
+                              "placeholder": "请选择类型",
+                              "options": [
+                                {
+                                  "value": "power",
+                                  "label": "力量"
+                                },
+                                {
+                                  "value": "speed",
+                                  "label": "速度"
+                                },
+                                {
+                                  "value": "endurance",
+                                  "label": "耐力"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "body_part",
+                          "label": "部位",
+                          "children": [
+                            {
+                              "tag": "select",
+                              "placeholder": "请选择类型",
+                              "allowClear": true,
+                              "options": [
+                                {
+                                  "value": "upper",
+                                  "label": "上肢"
+                                },
+                                {
+                                  "value": "lower",
+                                  "label": "下肢"
+                                },
+                                {
+                                  "value": "all",
+                                  "label": "全身"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "course_stage",
+                          "label": "状态",
+                          "children": [
+                            {
+                              "tag": "select",
+                              "placeholder": "请选择状态",
+                              "allowClear": true,
+                              "listHeight": 400,
+                              "options": [
+
+                                {
+                                  "value": "not_start",
+                                  "label": "未开始"
+                                },
+                                {
+                                  "label": "课前状态",
+                                  "options": [
+                                    {
+                                      "value": "before_start",
+                                      "label": "课前-开始"
+                                    },
+                                    {
+                                      "value": "before_finish",
+                                      "label": "课前-结束"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "label": "课中状态",
+                                  "options": [
+                                    {
+                                      "value": "in_start",
+                                      "label": "课中-开始"
+                                    },
+                                    {
+                                      "value": "in_finish",
+                                      "label": "课中-结束"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "label": "课后状态",
+                                  "options": [
+                                    {
+                                      "value": "after_start",
+                                      "label": "课后-开始"
+                                    },
+                                    {
+                                      "value": "after_finish",
+                                      "label": "课后-结束"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "form-item",
+                          "name": "start_time",
+                          "rules": [
+                            {
+                              "required": true,
+                              "message": "请选择上课时间!"
+                            }
+                          ],
+                          "label": "上课时间",
+                          "children": [
+                            {
+                              "tag": "date",
+                              "showTime": true,
+                              "format": "YYYY-MM-DD HH:mm:ss",
+                              "valueFormat": "YYYY-MM-DD HH:mm:ss",
+                              "placeholder": "请输入排序号"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "storeName": "leftRole",
+
+
+              "topRight": [
+                {
+                  "tag": "button",
+                  "type": "primary",
+                  "children": "新增",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "dialogVisible": true,
+                        "op": "add"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "opCourseForm"
+                    }
+                  ]
+                },
+
+                {
+                  "tag": "button",
+                  "action": [
+                    {
+                      "tag": "update-store",
+                      "value": {
+                        "dialogVisible": true,
+                        "op": "edit"
+                      }
+                    },
+                    {
+                      "tag": "reset-form",
+                      "formName": "opCourseForm"
+                    },
+                    {
+                      "tag": "update-form",
+                      "formName": "opCourseForm",
+                      "value": "${selection[0]}"
+                    }
+                  ],
+                  "disabled": "${selection.length !=1 }",
+                  "children": "编辑"
+                },
+                {
+                  "tag": "button",
+                  "disabled": "${selection.length <=0 }",
+                  "type": "primary",
+                  "confirm": {
+                    "title": "确认删除吗？",
+                    "description": "${'确认删除'+selection.length+'记录吗？'}"
+                  },
+                  "danger": true,
+                  "action": [
+                    {
+                      "tag": "ajax",
+                      "description": "删除课程",
+                      "api": "post:/template_data/data?service=sport.course_delete",
+                      "data": {
+                        "course_id_list": "${selection.map(item=>item.course_id)}"
+                      }
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "description": "页面初始化请求",
+                      "group": "course-list"
+                    }
+                  ],
+                  "children": "删除"
+                }
+              ],
+              "searchToolBar": [
+                {
+                  "tag": "form",
+                  "name": "course-form",
+                  "initialValues": "${searchForm}",
+                  "labelCol": { "span": 4 },
+                  "wrapperCol": { "span": 19 },
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "group": "course-list",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "submitOnChange": true,
+                  "children": [
+                    {
+                      "tag": "row",
+                      "children": [
+                        {
+                          "tag": "col",
+                          "span": 12,
+                          "children": [
+                            {
+                              "tag": "form-item",
+                              "name": "search",
+                              "label": "搜索",
+                              "children": [
+                                {
+                                  "tag": "input",
+                                  "placeholder": "名称/编码",
+                                  "allowClear": true
+                                }
+                              ]
+                            }
+                          ]
+                        },
+
+                        {
+                          "tag": "col",
+                          "span": 1,
+                          "children": [
+                            {
+                              "tag": "button",
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "course-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "type": "primary",
+                              "children": "搜索"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "col",
+          "span": 15,
+          "storeName": "userCourseDetail",
+          "initStore": {
+            "current_course": {
+              "course_id": "",
+              "teacher_name": "",
+              "start_time": "请选择课程"
+            },
+            "op": "add",
+            "training_list": [],
+            "userList": [],
+            "videoList": [],
+            "not_role_user_list": [],
+            "not_role_ldap_list": [],
+            "userCount": 0,
+            "userSelection": [],
+            "gradeList": [],
+            "analystList": [],
+            "userVisible": false,
+            "gradeVisible": false,
+            "analystVisible": false,
+            "gradeOp": "add",
+            "analystOp": "add",
+            "gradeSelection": [],
+            "analystSelection": [],
+            "videoSelection": [],
+            "ldapVisible": false,
+            "role_list": [],
+            "userForm": {
+              "spend": "60"
+            },
+            "ldapForm": {
+              "role_id": "",
+              "ldap_list": []
+            },
+            "userSearchForm": {
+              "page": 1,
+              "size": 20
+            },
+            "gradeSearchForm": {
+
+            },
+            "ldapSearchForm": {
+              "page": 1,
+              "size": 20
+            },
+            "ldapGroupSelection": [],
+            "ldapList": [],
+            "activeKey": "grade"
+          },
+          "initAction": [
+            {
+              "enable": "${current_course.teacher_name && activeKey=='user'}",
+              "tag": "ajax",
+              "group": "user-list",
+              "description": "页面初始化请求",
+              "api": "post:/template_data/data?service=sport.course_attendance_query",
+              "appendFormFields": "role-user-form",
+              "data": {
+                "course_id": "${current_course.course_id}"
+              },
+              "adapt": {
+                "userList": "${data}",
+                "userCount": "${count}"
+              }
+            },
+            {
+              "enable": "${current_course.teacher_name && activeKey=='grade'}",
+              "tag": "ajax",
+              "group": "grade-list",
+              "description": "页面初始化请求，查询训练中成绩",
+              "api": "post:/template_data/data?service=sport.course_grade_query",
+              "appendFormFields": "grade-user-form",
+              "data": {
+                "course_id": "${current_course.course_id}",
+                "dashboard_type": "training",
+                "with_training_project": true
+              },
+              "adapt": {
+                "gradeList": "${data}"
+              }
+            },
+
+            {
+              "enable": "${current_course.teacher_name && activeKey=='analyst'}",
+              "tag": "ajax",
+              "group": "analyst-list",
+              "description": "页面初始化请求，查询分析成绩",
+              "api": "post:/template_data/data?service=sport.course_grade_query",
+              "appendFormFields": "analyst-user-form",
+              "data": {
+                "course_id": "${current_course.course_id}",
+                "dashboard_type": "analyst"
+              },
+              "adapt": {
+                "analystList": "${data}"
+              }
+            },
+            {
+              "enable": "${current_course.course_id && activeKey=='video'}",
+              "tag": "ajax",
+              "group": "video-list",
+              "description": "页面初始化请求",
+              "api": "post:/template_data/data?service=sport.video_list",
+              "data": {
+                "course_id": "${[current_course.course_id]}"
+              },
+              "adapt": {
+                "videoList": "${data}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "description": "页面初始化请求-查询训练项目",
+              "api": "post:/template_data/data?service=sport.training_project_query",
+              "data": {
+                "pagination": false
+              },
+              "adapt": {
+                "training_list": "${data}"
+              }
+            },
+            {
+              "tag": "ajax",
+              "description": "加载角色",
+              "api": "post:/template_data/data?service=hrm.role_query",
+              "adapt": {
+                "role_list": "${data}"
+              }
+            }
+          ],
+          "children": [
+            {
+              "tag": "layout-fit",
+              "title": "${'【'+current_course.start_time+' '+current_course.teacher_name+'】课程详情'}",
+              "children": [
+                {
+                  "style": {
+                    "paddingTop": 10
+                  },
+                  "tag": "tabs",
+                  "size": "small",
+                  "type": "card",
+                  "action": [
+                    {
+                      "tag": "reload-init-action",
+                      "enable": "${activeKey=='grade'}",
+                      "group": "grade-list",
+                      "description": "页面初始化请求"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "enable": "${activeKey=='analyst'}",
+                      "group": "analyst-list",
+                      "description": "页面初始化请求"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "enable": "${activeKey=='user'}",
+                      "group": "user-list",
+                      "description": "页面初始化请求"
+                    },
+                    {
+                      "tag": "reload-init-action",
+                      "enable": "${activeKey=='video'}",
+                      "group": "video-list",
+                      "description": "页面初始化请求"
+                    }
+                  ],
+                  "activeKey": "${activeKey}",
+                  "items": [
+                    {
+                      "label": "训练中大屏数据",
+                      "key": "grade",
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "searchToolBar": [
+                            {
+                              "tag": "form",
+                              "name": "grade-user-form",
+                              "initialValues": "${userSearchForm}",
+                              "labelCol": { "span": 4 },
+                              "wrapperCol": { "span": 19 },
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "grade-list",
+                                  "description": "成绩请求"
+                                }
+                              ],
+                              "submitOnChange": true,
+                              "children": [
+                                {
+                                  "tag": "row",
+                                  "children": [
+                                    {
+                                      "tag": "col",
+                                      "span": 10,
+                                      "children": [
+                                        {
+                                          "tag": "form-item",
+                                          "name": "search",
+                                          "label": "搜索",
+                                          "children": [
+                                            {
+                                              "tag": "input",
+                                              "placeholder": "账号/用户名",
+                                              "allowClear": true
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "col",
+                                      "span": 1,
+                                      "children": [
+                                        {
+                                          "tag": "button",
+                                          "action": [
+                                            {
+                                              "tag": "reload-init-action",
+                                              "group": "*",
+                                              "description": "页面初始化请求"
+                                            }
+                                          ],
+                                          "type": "primary",
+                                          "children": "搜索"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "searchBarRight": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "children": "打开大屏",
+                              "icon": "FaChessBoard",
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "open-url",
+                                  "url": "/collect-ui/#/full/training_dashboard",
+                                  "windowName": "_blank",
+                                  "data": {
+                                    "course_id": "${current_course.course_id}",
+                                    "dashboard_type": "training"
+
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "children": "随机生成成绩",
+                              "icon": "FaChessBoard",
+                              "confirm": {
+                                "title": "确认随机生成成绩吗？",
+                                "description":
+                                "${'确认随机生成成绩吗？'}"
+                              },
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=sport.gen_course_grade",
+                                  "data": {
+                                    "target_course_id": "${current_course.course_id}",
+                                    "dashboard_type": "training",
+                                    "with_all": true,
+                                    "training_type": "${current_course.training_type}",
+                                    "body_part": "${current_course.body_part}",
+                                    "with_training_project": true
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "grade-list"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "children": "导出成绩模板",
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=sport.grade_list_download",
+                                  "download": true,
+                                  "data": {
+                                    "course_id": "${current_course.course_id}",
+                                    "dashboard_type": "training"
+                                  }
+                                }
+                              ]
+                            },
+
+                            {
+                              "tag": "upload",
+                              "uploadConfig": {
+                                "showUploadList": false,
+                                "api": "post:/template_data/data?service=sport.upload_course_grade",
+                                "data": {
+                                  "course_id": "${current_course.course_id}",
+                                  "dashboard_type": "training"
+                                }
+                              },
+                              "finish_action":[
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "grade-list"
+                                }
+                              ],
+                              "children": [
+
+                                {
+                                  "disabled": "${!current_course.teacher_name}",
+                                  "tag": "button",
+                                  "style": {
+                                    "margin": "0 10px"
+                                  },
+                                  "type": "primary",
+                                  "danger": true,
+                                  "children": "导入成绩"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "children": "新增学生成绩",
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "gradeVisible": true,
+                                    "gradeOp": "add"
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "gradeUserForm"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "gradeUserForm",
+                                  "value": "${current_course}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=hrm.user_list",
+                                  "data": {
+                                    "not_role_code": "teacher",
+                                    "pagination": false
+                                  },
+                                  "adapt": {
+                                    "not_role_user_list": "${data}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "children": "编辑学生成绩",
+                              "disabled": "${gradeSelection.length!=1}",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "description":"打开对话框",
+                                  "value": {
+                                    "gradeVisible": true,
+                                    "gradeOp": "edit"
+                                  }
+                                },
+                                {
+                                  "description":"重置表单",
+                                  "tag": "reset-form",
+                                  "formName": "gradeUserForm"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "gradeUserForm",
+                                  "value": "${gradeSelection[0]}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=hrm.user_list",
+                                  "data": {
+                                    "not_role_code": "teacher",
+                                    "pagination": false
+                                  },
+                                  "adapt": {
+                                    "not_role_user_list": "${data}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "danger": true,
+                              "children": "删除",
+                              "disabled": "${gradeSelection.length <=0 }",
+                              "confirm": {
+                                "title": "确认删除吗？",
+                                "description":
+                                "${'确认删除【'+gradeSelection.length+'】条记录吗？'}"
+                              },
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "description": "删除签到",
+                                  "api": "post:/template_data/data?service=sport.course_grade_delete",
+                                  "data": {
+                                    "course_grade_id_list":
+                                    "${gradeSelection.map(item=>item.course_grade_id)}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "grade-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            }
+                          ],
+                          "children": [
+                            {
+                              "selection": "${gradeSelection}",
+                              "tag": "table",
+                              "className": "padding10",
+                              "rowSelection": "multiple",
+                              "columnDefs": [
+                                {
+                                  "headerName": "#",
+                                  "width": 60,
+                                  "suppressSizeToFit": true,
+                                  "valueGetter": "node.rowIndex + 1",
+                                  "sortable": false,
+                                  "pinned": "left"
+                                },
+                                {
+                                  "pinned": "left",
+                                  "checkboxSelection": true,
+                                  "headerCheckboxSelection": true,
+                                  "headerName": "学生",
+                                  "width": 148,
+                                  "suppressSizeToFit": true,
+                                  "field": "student_name",
+                                  "cellRender": [
+                                    {
+                                      "tag": "span",
+                                      "children": "${row.student_name+'('+row.username+')'}"
+                                    }
+                                  ]
+                                },
+
+                                {
+                                  "headerName": "项目",
+                                  "field": "training_project_name",
+                                  "width": 100,
+                                  "suppressSizeToFit": true
+                                },
+                                {
+                                  "headerName": "平均级别",
+                                  "field": "sport_level_name",
+                                  "width": 70,
+                                  "suppressSizeToFit": true
+                                },
+                                {
+                                  "headerName": "课前得分/热量/次数",
+                                  "field": "before_score",
+                                  "cellRender": [
+                                    {
+                                      "tag": "span",
+                                      "children": "${row.before_score+'/'+row.before_calories+'/'+row.before_training_times}"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "headerName": "课前评价",
+                                  "field": "before_evaluate",
+                                  "tipField": "before_evaluate"
+                                },
+                                {
+                                  "headerName": "课中得分/热量/次数",
+                                  "field": "in_score",
+                                  "cellRender": [
+                                    {
+                                      "tag": "span",
+                                      "children": "${row.in_score+'/'+row.in_calories+'/'+row.in_training_times}"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "headerName": "课中评价",
+                                  "field": "in_evaluate",
+                                  "tipField": "in_evaluate"
+                                },
+                                {
+                                  "headerName": "课后得分/热量/次数",
+                                  "field": "after_score",
+                                  "cellRender": [
+                                    {
+                                      "tag": "span",
+                                      "children": "${row.after_score+'/'+row.after_calories+'/'+row.after_training_times}"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "headerName": "课后评价",
+                                  "field": "after_evaluate",
+                                  "tipField": "after_evaluate"
+                                },
+                                {
+                                  "headerName": "总分",
+                                  "field": "total_score",
+                                  "width": 70,
+                                  "suppressSizeToFit": true
+
+                                }
+                              ],
+
+                              "rowData": "${gradeList}"
+                            },
+                            {
+                              "tag": "dialog",
+                              "title":
+                              "${gradeOp=='add'?'角色【'+current_course.start_time+' '+current_course.teacher_name+'】新增学生成绩':'角色【'+current_course.start_time+' '+current_course.teacher_name+'】编辑学生成绩'}",
+                              "width": "40%",
+                              "style":{"top": 20 },
+                              "action": [
+                                {
+                                  "tag": "submit-form",
+                                  "description": "提交表单",
+                                  "formName": "gradeUserForm"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "新增成绩",
+                                  "enable": "${gradeOp=='add'}",
+                                  "api": "post:/template_data/data?service=sport.course_grade_save",
+                                  "appendFormFields": "gradeUserForm",
+                                  "data": {
+                                    "course_id": "${current_course.course_id}",
+                                    "dashboard_type": "training"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "编辑签到",
+                                  "enable": "${gradeOp=='edit'}",
+                                  "api": "post:/template_data/data?service=sport.course_grade_update",
+                                  "appendFormFields": "gradeUserForm",
+                                  "data": {
+                                    "course_grade_id": "${gradeSelection[0].course_grade_id}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "gradeVisible": false
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "grade-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "tag": "form",
+                                  "name": "gradeUserForm",
+                                  "initialValues":{},
+                                  "labelCol": { "span": 4 },
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "name": "username",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请选择学生!"
+                                        }
+                                      ],
+                                      "label": "学生",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "placeholder": "请选择学生",
+                                          "showSearch": true,
+                                          "fieldNames": {
+                                            "label": "nick",
+                                            "value": "username"
+                                          },
+                                          "labelRender": "${label+'('+value+')'}",
+                                          "optionRender":
+                                          "${nick+'('+username+')'}",
+                                          "options": "${not_role_user_list}"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "divider",
+
+                                      "children": "课前"
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "before_score",
+                                      "label": "课前分数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课前课前分数"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "before_calories",
+                                      "label": "课前热量",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课前消耗热量"
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "form-item",
+                                      "name": "before_training_times",
+                                      "label": "训练次数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课前训练次数"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "before_evaluate",
+                                      "label": "课前评价",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isTextarea": true,
+                                          "placeholder": "请填写课前评价"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "divider",
+                                      "children": "课中"
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "in_score",
+                                      "label": "课中分数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课中分数"
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "form-item",
+                                      "name": "in_calories",
+                                      "label": "课中热量",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课中消耗热量"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "in_training_times",
+                                      "label": "训练次数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课中训练次数"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "in_evaluate",
+                                      "label": "课中评价",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isTextarea": true,
+                                          "placeholder": "请填写课中评价"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "divider",
+                                      "children": "课后"
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "after_score",
+                                      "label": "课后分数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课后分数"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "after_calories",
+                                      "label": "课后热量",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课后消耗热量"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "after_training_times",
+                                      "label": "训练次数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课后训练次数"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "after_evaluate",
+                                      "label": "课后评价",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isTextarea": true,
+                                          "placeholder": "请填写课后评价"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "open": "${gradeVisible}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "label": "数据分析大屏数据",
+                      "key": "analyst",
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "searchToolBar": [
+                            {
+                              "tag": "form",
+                              "name": "analyst-user-form",
+                              "labelCol": { "span": 4 },
+                              "wrapperCol": { "span": 19 },
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "grade-list",
+                                  "description": "成绩请求"
+                                }
+                              ],
+                              "submitOnChange": true,
+                              "children": [
+                                {
+                                  "tag": "row",
+                                  "children": [
+                                    {
+                                      "tag": "col",
+                                      "span": 10,
+                                      "children": [
+                                        {
+                                          "tag": "form-item",
+                                          "name": "search",
+                                          "label": "搜索",
+                                          "children": [
+                                            {
+                                              "tag": "input",
+                                              "placeholder": "账号/用户名",
+                                              "allowClear": true
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "col",
+                                      "span": 1,
+                                      "children": [
+                                        {
+                                          "tag": "button",
+                                          "action": [
+                                            {
+                                              "tag": "reload-init-action",
+                                              "group": "*",
+                                              "description": "页面初始化请求"
+                                            }
+                                          ],
+                                          "type": "primary",
+                                          "children": "搜索"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "searchBarRight": [
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "children": "打开大屏",
+                              "icon": "FaChessBoard",
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "open-url",
+                                  "url": "/collect-ui/#/full/home",
+                                  "windowName": "_blank",
+                                  "data": {
+                                    "course_id": "${current_course.course_id}",
+                                    "dashboard_type": "analyst",
+                                    "course_stage": "init"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "children": "随机生成成绩",
+                              "icon": "FaChessBoard",
+                              "confirm": {
+                                "title": "确认随机生成成绩吗？",
+                                "description":
+                                "${'确认随机生成成绩吗？'}"
+                              },
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=sport.gen_course_grade",
+                                  "data": {
+                                    "target_course_id": "${current_course.course_id}",
+                                    "dashboard_type": "analyst",
+                                    "with_all": true,
+                                    "training_type": "${current_course.training_type}",
+                                    "body_part": "${current_course.body_part}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "analyst-list"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "type": "primary",
+                              "children": "导出数据模板",
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=sport.analyst_list_download",
+                                  "download": true,
+                                  "data": {
+                                    "course_id": "${current_course.course_id}",
+                                    "dashboard_type": "analyst"
+                                  }
+                                }
+                              ]
+                            },
+
+                            {
+                              "tag": "upload",
+                              "uploadConfig": {
+                                "showUploadList": false,
+                                "api": "post:/template_data/data?service=sport.analyst_list_import",
+                                "data": {
+                                  "course_id": "${current_course.course_id}",
+                                  "dashboard_type": "analyst"
+                                }
+                              },
+                              "finish_action":[
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "analyst-list"
+                                }
+                              ],
+                              "children": [
+
+                                {
+                                  "disabled": "${!current_course.teacher_name}",
+                                  "tag": "button",
+                                  "style": {
+                                    "margin": "0 10px"
+                                  },
+                                  "type": "primary",
+                                  "danger": true,
+                                  "children": "导入数据"
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "children": "新增大屏得分",
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "analystVisible": true,
+                                    "analystOp": "add"
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "analystUserForm"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "analystUserForm",
+                                  "value": "${current_course}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=hrm.user_list",
+                                  "data": {
+                                    "not_role_code": "teacher",
+                                    "pagination": false
+                                  },
+                                  "adapt": {
+                                    "not_role_user_list": "${data}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "children": "编辑大屏得分",
+                              "disabled": "${analystSelection.length!=1}",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "description":"打开对话框",
+                                  "value": {
+                                    "analystVisible": true,
+                                    "analystOp": "edit"
+                                  }
+                                },
+                                {
+                                  "description":"重置表单",
+                                  "tag": "reset-form",
+                                  "formName": "analystUserForm"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "analystUserForm",
+                                  "value": "${analystSelection[0]}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=hrm.user_list",
+                                  "data": {
+                                    "not_role_code": "teacher",
+                                    "pagination": false
+                                  },
+                                  "adapt": {
+                                    "not_role_user_list": "${data}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "danger": true,
+                              "children": "删除",
+                              "disabled": "${analystSelection.length <=0 }",
+                              "confirm": {
+                                "title": "确认删除吗？",
+                                "description":
+                                "${'确认删除【'+gradeSelection.length+'】条记录吗？'}"
+                              },
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "description": "删除签到",
+                                  "api": "post:/template_data/data?service=sport.course_grade_delete",
+                                  "data": {
+                                    "course_grade_id_list":
+                                    "${analystSelection.map(item=>item.course_grade_id)}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "analyst-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            }
+                          ],
+                          "children": [
+                            {
+                              "selection": "${analystSelection}",
+                              "tag": "table",
+                              "className": "padding10",
+                              "rowSelection": "multiple",
+                              "columnDefs": [
+                                {
+                                  "headerName": "#",
+                                  "width": 60,
+                                  "suppressSizeToFit": true,
+                                  "valueGetter": "node.rowIndex + 1",
+                                  "sortable": false,
+                                  "pinned": "left"
+                                },
+                                {
+                                  "pinned": "left",
+                                  "checkboxSelection": true,
+                                  "headerCheckboxSelection": true,
+                                  "headerName": "学生",
+                                  "width": 160,
+                                  "suppressSizeToFit": true,
+                                  "field": "student_name",
+                                  "cellRender": [
+                                    {
+                                      "tag": "span",
+                                      "children": "${row.student_name+'（'+row.username+'）'}"
+                                    }
+                                  ]
+                                },
+
+                                {
+                                  "headerName": "小组",
+                                  "field": "group_name",
+                                  "width": 100,
+                                  "suppressSizeToFit": true
+                                },
+
+                                {
+                                  "headerName": "课前精准度得分",
+                                  "field": "before_score"
+
+                                },
+                                {
+                                  "headerName": "课前精准度得分",
+                                  "field": "before_sport_level_name"
+
+                                },
+
+                                {
+                                  "headerName": "课中轨迹得分",
+                                  "field": "in_score"
+
+                                },
+                                {
+                                  "headerName": "课中级别",
+                                  "field": "in_sport_level_name"
+                                },
+                                {
+                                  "headerName": "课后轨迹得分",
+                                  "field": "after_score"
+                                },
+                                {
+                                  "headerName": "课后级别",
+                                  "field": "after_sport_level_name"
+                                },
+                                {
+                                  "headerName": "总分",
+                                  "field": "total_score",
+                                  "width": 130,
+                                  "suppressSizeToFit": true,
+                                  "cellRender": [
+                                    {
+                                      "tag": "span",
+                                      "children": "${row.total_score+'（'+row.sport_level_name+'）'}"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "rowData": "${analystList}"
+                            },
+                            {
+                              "tag": "dialog",
+                              "title":
+                              "${analystOp=='add'?'角色【'+current_course.start_time+' '+current_course.teacher_name+'】新增数据分析得分':'角色【'+current_course.start_time+' '+current_course.teacher_name+'】编辑数据分析得分'}",
+                              "width": "40%",
+
+                              "action": [
+                                {
+                                  "tag": "submit-form",
+                                  "description": "提交表单",
+                                  "formName": "analystUserForm"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "新增成绩",
+                                  "enable": "${analystOp=='add'}",
+                                  "api": "post:/template_data/data?service=sport.course_grade_save",
+                                  "appendFormFields": "analystUserForm",
+                                  "data": {
+                                    "course_id": "${current_course.course_id}",
+                                    "dashboard_type": "analyst"
+
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "编辑签到",
+                                  "enable": "${analystOp=='edit'}",
+                                  "api": "post:/template_data/data?service=sport.course_grade_update",
+                                  "appendFormFields": "analystUserForm",
+                                  "data": {
+                                    "course_grade_id": "${analystSelection[0].course_grade_id}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "analystVisible": false
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "analyst-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "tag": "form",
+                                  "name": "analystUserForm",
+                                  "initialValues":{},
+                                  "labelCol": { "span": 4 },
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "name": "username",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请选择学生!"
+                                        }
+                                      ],
+                                      "label": "学生",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "placeholder": "请选择学生",
+                                          "showSearch": true,
+                                          "fieldNames": {
+                                            "label": "nick",
+                                            "value": "username"
+                                          },
+                                          "labelRender": "${label+'('+value+')'}",
+                                          "optionRender":
+                                          "${nick+'('+username+')-'+role_names}",
+                                          "options": "${not_role_user_list}"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "divider",
+                                      "children": "课前动作准确度"
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "before_score",
+                                      "label": "课前分数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课前分数"
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "divider",
+                                      "children": "课中动作轨迹"
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "in_score",
+                                      "label": "课中分数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课中分数"
+                                        }
+                                      ]
+                                    },
+
+
+                                    {
+                                      "tag": "divider",
+                                      "children": "课后动作轨迹"
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "after_score",
+                                      "label": "课后分数",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "isNumber": true,
+                                          "placeholder": "请填写课后分数"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "open": "${analystVisible}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "label": "学生签到",
+                      "key": "user",
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "searchToolBar": [
+                            {
+                              "tag": "form",
+                              "name": "role-user-form",
+                              "initialValues": "${userSearchForm}",
+                              "labelCol": { "span": 4 },
+                              "wrapperCol": { "span": 19 },
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "用户请求"
+                                }
+                              ],
+                              "submitOnChange": true,
+                              "children": [
+                                {
+                                  "tag": "row",
+                                  "children": [
+                                    {
+                                      "tag": "col",
+                                      "span": 10,
+                                      "children": [
+                                        {
+                                          "tag": "form-item",
+                                          "name": "search",
+                                          "label": "搜索",
+                                          "children": [
+                                            {
+                                              "tag": "input",
+                                              "placeholder": "账号/用户名",
+                                              "allowClear": true
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "col",
+                                      "span": 1,
+                                      "children": [
+                                        {
+                                          "tag": "button",
+                                          "action": [
+                                            {
+                                              "tag": "reload-init-action",
+                                              "group": "*",
+                                              "description": "页面初始化请求"
+                                            }
+                                          ],
+                                          "type": "primary",
+                                          "children": "搜索"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ],
+                          "searchBarRight": [
+                            {
+                              "tag": "button",
+                              "children": "新增学生签到",
+                              "disabled": "${!current_course.teacher_name}",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "userVisible": true,
+                                    "op": "add"
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "attendanceUserForm"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "attendanceUserForm",
+                                  "value": "${current_course}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=hrm.user_list",
+                                  "data": {
+                                    "not_role_code": "teacher",
+                                    "pagination": false
+                                  },
+                                  "adapt": {
+                                    "not_role_user_list": "${data}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "children": "编辑学生签到",
+                              "disabled": "${userSelection.length!=1}",
+                              "action": [
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "userVisible": true,
+                                    "op": "edit"
+                                  }
+                                },
+                                {
+                                  "tag": "reset-form",
+                                  "formName": "attendanceUserForm"
+                                },
+                                {
+                                  "tag": "update-form",
+                                  "formName": "attendanceUserForm",
+                                  "value": "${userSelection[0]}"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "api": "post:/template_data/data?service=hrm.user_list",
+                                  "data": {
+                                    "not_role_code": "teacher",
+                                    "pagination": false
+                                  },
+                                  "adapt": {
+                                    "not_role_user_list": "${data}"
+                                  }
+                                }
+                              ]
+                            },
+                            {
+                              "tag": "button",
+                              "danger": true,
+                              "children": "删除",
+                              "disabled": "${userSelection.length <=0 }",
+                              "confirm": {
+                                "title": "确认删除吗？",
+                                "description":
+                                "${'确认删除【'+userSelection.length+'】条记录吗？'}"
+                              },
+                              "action": [
+                                {
+                                  "tag": "ajax",
+                                  "description": "删除签到",
+                                  "api": "post:/template_data/data?service=sport.course_attendance_delete",
+                                  "data": {
+                                    "course_attendance_id_list":
+                                    "${userSelection.map(item=>item.course_attendance_id)}"
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            }
+                          ],
+                          "children": [
+                            {
+                              "selection": "${userSelection}",
+                              "tag": "table",
+                              "className": "padding10",
+                              "rowSelection": "multiple",
+                              "columnDefs": [
+                                {
+                                  "headerName": "#",
+                                  "width": 60,
+                                  "suppressSizeToFit": true,
+                                  "valueGetter": "node.rowIndex + 1",
+                                  "sortable": false,
+                                  "pinned": "left"
+                                },
+                                {
+                                  "pinned": "left",
+                                  "checkboxSelection": true,
+                                  "headerCheckboxSelection": true,
+                                  "headerName": "学生",
+                                  "field": "student_name"
+                                },
+                                {
+                                  "headerName": "账号",
+                                  "field": "student_id",
+                                  "width": 120,
+                                  "suppressSizeToFit": true
+                                },
+                                {
+                                  "headerName": "训练项目",
+                                  "field": "training_project_name"
+                                },
+                                {
+                                  "headerName": "类型",
+                                  "field": "course_type_name"
+
+                                },
+                                {
+                                  "headerName": "耗时",
+                                  "field": "spend"
+                                },
+                                {
+                                  "headerName": "打卡时间",
+                                  "field": "create_time",
+                                  "width": 160,
+                                  "suppressSizeToFit": true
+                                }
+                              ],
+                              "rowData": "${userList}"
+                            },
+                            {
+                              "tag": "dialog",
+                              "title":
+                              "${op=='add'?'角色【'+current_course.start_time+' '+current_course.teacher_name+'】新增学生签到':'角色【'+current_course.start_time+' '+current_course.teacher_name+'】编辑学生签到'}",
+                              "width": "30%",
+                              "action": [
+                                {
+                                  "tag": "submit-form",
+                                  "description": "提交表单",
+                                  "formName": "attendanceUserForm"
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "新增签到",
+                                  "enable": "${op=='add'}",
+                                  "api": "post:/template_data/data?service=sport.course_attendance_save",
+                                  "appendFormFields": "attendanceUserForm",
+                                  "data": {
+                                    "course_id": "${current_course.course_id}"
+                                  }
+                                },
+                                {
+                                  "tag": "ajax",
+                                  "description": "编辑签到",
+                                  "enable": "${op=='edit'}",
+                                  "api": "post:/template_data/data?service=sport.course_attendance_update",
+                                  "appendFormFields": "attendanceUserForm",
+                                  "data": {
+                                    "course_attendance_id": "${userSelection[0].course_attendance_id}"
+                                  }
+                                },
+                                {
+                                  "tag": "update-store",
+                                  "value": {
+                                    "userVisible": false
+                                  }
+                                },
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ],
+                              "children": [
+                                {
+                                  "tag": "form",
+                                  "name": "attendanceUserForm",
+                                  "initialValues": "${userForm}",
+
+                                  "labelCol": { "span": 4 },
+                                  "children": [
+                                    {
+                                      "tag": "form-item",
+                                      "name": "student_id",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请选择学生!"
+                                        }
+                                      ],
+                                      "label": "学生",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "placeholder": "请选择学生",
+                                          "fieldNames": {
+                                            "label": "nick",
+                                            "value": "username"
+                                          },
+                                          "labelRender": "${label+'('+value+')'}",
+                                          "optionRender":
+                                          "${nick+'('+username+')'}",
+                                          "options": "${not_role_user_list}"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "training_project_id",
+                                      "label": "训练项目",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请选择训练项目!"
+                                        }
+                                      ],
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "placeholder": "请选择训练项目",
+                                          "allowClear": true,
+                                          "fieldNames": {
+                                            "label": "name",
+                                            "value": "training_project_id"
+                                          },
+                                          "optionRender": "${name+'['+training_type_name+']'}",
+                                          "options": "${training_list}"
+                                        }
+                                      ]
+                                    },
+
+                                    {
+                                      "tag": "form-item",
+                                      "name": "course_type",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请选择课程类型!"
+                                        }
+                                      ],
+                                      "label": "课程类型",
+                                      "children": [
+                                        {
+                                          "tag": "select",
+                                          "placeholder": "请选择课程类型",
+                                          "options": [
+                                            {
+                                              "value": "before",
+                                              "label": "课前"
+                                            },
+                                            {
+                                              "value": "in",
+                                              "label": "课中"
+                                            },
+                                            {
+                                              "value": "after",
+                                              "label": "课后"
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "spend",
+                                      "rules": [
+                                        {
+                                          "required": true,
+                                          "message": "请输入耗时!"
+                                        }
+                                      ],
+                                      "label": "耗时",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "请填写耗时"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "tag": "form-item",
+                                      "name": "movies",
+                                      "label": "视频地址",
+                                      "children": [
+                                        {
+                                          "tag": "input",
+                                          "placeholder": "视频地址"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "open": "${userVisible}"
+                            }
+                          ],
+                          "bottomAlign": "right",
+                          "bottomToolBar": [
+                            {
+                              "tag": "pagination",
+                              "showSizeChanger": true,
+                              "pageSize": "${userSearchForm.size}",
+                              "current": "${userSearchForm.page}",
+                              "total": "${userCount}",
+                              "showTotal": true,
+                              "action": [
+                                {
+                                  "tag": "reload-init-action",
+                                  "group": "user-list",
+                                  "description": "页面初始化请求"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "label": "学生视频",
+                      "key": "video",
+                      "searchToolBar": [
+
+                      ],
+                      "searchBarRight": [
+                        {
+                          "tag": "button",
+                          "danger": true,
+                          "children": "删除",
+                          "disabled": "${videoSelection.length <=0 }",
+                          "confirm": {
+                            "title": "确认删除吗？",
+                            "description":
+                            "${'确认删除【'+videoSelection.length+'】条记录吗？'}"
+                          },
+                          "action": [
+                            {
+                              "tag": "ajax",
+                              "description": "删除视频",
+                              "api": "post:/template_data/data?service=sport.course_video_delete",
+                              "data": {
+                                "course_video_id_list":
+                                "${videoSelection.map(item=>item.course_video_id)}"
+                              }
+                            },
+                            {
+                              "tag": "reload-init-action",
+                              "group": "video-list",
+                              "description": "页面初始化请求"
+                            }
+                          ]
+                        }
+                      ],
+                      "children": [
+                        {
+                          "tag": "layout-fit",
+                          "children": [
+                            {
+
+                              "selection": "${videoSelection}",
+                              "tag": "table",
+                              "className": "padding10",
+                              "rowSelection": "multiple",
+                              "columnDefs": [
+                                {
+                                  "headerName": "#",
+                                  "width": 60,
+                                  "suppressSizeToFit": true,
+                                  "valueGetter": "node.rowIndex + 1",
+                                  "sortable": false,
+                                  "pinned": "left"
+                                },
+                                {
+                                  "pinned": "left",
+                                  "checkboxSelection": true,
+                                  "headerCheckboxSelection": true,
+                                  "suppressSizeToFit": true,
+                                  "headerName": "学生",
+                                  "field": "create_username"
+                                },
+                                {
+                                  "headerName": "训练项目",
+                                  "field": "training_project_name"
+                                },
+                                {
+                                  "headerName": "课程类型",
+                                  "field": "course_type_name"
+                                },
+                                {
+                                  "headerName": "创建时间",
+                                  "field": "create_time"
+                                },
+                                {
+                                  "headerName": "大小",
+                                  "field": "size"
+                                },
+
+                                {
+                                  "headerName": "视频",
+                                  "field": "path",
+                                  "cellRender": {
+                                    "tag": "a",
+                                    "href": "${row.path}",
+                                    "children": "查看视频",
+                                    "target": "_blank"
+                                  }
+                                }
+                              ],
+                              "rowData": "${videoList}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+
+          ]
+        }
+      ]
+    }
+  ]
+}
+
