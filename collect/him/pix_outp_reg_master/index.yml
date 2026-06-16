@@ -128,6 +128,7 @@ service:
       master_id__in: "[master_id_list]"
 
   - key: pix_outp_reg_pool_query
+    http: true
     must_login: false
     module: sql
     params:
@@ -136,6 +137,7 @@ service:
     data_file: pool_query.sql
 
   - key: pix_outp_reg_schedule_query
+    http: true
     must_login: false
     module: sql
     params:
@@ -144,6 +146,7 @@ service:
     data_file: schedule_query.sql
 
   - key: pix_outp_reg_master_log_query
+    http: true
     must_login: false
     module: sql
     params:
